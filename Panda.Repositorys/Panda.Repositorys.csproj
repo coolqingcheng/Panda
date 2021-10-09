@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Panda.Repository</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FreeSql" Version="2.6.100" />
+      <PackageReference Include="FreeSql.Repository" Version="2.6.100" />
+      <PackageReference Include="IdleBus" Version="1.5.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Panda.Entity\Panda.Entity.csproj" />
+    </ItemGroup>
+
+</Project>

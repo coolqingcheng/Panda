@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Web", "Panda.Web\Panda.Web.csproj", "{C7DBA4FC-A1E4-49A8-A6B3-3756744C9443}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Repositorys", "Panda.Repositorys\Panda.Repositorys.csproj", "{2D8E700D-594C-475D-8AB7-5D701B84EA49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Entity", "Panda.Entity\Panda.Entity.csproj", "{8A8BB200-C2C8-4C33-A858-3CA57CBD6272}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Services", "Panda.Services\Panda.Services.csproj", "{F70ED88E-4BB5-4AFA-941E-F6FB3B443162}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C7DBA4FC-A1E4-49A8-A6B3-3756744C9443}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7DBA4FC-A1E4-49A8-A6B3-3756744C9443}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7DBA4FC-A1E4-49A8-A6B3-3756744C9443}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7DBA4FC-A1E4-49A8-A6B3-3756744C9443}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D8E700D-594C-475D-8AB7-5D701B84EA49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D8E700D-594C-475D-8AB7-5D701B84EA49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D8E700D-594C-475D-8AB7-5D701B84EA49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D8E700D-594C-475D-8AB7-5D701B84EA49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A8BB200-C2C8-4C33-A858-3CA57CBD6272}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A8BB200-C2C8-4C33-A858-3CA57CBD6272}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A8BB200-C2C8-4C33-A858-3CA57CBD6272}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A8BB200-C2C8-4C33-A858-3CA57CBD6272}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F70ED88E-4BB5-4AFA-941E-F6FB3B443162}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F70ED88E-4BB5-4AFA-941E-F6FB3B443162}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F70ED88E-4BB5-4AFA-941E-F6FB3B443162}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F70ED88E-4BB5-4AFA-941E-F6FB3B443162}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
