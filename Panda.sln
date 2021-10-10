@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Entity", "Panda.Entit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Services", "Panda.Services\Panda.Services.csproj", "{F70ED88E-4BB5-4AFA-941E-F6FB3B443162}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Tools", "Panda.Tools\Panda.Tools.csproj", "{68D7FA49-29FA-4B2D-ACB8-C82F65223C6A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{F70ED88E-4BB5-4AFA-941E-F6FB3B443162}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F70ED88E-4BB5-4AFA-941E-F6FB3B443162}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F70ED88E-4BB5-4AFA-941E-F6FB3B443162}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68D7FA49-29FA-4B2D-ACB8-C82F65223C6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68D7FA49-29FA-4B2D-ACB8-C82F65223C6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68D7FA49-29FA-4B2D-ACB8-C82F65223C6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68D7FA49-29FA-4B2D-ACB8-C82F65223C6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

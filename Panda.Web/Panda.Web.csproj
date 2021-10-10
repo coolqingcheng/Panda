@@ -8,10 +8,13 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Panda.Entity\Panda.Entity.csproj" />
+      <ProjectReference Include="..\Panda.Repositorys\Panda.Repositorys.csproj" />
       <ProjectReference Include="..\Panda.Services\Panda.Services.csproj" />
+      <ProjectReference Include="..\Panda.Tools\Panda.Tools.csproj" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0-preview.1" />
       <PackageReference Include="FreeSql" Version="2.6.100" />
       <PackageReference Include="FreeSql.Provider.MySql" Version="2.6.100" />
     </ItemGroup>
