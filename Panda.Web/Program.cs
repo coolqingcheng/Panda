@@ -18,6 +18,12 @@ var fsql = new FreeSql.FreeSqlBuilder()
     .UseAutoSyncStructure(true) //自动迁移实体的结构到数据库 
 #endif
     .Build();
+
+fsql.Aop.CurdAfter += (a, b) =>
+{
+    Console.WriteLine("执行sql:  "+b.Sql);
+};
+
 builder.Services.AddSingleton(fsql);
 
 builder.Services.AddControllersWithViews();

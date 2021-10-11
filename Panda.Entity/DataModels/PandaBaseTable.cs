@@ -8,5 +8,5 @@ public class PandaBaseTable
     public virtual int Id { get; set; }
 
     [Column(ServerTime = DateTimeKind.Utc,CanInsert = false,CanUpdate = false)]
-    public DateTimeKind AddTime { get; set; }
+    public DateTime AddTime { get; set; }
 }

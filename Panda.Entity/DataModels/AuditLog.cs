@@ -1,5 +1,5 @@
 using FreeSql.DataAnnotations;
-using Panda.Entitys.Enums;
+using Panda.Entity.Enums;
 
 namespace Panda.Entity.DataModels;
 

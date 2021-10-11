@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Panda.Entity.Models;
 using Panda.Services.Account;
+using Panda.Services.Article;
 using Panda.Web.Models;
 
 namespace Panda.Web.Controllers;
@@ -11,16 +13,23 @@ public class HomeController : Controller
 
     private readonly IAccountService _accountService;
 
+    private readonly IArticleService _articleService;
 
-    public HomeController(ILogger<HomeController> logger, IAccountService accountService)
+    public HomeController(ILogger<HomeController> logger, IAccountService accountService,
+        IArticleService articleService)
     {
         _logger = logger;
         _accountService = accountService;
+        _articleService = articleService;
     }
+
 
     public async Task<IActionResult> Index()
     {
-        ViewData["time"] = await _accountService.Test();
+        await _articleService.GetArticleList(new ArticleRequest()
+        {
+            Index = 1, Size = 10
+        });
         return View();
     }
 

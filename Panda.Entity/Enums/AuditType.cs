@@ -1,4 +1,4 @@
-namespace Panda.Entitys.Enums;
+namespace Panda.Entity.Enums;
 
 public enum AuditType
 {

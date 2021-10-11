@@ -10,4 +10,9 @@
       <PackageReference Include="Mapster" Version="7.2.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Panda.Entity\Panda.Entity.csproj" />
+      <ProjectReference Include="..\Panda.Repositorys\Panda.Repositorys.csproj" />
+    </ItemGroup>
+
 </Project>
