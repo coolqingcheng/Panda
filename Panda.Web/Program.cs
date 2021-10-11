@@ -1,7 +1,3 @@
-using Autofac.Extensions.DependencyInjection;
-using System.Linq;
-using System.Reflection;
-using Autofac;
 using Panda.Tools;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,8 +26,16 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddAutoInject(opt =>
 {
-    opt.AssemblyStringList.TryAdd("Panda.Services", "Service");
-    opt.AssemblyStringList.TryAdd("Panda.Repositorys", "Repository");
+    opt.AssemblyStringList.Add(new AutoInjectOptionItem()
+    {
+        AssemblyName = "Panda.Services",
+        EndWdith = "Service"
+    });
+    opt.AssemblyStringList.Add(new AutoInjectOptionItem()
+    {
+        AssemblyName = "Panda.Repositorys",
+        EndWdith = "Repository"
+    });
 });
 
 
