@@ -15,55 +15,75 @@ public static class AutoInject
     {
         var option = new AutoInjectOption();
         action(option);
-        foreach (var (key, value) in option.AssemblyStringList)
+        foreach (var item in option.AssemblyStringList)
         {
-            var types  = Assembly.Load(key).GetTypes().Where(a => a.IsClass && a.IsPublic);
+            var types = Assembly.Load(item.AssemblyName).GetTypes().Where(a => a.IsClass && a.IsPublic);
             foreach (var type in types)
             {
-                if (!type.Name.EndsWith(value) || type.GetInterfaces().Length <= 0 ||
-                    !type.GetInterfaces()[0].Name.EndsWith(value)) continue;
-                var att = type.GetCustomAttribute<AutoInjectScopeAttribute>();
-                var impInterface = type.GetInterfaces()[0];
-#if DEBUG
-                Console.WriteLine($"正在注入:{impInterface.FullName}->{type.FullName}");
-#endif
-                if (att != null)
+                if (item.InjectSelf == false)
                 {
-                    switch (att)
-                    {
-                        case { InjectType: AutoInjectType.Scope }:
-                            serviceCollection.AddScoped(impInterface, type);
-                            break;
-                        case { InjectType: AutoInjectType.Single }:
-                            serviceCollection.AddSingleton(impInterface, type);
-                            break;
-                        case { InjectType: AutoInjectType.Transient }:
-                            serviceCollection.AddTransient(impInterface, type);
-                            break;
-                    }
+                    if (!type.Name.EndsWith(item.EndWdith) || type.GetInterfaces().Length <= 0 ||
+                        !type.GetInterfaces()[0].Name.EndsWith(item.EndWdith)) continue;
+                    var impInterface = type.GetInterfaces()[0];
+                    Inject(serviceCollection, type, impInterface);
                 }
                 else
                 {
-                    serviceCollection.AddScoped(impInterface, type);
+                    Inject(serviceCollection, type, type);
                 }
             }
+        }
+    }
+
+    private static void Inject(IServiceCollection serviceCollection, Type type, Type impInterface)
+    {
+        var att = type.GetCustomAttribute<AutoInjectScopeAttribute>();
+#if DEBUG
+        Console.WriteLine($"正在注入:{impInterface.FullName}->{type.FullName}");
+#endif
+        if (att != null)
+        {
+            switch (att)
+            {
+                case {InjectType: AutoInjectType.Scope}:
+                    serviceCollection.AddScoped(impInterface, type);
+                    break;
+                case {InjectType: AutoInjectType.Single}:
+                    serviceCollection.AddSingleton(impInterface, type);
+                    break;
+                case {InjectType: AutoInjectType.Transient}:
+                    serviceCollection.AddTransient(impInterface, type);
+                    break;
+            }
+        }
+        else
+        {
+            serviceCollection.AddScoped(impInterface, type);
         }
     }
 }
 
 public class AutoInjectOption
 {
-    private Dictionary<string, string> _assemblyStringList = new Dictionary<string, string>();
+    public readonly List<AutoInjectOptionItem> AssemblyStringList = new();
+}
+
+public class AutoInjectOptionItem
+{
+    /// <summary>
+    /// 名称
+    /// </summary>
+    public string AssemblyName { get; set; }
 
     /// <summary>
-    /// 启动注入配置
-    /// key:类库名称 value: 以什么为后缀的类与接口可以自动注入
+    /// 结尾
     /// </summary>
-    public Dictionary<string, string> AssemblyStringList
-    {
-        get => _assemblyStringList;
-        set => _assemblyStringList = value;
-    }
+    public string EndWdith { get; set; }
+
+    /// <summary>
+    /// 是否是直接注入自己，不注入接口
+    /// </summary>
+    public bool InjectSelf { get; set; } = false;
 }
 
 [AttributeUsage(AttributeTargets.Class)]
