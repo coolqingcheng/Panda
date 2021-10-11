@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using Panda.Entity;
 using Panda.Tools;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,22 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetSection("ConnectionStrings:mysql").Value;
 
 
-
-
-var fsql = new FreeSql.FreeSqlBuilder()
-    .UseConnectionString(FreeSql.DataType.MySql,
-        connectionString)
-#if DEBUG
-    .UseAutoSyncStructure(true) //自动迁移实体的结构到数据库 
-#endif
-    .Build();
-
-fsql.Aop.CurdAfter += (a, b) =>
-{
-    Console.WriteLine("执行sql:  "+b.Sql);
-};
-
-builder.Services.AddSingleton(fsql);
+builder.Services.AddDbContext<PandaContext>(
+    opt =>
+    {
+        opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+    }
+    );
 
 builder.Services.AddControllersWithViews();
 
@@ -34,7 +26,8 @@ builder.Services.AddAutoInject(opt =>
     opt.AssemblyStringList.Add(new AutoInjectOptionItem()
     {
         AssemblyName = "Panda.Repositorys",
-        EndWdith = "Repository"
+        EndWdith = "Repository",
+        InjectSelf = true
     });
 });
 

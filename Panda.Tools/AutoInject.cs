@@ -29,7 +29,8 @@ public static class AutoInject
                 }
                 else
                 {
-                    Inject(serviceCollection, type, type);
+                    if (type.IsGenericType == false)
+                        Inject(serviceCollection, type, type);
                 }
             }
         }
@@ -45,13 +46,13 @@ public static class AutoInject
         {
             switch (att)
             {
-                case {InjectType: AutoInjectType.Scope}:
+                case { InjectType: AutoInjectType.Scope }:
                     serviceCollection.AddScoped(impInterface, type);
                     break;
-                case {InjectType: AutoInjectType.Single}:
+                case { InjectType: AutoInjectType.Single }:
                     serviceCollection.AddSingleton(impInterface, type);
                     break;
-                case {InjectType: AutoInjectType.Transient}:
+                case { InjectType: AutoInjectType.Transient }:
                     serviceCollection.AddTransient(impInterface, type);
                     break;
             }

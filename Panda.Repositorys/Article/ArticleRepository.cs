@@ -1,36 +1,37 @@
 using System.Drawing;
+using Microsoft.EntityFrameworkCore;
+using Panda.Entity;
 using Panda.Entity.DataModels;
 using Panda.Entity.Models;
 using Panda.Entity.Responses;
+using Panda.Tools.Extensions;
 
 namespace Panda.Repository.Article;
 
-public class ArticleRepository:PandaRepository<Articles>
+public class ArticleRepository : PandaRepository<Articles>
 {
-    public ArticleRepository(IFreeSql freeSql) : base(freeSql)
+    public ArticleRepository(PandaContext context) : base(context)
     {
     }
 
-    public async Task<PageResponse<List<ArticleItem>>> GetArticleList(int index,int size)
+    public async Task<PageResponse<List<ArticleItem>>> GetArticleList(int index, int size)
     {
-        var res =  await _freeSql.Select<Articles, ArticleCategoryRelations>()
-            .LeftJoin(a => a.t1.Id == a.t2.ArticleId)
-            .Page(index, size).Count(out var count).ToListAsync(a => new ArticleItem()
+        var query = _context.Articles.AsQueryable();
+        var res = await query.Page(index,size).Select(a => new ArticleItem()
+        {
+            Id = a.Id,
+            Title = a.Title,
+            Summary = a.Summary,
+            AddTime = a.AddTime,
+            Categories = a.ArticleCategoryRelations.Select(b => new ArticleCategories()
             {
-                Title = a.t1.Title,
-                Summary = a.t1.Summary,
-                AddTime = a.t1.AddTime,
-                Id = a.t1.Id,
-                Categories = _freeSql.Select<Categorys>().Where(b=>b.Id==a.t2.CategoryId)
-                    .ToList(c=>new ArticleCategories()
-                    {
-                        CategoryName = c.categoryName,
-                        CategoryId = c.Id
-                    })
-            });
+                CategoryId = b.Categories.Id,
+                CategoryName = b.Categories.categoryName
+            }).ToList()
+        }).ToListAsync();
         return new PageResponse<List<ArticleItem>>()
         {
-            Total = count,
+            Total = await query.CountAsync(),
             Data = res
         };
     }

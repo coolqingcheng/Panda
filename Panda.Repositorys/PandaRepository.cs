@@ -1,15 +1,16 @@
 ﻿using System.Linq.Expressions;
+using Panda.Entity;
+using Panda.Entity.DataModels;
 
 namespace Panda.Repository;
 using FreeSql;
 
-public class PandaRepository<T>:BaseRepository<T> where T:class
+public class PandaRepository<T> where T:PandaBaseTable
 {
-    protected readonly IFreeSql _freeSql;
+    protected readonly PandaContext _context;
 
-    protected PandaRepository(IFreeSql freeSql) 
-        : base(freeSql, null, null)
+    protected PandaRepository(PandaContext context)
     {
-        _freeSql = freeSql;
+        _context = context;
     }
 }

@@ -34,5 +34,7 @@ public class Articles:PandaBaseTable
     /// <summary>
     /// 用户Id
     /// </summary>
-    public int AccountId { get; set; }
+    public Accounts Account { get; set; }
+
+    public List<ArticleCategoryRelations> ArticleCategoryRelations { get; set; }
 }
