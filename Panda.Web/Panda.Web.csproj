@@ -17,6 +17,7 @@
       <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0-preview.1" />
       <PackageReference Include="FreeSql" Version="2.6.100" />
       <PackageReference Include="FreeSql.Provider.MySql" Version="2.6.100" />
+      <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.0-preview.7" />
     </ItemGroup>
 
 </Project>
