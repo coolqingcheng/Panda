@@ -1,4 +1,3 @@
-using FreeSql.DataAnnotations;
 using Panda.Entity.Enums;
 
 namespace Panda.Entity.DataModels;
@@ -18,7 +17,6 @@ public class AuditLog : PandaBaseTable
     /// <summary>
     /// 类型
     /// </summary>
-    [Column(MapType = typeof(int))]
     public AuditType AuditType { get; set; }
     
     

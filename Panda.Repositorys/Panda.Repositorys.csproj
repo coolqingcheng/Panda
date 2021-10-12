@@ -8,14 +8,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="FreeSql" Version="2.6.100" />
-      <PackageReference Include="FreeSql.Repository" Version="2.6.100" />
-      <PackageReference Include="IdleBus" Version="1.5.2" />
+      <ProjectReference Include="..\Panda.Entity\Panda.Entity.csproj" />
+      <ProjectReference Include="..\Panda.Tools\Panda.Tools.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Panda.Entity\Panda.Entity.csproj" />
-      <ProjectReference Include="..\Panda.Tools\Panda.Tools.csproj" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.10">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
     </ItemGroup>
 
 </Project>

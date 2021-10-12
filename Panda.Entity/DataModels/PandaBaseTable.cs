@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using FreeSql.DataAnnotations;
 
 namespace Panda.Entity.DataModels;
 

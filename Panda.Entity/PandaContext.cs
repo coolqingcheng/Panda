@@ -16,4 +16,12 @@ public class PandaContext : DbContext
     public PandaContext(DbContextOptions<PandaContext> options) : base(options)
     {
     }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
+#if DEBUG
+        optionsBuilder.LogTo(Console.WriteLine);
+#endif
+    }
 }

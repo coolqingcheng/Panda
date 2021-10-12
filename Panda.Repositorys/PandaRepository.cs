@@ -3,7 +3,6 @@ using Panda.Entity;
 using Panda.Entity.DataModels;
 
 namespace Panda.Repository;
-using FreeSql;
 
 public class PandaRepository<T> where T:PandaBaseTable
 {
