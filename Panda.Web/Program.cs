@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Panda.Entity;
+using Panda.Entity.UnitOfWork;
 using Panda.Tools;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,11 +9,8 @@ var connectionString = builder.Configuration.GetSection("ConnectionStrings:mysql
 
 
 builder.Services.AddDbContext<PandaContext>(
-    opt =>
-    {
-        opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-    }
-    );
+    opt => { opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)); }
+);
 
 builder.Services.AddControllersWithViews();
 
@@ -30,6 +28,7 @@ builder.Services.AddAutoInject(opt =>
         InjectSelf = true
     });
 });
+builder.Services.AddScoped<IUnitOfWork, EFUnitOfWork>();
 
 
 var app = builder.Build();

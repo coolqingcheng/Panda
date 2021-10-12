@@ -14,10 +14,10 @@ public class ArticleRepository : PandaRepository<Articles>
     {
     }
 
-    public async Task<PageResponse<List<ArticleItem>>> GetArticleList(int index, int size)
+    public async Task<PageResponse<ArticleItem>> GetArticleList(int index, int size)
     {
         var query = _context.Articles.AsQueryable();
-        var res = await query.Page(index,size).Select(a => new ArticleItem()
+        var res = await query.Page(index, size).Select(a => new ArticleItem()
         {
             Id = a.Id,
             Title = a.Title,
@@ -29,7 +29,7 @@ public class ArticleRepository : PandaRepository<Articles>
                 CategoryName = b.Categories.categoryName
             }).ToList()
         }).ToListAsync();
-        return new PageResponse<List<ArticleItem>>()
+        return new PageResponse<ArticleItem>()
         {
             Total = await query.CountAsync(),
             Data = res
