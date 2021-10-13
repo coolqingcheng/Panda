@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Panda.Entity;
 using Panda.Entity.UnitOfWork;
@@ -11,6 +12,8 @@ var connectionString = builder.Configuration.GetSection("ConnectionStrings:mysql
 builder.Services.AddDbContext<PandaContext>(
     opt => { opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)); }
 );
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
 builder.Services.AddControllersWithViews();
 
@@ -47,6 +50,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
