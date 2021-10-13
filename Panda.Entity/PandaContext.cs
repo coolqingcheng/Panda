@@ -24,4 +24,9 @@ public class PandaContext : DbContext
         optionsBuilder.LogTo(Console.WriteLine);
 #endif
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+    }
 }
