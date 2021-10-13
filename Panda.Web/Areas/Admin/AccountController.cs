@@ -32,7 +32,6 @@ public class AccountController : AdminBaseController
     [HttpGet]
     public  IActionResult AuthTest()
     {
-        HttpContext.Request.Query.
         return Content("登录成功");
     }
 }
