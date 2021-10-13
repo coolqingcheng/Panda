@@ -49,3 +49,9 @@ public class ArticleCategories
 public class ArticleRequest : PageRequest
 {
 }
+
+public class ArticleCategoryRequest : PageRequest
+{
+    
+    public int CategoryId { get; set; }
+}

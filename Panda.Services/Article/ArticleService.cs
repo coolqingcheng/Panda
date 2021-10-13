@@ -23,6 +23,11 @@ public class ArticleService : IArticleService
         return await _articleRepository.GetArticleList(request.Index, request.Size);
     }
 
+    public async Task<PageResponse<ArticleItem>> GetArticleListByCategoryId(ArticleCategoryRequest request)
+    {
+        return await Task.FromResult(new PageResponse<ArticleItem>());
+    }
+
     public async Task<ArticleDetailItem> GetArticle(int id)
     {
         var item = await _articleRepository.Where(a => a.Id == id).Include(a => a.Account).Select(a =>
