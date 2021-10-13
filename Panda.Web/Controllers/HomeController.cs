@@ -37,12 +37,19 @@ public class HomeController : Controller
         {
             Index = Index, Size = 15
         });
-
+        ViewData["res"] = res;
         return View();
     }
 
-    public IActionResult Privacy()
+    /// <summary>
+    /// 模板页面
+    /// </summary>
+    /// <param name="tmp"></param>
+    /// <returns></returns>
+    [HttpGet("/{tmp}.html")]
+    public IActionResult TmpHtml(string tmp)
     {
+        ViewData["tmp"] = tmp;
         return View();
     }
 

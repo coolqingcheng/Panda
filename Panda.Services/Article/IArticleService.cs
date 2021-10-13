@@ -6,4 +6,6 @@ namespace Panda.Services.Article;
 public interface IArticleService
 {
     Task<PageResponse<ArticleItem>> GetArticleList(ArticleRequest request);
+    
+    Task<ArticleDetailItem> GetArticle(int Id);
 }

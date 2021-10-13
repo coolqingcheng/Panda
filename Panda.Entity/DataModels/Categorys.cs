@@ -16,6 +16,16 @@ public class Categorys:PandaBaseTable
     /// </summary>
     public string CategoryDesc { get; set; }
 
+    /// <summary>
+    /// 是否显示
+    /// </summary>
+    public bool IsShow { get; set; }
+
+    /// <summary>
+    /// 上级Id
+    /// </summary>
+    public int Pid { get; set; }
+
     
     public List<ArticleCategoryRelations> ArticleCategoryRelations { get; set; }
 }

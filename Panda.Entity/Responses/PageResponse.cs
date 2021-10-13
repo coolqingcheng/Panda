@@ -6,5 +6,5 @@ public class PageResponse<T> : BaseResponse
 {
     public List<T> Data { get; set; }
 
-    public long Total { get; set; }
+    public int Total { get; set; }
 }

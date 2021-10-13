@@ -1,8 +1,36 @@
-﻿@{
+﻿@using Panda.Entity.Responses
+@using Panda.Entity.Models
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome:@ViewData["time"]</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@{
+    var res = ViewData["res"] as PageResponse<ArticleItem>;
+}
+
+<div>
+    @foreach (var item in res?.Data)
+    {
+        <div>
+            <a href="/article/@item.Id">@item.Title</a>
+        </div>
+    }
+</div>
+
+<div>
+    @{
+        var pageCount = res.Total.GetPageSum(10);
+        @if (pageCount > 1)
+        {
+            <ul>
+                @{
+
+                    @for (var i = 1; i <= pageCount; i++)
+                    {
+                        <li>@i</li>
+                    }
+                }
+            </ul>
+        }
+    }
 </div>
