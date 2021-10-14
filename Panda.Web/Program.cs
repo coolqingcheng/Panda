@@ -16,6 +16,7 @@ builder.Services.AddDbContext<PandaContext>(
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddTools();
 
 builder.Services.AddAutoInject(opt =>
 {

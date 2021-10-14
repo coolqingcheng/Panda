@@ -3,22 +3,23 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Panda.Services.Account;
 
 namespace Panda.Web.Areas.Admin;
 
-
 public class AccountController : AdminBaseController
 {
-    // GET
-    public async Task<IActionResult> Index()
+    private readonly IAccountService _accountService;
+
+    public AccountController(IAccountService accountService)
     {
-        var identity = new ClaimsIdentity(new Claim[]
-        {
-            new Claim(ClaimTypes.Name,"qingcheng")
-        },CookieAuthenticationDefaults.AuthenticationScheme);
-        var claimsPrincipal = new ClaimsPrincipal(identity);
-        await HttpContext.SignInAsync(claimsPrincipal);
-        //后台全部走ajax请求，请求头header必须带上 X-Requested-With=XMLHttpRequest，否则中间件会执行重定向
+        _accountService = accountService;
+    }
+
+    // GET
+    public async Task<IActionResult> Login()
+    {
+        
         return Content("admin");
     }
 
@@ -30,7 +31,7 @@ public class AccountController : AdminBaseController
 
     [Authorize]
     [HttpGet]
-    public  IActionResult AuthTest()
+    public IActionResult AuthTest()
     {
         return Content("登录成功");
     }

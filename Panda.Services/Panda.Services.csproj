@@ -7,12 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Mapster" Version="7.2.0" />
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+        <PackageReference Include="Mapster" Version="7.2.0"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Panda.Entity\Panda.Entity.csproj" />
-      <ProjectReference Include="..\Panda.Repositorys\Panda.Repositorys.csproj" />
+        <ProjectReference Include="..\Panda.Entity\Panda.Entity.csproj"/>
+        <ProjectReference Include="..\Panda.Repositorys\Panda.Repositorys.csproj"/>
     </ItemGroup>
 
 </Project>
