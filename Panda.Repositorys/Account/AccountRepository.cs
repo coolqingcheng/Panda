@@ -12,14 +12,26 @@ public class AccountRepository : PandaRepository<Accounts>
 
     public async Task LoginFailAsync(Accounts account)
     {
-        account.LoginFailCount += 1;
-        if (account.LoginFailCount > 5 && account.LockedTime > DateTime.Now)
+        if (await IsLocked(account))
         {
-            //大于5次锁定账户
-            account.LockedTime = DateTime.Now.AddMinutes(15);
+            account.LoginFailCount = 1;
         }
-
+        else
+        {
+            account.LoginFailCount += 1;
+            if (account.LoginFailCount > 5 && account.LockedTime > DateTime.Now)
+            {
+                //大于5次锁定账户
+                account.LockedTime = DateTime.Now.AddMinutes(15);
+            }
+        }
         await _context.SaveChangesAsync();
+    }
+
+
+    public async Task<bool> IsLocked(Accounts account)
+    {
+        return account.LockedTime > DateTime.Now;
     }
 
     public async Task LoginSuccessAsync(Accounts account)

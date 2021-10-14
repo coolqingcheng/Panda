@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Panda.Web.Areas;
+namespace Panda.Web.Admin.Controllers;
 
 /// <summary>
 /// 后台api

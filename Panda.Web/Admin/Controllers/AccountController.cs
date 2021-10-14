@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Panda.Services.Account;
+using Panda.Tools.Exception;
+using Panda.Web.Admin.Models;
 
-namespace Panda.Web.Areas.Admin;
+namespace Panda.Web.Admin.Controllers;
 
 public class AccountController : AdminBaseController
 {
@@ -17,10 +19,14 @@ public class AccountController : AdminBaseController
     }
 
     // GET
-    public async Task<IActionResult> Login()
+    public async Task Login(AccountLoginRequest request)
     {
-        
-        return Content("admin");
+        var res = await _accountService.LoginAsync(request.UserName, request.Password);
+        if (res.IsSuccess == false)
+        {
+            throw new UserException(res.Message);
+        }
+
     }
 
     [HttpGet]
