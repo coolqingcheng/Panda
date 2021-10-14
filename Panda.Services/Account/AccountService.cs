@@ -17,10 +17,10 @@ public class AccountService : IAccountService
 
     private readonly IdentitySecurity _identitySecurity;
 
-    private readonly HttpContextAccessor _httpContextAccessor;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
     public AccountService(AccountRepository accountRepository, IdentitySecurity identitySecurity,
-        HttpContextAccessor httpContextAccessor)
+        IHttpContextAccessor httpContextAccessor)
     {
         _accountRepository = accountRepository;
         _identitySecurity = identitySecurity;

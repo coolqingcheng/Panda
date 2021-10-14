@@ -17,8 +17,8 @@ public class AccountController : AdminBaseController
     {
         _accountService = accountService;
     }
-
-    // GET
+    
+    [HttpPost]
     public async Task Login(AccountLoginRequest request)
     {
         var res = await _accountService.LoginAsync(request.UserName, request.Password);
