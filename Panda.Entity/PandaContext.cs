@@ -13,6 +13,8 @@ public class PandaContext : DbContext
 
     public DbSet<ArticleCategoryRelations> ArticleCategoryRelations { get; set; }
 
+    public DbSet<AuditLogs> AuditLogs { get; set; }
+
     public PandaContext(DbContextOptions<PandaContext> options) : base(options)
     {
     }

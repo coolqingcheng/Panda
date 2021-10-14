@@ -2,7 +2,7 @@ using Panda.Entity.Enums;
 
 namespace Panda.Entity.DataModels;
 
-public class AuditLog : PandaBaseTable
+public class AuditLogs : PandaBaseTable
 {
     /// <summary>
     /// 消息

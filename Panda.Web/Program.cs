@@ -1,3 +1,5 @@
+using System.Net;
+using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Panda.Entity;
@@ -44,6 +46,24 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+}
+else
+{
+    app.UseExceptionHandler(builder =>
+    {
+        builder.Run(async context =>
+        {
+            context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
+            if (context.Request.Headers["X-Requested-With"] == "XMLHttpRequest" || context.Request.Query["X-Requested-With"]=="XMLHttpRequest")
+            {
+                await context.Response.WriteAsJsonAsync(new {message = "服务器繁忙！【500】"});
+            }
+            else
+            {
+                context.Response.Redirect("/Home/Error");
+            }
+        });
+    });
 }
 
 app.UseHttpsRedirection();
