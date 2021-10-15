@@ -28,6 +28,7 @@ import { ElForm } from "element-plus/lib/components/form"
 import { useRouter } from "vue-router";
 import { ElMessage } from 'element-plus/lib/components/message'
 import { http } from "shared/http/HttpClient"
+import { log } from 'util';
 export default {
   setup() {
     const loginForm = reactive({
@@ -55,21 +56,18 @@ export default {
     const router = useRouter();
     const loginHandler = async () => {
       loading.value = true
-      await form.value?.validate((valid) => {
-
+      await form.value?.validate(async (valid) => {
         if (valid) {
-          http.post("/admin/account/login", { userName: loginForm.userName, password: loginForm.pass }).then(res => {
+          try {
+            await http.post("/admin/account/login", { userName: loginForm.userName, password: loginForm.pass })
             setTimeout(() => {
               loading.value = false
               router.replace('/dash')
-
-              ElMessage({
-                message: '登录成功！', onClose: () => {
-                },
-                type: 'success'
-              })
+              ElMessage({ message: '登录成功！', showClose: false, type: 'success' })
             }, 2000);
-          })
+          } finally {
+            loading.value = false
+          }
         } else {
           loading.value = false
         }
