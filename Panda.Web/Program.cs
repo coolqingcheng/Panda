@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Panda.Entity;
 using Panda.Entity.UnitOfWork;
 using Panda.Tools;
+using Panda.Tools.Filter;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +18,10 @@ builder.Services.AddDbContext<PandaContext>(
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(opt =>
+{
+    opt.Filters.Add<GlobalExceptionFilter>();
+});
 builder.Services.AddTools();
 
 builder.Services.AddAutoInject(opt =>
@@ -54,7 +58,7 @@ else
             context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
             if (context.Request.Headers["X-Requested-With"] == "XMLHttpRequest" || context.Request.Query["X-Requested-With"]=="XMLHttpRequest")
             {
-                await context.Response.WriteAsJsonAsync(new {message = "服务器繁忙！【500】"});
+                await context.Response.WriteAsJsonAsync(new {message = "服务器繁忙"});
             }
             else
             {
