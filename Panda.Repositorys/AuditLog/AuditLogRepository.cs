@@ -3,9 +3,9 @@ using Panda.Entity.DataModels;
 
 namespace Panda.Repository.AuditLog;
 
-public class AuditLogRepository:PandaRepository<AuditLogs>
+public class AuditLogRepository : PandaRepository<AuditLogs>
 {
-    protected AuditLogRepository(PandaContext context) : base(context)
+    public AuditLogRepository(PandaContext context) : base(context)
     {
     }
 
