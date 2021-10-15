@@ -32,8 +32,15 @@ http.interceptors.response.use((response) => {
             message: message,
             type: 'error'
         })
-        return Promise.reject(error)
+
+    } else {
+        ElMessage({
+            showClose: false,
+            message: "访问需要登录",
+            type: 'warning'
+        })
     }
+    return Promise.reject(error)
 })
 
 export {

@@ -17,7 +17,8 @@ public class AccountController : AdminBaseController
     {
         _accountService = accountService;
     }
-    
+
+    [AllowAnonymous]
     [HttpPost]
     public async Task Login(AccountLoginRequest request)
     {
@@ -26,7 +27,6 @@ public class AccountController : AdminBaseController
         {
             throw new UserException(res.Message);
         }
-
     }
 
     [HttpGet]
