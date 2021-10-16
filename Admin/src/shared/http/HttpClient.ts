@@ -33,10 +33,18 @@ http.interceptors.response.use((response) => {
             type: 'error'
         })
 
-    } else {
+    }
+    if (error.response?.status == 401) {
         ElMessage({
             showClose: false,
             message: "访问需要登录",
+            type: 'warning'
+        })
+    }
+    if(error.response?.status == 404){
+        ElMessage({
+            showClose: false,
+            message: "Url地址错误！【404】",
             type: 'warning'
         })
     }

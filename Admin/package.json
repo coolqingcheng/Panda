@@ -12,7 +12,8 @@
     "element-plus": "^1.1.0-beta.8",
     "remixicon": "^2.5.0",
     "vue": "^3.2.6",
-    "vue-router": "4"
+    "vue-router": "4",
+    "wangeditor": "^4.7.8"
   },
   "devDependencies": {
     "@types/node": "^16.11.0",

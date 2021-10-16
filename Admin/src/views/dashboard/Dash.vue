@@ -49,12 +49,12 @@
                         </el-dropdown>
                     </div>
                 </div>
-                
             </el-header>
             <q-route-tab></q-route-tab>
             <el-main>
-                
-                <router-view></router-view>
+                <div class="el-main-container">
+                    <router-view></router-view>
+                </div>
             </el-main>
         </el-container>
     </el-container>
@@ -64,6 +64,7 @@ import SlideMenu from "./SlideMenu.vue";
 import { Expand, FullScreen } from '@element-plus/icons'
 import { useRouter } from "vue-router";
 import { ref } from "@vue/reactivity";
+import { http } from "shared/http/HttpClient"
 export default {
     components: {
         SlideMenu,
@@ -72,11 +73,15 @@ export default {
     },
     setup() {
         const router = useRouter()
-        const quit = () => {
-            localStorage.clear();
-            router.replace({
-                path: '/login'
-            })
+        const quit = async () => {
+            try {
+                await http.get('/admin/account/LoginOut')
+                router.replace({
+                    path: '/login'
+                })
+            } catch (error) {
+
+            }
         }
         const fullScreen = () => {
         }
@@ -122,10 +127,9 @@ export default {
             flex-direction: row;
             justify-content: space-between;
             border-bottom: 0.5px solid #dcdfe6;
-            .q-header-left{
+            .q-header-left {
                 display: flex;
                 flex-direction: row;
-
             }
         }
         .q-expand {
@@ -163,6 +167,18 @@ export default {
             width: 33.33%;
             text-align: center;
         }
+    }
+}
+.el-main {
+    box-sizing: border-box;
+    .el-main-container {
+        background: white;
+        width: 100%;
+        // height: 100%;
+    }
+    h1{
+        margin: 0;
+        padding: 0;
     }
 }
 </style>

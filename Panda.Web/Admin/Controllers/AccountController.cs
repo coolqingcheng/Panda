@@ -35,10 +35,20 @@ public class AccountController : AdminBaseController
         await HttpContext.SignOutAsync();
     }
 
-    [Authorize]
+    [AllowAnonymous]
     [HttpGet]
-    public IActionResult AuthTest()
+    public async Task<IActionResult> Test()
     {
-        return Content("登录成功");
+        await _accountService.InitAsync();
+        return Content("初始化账号成功");
+    }
+
+    
+    [HttpGet]
+    public bool IsLogin()
+    {
+        var res =  HttpContext.User.Identity is { IsAuthenticated: true };
+        if (res) return true;
+        throw new UserException("登录信息失效，请重新登录");
     }
 }

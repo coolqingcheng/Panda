@@ -30,5 +30,6 @@ public class PandaContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<Accounts>().HasIndex(a => a.UserName).IsUnique();
     }
 }

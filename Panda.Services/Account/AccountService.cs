@@ -27,9 +27,19 @@ public class AccountService : IAccountService
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<string> Test()
+    public async Task InitAsync()
     {
-        return await Task.FromResult(DateTime.UtcNow.ToString(CultureInfo.InvariantCulture));
+        var any = await _accountRepository.AnyAsync();
+        if (any==false)
+        {
+            await _accountRepository.AddAsync(new Accounts()
+            {
+                UserName = "admin",
+                Passwd = _identitySecurity.HashPassword("admin"),
+                AddTime = DateTime.Now,
+                Email = "qingchengcode@qq.com"
+            });
+        }
     }
 
     public async Task<AuthResult> LoginAsync(string userName, string password)
@@ -56,6 +66,7 @@ public class AccountService : IAccountService
             return result;
         }
 
+        result.IsSuccess = true;
         await _accountRepository.LoginSuccessAsync(account);
         var identity = new ClaimsIdentity(new Claim[]
         {

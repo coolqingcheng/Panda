@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using Panda.Entity;
 using Panda.Entity.DataModels;
 
@@ -17,5 +18,16 @@ public class PandaRepository<T> where T:PandaBaseTable
     protected PandaRepository(PandaContext context)
     {
         _context = context;
+    }
+
+    public async Task AddAsync(T entity)
+    {
+        await _context.Set<T>().AddAsync(entity);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task<bool> AnyAsync()
+    {
+        return await _context.Set<T>().AnyAsync();
     }
 }

@@ -29,6 +29,7 @@ import { useRouter } from "vue-router";
 import { ElMessage } from 'element-plus/lib/components/message'
 import { http } from "shared/http/HttpClient"
 import { log } from 'util';
+import { onMounted } from 'vue-demi';
 export default {
   setup() {
     const loginForm = reactive({
@@ -64,7 +65,7 @@ export default {
               loading.value = false
               router.replace('/dash')
               ElMessage({ message: '登录成功！', showClose: false, type: 'success' })
-            }, 2000);
+            }, 100);
           } finally {
             loading.value = false
           }
@@ -73,6 +74,21 @@ export default {
         }
       });
     }
+
+    const checkLogin = async ()=>{
+      loading.value = true
+      try {
+        await http.get('/admin/account/islogin')
+        router.replace('/dash')
+      } catch (error) {
+        loading.value = false
+      }
+    }
+    onMounted(()=>{
+      console.log('Mounted')
+      checkLogin();
+    })
+
     return {
       loginForm,
       loginRules,

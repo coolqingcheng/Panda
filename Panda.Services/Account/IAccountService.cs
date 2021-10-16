@@ -5,7 +5,7 @@ namespace Panda.Services.Account;
 
 public interface IAccountService
 {
-    Task<string> Test();
+    Task InitAsync();
 
     Task<AuthResult> LoginAsync(string userName, string password);
 }
