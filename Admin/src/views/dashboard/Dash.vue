@@ -50,11 +50,9 @@
                     </div>
                 </div>
             </el-header>
-            <q-route-tab></q-route-tab>
+            <!-- <q-route-tab></q-route-tab> -->
             <el-main>
-                <div class="el-main-container">
-                    <router-view></router-view>
-                </div>
+                <router-view></router-view>
             </el-main>
         </el-container>
     </el-container>
@@ -176,7 +174,7 @@ export default {
         width: 100%;
         // height: 100%;
     }
-    h1{
+    h1 {
         margin: 0;
         padding: 0;
     }

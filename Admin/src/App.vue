@@ -10,7 +10,7 @@
 body {
   background: #f1f1f1;
 }
-p{
+p {
   padding: 0;
   margin: 0;
 }
@@ -29,5 +29,9 @@ body,
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+.tool-bar {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
 }
 </style>
