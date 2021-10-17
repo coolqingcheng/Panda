@@ -14,7 +14,7 @@ public class Categorys:PandaBaseTable
     /// <summary>
     /// 说明
     /// </summary>
-    public string CategoryDesc { get; set; }
+    public string? CategoryDesc { get; set; }
 
     /// <summary>
     /// 是否显示

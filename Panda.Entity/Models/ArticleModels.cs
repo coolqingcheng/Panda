@@ -1,4 +1,5 @@
 using Panda.Entity.Requests;
+using Panda.Tools.Models;
 
 namespace Panda.Entity.Models;
 
@@ -46,11 +47,12 @@ public class ArticleCategories
     public string CategoryName { get; set; }
 }
 
-public class ArticleRequest : PageRequest
+
+public class ArticleRequest : BasePageRequest
 {
 }
 
-public class ArticleCategoryRequest : PageRequest
+public class ArticleCategoryRequest : BasePageRequest
 {
     
     public int CategoryId { get; set; }

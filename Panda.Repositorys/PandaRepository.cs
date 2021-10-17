@@ -30,4 +30,19 @@ public class PandaRepository<T> where T:PandaBaseTable
     {
         return await _context.Set<T>().AnyAsync();
     }
+
+    public async Task SaveAsync()
+    {
+       await  _context.SaveChangesAsync();
+    }
+
+    public async Task DeleteOne(Expression<Func<T, bool>> expression)
+    {
+        var item = await Where(expression).FirstOrDefaultAsync();
+        if (item!=null)
+        {
+            _context.Remove(item);
+            await _context.SaveChangesAsync();
+        }
+    }
 }

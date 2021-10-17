@@ -26,10 +26,10 @@ export default {
         const checkFullScreen = () => {
             let doc = document.documentElement
             if (document.fullscreenElement) {
-                console.log('全屏');
+                // console.log('全屏');
                 isFullScreen.value = true
             } else {
-                console.log('不是全屏');
+                // console.log('不是全屏');
                 isFullScreen.value = false
             }
         }

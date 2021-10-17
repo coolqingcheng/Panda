@@ -1,4 +1,5 @@
 ﻿@using Panda.Services.Category
+@using Panda.Entity.Requests
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,11 +14,15 @@
     <nav class="navbar">
         <ul>
             @{
-                var list = await _categoryService.GetCategories();
+                var list = await _categoryService.GetCategories(new CategoryPageRequest()
+                {
+                    Index = 1,
+                    Size = 20
+                });
                 foreach (var categoryItem in list)
                 {
                     <li>
-                        <a href="/category/@categoryItem.Id">@categoryItem.CategoryName</a>
+                        <a href="/category/@categoryItem.Id">@categoryItem.CateName</a>
                     </li>
                 }
             }

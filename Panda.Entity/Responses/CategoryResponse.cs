@@ -12,7 +12,7 @@ public class CategoryItem
     /// <summary>
     /// 分类名称
     /// </summary>
-    public string CategoryName { get; set; }
+    public string CateName { get; set; }
 
     /// <summary>
     /// 分类上级Id

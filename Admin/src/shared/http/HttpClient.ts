@@ -15,7 +15,8 @@ http.interceptors.request.use((config) => {
 })
 
 http.interceptors.response.use((response) => {
-    return response
+    // console.log(response.data)
+    return response.data
 }, (error: AxiosError) => {
     //自定义拦截响应处理，比如500状态的时候，提示错误等
     console.log(error);
@@ -41,7 +42,7 @@ http.interceptors.response.use((response) => {
             type: 'warning'
         })
     }
-    if(error.response?.status == 404){
+    if (error.response?.status == 404) {
         ElMessage({
             showClose: false,
             message: "Url地址错误！【404】",
@@ -51,6 +52,12 @@ http.interceptors.response.use((response) => {
     return Promise.reject(error)
 })
 
+const get = async <T>(url: string, params: {}) => {
+    var res = await http.get(url,{params:params})
+    return res as any
+}
+
 export {
-    http
+    http,
+    get
 }
