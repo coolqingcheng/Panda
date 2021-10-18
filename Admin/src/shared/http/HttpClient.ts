@@ -52,12 +52,18 @@ http.interceptors.response.use((response) => {
     return Promise.reject(error)
 })
 
-const get = async <T>(url: string, params: {}) => {
-    var res = await http.get(url,{params:params})
+const get = async <T>(url: string, params: {}): Promise<T> => {
+    var res = await http.get(url, { params: params })
+    return res as any
+}
+
+const post = async <T>(url: string, body: {}): Promise<T> => {
+    var res = await http.post(url, body)
     return res as any
 }
 
 export {
     http,
-    get
+    get,
+    post
 }

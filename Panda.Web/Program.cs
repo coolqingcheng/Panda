@@ -18,6 +18,11 @@ builder.Services.AddDbContext<PandaContext>(
         opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
     }
 );
+builder.Services.AddAntiforgery(anti =>
+{
+    anti.Cookie.Name = "csrf-token";
+    anti.Cookie.HttpOnly = true;
+});
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 

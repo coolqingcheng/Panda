@@ -34,5 +34,10 @@ public class Articles:PandaBaseTable
     /// </summary>
     public Accounts Account { get; set; }
 
+    /// <summary>
+    /// 修改时间
+    /// </summary>
+    public DateTime UpdateTime { get; set; }
+
     public List<ArticleCategoryRelations> ArticleCategoryRelations { get; set; }
 }

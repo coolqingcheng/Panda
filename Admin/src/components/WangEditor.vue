@@ -4,12 +4,18 @@
 </template>
 
 <script lang="ts">
-import { onMounted, ref } from 'vue';
+import { defineComponent, onMounted, ref, toRefs, watch } from 'vue';
 import E from 'wangeditor'
 import { ElMessage } from 'element-plus';
-export default {
-    setup() {
-
+export default defineComponent({
+    props: {
+        modelValue: {
+            type: String,
+            default: ''
+        }
+    },
+    setup(props, context) {
+        const { modelValue } = toRefs(props)
         const container = ref<HTMLElement>();
         var editor: E;
         onMounted(() => {
@@ -21,13 +27,23 @@ export default {
                 })
             }
             editor.create();
+            editor.txt.html(props.modelValue)
+            editor.config.onchange = (newHtml: string) => {
+                context.emit('update:modelValue', newHtml)
+            }
+            editor.config.onchangeTimeout = 500;
+        })
+        watch(modelValue, () => {
+            if (editor) {
+                editor.txt.html(props.modelValue)
+            }
         })
 
         return {
             container
         }
     }
-}
+})
 </script>
 
 <style>

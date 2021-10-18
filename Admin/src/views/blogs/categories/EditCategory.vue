@@ -5,7 +5,7 @@
                 <el-form-item label="名称" prop="cateName">
                     <el-input placeholder="输入分类名称" v-model="formModel.cateName"></el-input>
                 </el-form-item>
-                <el-form-item label="上级" prop="pid">
+                <!-- <el-form-item label="上级" prop="pid">
                     <el-select placeholder="选择上级分类" v-model="formModel.pid">
                         <el-option
                             v-for="item in selectList"
@@ -14,7 +14,7 @@
                             :value="item.value"
                         ></el-option>
                     </el-select>
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item>
                     <el-button type="primary" @click="save()">保存</el-button>
                     <el-button @click="close()">取消</el-button>

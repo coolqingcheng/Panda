@@ -1,8 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Panda.Entity.DataModels;
 using Panda.Entity.Models;
+using Panda.Entity.Requests;
 using Panda.Entity.Responses;
+using Panda.Entity.UnitOfWork;
 using Panda.Repository.Article;
+using Panda.Repository.ArticleCategoryRelation;
 using Panda.Repository.Category;
+using Panda.Tools.Exception;
+using Panda.Tools.Extensions;
+using ArticleRequest = Panda.Entity.Models.ArticleRequest;
 
 namespace Panda.Services.Article;
 
@@ -12,10 +19,17 @@ public class ArticleService : IArticleService
 
     private readonly CategoryRepository _categoryRepository;
 
-    public ArticleService(ArticleRepository articleRepository, CategoryRepository categoryRepository)
+    private readonly IUnitOfWork _unitOfWork;
+
+    private readonly ArticleCategoryRelationRepository _articleCategoryRelationRepository;
+
+    public ArticleService(ArticleRepository articleRepository, CategoryRepository categoryRepository,
+        IUnitOfWork unitOfWork, ArticleCategoryRelationRepository articleCategoryRelationRepository)
     {
         _articleRepository = articleRepository;
         _categoryRepository = categoryRepository;
+        _unitOfWork = unitOfWork;
+        _articleCategoryRelationRepository = articleCategoryRelationRepository;
     }
 
     public async Task<PageResponse<ArticleItem>> GetArticleList(ArticleRequest request)
@@ -48,5 +62,51 @@ public class ArticleService : IArticleService
             CategoryName = a.categoryName
         }).ToList();
         return item;
+    }
+
+    public async Task AddOrUpdate(ArticleAddOrUpdate request)
+    {
+        var text = request.Content.GetHtmlText();
+        await _unitOfWork.BeginTransactionAsync();
+        if (request.Id > 0)
+        {
+            var article = await _articleRepository.Where(a => a.Id == request.Id)
+                .Include(a => a.ArticleCategoryRelations).FirstOrDefaultAsync();
+            if (article == null)
+            {
+                throw new UserException("修改的文章不存在");
+            }
+            article.Content = request.Content;
+            article.Text = text;
+            article.Summary = text.GetSummary(80);
+            article.UpdateTime = DateTime.Now;
+            await _articleRepository.SaveAsync();
+            var beforeCategories = article.ArticleCategoryRelations.Select(a => a.Categories).ToList();
+            var afterCategories = await _categoryRepository.Where(a => request.Categories.Contains(a.Id)).ToListAsync();
+            await _articleCategoryRelationRepository.DiffUpdateRelation(article, beforeCategories, afterCategories);
+        }
+        else
+        {
+            //添加
+
+            var entity = new Articles()
+            {
+                Title = request.Title,
+                Content = request.Content,
+                AddTime = DateTime.Now,
+                Text = text,
+                Summary = text.GetSummary(80)
+            };
+            await _articleRepository.AddAsync(entity);
+            var categories = await _categoryRepository.Where(a => request.Categories.Contains(a.Id)).ToListAsync();
+            foreach (var category in categories)
+            {
+                await _articleCategoryRelationRepository.AddRelationAsync(entity, category);
+            }
+
+            await _articleRepository.SaveAsync();
+        }
+
+        await _unitOfWork.CommitAsync();
     }
 }

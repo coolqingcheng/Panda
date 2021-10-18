@@ -1,7 +1,9 @@
 
 <template>
     <el-card class="anim1">
-        <el-header>分类</el-header>
+        <template #header>
+            <h1>分类</h1>
+        </template>
         <el-row class="tool-bar">
             <el-button type="primary" @click="showDialog()">添加</el-button>
         </el-row>
