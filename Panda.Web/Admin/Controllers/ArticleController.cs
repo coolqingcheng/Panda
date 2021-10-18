@@ -16,6 +16,7 @@ public class ArticleController : AdminBaseController
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task AddOrUpdate(ArticleAddOrUpdate request)
     {
         await _articleService.AddOrUpdate(request);

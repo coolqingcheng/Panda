@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -13,9 +14,12 @@ public class AccountController : AdminBaseController
 {
     private readonly IAccountService _accountService;
 
-    public AccountController(IAccountService accountService)
+    private readonly IAntiforgery _antiforgery;
+
+    public AccountController(IAccountService accountService, IAntiforgery antiforgery)
     {
         _accountService = accountService;
+        _antiforgery = antiforgery;
     }
 
     [AllowAnonymous]
@@ -27,6 +31,11 @@ public class AccountController : AdminBaseController
         {
             throw new UserException(res.Message);
         }
+
+        var tokens = _antiforgery.GetAndStoreTokens(HttpContext);
+        HttpContext.Response.Cookies.Append("X-CSRF-TOKEN", tokens.CookieToken, new CookieOptions { HttpOnly = false });
+        HttpContext.Response.Cookies.Append("X-CSRF-FORM-TOKEN", tokens.RequestToken,
+            new CookieOptions { HttpOnly = false });
     }
 
     [HttpGet]
@@ -43,11 +52,11 @@ public class AccountController : AdminBaseController
         return Content("初始化账号成功");
     }
 
-    
+
     [HttpGet]
     public bool IsLogin()
     {
-        var res =  HttpContext.User.Identity is { IsAuthenticated: true };
+        var res = HttpContext.User.Identity is { IsAuthenticated: true };
         if (res) return true;
         throw new UserException("登录信息失效，请重新登录");
     }

@@ -20,8 +20,8 @@ builder.Services.AddDbContext<PandaContext>(
 );
 builder.Services.AddAntiforgery(anti =>
 {
-    anti.Cookie.Name = "csrf-token";
-    anti.Cookie.HttpOnly = true;
+    anti.HeaderName = "X-XSRF-TOKEN";
+    anti.Cookie.Name = "X-CSRF-TOKEN";
 });
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
@@ -75,6 +75,8 @@ else
         });
     });
 }
+
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
