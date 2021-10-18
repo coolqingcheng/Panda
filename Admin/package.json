@@ -13,7 +13,7 @@
     "remixicon": "^2.5.0",
     "vue": "^3.2.6",
     "vue-router": "4",
-    "wangeditor": "^4.7.8"
+    "wangeditor": "^4.7.9"
   },
   "devDependencies": {
     "@types/node": "^16.11.0",

@@ -25,12 +25,11 @@
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue-demi'
-import { computed, defineComponent, onMounted, PropType, ref, toRef, toRefs, watch } from 'vue'
+import { reactive } from 'vue'
+import { defineComponent, onMounted, PropType, ref, toRefs, watch } from 'vue'
 import { http } from 'shared/http/HttpClient'
 import { ElForm, ElMessage } from 'element-plus'
 import { CategoryItem } from './CategoryModel'
-import { deepCopy } from 'shared/utils/ObjectUtils'
 export default defineComponent(
     {
         props: {

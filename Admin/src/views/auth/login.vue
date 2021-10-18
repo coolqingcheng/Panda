@@ -28,8 +28,7 @@ import { ElForm } from "element-plus/lib/components/form"
 import { useRouter } from "vue-router";
 import { ElMessage } from 'element-plus/lib/components/message'
 import { http } from "shared/http/HttpClient"
-import { log } from 'util';
-import { onMounted } from 'vue-demi';
+import { onMounted } from 'vue';
 export default {
   setup() {
     const loginForm = reactive({
@@ -75,7 +74,7 @@ export default {
       });
     }
 
-    const checkLogin = async ()=>{
+    const checkLogin = async () => {
       loading.value = true
       try {
         await http.get('/admin/account/islogin')
@@ -84,7 +83,7 @@ export default {
         loading.value = false
       }
     }
-    onMounted(()=>{
+    onMounted(() => {
       console.log('Mounted')
       checkLogin();
     })
