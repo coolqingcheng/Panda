@@ -58,8 +58,8 @@ public class ArticleService : IArticleService
         var categories = await _categoryRepository.GetCategories(item.Id);
         item.Categories = categories.Select(a => new ArticleCategories()
         {
-            CategoryId = a.Id,
-            CategoryName = a.categoryName
+            Id = a.Id,
+            CateName = a.categoryName
         }).ToList();
         return item;
     }
@@ -81,8 +81,8 @@ public class ArticleService : IArticleService
             article.Summary = text.GetSummary(80);
             article.UpdateTime = DateTime.Now;
             await _articleRepository.SaveAsync();
-            var beforeCategories = article.ArticleCategoryRelations.Select(a => a.Categories).ToList();
-            var afterCategories = await _categoryRepository.Where(a => request.Categories.Contains(a.Id)).ToListAsync();
+            var beforeCategories = await _articleCategoryRelationRepository.Where(a=>a.Articles==article).Select(a => a.Categories.Id).ToListAsync();
+            var afterCategories = await _categoryRepository.Where(a => request.Categories.Contains(a.Id)).Select(a=>a.Id).ToListAsync();
             await _articleCategoryRelationRepository.DiffUpdateRelation(article, beforeCategories, afterCategories);
         }
         else

@@ -22,9 +22,9 @@ public class ArticleItem
     /// </summary>
     public DateTime AddTime { get; set; }
 
-    public int AccountId { get; set; }
+    public int? AccountId { get; set; }
 
-    public string AccountName { get; set; }
+    public string? AccountName { get; set; }
 
     /// <summary>
     /// 分类
@@ -42,9 +42,9 @@ public class ArticleDetailItem : ArticleItem
 
 public class ArticleCategories
 {
-    public int CategoryId { get; set; }
+    public int Id { get; set; }
 
-    public string CategoryName { get; set; }
+    public string CateName { get; set; }
 }
 
 

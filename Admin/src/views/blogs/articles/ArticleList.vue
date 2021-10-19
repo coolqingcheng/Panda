@@ -54,8 +54,8 @@ export default defineComponent({
   setup() {
 
     const router = useRouter();
-    const edit = (item: any) => {
-
+    const edit = (item: ArticleItem) => {
+      router.push({ path: "/article-write", query: { id: item.id } })
     }
 
     const data = ref<{ list: ArticleItem[], total: number }>({

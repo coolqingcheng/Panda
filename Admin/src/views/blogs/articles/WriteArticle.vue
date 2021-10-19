@@ -18,7 +18,12 @@
             </el-form-item>
             <el-form-item label="分类" prop="categories">
                 <el-checkbox-group v-model="formModel.categories">
-                    <el-checkbox :label="item.id" v-for="(item,i) in categoryItems" :key="i" name="categories">{{item.cateName}}</el-checkbox>
+                    <el-checkbox
+                        :label="item.id"
+                        v-for="(item,i) in categoryItems"
+                        :key="i"
+                        name="categories"
+                    >{{ item.cateName }}</el-checkbox>
                 </el-checkbox-group>
             </el-form-item>
             <el-form-item>
@@ -33,25 +38,26 @@
 import { defineComponent, onMounted, toRefs } from "@vue/runtime-core";
 import { ElForm, ElMessage } from "element-plus";
 import { get, http, post } from "shared/http/HttpClient";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import WangEditor from "../../../components/WangEditor.vue";
 import { CategoryItem } from "../categories/CategoryModel";
+
+
+interface articleItem {
+    id: number
+    title: string
+    content: string
+    categories: number[]
+}
 
 export default defineComponent({
     components: {
         WangEditor
     },
-    props:{
-        id:{
-            type:Number,
-            default:0
-        }
-    },
-    setup(props) {
-        const {id} = toRefs(props)
-        const formModel = ref({
-            id:0,
+    setup() {
+        const formModel = ref<articleItem>({
+            id: 0,
             categories: [],
             title: '',
             content: ''
@@ -65,9 +71,7 @@ export default defineComponent({
 
         onMounted(async () => {
             await loadCategories();
-            if(props.id>0){
-               await loadArticleData();
-            }
+            await loadArticleData();
         })
 
         var formRef = ref<InstanceType<typeof ElForm>>()
@@ -103,17 +107,37 @@ export default defineComponent({
         }
 
         var router = useRouter();
+        var route = useRoute();
 
         const back = () => {
             router.back();
         }
 
+        console.log('params:', route.query.id)
 
-        
 
-        const loadArticleData = async ()=>{
-           var res =  await get('/admin/article/get',{id:id.value})
-           console.log('res:',res)
+
+
+        const loadArticleData = async () => {
+            try {
+                loading.value = true
+                if (route.query.id) {
+                    var res = await get<{ title: string, id: number, content: string, categories: { id: number, cateName: string }[] }>
+                        ('/admin/article/get', { id: route.query.id })
+                    console.log('res:', res)
+                    formModel.value = {
+                        title: res.title,
+                        content: res.content,
+                        categories: res.categories.map(a => a.id),
+                        id: res.id
+                    }
+                    console.log('formModel:', JSON.stringify(formModel.value.categories))
+
+                }
+            } finally {
+                loading.value = false
+            }
+
         }
 
         return {

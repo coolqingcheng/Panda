@@ -26,8 +26,8 @@ public class ArticleRepository : PandaRepository<Articles>
             AddTime = a.AddTime,
             Categories = a.ArticleCategoryRelations.Select(b => new ArticleCategories()
             {
-                CategoryId = b.Categories.Id,
-                CategoryName = b.Categories.categoryName
+                Id = b.Categories.Id,
+                CateName = b.Categories.categoryName
             }).ToList()
         }).ToListAsync();
         return new PageResponse<ArticleItem>()

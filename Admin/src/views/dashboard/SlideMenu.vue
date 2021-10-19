@@ -25,8 +25,9 @@
                         <el-menu-item index="/article-list">我的随笔</el-menu-item>
                     </el-menu-item-group>
                     <el-sub-menu index="1-4">
-                        <template #title>选项4</template>
-                        <el-menu-item index="1-4-1">选项1</el-menu-item>
+                        <template #title>系统</template>
+                        <el-menu-item index="1-4-1">媒体库</el-menu-item>
+                        <el-menu-item index="1-4-1">设置</el-menu-item>
                     </el-sub-menu>
                 </el-sub-menu>
                 <!-- <el-menu-item index="2">

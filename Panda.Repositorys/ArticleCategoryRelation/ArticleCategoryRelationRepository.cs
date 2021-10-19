@@ -21,13 +21,14 @@ public class ArticleCategoryRelationRepository : PandaRepository<ArticleCategory
         await _context.SaveChangesAsync();
     }
 
-    public async Task DiffUpdateRelation(Articles article, List<Categorys> before, List<Categorys> after)
+    public async Task DiffUpdateRelation(Articles article, List<int> delIds, List<int> addList)
     {
-        var delList = before.Except(after);
-        var addList = after.Except(before);
-        var relations = await _context.ArticleCategoryRelations.Where(a => a.Articles == article).ToListAsync();
-        _context.ArticleCategoryRelations.RemoveRange(relations.Where(a => delList.Contains(a.Categories)));
-        foreach (var category in addList)
+       //移除
+       var delList = await _context.ArticleCategoryRelations.Where(a => delIds.Contains(a.Categories.Id) &&a.Articles==article).ToListAsync();
+       _context.ArticleCategoryRelations.RemoveRange(delList);
+       await _context.SaveChangesAsync();
+        var addCateList = _context.Categories.Where(a => addList.Contains(a.Id)).ToList();
+        foreach (var category in addCateList)
         {
             await _context.ArticleCategoryRelations.AddAsync(new ArticleCategoryRelations()
             {
