@@ -14,4 +14,6 @@ public interface IArticleService
     Task<ArticleDetailItem> GetArticle(int id);
 
     Task AddOrUpdate(ArticleAddOrUpdate request);
+
+    Task<PageResponse<AdminArticleItemResponse>> AdminGetList(AdminArticleGetListRequest request);
 }

@@ -26,6 +26,7 @@ export default defineComponent({
                     message: s
                 })
             }
+            editor.config.zIndex = 1000;
             editor.create();
             editor.txt.html(props.modelValue)
             editor.config.onchange = (newHtml: string) => {

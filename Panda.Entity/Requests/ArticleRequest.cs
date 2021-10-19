@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Panda.Tools.Models;
 
 namespace Panda.Entity.Requests;
 
@@ -19,5 +20,10 @@ public class ArticleAddOrUpdate
     
     [Required]
     public List<int> Categories { get; set; }
+}
+
+public class AdminArticleGetListRequest:BasePageRequest
+{
+    public string? KeyWord { get; set; }
 }
 

@@ -16,7 +16,6 @@ public class ArticleController : AdminBaseController
     }
 
     [HttpPost]
-    [ValidateAntiForgeryToken]
     public async Task AddOrUpdate(ArticleAddOrUpdate request)
     {
         await _articleService.AddOrUpdate(request);
@@ -26,5 +25,12 @@ public class ArticleController : AdminBaseController
     public async Task<ArticleDetailItem> Get(int id)
     {
         return await _articleService.GetArticle(id);
+    }
+
+    [HttpGet]
+    public async Task<PageResponse<AdminArticleItemResponse>> GetList([FromQuery]AdminArticleGetListRequest request)
+    {
+       var res =   await _articleService.AdminGetList(request);
+       return res;
     }
 }

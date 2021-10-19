@@ -11,7 +11,10 @@ public class AdminArticleItemResponse
 
     public string Title { get; set; }
 
-    public string Content { get; set; }
+    
+    public DateTime UpdateTime { get; set; }
+    
+    
 
     public List<AdminCategoryItem> CategoryItems { get; set; }
 }

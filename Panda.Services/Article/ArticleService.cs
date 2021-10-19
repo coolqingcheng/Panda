@@ -94,6 +94,7 @@ public class ArticleService : IArticleService
                 Title = request.Title,
                 Content = request.Content,
                 AddTime = DateTime.Now,
+                UpdateTime = DateTime.Now,
                 Text = text,
                 Summary = text.GetSummary(80)
             };
@@ -108,5 +109,12 @@ public class ArticleService : IArticleService
         }
 
         await _unitOfWork.CommitAsync();
+    }
+
+    public async Task<PageResponse<AdminArticleItemResponse>> AdminGetList(AdminArticleGetListRequest request)
+    {
+        var res = await _articleRepository.AdminGetList(request);
+        return res;
+
     }
 }

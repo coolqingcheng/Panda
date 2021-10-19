@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Panda.Entity;
 using Panda.Entity.DataModels;
 using Panda.Entity.Models;
+using Panda.Entity.Requests;
 using Panda.Entity.Responses;
 using Panda.Tools.Extensions;
 
@@ -34,5 +35,30 @@ public class ArticleRepository : PandaRepository<Articles>
             Total = await query.CountAsync(),
             Data = res
         };
+    }
+
+    public async Task<PageResponse<AdminArticleItemResponse>> AdminGetList(AdminArticleGetListRequest request)
+    {
+        var query = _context.Articles.AsQueryable();
+
+       var list = await  query.Page(request).Include(a=>a.ArticleCategoryRelations).OrderByDescending(a => a.UpdateTime)
+           .ThenByDescending(a=>a.AddTime).Select(a =>
+            new AdminArticleItemResponse()
+            {
+                Title = a.Title,
+                Id = a.Id,
+                UpdateTime = a.UpdateTime,
+                CategoryItems = a.ArticleCategoryRelations.Select(b=>new AdminCategoryItem()
+                {
+                    Id = b.Categories.Id,
+                    CateName = b.Categories.categoryName
+                }).ToList()
+            }).ToListAsync();
+       return new PageResponse<AdminArticleItemResponse>()
+       {
+           Data = list,
+           Total = await query.CountAsync()
+       };
+
     }
 }

@@ -7,6 +7,7 @@ using Panda.Entity;
 using Panda.Entity.UnitOfWork;
 using Panda.Tools;
 using Panda.Tools.Filter;
+using Panda.Tools.Web;
 using Panda.Web.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +28,10 @@ builder.Services.AddControllersWithViews(opt =>
     opt.Filters.Add<GlobalExceptionFilter>();
     opt.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
     opt.Filters.Add<CSRFFilter>();
+}).AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
+    options.JsonSerializerOptions.Converters.Add(new DateTimeNullConverter());
 });
 builder.Services.AddTools();
 
