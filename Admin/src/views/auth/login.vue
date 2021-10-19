@@ -77,9 +77,12 @@ export default {
     const checkLogin = async () => {
       loading.value = true
       try {
-        await http.get('/admin/account/islogin')
-        router.replace('/dash')
-      } catch (error) {
+        var isLogin = await http.get('/admin/account/islogin')
+        console.log('islogin ', isLogin)
+        if (isLogin) {
+          router.replace('/dash')
+        }
+      } finally {
         loading.value = false
       }
     }

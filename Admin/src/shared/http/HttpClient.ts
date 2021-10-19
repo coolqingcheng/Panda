@@ -8,9 +8,19 @@ const http = axios.create({
     timeout: 1000 * 10
 })
 
+const getCookie = (name: string) => {
+    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+    if (arr = document.cookie.match(reg))
+        return unescape(arr[2]);
+    else
+        return null;
+}
+
 http.interceptors.request.use((config) => {
     //自定义拦截请求逻辑处理
     config.headers['X-Requested-With'] = 'XMLHttpRequest'
+    let token = getCookie('CSRF-TOKEN');
+    config.headers["X-CSRF-TOKEN"] = token;
     return config;
 })
 

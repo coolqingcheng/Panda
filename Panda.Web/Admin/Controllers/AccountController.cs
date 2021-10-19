@@ -31,11 +31,6 @@ public class AccountController : AdminBaseController
         {
             throw new UserException(res.Message);
         }
-
-        var tokens = _antiforgery.GetAndStoreTokens(HttpContext);
-        HttpContext.Response.Cookies.Append("X-CSRF-TOKEN", tokens.CookieToken, new CookieOptions { HttpOnly = false });
-        HttpContext.Response.Cookies.Append("X-CSRF-FORM-TOKEN", tokens.RequestToken,
-            new CookieOptions { HttpOnly = false });
     }
 
     [HttpGet]
@@ -53,11 +48,11 @@ public class AccountController : AdminBaseController
     }
 
 
+    [AllowAnonymous]
     [HttpGet]
     public bool IsLogin()
     {
-        var res = HttpContext.User.Identity is { IsAuthenticated: true };
-        if (res) return true;
-        throw new UserException("登录信息失效，请重新登录");
+        var res = HttpContext.User.Identity is {IsAuthenticated: true};
+        return res;
     }
 }

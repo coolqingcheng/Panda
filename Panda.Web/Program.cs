@@ -1,11 +1,13 @@
 using System.Net;
 using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Panda.Entity;
 using Panda.Entity.UnitOfWork;
 using Panda.Tools;
 using Panda.Tools.Filter;
+using Panda.Web.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,24 +15,25 @@ var connectionString = builder.Configuration.GetSection("ConnectionStrings:mysql
 
 
 builder.Services.AddDbContext<PandaContext>(
-    opt =>
-    {
-        opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-    }
+    opt => { opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)); }
 );
-builder.Services.AddAntiforgery(anti =>
-{
-    anti.HeaderName = "X-XSRF-TOKEN";
-    anti.Cookie.Name = "X-CSRF-TOKEN";
-});
+
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+
 
 builder.Services.AddControllersWithViews(opt =>
 {
     opt.Filters.Add<GlobalExceptionFilter>();
+    opt.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+    opt.Filters.Add<CSRFFilter>();
 });
 builder.Services.AddTools();
+
+builder.Services.AddAntiforgery(options =>
+    options.HeaderName = "X-CSRF-TOKEN"
+);
+
 
 builder.Services.AddAutoInject(opt =>
 {
@@ -64,7 +67,8 @@ else
         builder.Run(async context =>
         {
             context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
-            if (context.Request.Headers["X-Requested-With"] == "XMLHttpRequest" || context.Request.Query["X-Requested-With"]=="XMLHttpRequest")
+            if (context.Request.Headers["X-Requested-With"] == "XMLHttpRequest" ||
+                context.Request.Query["X-Requested-With"] == "XMLHttpRequest")
             {
                 await context.Response.WriteAsJsonAsync(new {message = "服务器繁忙"});
             }
@@ -75,7 +79,6 @@ else
         });
     });
 }
-
 
 
 app.UseHttpsRedirection();
