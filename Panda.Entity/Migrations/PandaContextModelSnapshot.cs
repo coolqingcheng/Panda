@@ -55,68 +55,6 @@ namespace Panda.Entity.Migrations
                     b.ToTable("Accounts");
                 });
 
-            modelBuilder.Entity("Panda.Entity.DataModels.ArticleCategoryRelations", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("AddTime")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("ArticlesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoriesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArticlesId");
-
-                    b.HasIndex("CategoriesId");
-
-                    b.ToTable("ArticleCategoryRelations");
-                });
-
-            modelBuilder.Entity("Panda.Entity.DataModels.Articles", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AccountId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("AddTime")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Summary")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("UpdateTime")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
-
-                    b.ToTable("Articles");
-                });
-
             modelBuilder.Entity("Panda.Entity.DataModels.AuditLogs", b =>
                 {
                     b.Property<int>("Id")
@@ -170,26 +108,69 @@ namespace Panda.Entity.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Panda.Entity.DataModels.ArticleCategoryRelations", b =>
+            modelBuilder.Entity("Panda.Entity.DataModels.Posts", b =>
                 {
-                    b.HasOne("Panda.Entity.DataModels.Articles", "Articles")
-                        .WithMany("ArticleCategoryRelations")
-                        .HasForeignKey("ArticlesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.HasOne("Panda.Entity.DataModels.Categorys", "Categories")
-                        .WithMany("ArticleCategoryRelations")
-                        .HasForeignKey("CategoriesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int?>("AccountId")
+                        .HasColumnType("int");
 
-                    b.Navigation("Articles");
+                    b.Property<DateTime>("AddTime")
+                        .HasColumnType("datetime(6)");
 
-                    b.Navigation("Categories");
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Summary")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("Panda.Entity.DataModels.Articles", b =>
+            modelBuilder.Entity("Panda.Entity.DataModels.PostsCategoryRelations", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("AddTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("CategoriesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PostsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoriesId");
+
+                    b.HasIndex("PostsId");
+
+                    b.ToTable("ArticleCategoryRelations");
+                });
+
+            modelBuilder.Entity("Panda.Entity.DataModels.Posts", b =>
                 {
                     b.HasOne("Panda.Entity.DataModels.Accounts", "Account")
                         .WithMany()
@@ -198,12 +179,31 @@ namespace Panda.Entity.Migrations
                     b.Navigation("Account");
                 });
 
-            modelBuilder.Entity("Panda.Entity.DataModels.Articles", b =>
+            modelBuilder.Entity("Panda.Entity.DataModels.PostsCategoryRelations", b =>
+                {
+                    b.HasOne("Panda.Entity.DataModels.Categorys", "Categories")
+                        .WithMany("ArticleCategoryRelations")
+                        .HasForeignKey("CategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Panda.Entity.DataModels.Posts", "Posts")
+                        .WithMany("ArticleCategoryRelations")
+                        .HasForeignKey("PostsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Categories");
+
+                    b.Navigation("Posts");
+                });
+
+            modelBuilder.Entity("Panda.Entity.DataModels.Categorys", b =>
                 {
                     b.Navigation("ArticleCategoryRelations");
                 });
 
-            modelBuilder.Entity("Panda.Entity.DataModels.Categorys", b =>
+            modelBuilder.Entity("Panda.Entity.DataModels.Posts", b =>
                 {
                     b.Navigation("ArticleCategoryRelations");
                 });

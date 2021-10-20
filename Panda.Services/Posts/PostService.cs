@@ -21,15 +21,15 @@ public class PostService : IPostService
 
     private readonly IUnitOfWork _unitOfWork;
 
-    private readonly ArticleCategoryRelationRepository _articleCategoryRelationRepository;
+    private readonly PostCategoryRelationRepository _postCategoryRelationRepository;
 
     public PostService(ArticleRepository articleRepository, CategoryRepository categoryRepository,
-        IUnitOfWork unitOfWork, ArticleCategoryRelationRepository articleCategoryRelationRepository)
+        IUnitOfWork unitOfWork, PostCategoryRelationRepository postCategoryRelationRepository)
     {
         _articleRepository = articleRepository;
         _categoryRepository = categoryRepository;
         _unitOfWork = unitOfWork;
-        _articleCategoryRelationRepository = articleCategoryRelationRepository;
+        _postCategoryRelationRepository = postCategoryRelationRepository;
     }
 
     public async Task<PageResponse<ArticleItem>> GetArticleList(PostRequest request)
@@ -81,9 +81,9 @@ public class PostService : IPostService
             article.Summary = text.GetSummary(80);
             article.UpdateTime = DateTime.Now;
             await _articleRepository.SaveAsync();
-            var beforeCategories = await _articleCategoryRelationRepository.Where(a=>a.Posts==article).Select(a => a.Categories.Id).ToListAsync();
+            var beforeCategories = await _postCategoryRelationRepository.Where(a=>a.Posts==article).Select(a => a.Categories.Id).ToListAsync();
             var afterCategories = await _categoryRepository.Where(a => request.Categories.Contains(a.Id)).Select(a=>a.Id).ToListAsync();
-            await _articleCategoryRelationRepository.DiffUpdateRelation(article, beforeCategories, afterCategories);
+            await _postCategoryRelationRepository.DiffUpdateRelation(article, beforeCategories, afterCategories);
         }
         else
         {
@@ -102,7 +102,7 @@ public class PostService : IPostService
             var categories = await _categoryRepository.Where(a => request.Categories.Contains(a.Id)).ToListAsync();
             foreach (var category in categories)
             {
-                await _articleCategoryRelationRepository.AddRelationAsync(entity, category);
+                await _postCategoryRelationRepository.AddRelationAsync(entity, category);
             }
 
             await _articleRepository.SaveAsync();

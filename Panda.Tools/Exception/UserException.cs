@@ -5,9 +5,9 @@ public class UserException : System.Exception
     /// <summary>
     /// 友好错误信息
     /// </summary>
-    public string Message { get; set; }
+    public string? Message { get; set; }
 
-    public UserException(string message)
+    public UserException(string? message)
     {
         Message = message;
     }

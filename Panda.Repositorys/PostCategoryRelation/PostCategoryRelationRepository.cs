@@ -5,9 +5,9 @@ using Panda.Repository;
 
 namespace Panda.Repository.ArticleCategoryRelation;
 
-public class ArticleCategoryRelationRepository : PandaRepository<PostsCategoryRelations>
+public class PostCategoryRelationRepository : PandaRepository<PostsCategoryRelations>
 {
-    public ArticleCategoryRelationRepository(PandaContext context) : base(context)
+    public PostCategoryRelationRepository(PandaContext context) : base(context)
     {
     }
 

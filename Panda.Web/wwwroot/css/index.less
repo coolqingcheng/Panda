@@ -1,11 +1,105 @@
-h1 {
-  color: black;
-  background: #ccc;
-  font-size: 15px;
+
+@a_hover_color:#DA4453;
+
+html,
+body,p,ul,h1,h2,h3,h4{
+  padding: 0;
+  margin: 0;
 }
 
+html,
 body {
-  background: #000000;
+
+  background: #fff;
+  color: #555;
+  font-size: 15px;
+  main{
+    margin: 0 auto;
+    @media(min-width: 768px){
+      width: 750px;
+    }
+
+    @media(min-width: 992px){
+      width: 970px;
+    }
+    
+    @media(min-width: 1200px){
+      width: 1170px;
+    }
+   
   
+  }
   
+  .navbar{
+    padding: 1.5rem 0;
+    box-sizing: border-box;
+ 
+    main{
+      display: flex;
+      flex-direction: column;
+      .site-title{
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        text-decoration: none;
+        color: @a_hover_color;
+      }
+      ul{
+        display: flex;
+        flex-direction: row;
+        list-style: none;
+        li{
+          margin-right: 1rem;
+          font-size: 1.4rem;
+        }
+      }
+    }
+  }
+
+  main {
+    .entry-card {
+      margin-bottom: 1rem;
+      margin-top: 1.8rem;
+      .entry-title {
+        a{
+          color: #333;
+          &:hover{
+            color: @a_hover_color;
+          }
+        }
+      }
+      .entry-content{
+        margin: 1.2rem 0 1.2rem 0;
+        p{
+          color: #555;
+        }
+      }
+    }
+  }
+}
+
+.post-main{
+  .post-body{
+    p{
+      margin: 0 0 10px;
+    }
+  }
+}
+
+p {
+  line-height: 1.8;
+}
+
+a {
+  color: #999;
+  text-decoration: none;
+  &:hover {
+    color: @a_hover_color;
+    text-decoration: underline;
+  }
+}
+
+footer{
+  a{
+    text-decoration: underline;
+  }
 }

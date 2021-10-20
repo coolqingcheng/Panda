@@ -5,7 +5,7 @@ public class AuthResult
     /// <summary>
     /// 信息
     /// </summary>
-    public string Message { get; set; }
+    public string? Message { get; set; }
 
     /// <summary>
     /// 是否成功

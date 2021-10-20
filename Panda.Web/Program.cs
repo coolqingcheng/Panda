@@ -1,5 +1,7 @@
 using System.Net;
 using System.Net.Http.Headers;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +20,7 @@ var connectionString = builder.Configuration.GetSection("ConnectionStrings:mysql
 builder.Services.AddDbContext<PandaContext>(
     opt => { opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)); }
 );
+builder.Services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
 
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();

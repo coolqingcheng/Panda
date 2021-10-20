@@ -17,7 +17,8 @@ public class CSRFFilter : IActionFilter
 
         var antiforgery = context.HttpContext.RequestServices.GetService<IAntiforgery>();
         var tokens = antiforgery?.GetAndStoreTokens(context.HttpContext);
-        context.HttpContext.Response.Cookies.Append("CSRF-TOKEN", tokens.RequestToken,
-            new Microsoft.AspNetCore.Http.CookieOptions {HttpOnly = false});
+        if (tokens?.RequestToken != null)
+            context.HttpContext.Response.Cookies.Append("CSRF-TOKEN", tokens.RequestToken,
+                new Microsoft.AspNetCore.Http.CookieOptions { HttpOnly = false });
     }
 }

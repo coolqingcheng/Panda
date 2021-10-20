@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <NoWarn>8618;</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
@@ -17,6 +18,10 @@
     <ItemGroup>
       <PackageReference Include="Mapster" Version="7.2.0" />
       <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Post\Index.cshtml" />
     </ItemGroup>
 
 </Project>

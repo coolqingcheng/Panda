@@ -7,41 +7,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - Panda.Web</title>
     <link rel="stylesheet" href="~/css/index.css" asp-append-version="true"/>
+    @await RenderSectionAsync("css",required:false)
 </head>
 @inject ICategoryService _categoryService
 <body>
 <header>
     <nav class="navbar">
-        <ul>
-            @{
-                var list = await _categoryService.GetCategories(new CategoryPageRequest()
-                {
-                    Index = 1,
-                    Size = 20
-                });
-                foreach (var categoryItem in list)
-                {
-                    <li>
-                        <a href="/category/@categoryItem.Id">@categoryItem.CateName</a>
-                    </li>
-                }
-            }
-        </ul>
+        <main>
+            <a class="site-title" href="/">Panda Blog</a>
+            <ul>
+                <li><a href="/">首页</a></li>
+                <li><a href="/">与我联系</a></li>
+                <li><a href="/">RSS订阅</a></li>
+            </ul>
+        </main>
     </nav>
 </header>
-<div class="container">
+<div class="content">
     <main>
         @RenderBody()
     </main>
 </div>
 
 <footer>
-    <div>
-        <p> &copy; 2021 - Panda.Web - <a href="/about.html">about</a></p>
+    <main>
+        <p> &copy; 2021 - Panda.Blog版权所有 - 本站使用<a href="https://github.com/dotnet/aspnetcore" target="_blank">ASP.NET Core 6.0</a>强力驱动</p>
         <p>备案号：<a href="/">川12336478896554</a></p>
-    </div>
+    </main>
 </footer>
-<script src="js/jquery.min.js"></script>
+<script src="~/js/jquery.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>

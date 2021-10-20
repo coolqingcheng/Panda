@@ -28,14 +28,14 @@ public class HomeController : Controller
     /// <summary>
     /// 主页
     /// </summary>
-    /// <param name="Index"></param>
+    /// <param name="index"></param>
     /// <returns></returns>
-    [HttpGet("/"), HttpGet("/page/{Id:int}")]
-    public async Task<IActionResult> Index(int Index = 1)
+    [HttpGet("/"), HttpGet("/page/{index:int}")]
+    public async Task<IActionResult> Index(int index = 1)
     {
         var res = await _postService.GetArticleList(new PostRequest()
         {
-            Index = Index, Size = 15
+            Index = index, Size = 10
         });
         ViewData["res"] = res;
         return View();

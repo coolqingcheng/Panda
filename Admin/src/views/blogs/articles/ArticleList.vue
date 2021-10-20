@@ -73,7 +73,7 @@ export default defineComponent({
     const loadData = async () => {
       loading.value = true
       try {
-        var res = await get<PageResponse<ArticleItem>>('/admin/article/getlist', {})
+        var res = await get<PageResponse<ArticleItem>>('/admin/article/getlist', params.value)
         data.value.list = res.data
         data.value.total = res.total
       } finally {

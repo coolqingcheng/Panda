@@ -8,14 +8,23 @@
     var res = ViewData["res"] as PageResponse<ArticleItem>;
 }
 
-<div>
     @foreach (var item in res?.Data)
     {
-        <div>
-            <a href="/article/@item.Id">@item.Title</a>
+        <div class="entry-card">
+            <h2 class="entry-title">
+                <a href="/post/@(item.Id).html">@item.Title</a>
+            </h2>
+            <div class="entry-content">
+                <p>@item.Summary</p>
+            </div>
+            <div class="entry-footer">
+                <div >
+                    <time datetime="@item.AddTime">@item.AddTime.ToString("yyyy年MM月dd日")</time>
+                    <span>作者：@item.AccountName</span>
+                </div>
+            </div>
         </div>
     }
-</div>
 
 <div>
     @{
@@ -24,16 +33,14 @@
         {
             <ul>
                 @{
-
                     @for (var i = 1; i <= pageCount; i++)
                     {
-                        <li>@i</li>
+                        <li>
+                            <a href="/page/@i">@i</a>
+                        </li>
                     }
                 }
             </ul>
         }
     }
 </div>
-
-<h1>@Context.User.Identity.IsAuthenticated</h1>
-<h1>@Context.User.Identity.Name</h1>

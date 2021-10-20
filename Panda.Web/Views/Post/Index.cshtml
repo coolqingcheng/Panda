@@ -1,0 +1,39 @@
+@model Panda.Entity.Models.ArticleDetailItem
+@{
+    ViewData["Title"] = "post";
+}
+
+<div class="post-main">
+    <header>
+        <h1>@Model.Title</h1>
+    </header>
+    <div class="post-body">
+        @(Html.Raw(Model.Content))
+
+        <pre>
+<code>
+document.addEventListener('DOMContentLoaded', (event) => {
+      document.querySelectorAll('pre code').forEach((el) => {
+        hljs.highlightElement(el);
+      });
+    });
+</code>
+</pre>
+    </div>
+</div>
+
+@section css{
+    <link rel="stylesheet" href="~/css/highlight.css" asp-append-version="true"/>
+}
+
+@section Scripts
+{
+    <script src="~/js/highlight.js"></script>
+    <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', (event) => {
+      document.querySelectorAll('pre code').forEach((el) => {
+        hljs.highlightElement(el);
+      });
+    });
+    </script>
+}
