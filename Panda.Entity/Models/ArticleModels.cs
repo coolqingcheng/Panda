@@ -48,11 +48,11 @@ public class ArticleCategories
 }
 
 
-public class ArticleRequest : BasePageRequest
+public class PostRequest : BasePageRequest
 {
 }
 
-public class ArticleCategoryRequest : BasePageRequest
+public class PostCategoryRequest : BasePageRequest
 {
     
     public int CategoryId { get; set; }

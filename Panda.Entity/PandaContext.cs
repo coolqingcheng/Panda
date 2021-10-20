@@ -7,11 +7,11 @@ public class PandaContext : DbContext
 {
     public DbSet<Accounts> Accounts { get; set; }
 
-    public DbSet<Articles> Articles { get; set; }
+    public DbSet<Posts> Posts { get; set; }
 
     public DbSet<Categorys> Categories { get; set; }
 
-    public DbSet<ArticleCategoryRelations> ArticleCategoryRelations { get; set; }
+    public DbSet<PostsCategoryRelations> ArticleCategoryRelations { get; set; }
 
     public DbSet<AuditLogs> AuditLogs { get; set; }
 

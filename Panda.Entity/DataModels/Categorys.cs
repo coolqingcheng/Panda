@@ -27,5 +27,5 @@ public class Categorys:PandaBaseTable
     public int Pid { get; set; }
 
     
-    public List<ArticleCategoryRelations> ArticleCategoryRelations { get; set; }
+    public List<PostsCategoryRelations> ArticleCategoryRelations { get; set; }
 }

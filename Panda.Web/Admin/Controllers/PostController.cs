@@ -2,21 +2,21 @@ using Microsoft.AspNetCore.Mvc;
 using Panda.Entity.Models;
 using Panda.Entity.Requests;
 using Panda.Entity.Responses;
-using Panda.Services.Article;
+using Panda.Services.Posts;
 
 namespace Panda.Web.Admin.Controllers;
 
 public class ArticleController : AdminBaseController
 {
-    private readonly IArticleService _articleService;
+    private readonly IPostService _articleService;
 
-    public ArticleController(IArticleService articleService)
+    public ArticleController(IPostService articleService)
     {
         _articleService = articleService;
     }
 
     [HttpPost]
-    public async Task AddOrUpdate(ArticleAddOrUpdate request)
+    public async Task AddOrUpdate(PostAddOrUpdate request)
     {
         await _articleService.AddOrUpdate(request);
     }
@@ -28,7 +28,7 @@ public class ArticleController : AdminBaseController
     }
 
     [HttpGet]
-    public async Task<PageResponse<AdminArticleItemResponse>> GetList([FromQuery]AdminArticleGetListRequest request)
+    public async Task<PageResponse<AdminArticleItemResponse>> GetList([FromQuery]AdminPostGetListRequest request)
     {
        var res =   await _articleService.AdminGetList(request);
        return res;

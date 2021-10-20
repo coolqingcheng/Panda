@@ -9,11 +9,11 @@ using Panda.Repository.ArticleCategoryRelation;
 using Panda.Repository.Category;
 using Panda.Tools.Exception;
 using Panda.Tools.Extensions;
-using ArticleRequest = Panda.Entity.Models.ArticleRequest;
+using PostRequest = Panda.Entity.Models.PostRequest;
 
-namespace Panda.Services.Article;
+namespace Panda.Services.Posts;
 
-public class ArticleService : IArticleService
+public class PostService : IPostService
 {
     private readonly ArticleRepository _articleRepository;
 
@@ -23,7 +23,7 @@ public class ArticleService : IArticleService
 
     private readonly ArticleCategoryRelationRepository _articleCategoryRelationRepository;
 
-    public ArticleService(ArticleRepository articleRepository, CategoryRepository categoryRepository,
+    public PostService(ArticleRepository articleRepository, CategoryRepository categoryRepository,
         IUnitOfWork unitOfWork, ArticleCategoryRelationRepository articleCategoryRelationRepository)
     {
         _articleRepository = articleRepository;
@@ -32,12 +32,12 @@ public class ArticleService : IArticleService
         _articleCategoryRelationRepository = articleCategoryRelationRepository;
     }
 
-    public async Task<PageResponse<ArticleItem>> GetArticleList(ArticleRequest request)
+    public async Task<PageResponse<ArticleItem>> GetArticleList(PostRequest request)
     {
         return await _articleRepository.GetArticleList(request.Index, request.Size);
     }
 
-    public async Task<PageResponse<ArticleItem>> GetArticleListByCategoryId(ArticleCategoryRequest request)
+    public async Task<PageResponse<ArticleItem>> GetArticleListByCategoryId(PostCategoryRequest request)
     {
         return await Task.FromResult(new PageResponse<ArticleItem>());
     }
@@ -64,7 +64,7 @@ public class ArticleService : IArticleService
         return item;
     }
 
-    public async Task AddOrUpdate(ArticleAddOrUpdate request)
+    public async Task AddOrUpdate(PostAddOrUpdate request)
     {
         var text = request.Content.GetHtmlText();
         await _unitOfWork.BeginTransactionAsync();
@@ -81,7 +81,7 @@ public class ArticleService : IArticleService
             article.Summary = text.GetSummary(80);
             article.UpdateTime = DateTime.Now;
             await _articleRepository.SaveAsync();
-            var beforeCategories = await _articleCategoryRelationRepository.Where(a=>a.Articles==article).Select(a => a.Categories.Id).ToListAsync();
+            var beforeCategories = await _articleCategoryRelationRepository.Where(a=>a.Posts==article).Select(a => a.Categories.Id).ToListAsync();
             var afterCategories = await _categoryRepository.Where(a => request.Categories.Contains(a.Id)).Select(a=>a.Id).ToListAsync();
             await _articleCategoryRelationRepository.DiffUpdateRelation(article, beforeCategories, afterCategories);
         }
@@ -89,7 +89,7 @@ public class ArticleService : IArticleService
         {
             //添加
 
-            var entity = new Articles()
+            var entity = new Entity.DataModels.Posts()
             {
                 Title = request.Title,
                 Content = request.Content,
@@ -111,7 +111,7 @@ public class ArticleService : IArticleService
         await _unitOfWork.CommitAsync();
     }
 
-    public async Task<PageResponse<AdminArticleItemResponse>> AdminGetList(AdminArticleGetListRequest request)
+    public async Task<PageResponse<AdminArticleItemResponse>> AdminGetList(AdminPostGetListRequest request)
     {
         var res = await _articleRepository.AdminGetList(request);
         return res;

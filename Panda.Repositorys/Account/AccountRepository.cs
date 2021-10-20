@@ -12,7 +12,7 @@ public class AccountRepository : PandaRepository<Accounts>
 
     public async Task LoginFailAsync(Accounts account)
     {
-        if (await IsLocked(account))
+        if (IsLocked(account))
         {
             account.LoginFailCount = 1;
         }
@@ -25,11 +25,12 @@ public class AccountRepository : PandaRepository<Accounts>
                 account.LockedTime = DateTime.Now.AddMinutes(15);
             }
         }
+
         await _context.SaveChangesAsync();
     }
 
 
-    public async Task<bool> IsLocked(Accounts account)
+    private bool IsLocked(Accounts account)
     {
         return account.LockedTime > DateTime.Now;
     }

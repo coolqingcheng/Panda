@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Panda.Entity.DataModels;
 
-public class Articles:PandaBaseTable
+public class Posts:PandaBaseTable
 {
 
     /// <summary>
@@ -39,5 +39,5 @@ public class Articles:PandaBaseTable
     /// </summary>
     public DateTime UpdateTime { get; set; }
 
-    public List<ArticleCategoryRelations> ArticleCategoryRelations { get; set; }
+    public List<PostsCategoryRelations> ArticleCategoryRelations { get; set; }
 }

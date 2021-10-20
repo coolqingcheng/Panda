@@ -3,12 +3,12 @@ using Panda.Tools.Models;
 
 namespace Panda.Entity.Requests;
 
-public class ArticleRequest
+public class PostRequest
 {
     
 }
 
-public class ArticleAddOrUpdate
+public class PostAddOrUpdate
 {
     public int Id { get; set; }
     
@@ -22,7 +22,7 @@ public class ArticleAddOrUpdate
     public List<int> Categories { get; set; }
 }
 
-public class AdminArticleGetListRequest:BasePageRequest
+public class AdminPostGetListRequest:BasePageRequest
 {
     public string? KeyWord { get; set; }
 }

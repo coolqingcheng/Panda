@@ -9,7 +9,7 @@ using Panda.Tools.Extensions;
 
 namespace Panda.Repository.Article;
 
-public class ArticleRepository : PandaRepository<Articles>
+public class ArticleRepository : PandaRepository<Posts>
 {
     public ArticleRepository(PandaContext context) : base(context)
     {
@@ -17,7 +17,7 @@ public class ArticleRepository : PandaRepository<Articles>
 
     public async Task<PageResponse<ArticleItem>> GetArticleList(int index, int size)
     {
-        var query = _context.Articles.AsQueryable();
+        var query = _context.Posts.AsQueryable();
         var res = await query.Page(index, size).Select(a => new ArticleItem()
         {
             Id = a.Id,
@@ -37,9 +37,9 @@ public class ArticleRepository : PandaRepository<Articles>
         };
     }
 
-    public async Task<PageResponse<AdminArticleItemResponse>> AdminGetList(AdminArticleGetListRequest request)
+    public async Task<PageResponse<AdminArticleItemResponse>> AdminGetList(AdminPostGetListRequest request)
     {
-        var query = _context.Articles.AsQueryable();
+        var query = _context.Posts.AsQueryable();
 
        var list = await  query.Page(request).Include(a=>a.ArticleCategoryRelations).OrderByDescending(a => a.UpdateTime)
            .ThenByDescending(a=>a.AddTime).Select(a =>

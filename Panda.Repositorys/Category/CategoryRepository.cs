@@ -12,7 +12,7 @@ public class CategoryRepository : PandaRepository<Categorys>
 
     public async Task<List<Categorys>> GetCategories(int articleId)
     {
-        return await _context.ArticleCategoryRelations.Where(a => a.Articles.Id == articleId).Include(a => a.Categories)
+        return await _context.ArticleCategoryRelations.Where(a => a.Posts.Id == articleId).Include(a => a.Categories)
             .Select(a => a.Categories)
             .ToListAsync();
     }

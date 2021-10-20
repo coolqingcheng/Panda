@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Panda.Entity.Models;
 using Panda.Entity.UnitOfWork;
 using Panda.Services.Account;
-using Panda.Services.Article;
+using Panda.Services.Posts;
 using Panda.Web.Models;
 
 namespace Panda.Web.Controllers;
@@ -14,15 +14,15 @@ public class HomeController : Controller
 
     private readonly IAccountService _accountService;
 
-    private readonly IArticleService _articleService;
+    private readonly IPostService _postService;
 
 
     public HomeController(ILogger<HomeController> logger, IAccountService accountService,
-        IArticleService articleService)
+        IPostService postService)
     {
         _logger = logger;
         _accountService = accountService;
-        _articleService = articleService;
+        _postService = postService;
     }
 
     /// <summary>
@@ -33,7 +33,7 @@ public class HomeController : Controller
     [HttpGet("/"), HttpGet("/page/{Id:int}")]
     public async Task<IActionResult> Index(int Index = 1)
     {
-        var res = await _articleService.GetArticleList(new ArticleRequest()
+        var res = await _postService.GetArticleList(new PostRequest()
         {
             Index = Index, Size = 15
         });
