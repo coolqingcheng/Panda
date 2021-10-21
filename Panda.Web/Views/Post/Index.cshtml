@@ -2,6 +2,13 @@
 @{
     ViewData["Title"] = "post";
 }
+@{
+    if (Model == null)
+    {
+        <h1>404</h1>
+        return;
+    }
+}
 
 <div class="post-main">
     <header>

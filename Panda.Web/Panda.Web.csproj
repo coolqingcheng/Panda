@@ -9,6 +9,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Content Remove="compilerconfig.json" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\Panda.Entity\Panda.Entity.csproj" />
       <ProjectReference Include="..\Panda.Repositorys\Panda.Repositorys.csproj" />
       <ProjectReference Include="..\Panda.Services\Panda.Services.csproj" />
@@ -22,6 +26,10 @@
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Views\Post\Index.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="compilerconfig.json" />
     </ItemGroup>
 
 </Project>
