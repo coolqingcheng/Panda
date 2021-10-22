@@ -1,13 +1,30 @@
-﻿html,
+﻿@import "config";
+html,
 body {
   background: #fff;
   color: #555;
   font-size: 15px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  .content{
+
+  p {
+    line-height: 1.8;
+  }
+
+  a {
+    color: #999;
+    text-decoration: none;
+
+    &:hover {
+      color: $a_hover_color;
+      text-decoration: underline;
+    }
+  }
+
+  .content {
     padding: 1rem;
     box-sizing: border-box;
   }
+
   main {
     margin: 0 auto;
 
@@ -22,9 +39,11 @@ body {
       width: 1170px;
     }
   }
+
   .navbar {
     padding: 1.5rem 1rem;
     box-sizing: border-box;
+
     main {
       display: flex;
       flex-direction: column;
@@ -35,6 +54,7 @@ body {
         text-decoration: none;
         color: $a_hover_color;
       }
+
       ul {
         display: flex;
         flex-direction: row;
@@ -47,6 +67,7 @@ body {
       }
     }
   }
+
   main {
     .entry-card {
       margin-bottom: 1rem;
@@ -56,7 +77,7 @@ body {
         a {
           color: #333;
           margin-left: 0;
-
+          transition: all .3s;
           &:hover {
             color: $a_hover_color;
             margin-left: 1rem;
@@ -64,6 +85,7 @@ body {
           }
         }
       }
+
       .entry-content {
         margin: 1.2rem 0 1.2rem 0;
 
@@ -90,25 +112,27 @@ body {
       padding-bottom: 0.8rem;
     }
   }
-}
-p {
-  line-height: 1.8;
+
 }
 
-a {
-  color: #999;
-  text-decoration: none;
 
-  &:hover {
-    color: $a_hover_color;
-    text-decoration: underline;
-  }
-}
 
 footer {
   padding: 1rem;
   box-sizing: border-box;
+
   a {
     text-decoration: underline;
+  }
+}
+
+.page {
+  display: flex;
+  flex-direction: row;
+  .active{
+    color: $a_hover_color;
+  }
+  li{
+    padding: .5rem;
   }
 }

@@ -10,4 +10,12 @@ public interface ICategoryService
     Task AddOrUpdate(CategoryAddOrUpdate request);
 
     Task Delete(int Id);
+
+    /// <summary>
+    /// 获取分类从缓存
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="timeSpan"></param>
+    /// <returns></returns>
+    Task<List<CategoryItem>> GetCategoriesByCache(CategoryPageRequest request,TimeSpan timeSpan);
 }

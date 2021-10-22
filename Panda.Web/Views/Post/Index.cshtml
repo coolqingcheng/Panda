@@ -11,21 +11,18 @@
 }
 
 <div class="post-main">
-    <header>
-        <h1>@Model.Title</h1>
-    </header>
-    <div class="post-body">
-        @(Html.Raw(Model.Content))
+    <div class="row">
+        <div class="col-xs-12 col-md-8 col-lg-8 col-xl-9 col-xxl-9">
+            <header>
+                <h1>@Model.Title</h1>
+            </header>
+            <div class="post-body">
+                @(Html.Raw(Model.Content))
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-4 col-lg-4 col-xl-3 col-xxl-3">
 
-        <pre>
-<code>
-document.addEventListener('DOMContentLoaded', (event) => {
-      document.querySelectorAll('pre code').forEach((el) => {
-        hljs.highlightElement(el);
-      });
-    });
-</code>
-</pre>
+        </div>
     </div>
 </div>
 

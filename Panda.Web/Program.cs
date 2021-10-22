@@ -17,15 +17,16 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetSection("ConnectionStrings:mysql").Value;
 
 
+builder.Services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
 builder.Services.AddDbContext<PandaContext>(
     opt => { opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)); }
 );
-builder.Services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
-
-
+builder.Services.AddEasyCaching(options =>
+{
+    //use memory cache that named default
+    options.UseInMemory("default");
+});
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
-
-
 builder.Services.AddControllersWithViews(opt =>
 {
     opt.Filters.Add<GlobalExceptionFilter>();
@@ -35,7 +36,7 @@ builder.Services.AddControllersWithViews(opt =>
 {
     options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
     options.JsonSerializerOptions.Converters.Add(new DateTimeNullConverter());
-});
+}).AddRazorRuntimeCompilation();
 builder.Services.AddTools();
 
 builder.Services.AddAntiforgery(options =>

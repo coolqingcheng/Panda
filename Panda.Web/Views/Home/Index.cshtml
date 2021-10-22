@@ -8,6 +8,8 @@
     var res = ViewData["res"] as PageResponse<ArticleItem>;
 }
 
+@inject ICategoryService _categoryService
+
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-8 col-xxl-8">
         @foreach (var item in res?.Data)
@@ -31,14 +33,15 @@
         <div>
             @{
                 var pageCount = res.Total.GetPageSum(10);
+                int index = Convert.ToInt32(ViewData["index"]);
                 @if (pageCount > 1)
                 {
-                    <ul>
+                    <ul class="page">
                         @{
                             @for (var i = 1; i <= pageCount; i++)
                             {
                                 <li>
-                                    <a href="/page/@i">@i</a>
+                                    <a class="@(index == i ? "active" : "")" href="/page/@i">@i</a>
                                 </li>
                             }
                         }
@@ -70,15 +73,18 @@
             </div>
             <div class="card-body">
                 <ul class="p-l-6">
-                    @for (int i = 0; i < 5; i++)
-                    {
-                        <li>
-                            <a href="/">分类@i</a>
-                        </li>
+                    @{
+                        var categories = await _categoryService.GetCategoriesByCache(new CategoryPageRequest() {Index = 1, Size = 50}, TimeSpan.FromMinutes(5));
+                        foreach (var categoryItem in categories)
+                        {
+                            <li>
+                                <a href="/category/@categoryItem.Id">@categoryItem.CateName</a>
+                            </li>
+                        }
                     }
                 </ul>
             </div>
         </div>
-        
+
     </div>
 </div>

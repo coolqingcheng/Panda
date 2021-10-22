@@ -38,6 +38,7 @@ public class HomeController : Controller
             Index = index, Size = 10
         });
         ViewData["res"] = res;
+        ViewData["index"] = index;
         return View();
     }
 
