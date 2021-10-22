@@ -1,0 +1,25 @@
+﻿@import "config";
+.card{
+  display: flex;
+  flex-direction: column;
+  .card-header{
+   
+    .card-title{
+      color: $card_header_color;
+      font-size: 1rem;
+      
+    }
+    margin-bottom: 0.6rem;
+  }
+  .card-body{
+    ul{
+      li{
+        margin-bottom: .8rem;
+        margin-top: .8rem;
+      }
+    }
+  }
+  .card-footer{
+    
+  }
+}

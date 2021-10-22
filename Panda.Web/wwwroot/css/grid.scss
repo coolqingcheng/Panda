@@ -6,7 +6,16 @@ $span:12;
       width: #{$i/$span * 100%};
     }
   }
+ 
 }
+@mixin col(){
+  @for $i from 1 through $span{
+    .col-#{$i}{
+      width: #{$i/$span * 100%};
+    }
+  }
+}
+@include col();
 
 @media screen and (max-width:576px) {
   @include grid(xs)
@@ -26,4 +35,11 @@ $span:12;
 }
 @media screen and (min-width:1400px) {
   @include grid(xxl)
+}
+
+
+.row{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
