@@ -21,6 +21,12 @@ if (string.IsNullOrWhiteSpace(db))
     return;
 }
 
+var optionsBuilder = new DbContextOptionsBuilder<PandaContext>();
+optionsBuilder.UseMySql(db, ServerVersion.AutoDetect(db));
+
+var context = new PandaContext(optionsBuilder.Options);
+context.Database.Migrate();
+
 builder.Services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
 builder.Services.AddDbContext<PandaContext>(
     opt => { opt.UseMySql(db, ServerVersion.AutoDetect(db)); }

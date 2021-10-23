@@ -1,0 +1,15 @@
+# Panda博客系统一键搭建脚本
+version: '3'
+services:
+ web:
+   build: .
+   ports:
+    - "9845:80"
+   environment:
+    - MYSQL_DB=Data Source=db;Port=53200;User ID=root;Password=root; Initial Catalog=q_blog;Charset=utf8; SslMode=none;Min pool size=1
+ db:
+   image: "mysql/mysql-server"
+   ports:
+    - "3306:3306"
+   environment:
+    - MYSQL_ROOT_PASSWORD:root
