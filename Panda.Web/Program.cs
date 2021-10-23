@@ -14,12 +14,16 @@ using Panda.Web.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetSection("ConnectionStrings:mysql").Value;
-
+var db =  Environment.GetEnvironmentVariable("MYSQL_DB");
+if (string.IsNullOrWhiteSpace(db))
+{
+    Console.WriteLine("mysql连接没有配置");
+    return;
+}
 
 builder.Services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
 builder.Services.AddDbContext<PandaContext>(
-    opt => { opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)); }
+    opt => { opt.UseMySql(db, ServerVersion.AutoDetect(db)); }
 );
 builder.Services.AddEasyCaching(options =>
 {
@@ -88,9 +92,6 @@ else
         });
     });
 }
-
-
-app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();

@@ -19,13 +19,13 @@ public class PandaContext : DbContext
     {
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        base.OnConfiguring(optionsBuilder);
-#if DEBUG
-        optionsBuilder.LogTo(Console.WriteLine);
-#endif
-    }
+//     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//     {
+//         base.OnConfiguring(optionsBuilder);
+// #if DEBUG
+//         optionsBuilder.LogTo(Console.WriteLine);
+// #endif
+//     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
