@@ -3,10 +3,6 @@ using Panda.Tools.Models;
 
 namespace Panda.Entity.Requests;
 
-public class PostRequest
-{
-    
-}
 
 public class PostAddOrUpdate
 {

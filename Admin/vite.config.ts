@@ -7,7 +7,7 @@ import path from 'path'
 export default defineConfig({
   plugins: [vue()],
   build: {
-    outDir: './docs'
+    outDir: './dist'
   },
   server: {
     proxy: {

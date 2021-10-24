@@ -9,7 +9,7 @@ public interface ICategoryService
 
     Task AddOrUpdate(CategoryAddOrUpdate request);
 
-    Task Delete(int Id);
+    Task Delete(int id);
 
     /// <summary>
     /// 获取分类从缓存
@@ -18,4 +18,10 @@ public interface ICategoryService
     /// <param name="timeSpan"></param>
     /// <returns></returns>
     Task<List<CategoryItem>> GetCategoriesByCache(CategoryPageRequest request,TimeSpan timeSpan);
+
+
+    Task<CategoryItem> GetCategoryById(int id);
+
+
+
 }

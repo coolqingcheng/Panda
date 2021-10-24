@@ -15,6 +15,7 @@ using Panda.Web.Filters;
 var builder = WebApplication.CreateBuilder(args);
 
 var db =  Environment.GetEnvironmentVariable("MYSQL_DB");
+Console.WriteLine("db: "+db);
 if (string.IsNullOrWhiteSpace(db))
 {
     Console.WriteLine("mysql连接没有配置");
@@ -77,7 +78,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/error.html");
 }
 else
 {
@@ -93,7 +94,7 @@ else
             }
             else
             {
-                context.Response.Redirect("/Home/Error");
+                context.Response.Redirect("/error.html");
             }
         });
     });

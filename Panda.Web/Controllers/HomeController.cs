@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using System.Net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Panda.Entity.Models;
 using Panda.Entity.UnitOfWork;
@@ -33,7 +35,7 @@ public class HomeController : Controller
     [HttpGet("/"), HttpGet("/page/{index:int}")]
     public async Task<IActionResult> Index(int index = 1)
     {
-        var res = await _postService.GetArticleList(new PostRequest()
+        var res = await _postService.GetPostList(new PostRequest()
         {
             Index = index, Size = 10
         });
@@ -54,9 +56,28 @@ public class HomeController : Controller
         return View();
     }
 
+    [HttpGet("/error.html")]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
+        HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
         return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
+    }
+    
+    /// <summary>
+    /// 后台Spa页面
+    /// </summary>
+    /// <param name="env"></param>
+    /// <returns></returns>
+    [HttpGet("/admin")]
+    [AllowAnonymous]
+    public ActionResult AdminHtml([FromServices] IWebHostEnvironment env)
+    {
+        var path = Path.Combine(env.WebRootPath, "admin", "index.html");
+        if (System.IO.File.Exists(path)==false)
+        {
+            return Content("后台文件找不到，请确定已经发布");
+        }
+        return PhysicalFile(path, "text/html; charset=utf-8");
     }
 }

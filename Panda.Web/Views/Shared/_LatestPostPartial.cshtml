@@ -1,0 +1,20 @@
+@using Panda.Services.Posts
+@inject IPostService _postService
+<div class="card">
+    <div class="card-header">
+        <h2 class="p-l-6 card-title">近期文章</h2>
+    </div>
+    <div class="card-body">
+        <ul class="p-l-6">
+            @{
+                var list = await _postService.GetLatestPosts(5);
+                foreach (var item in list)
+                {
+                    <li>
+                        <a href="/post/@(item.Id).html">@item.Title</a>
+                    </li>
+                }
+           }
+        </ul>
+    </div>
+</div>

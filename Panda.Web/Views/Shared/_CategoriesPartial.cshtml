@@ -1,0 +1,20 @@
+@inject ICategoryService _categoryService
+
+<div class="card m-t-5">
+    <div class="card-header">
+        <h2 class="p-l-6 card-title">分类</h2>
+    </div>
+    <div class="card-body">
+        <ul class="p-l-6">
+            @{
+                var categories = await _categoryService.GetCategoriesByCache(new CategoryPageRequest() {Index = 1, Size = 50}, TimeSpan.FromMinutes(5));
+                foreach (var categoryItem in categories)
+                {
+                    <li>
+                        <a href="/category/@categoryItem.Id">@categoryItem.CateName</a>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</div>

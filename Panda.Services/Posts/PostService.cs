@@ -32,9 +32,14 @@ public class PostService : IPostService
         _postCategoryRelationRepository = postCategoryRelationRepository;
     }
 
-    public async Task<PageResponse<ArticleItem>> GetArticleList(PostRequest request)
+    public async Task<PageResponse<ArticleItem>> GetPostList(PostRequest request)
     {
-        return await _articleRepository.GetArticleList(request.Index, request.Size);
+        return await _articleRepository.GetArticleList(request);
+    }
+
+    public async Task<List<ArticleItem>> GetLatestPosts(int top)
+    {
+        return await _articleRepository.GetLatestPosts(top);
     }
 
     public async Task<PageResponse<ArticleItem>> GetArticleListByCategoryId(PostCategoryRequest request)

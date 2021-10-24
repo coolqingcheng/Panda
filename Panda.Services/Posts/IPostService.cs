@@ -7,7 +7,10 @@ namespace Panda.Services.Posts;
 
 public interface IPostService
 {
-    Task<PageResponse<ArticleItem>> GetArticleList(PostRequest request);
+    Task<PageResponse<ArticleItem>> GetPostList(PostRequest request);
+
+    Task<List<ArticleItem>> GetLatestPosts(int top);
+    
     
     Task<PageResponse<ArticleItem>> GetArticleListByCategoryId(PostCategoryRequest request);
     

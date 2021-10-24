@@ -69,9 +69,9 @@ public class CategoryService : ICategoryService
         }
     }
 
-    public async Task Delete(int Id)
+    public async Task Delete(int id)
     {
-        var res = await _categoryRepository.Where(a => a.Id == Id).Select(a => new
+        var res = await _categoryRepository.Where(a => a.Id == id).Select(a => new
         {
             a.Id,
             Count = a.ArticleCategoryRelations.Count
@@ -86,7 +86,7 @@ public class CategoryService : ICategoryService
             throw new UserException("分类不为空，无法删除");
         }
 
-        await _categoryRepository.DeleteOne(a => a.Id == Id);
+        await _categoryRepository.DeleteOne(a => a.Id == id);
     }
 
     public async Task<List<CategoryItem>> GetCategoriesByCache(CategoryPageRequest request, TimeSpan timeSpan)
@@ -100,5 +100,16 @@ public class CategoryService : ICategoryService
         var res = await GetCategories(request);
         await _easyCachingProvider.SetAsync(CacheKeys.Categories, res, timeSpan);
         return res;
+    }
+
+    public async Task<CategoryItem> GetCategoryById(int id)
+    {
+       var item = await  _categoryRepository.Where(a => a.Id == id).Select(a=>new CategoryItem()
+       {
+           Id = a.Id,
+           CateName = a.categoryName,
+           Pid = a.Pid
+       }).FirstOrDefaultAsync();
+       return item;
     }
 }

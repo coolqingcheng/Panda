@@ -50,6 +50,7 @@ public class ArticleCategories
 
 public class PostRequest : BasePageRequest
 {
+    public int CategoryId { get; set; }
 }
 
 public class PostCategoryRequest : BasePageRequest

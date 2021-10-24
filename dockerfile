@@ -14,11 +14,22 @@ RUN dotnet publish "Panda.Web/Panda.Web.csproj" -c Release -o /app/publish
 
 # # 构建后台
 
+# FROM node:14.17.5 as admin
+# WORKDIR "/src"
+# COPY "./Admin/dist" "Admin"
+# WORKDIR "/src/Admin"
+# RUN npm install -g npm --registry=https://registry.npm.taobao.org
+# RUN npm install -g yarn --registry=https://registry.npm.taobao.org
+# RUN yarn global add @angular/cli
+# RUN yarn install
+# RUN yarn run build
+
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-# COPY --from=ng /src/Admin/dist ./wwwroot/
+# COPY --from=admin /src/Admin ./wwwroot/
+COPY ["./Admin/dist","/app/publish/wwwroot/admin"]
 RUN echo "deb http://mirrors.aliyun.com/debian stretch main contrib non-free \
     deb-src http://mirrors.aliyun.com/debian stretch main contrib non-free \
     deb http://mirrors.aliyun.com/debian stretch-updates main contrib non-free \

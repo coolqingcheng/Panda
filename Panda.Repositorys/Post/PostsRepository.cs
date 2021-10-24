@@ -15,10 +15,33 @@ public class ArticleRepository : PandaRepository<Posts>
     {
     }
 
-    public async Task<PageResponse<ArticleItem>> GetArticleList(int index, int size)
+    public async Task<List<ArticleItem>> GetLatestPosts(int top)
+    {
+        var res = await _context.Posts.OrderByDescending(a=>a.AddTime).Take(top).Select(a => new ArticleItem()
+        {
+            Id = a.Id,
+            Title = a.Title,
+            Summary = a.Summary,
+            AddTime = a.AddTime,
+            Categories = a.ArticleCategoryRelations.Select(b => new ArticleCategories()
+            {
+                Id = b.Categories.Id,
+                CateName = b.Categories.categoryName
+            }).ToList()
+        }).ToListAsync();
+        return res;
+    }
+
+    public async Task<PageResponse<ArticleItem>> GetArticleList(PostRequest request)
     {
         var query = _context.Posts.AsQueryable();
-        var res = await query.Page(index, size).Select(a => new ArticleItem()
+        if (request.CategoryId > 0)
+        {
+            var category =  await _context.Categories.Where(a => a.Id == request.CategoryId).FirstOrDefaultAsync();
+            query = query.Where(a => a.ArticleCategoryRelations.Any(b => b.Categories == category));
+        }
+        
+        var res = await query.Page(request).Select(a => new ArticleItem()
         {
             Id = a.Id,
             Title = a.Title,
