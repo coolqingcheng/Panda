@@ -1,13 +1,13 @@
 ﻿@import "config";
 html,
 body {
-  background: #fff;
+  background: #f4f6fa;
   color: #555;
   font-size: 15px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-
   p {
     line-height: 1.8;
+    margin: 10px auto;
   }
 
   a {
@@ -94,9 +94,10 @@ body {
 
       .entry-content {
         margin: 1.2rem 0 1.2rem 0;
-
+       
         p {
           color: #555;
+         
         }
       }
     }
@@ -104,18 +105,41 @@ body {
 }
 
 .post-main {
+  .post-title{
+    text-align: center;
+    border-bottom: 1px solid #e7eaf0;
+    padding-bottom: 15px;
+  }
+  .post-desc{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  
   .post-body {
     margin-top: 3rem;
-
-    p {
-      margin: 0 0 5px;
+  
+    h1{
+      font-size: 2rem;
     }
-
+    h2{
+      font-size: 1.6rem;
+    }
+    h3{
+      font-size: 1.4rem;
+    }
+    p {
+      margin: 10px auto;
+      line-height: 1.7;
+    }
     h1,
     h2,
     h3 {
       padding-top: 0.8rem;
       padding-bottom: 0.8rem;
+      border-bottom: 1px solid #e7eaf0;
     }
   }
 

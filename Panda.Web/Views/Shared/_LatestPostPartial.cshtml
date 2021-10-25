@@ -2,10 +2,10 @@
 @inject IPostService _postService
 <div class="card">
     <div class="card-header">
-        <h2 class="p-l-6 card-title d-flex-row-align-center"><i class="ri-file-line m-r-1"></i>近期文章</h2>
+        <h2 class="card-title d-flex-row-align-center"><i class="ri-file-line m-r-1"></i>近期文章</h2>
     </div>
     <div class="card-body">
-        <ul class="p-l-6">
+        <ul class="">
             @{
                 var list = await _postService.GetLatestPosts(5);
                 foreach (var item in list)

@@ -4,6 +4,9 @@ $span:12;
   @for $i from 1 through $span {
     .col-#{$p}-#{$i} {
       width: #{$i/$span * 100%};
+      padding: 6px;
+      box-sizing: border-box;
+      border-radius: 5px;
     }
   }
  
@@ -12,6 +15,9 @@ $span:12;
   @for $i from 1 through $span{
     .col-#{$i}{
       width: #{$i/$span * 100%};
+      padding: 6px;
+      box-sizing: border-box;
+      border-radius: 5px;
     }
   }
 }

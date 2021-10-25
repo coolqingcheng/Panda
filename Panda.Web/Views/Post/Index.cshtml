@@ -12,15 +12,28 @@
 
 <div class="post-main">
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-8 col-xxl-8">
-            <header>
-                <h1>@Model.Title</h1>
-            </header>
-            <div class="post-body">
-                @(Html.Raw(Model.Content))
+        <div class="col-12 col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
+            <div class="card">
+                <header>
+                    <h1 class="post-title">@Model.Title</h1>
+                </header>
+                <div class="post-desc">
+                    <i class="ri-time-line m-r-1"></i><time datetime="@Model.AddTime" class="p-r-4">@Model.AddTime.ToString("yyyy年MM月dd日")</time>
+                    <i class="ri-user-line m-r-1"></i><span class="p-r-4">@(Model.AccountName==null?"管理员":Model.AccountName)</span>
+                    <span>
+                        分类:
+                        @foreach (var item in Model.Categories)
+                        {
+                            <a href="/category/@item.Id">@item.CateName</a>
+                        }
+                    </span>
+                </div>
+                <div class="post-body">
+                    @(Html.Raw(Model.Content))
+                </div>
             </div>
         </div>
-        <div class="col-xs-12 col-md-4 col-lg-4 col-xl-3 col-xxl-3">
+        <div class="col-12 col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
             @{
                 await Html.RenderPartialAsync("_LatestPostPartial");
             }

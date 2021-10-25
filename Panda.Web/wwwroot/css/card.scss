@@ -2,6 +2,9 @@
 .card{
   display: flex;
   flex-direction: column;
+  padding: .8rem;
+  box-sizing: border-box;
+  background: #fff;
   .card-header{
    
     .card-title{

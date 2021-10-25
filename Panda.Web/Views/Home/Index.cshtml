@@ -11,27 +11,30 @@
 @inject ICategoryService _categoryService
 
 <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-8 col-xxl-8">
-        @foreach (var item in res?.Data)
-        {
-            <div class="entry-card">
-                <h2 class="entry-title">
-                    <a href="/post/@(item.Id).html">@item.Title</a>
-                </h2>
-                <div class="entry-content">
-                    <p>@item.Summary</p>
-                </div>
-                <div class="entry-footer">
-                    <div class="d-flex-row-align-center">
-                        <i class="ri-time-line m-r-1"></i>
-                        <time datetime="@item.AddTime">@item.AddTime.ToString("yyyy年MM月dd日")</time>
-                        <i class="ri-user-line m-l-2 m-r-1"></i>
-                        <span>作者：@item.AccountName</span>
+    <div class="col-12 col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
+        <div class="card">
+            @foreach (var item in res?.Data)
+            {
+                <div class="entry-card">
+                    <h2 class="entry-title">
+                        <a href="/post/@(item.Id).html">@item.Title</a>
+                    </h2>
+                    <div class="entry-content">
+                        <p>@item.Summary</p>
+                    </div>
+                    <div class="entry-footer">
+                        <div class="d-flex-row-align-center">
+                            <i class="ri-time-line m-r-1"></i>
+                            <time datetime="@item.AddTime">@item.AddTime.ToString("yyyy年MM月dd日")</time>
+                            <i class="ri-user-line m-l-2 m-r-1"></i>
+                            <span>作者：@item.AccountName</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
 
+
+        </div>
         <div>
             @{
                 var pageCount = res.Total.GetPageSum(10);
@@ -52,7 +55,7 @@
             }
         </div>
     </div>
-    <div class="col-12 col-md-3 col-lg-3 col-xl-4 col-xxl-4">
+    <div class="col-12 col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
         @{
             await Html.RenderPartialAsync("_LatestPostPartial");
         }
