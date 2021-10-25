@@ -19,7 +19,7 @@ public class RssController : Controller
             model.Item.Add(new RssItem()
             {
                 Title = "test-title-"+i,
-                Link = "https://www.baidu.com/",
+                Link = $"https://www.baidu.com/{i}.html",
                 Description = "无法傻屌发烧发烧发烧发烧发烧:"+i
             });
         }

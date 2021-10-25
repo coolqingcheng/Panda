@@ -12,7 +12,7 @@
 
 <div class="post-main">
     <div class="row">
-        <div class="col-xs-12 col-md-8 col-lg-8 col-xl-9 col-xxl-9">
+        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-8 col-xxl-8">
             <header>
                 <h1>@Model.Title</h1>
             </header>
@@ -21,7 +21,12 @@
             </div>
         </div>
         <div class="col-xs-12 col-md-4 col-lg-4 col-xl-3 col-xxl-3">
-
+            @{
+                await Html.RenderPartialAsync("_LatestPostPartial");
+            }
+            @{
+                await Html.RenderPartialAsync("_CategoriesPartial");
+            }
         </div>
     </div>
 </div>
@@ -29,6 +34,7 @@
 @section css{
     <link rel="stylesheet" href="~/css/highlight.css" asp-append-version="true"/>
 }
+
 @section Scripts
 {
     <script src="~/js/highlight.js"></script>

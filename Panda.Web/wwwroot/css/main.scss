@@ -63,6 +63,12 @@ body {
         li {
           margin-right: 1rem;
           font-size: 1.4rem;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          i{
+            margin-right: 5px;
+          }
         }
       }
     }
