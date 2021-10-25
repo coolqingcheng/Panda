@@ -76,9 +76,9 @@ body {
 
   main {
     .entry-card {
-      margin-bottom: 1rem;
-      margin-top: 1.8rem;
-
+      padding-bottom: 1.8rem;
+      margin-top: 1rem;
+      border-bottom: 1px solid #e7eaf0;
       .entry-title {
         a {
           color: #333;

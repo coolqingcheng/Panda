@@ -24,6 +24,13 @@
                         <el-menu-item index="/article-write">写一篇</el-menu-item>
                         <el-menu-item index="/article-list">我的随笔</el-menu-item>
                     </el-menu-item-group>
+                    <el-sub-menu>
+                        <template #title>自定义页面</template>
+                        <el-menu-item-group>
+                            <el-menu-item index="/pages-write">新建页面</el-menu-item>
+                            <el-menu-item index="/pages">所有页面</el-menu-item>
+                        </el-menu-item-group>
+                    </el-sub-menu>
                     <el-sub-menu index="1-4">
                         <template #title>系统</template>
                         <el-menu-item index="1-4-1">媒体库</el-menu-item>
@@ -55,7 +62,7 @@
                     <el-menu-item-group title="分组2">
                         <el-menu-item index="5-3">选项3</el-menu-item>
                     </el-menu-item-group>
-                </el-sub-menu> -->
+                </el-sub-menu>-->
             </el-menu>
         </div>
     </div>
@@ -74,8 +81,8 @@ export default {
         const handleClose = () => {
         }
         const router = useRouter();
-        onMounted(()=>{
-            console.log(router.currentRoute.value)
+        onMounted(() => {
+            console.log(router.currentRoute.value.path)
             currActivePath.value = router.currentRoute.value.path
         })
         return {

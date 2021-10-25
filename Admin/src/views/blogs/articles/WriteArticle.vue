@@ -1,7 +1,7 @@
 <template>
     <el-card class="anim1">
         <template #header>
-            <h1>写</h1>
+            <h1>{{ title }}</h1>
         </template>
         <el-form
             label-width="80px"
@@ -62,6 +62,7 @@ export default defineComponent({
             title: '',
             content: ''
         })
+        const title = ref("新建")
         const loading = ref(false)
         const categoryItems = ref<CategoryItem[]>()
         const loadCategories = async () => {
@@ -122,6 +123,7 @@ export default defineComponent({
             try {
                 loading.value = true
                 if (route.query.id) {
+                    title.value = "编辑"
                     var res = await get<{ title: string, id: number, content: string, categories: { id: number, cateName: string }[] }>
                         ('/admin/article/get', { id: route.query.id })
                     console.log('res:', res)
@@ -147,7 +149,8 @@ export default defineComponent({
             submitForm,
             back,
             rules,
-            formRef
+            formRef,
+            title
         }
     }
 })
