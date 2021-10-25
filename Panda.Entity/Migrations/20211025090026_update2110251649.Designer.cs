@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Panda.Entity;
 
 namespace Panda.Entity.Migrations
 {
     [DbContext(typeof(PandaContext))]
-    partial class PandaContextModelSnapshot : ModelSnapshot
+    [Migration("20211025090026_update2110251649")]
+    partial class update2110251649
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -189,8 +191,7 @@ namespace Panda.Entity.Migrations
 
                     b.Property<string>("Summary")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("varchar(250)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Text")
                         .IsRequired()
@@ -198,7 +199,7 @@ namespace Panda.Entity.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime(6)");
@@ -206,10 +207,6 @@ namespace Panda.Entity.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AccountId");
-
-                    b.HasIndex("Text", "Title")
-                        .HasAnnotation("MySql:FullTextIndex", true)
-                        .HasAnnotation("MySql:FullTextParser", "ngram");
 
                     b.ToTable("Posts");
                 });

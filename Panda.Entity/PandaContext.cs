@@ -15,8 +15,10 @@ public class PandaContext : DbContext
 
     public DbSet<AuditLogs> AuditLogs { get; set; }
 
-    
+
     public DbSet<Pages> Pages { get; set; }
+
+    public DbSet<Dictionaries> Dictionaries { get; set; }
 
     public PandaContext(DbContextOptions<PandaContext> options) : base(options)
     {
@@ -34,6 +36,10 @@ public class PandaContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<Accounts>().HasIndex(a => a.UserName).IsUnique();
+        modelBuilder.Entity<Posts>().Property(a => a.Summary).HasMaxLength(250);
+        modelBuilder.Entity<Posts>().Property(a => a.Text).HasColumnType("longtext");
+        modelBuilder.Entity<Posts>().Property(a => a.Content).HasColumnType("longtext");
+        modelBuilder.Entity<Posts>().HasIndex(a => new {a.Text, a.Title}).IsFullText(fullText: true, parser: "ngram");
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
@@ -54,7 +60,8 @@ public class PandaContext : DbContext
         return base.SaveChanges(acceptAllChangesOnSuccess);
     }
 
-    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
+    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
+        CancellationToken cancellationToken = new CancellationToken())
     {
         SaveChangeModifyAddTime();
         return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
