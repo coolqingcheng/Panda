@@ -32,7 +32,7 @@ public class PostService : IPostService
         _postCategoryRelationRepository = postCategoryRelationRepository;
     }
 
-    public async Task<PageResponse<ArticleItem>> GetPostList(PostRequest request)
+    public async Task<PageDto<ArticleItem>> GetPostList(PostRequest request)
     {
         return await _articleRepository.GetArticleList(request);
     }
@@ -42,9 +42,9 @@ public class PostService : IPostService
         return await _articleRepository.GetLatestPosts(top);
     }
 
-    public async Task<PageResponse<ArticleItem>> GetArticleListByCategoryId(PostCategoryRequest request)
+    public async Task<PageDto<ArticleItem>> GetArticleListByCategoryId(PostCategoryRequest request)
     {
-        return await Task.FromResult(new PageResponse<ArticleItem>());
+        return await Task.FromResult(new PageDto<ArticleItem>());
     }
 
     public async Task<ArticleDetailItem> GetArticle(int id)
@@ -116,7 +116,7 @@ public class PostService : IPostService
         await _unitOfWork.CommitAsync();
     }
 
-    public async Task<PageResponse<AdminArticleItemResponse>> AdminGetList(AdminPostGetListRequest request)
+    public async Task<PageDto<AdminArticleItemResponse>> AdminGetList(AdminPostGetListRequest request)
     {
         var res = await _articleRepository.AdminGetList(request);
         return res;

@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Panda.Entity;
 
 namespace Panda.Entity.Migrations
 {
     [DbContext(typeof(PandaContext))]
-    partial class PandaContextModelSnapshot : ModelSnapshot
+    [Migration("20211026135700_update10262156")]
+    partial class update10262156
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -146,64 +148,6 @@ namespace Panda.Entity.Migrations
                     b.ToTable("Dictionaries");
                 });
 
-            modelBuilder.Entity("Panda.Entity.DataModels.FriendlyLinkRecord", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("AddTime")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("IP")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("LinksId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UA")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("UpdateTime")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LinksId");
-
-                    b.ToTable("FriendlyLinkRecords");
-                });
-
-            modelBuilder.Entity("Panda.Entity.DataModels.FriendlyLinks", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("AddTime")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("SiteName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("SiteUrl")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("UpdateTime")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("Weight")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FriendlyLinks");
-                });
-
             modelBuilder.Entity("Panda.Entity.DataModels.Pages", b =>
                 {
                     b.Property<int>("Id")
@@ -303,17 +247,6 @@ namespace Panda.Entity.Migrations
                     b.ToTable("ArticleCategoryRelations");
                 });
 
-            modelBuilder.Entity("Panda.Entity.DataModels.FriendlyLinkRecord", b =>
-                {
-                    b.HasOne("Panda.Entity.DataModels.FriendlyLinks", "Links")
-                        .WithMany("Records")
-                        .HasForeignKey("LinksId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Links");
-                });
-
             modelBuilder.Entity("Panda.Entity.DataModels.Posts", b =>
                 {
                     b.HasOne("Panda.Entity.DataModels.Accounts", "Account")
@@ -345,11 +278,6 @@ namespace Panda.Entity.Migrations
             modelBuilder.Entity("Panda.Entity.DataModels.Categorys", b =>
                 {
                     b.Navigation("ArticleCategoryRelations");
-                });
-
-            modelBuilder.Entity("Panda.Entity.DataModels.FriendlyLinks", b =>
-                {
-                    b.Navigation("Records");
                 });
 
             modelBuilder.Entity("Panda.Entity.DataModels.Posts", b =>

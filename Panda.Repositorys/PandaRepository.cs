@@ -15,6 +15,11 @@ public class PandaRepository<T> where T:PandaBaseTable
         return _context.Set<T>().Where(expression);
     }
 
+    public IQueryable<T> Queryable()
+    {
+        return _context.Set<T>().AsQueryable();
+    }
+
     protected PandaRepository(PandaContext context)
     {
         _context = context;

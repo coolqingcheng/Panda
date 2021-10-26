@@ -32,6 +32,8 @@ import { useRouter } from "vue-router";
 
 import { get } from 'shared/http/HttpClient'
 
+import {PageResponse } from 'shared/base'
+
 interface ArticleItem {
   id: number
   title: string
@@ -39,11 +41,7 @@ interface ArticleItem {
   categoryItems: Categories[]
 }
 
-interface PageResponse<T> {
-  total: number
 
-  data: T[]
-}
 
 interface Categories {
   id: number

@@ -20,6 +20,10 @@ public class PandaContext : DbContext
 
     public DbSet<Dictionaries> Dictionaries { get; set; }
 
+    public DbSet<FriendlyLinks> FriendlyLinks { get; set; }
+
+    public DbSet<FriendlyLinkRecord> FriendlyLinkRecords { get; set; }
+
     public PandaContext(DbContextOptions<PandaContext> options) : base(options)
     {
     }
@@ -39,7 +43,7 @@ public class PandaContext : DbContext
         modelBuilder.Entity<Posts>().Property(a => a.Summary).HasMaxLength(250);
         modelBuilder.Entity<Posts>().Property(a => a.Text).HasColumnType("longtext");
         modelBuilder.Entity<Posts>().Property(a => a.Content).HasColumnType("longtext");
-        modelBuilder.Entity<Posts>().HasIndex(a => new {a.Text, a.Title}).IsFullText(fullText: true, parser: "ngram");
+        modelBuilder.Entity<Posts>().HasIndex(a => new { a.Text, a.Title }).IsFullText(fullText: true, parser: "ngram");
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
@@ -71,7 +75,14 @@ public class PandaContext : DbContext
     {
         foreach (var entry in ChangeTracker.Entries().Where(a => a.State == EntityState.Added))
         {
-            if (!entry.CurrentValues.TryGetValue<DateTime>("AddTime", out var time)) continue;
+            DateTime time;
+            if (!entry.CurrentValues.TryGetValue<DateTime>("UpdateTime", out time)) continue;
+            if (time == default)
+            {
+                entry.CurrentValues["UpdateTime"] = DateTime.Now;
+            }
+
+            if (!entry.CurrentValues.TryGetValue<DateTime>("AddTime", out time)) continue;
             if (time == default)
             {
                 entry.CurrentValues["AddTime"] = DateTime.Now;

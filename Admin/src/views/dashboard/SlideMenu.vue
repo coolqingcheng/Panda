@@ -13,56 +13,18 @@
                 router
             >
                 <el-sub-menu index="1">
-                    <template #title>
-                        <i class="el-icon-location"></i>
-                        <span>博文</span>
-                    </template>
+                    <template #title>博文</template>
                     <el-menu-item-group>
                         <el-menu-item index="/categories">分类</el-menu-item>
-                    </el-menu-item-group>
-                    <el-menu-item-group title="分组2">
                         <el-menu-item index="/article-write">写一篇</el-menu-item>
                         <el-menu-item index="/article-list">我的随笔</el-menu-item>
                     </el-menu-item-group>
-                    <el-sub-menu>
-                        <template #title>自定义页面</template>
-                        <el-menu-item-group>
-                            <el-menu-item index="/pages-write">新建页面</el-menu-item>
-                            <el-menu-item index="/pages">所有页面</el-menu-item>
-                        </el-menu-item-group>
-                    </el-sub-menu>
-                    <el-sub-menu index="1-4">
-                        <template #title>系统</template>
-                        <el-menu-item index="1-4-1">媒体库</el-menu-item>
-                        <el-menu-item index="1-4-1">设置</el-menu-item>
-                    </el-sub-menu>
                 </el-sub-menu>
-                <!-- <el-menu-item index="2">
-                    <i class="el-icon-menu"></i>
-                    <template #title>导航二</template>
-                </el-menu-item>
-                <el-menu-item index="3" disabled>
-                    <i class="el-icon-document"></i>
-                    <template #title>导航三</template>
-                </el-menu-item>
-                <el-menu-item index="4">
-                    <i class="el-icon-setting"></i>
-                    <template #title>导航四</template>
-                </el-menu-item>
-                <el-sub-menu index="5">
-                    <template #title>
-                        <i class="el-icon-location"></i>
-                        <span>导航一</span>
-                    </template>
-                    <el-menu-item-group>
-                        <template #title>分组一</template>
-                        <el-menu-item index="5-1">选项1</el-menu-item>
-                        <el-menu-item index="5-2">选项2</el-menu-item>
-                    </el-menu-item-group>
-                    <el-menu-item-group title="分组2">
-                        <el-menu-item index="5-3">选项3</el-menu-item>
-                    </el-menu-item-group>
-                </el-sub-menu>-->
+                <el-sub-menu index="2">
+                    <template #title>自定义页面</template>
+                    <el-menu-item index="/pages-write">新建页面</el-menu-item>
+                    <el-menu-item index="/pages">所有页面</el-menu-item>
+                </el-sub-menu>
             </el-menu>
         </div>
     </div>

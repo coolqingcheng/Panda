@@ -32,7 +32,7 @@ public class ArticleRepository : PandaRepository<Posts>
         return res;
     }
 
-    public async Task<PageResponse<ArticleItem>> GetArticleList(PostRequest request)
+    public async Task<PageDto<ArticleItem>> GetArticleList(PostRequest request)
     {
         var query = _context.Posts.AsQueryable();
         if (request.CategoryId > 0)
@@ -53,14 +53,14 @@ public class ArticleRepository : PandaRepository<Posts>
                 CateName = b.Categories.categoryName
             }).ToList()
         }).ToListAsync();
-        return new PageResponse<ArticleItem>()
+        return new PageDto<ArticleItem>()
         {
             Total = await query.CountAsync(),
             Data = res
         };
     }
 
-    public async Task<PageResponse<AdminArticleItemResponse>> AdminGetList(AdminPostGetListRequest request)
+    public async Task<PageDto<AdminArticleItemResponse>> AdminGetList(AdminPostGetListRequest request)
     {
         var query = _context.Posts.AsQueryable();
 
@@ -78,7 +78,7 @@ public class ArticleRepository : PandaRepository<Posts>
                         CateName = b.Categories.categoryName
                     }).ToList()
                 }).ToListAsync();
-        return new PageResponse<AdminArticleItemResponse>()
+        return new PageDto<AdminArticleItemResponse>()
         {
             Data = list,
             Total = await query.CountAsync()
@@ -90,7 +90,7 @@ public class ArticleRepository : PandaRepository<Posts>
     /// </summary>
     /// <param name="keyword"></param>
     /// <returns></returns>
-    public async Task<PageResponse<AdminArticleItemResponse>> SearchPost(string keyword)
+    public async Task<PageDto<AdminArticleItemResponse>> SearchPost(string keyword)
     {
         var query = _context.Posts.FromSqlRaw("select * from posts where match(title,text) against(@keyword)", keyword);
         var res =
@@ -107,7 +107,7 @@ public class ArticleRepository : PandaRepository<Posts>
                             CateName = b.Categories.categoryName
                         }).ToList()
                     }).ToListAsync();
-        return new PageResponse<AdminArticleItemResponse>()
+        return new PageDto<AdminArticleItemResponse>()
         {
             Total = query.Count(),
             Data = res

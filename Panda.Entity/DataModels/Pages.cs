@@ -6,10 +6,14 @@ public class Pages:PandaBaseTable
 {
     
     [Required]
-    public string UrlName { get; set; }
+    public string Url { get; set; }
+
+    [Required]
+    public string Title { get; set; }
 
     /// <summary>
     /// 内容
     /// </summary>
+    [Required]
     public string Content { get; set; }
 }
