@@ -6,11 +6,11 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["./", "Panda"]
 RUN dotnet restore "Panda/Panda.Web/Panda.Web.csproj"
-WORKDIR "/src/Panda"
-RUN dotnet build "Panda.Web/Panda.Web.csproj" -c Release -o /app/build
+# WORKDIR "/src/Panda"
+# RUN dotnet build "Panda.Web/Panda.Web.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Panda.Web/Panda.Web.csproj" -c Release -o /app/publish
+RUN dotnet publish "Panda/Panda.Web/Panda.Web.csproj" -c Release -o /app/publish
 
 # # 构建后台
 
