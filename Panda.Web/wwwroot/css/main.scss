@@ -1,10 +1,12 @@
 ﻿@import "config";
+
 html,
 body {
   background: #f4f6fa;
   color: #555;
   font-size: 15px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
   p {
     line-height: 1.8;
     margin: 10px auto;
@@ -66,7 +68,8 @@ body {
           display: flex;
           flex-direction: row;
           align-items: center;
-          i{
+
+          i {
             margin-right: 5px;
           }
         }
@@ -79,11 +82,13 @@ body {
       padding-bottom: 1.8rem;
       margin-top: 1rem;
       border-bottom: 1px solid #e7eaf0;
+
       .entry-title {
         a {
           color: #333;
           margin-left: 0;
           transition: all .3s;
+
           &:hover {
             color: $a_hover_color;
             margin-left: 1rem;
@@ -94,10 +99,10 @@ body {
 
       .entry-content {
         margin: 1.2rem 0 1.2rem 0;
-       
+
         p {
           color: #555;
-         
+
         }
       }
     }
@@ -105,35 +110,40 @@ body {
 }
 
 .post-main {
-  .post-title{
+  .post-title {
     text-align: center;
     border-bottom: 1px solid #e7eaf0;
     padding-bottom: 15px;
   }
-  .post-desc{
+
+  .post-desc {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     margin-top: 1rem;
   }
-  
+
   .post-body {
     margin-top: 3rem;
-  
-    h1{
+
+    h1 {
       font-size: 2rem;
     }
-    h2{
+
+    h2 {
       font-size: 1.6rem;
     }
-    h3{
+
+    h3 {
       font-size: 1.4rem;
     }
+
     p {
       margin: 10px auto;
       line-height: 1.7;
     }
+
     h1,
     h2,
     h3 {
@@ -146,7 +156,6 @@ body {
 }
 
 
-
 footer {
   padding: 1rem;
   box-sizing: border-box;
@@ -154,15 +163,42 @@ footer {
   a {
     text-decoration: underline;
   }
+
+  .friend-link {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .friend-link-item {
+      margin-right: .8rem;
+      line-height: 1.8;
+    }
+    .friend-link-apply{
+      color:$a_hover_color;
+    }
+
+    a {
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
 }
 
 .page {
   display: flex;
   flex-direction: row;
-  .active{
+
+  .active {
     color: $a_hover_color;
   }
-  li{
+
+  li {
     padding: .5rem;
   }
+}
+.search-card{
+  
 }

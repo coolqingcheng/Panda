@@ -18,5 +18,8 @@ public interface IPostService
 
     Task AddOrUpdate(PostAddOrUpdate request);
 
-    Task<PageDto<AdminArticleItemResponse>> AdminGetList(AdminPostGetListRequest request);
+    Task<PageDto<AdminPostItemResponse>> AdminGetList(AdminPostGetListRequest request);
+
+
+    Task<PageDto<AdminPostItemResponse>> Search(string keyword);
 }

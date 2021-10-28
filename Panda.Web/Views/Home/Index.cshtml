@@ -56,11 +56,16 @@
         </div>
     </div>
     <div class="col-12 col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+
+        @{
+            await Html.RenderPartialAsync("_SearchCardPartial");
+        }
         @{
             await Html.RenderPartialAsync("_LatestPostPartial");
         }
         @{
             await Html.RenderPartialAsync("_CategoriesPartial");
         }
+
     </div>
 </div>

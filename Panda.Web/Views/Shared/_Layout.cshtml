@@ -40,7 +40,10 @@
 <footer>
     <main>
         <p> &copy; 2021 - Panda.Blog版权所有 - 本站使用<a class="p-l-1 p-r-1" href="https://github.com/dotnet/aspnetcore" target="_blank">ASP.NET Core 6.0</a>强力驱动</p>
-        <p>备案号：<a href="/">川12336478896554</a></p>
+        @{
+            await Html.RenderPartialAsync("_FriendLinkPartialView");
+        }
+        <p>备案号：<a href="/">川1233647</a></p>
     </main>
 </footer>
 <script src="~/js/jquery.min.js"></script>

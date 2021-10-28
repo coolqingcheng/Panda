@@ -1,0 +1,30 @@
+﻿.p-button {
+  height: 2rem;
+  background: rgba($theme-color,.9);
+  border: none;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+  &:hover{
+    background: rgba($theme-color,1);
+  }
+}
+
+.p-input {
+  outline: none;
+  height: 2rem;
+  border: 1px solid $border-color;
+  border-radius: 3px;
+  transition: all .3s linear;
+  box-sizing: border-box;
+
+  &:active {
+    border-color: $a_hover_color;
+    transition: all .3s linear;
+  }
+
+  &:focus {
+    border-color: $a_hover_color;
+    transition: all .3s linear;
+  }
+}

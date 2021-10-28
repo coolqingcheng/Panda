@@ -19,4 +19,12 @@ public class PostController : Controller
         var res =  await _postService.GetArticle(id);
         return View(res);
     }
+
+    [HttpGet("/search")]
+    public async Task<IActionResult> Search(string keyword)
+    {
+        var res = await _postService.Search(keyword);
+        ViewData["res"] = res;
+        return View();
+    }
 }

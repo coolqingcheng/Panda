@@ -15,7 +15,7 @@ namespace Panda.Services.Posts;
 
 public class PostService : IPostService
 {
-    private readonly ArticleRepository _articleRepository;
+    private readonly PostRepository _postRepository;
 
     private readonly CategoryRepository _categoryRepository;
 
@@ -23,10 +23,10 @@ public class PostService : IPostService
 
     private readonly PostCategoryRelationRepository _postCategoryRelationRepository;
 
-    public PostService(ArticleRepository articleRepository, CategoryRepository categoryRepository,
+    public PostService(PostRepository postRepository, CategoryRepository categoryRepository,
         IUnitOfWork unitOfWork, PostCategoryRelationRepository postCategoryRelationRepository)
     {
-        _articleRepository = articleRepository;
+        _postRepository = postRepository;
         _categoryRepository = categoryRepository;
         _unitOfWork = unitOfWork;
         _postCategoryRelationRepository = postCategoryRelationRepository;
@@ -34,12 +34,12 @@ public class PostService : IPostService
 
     public async Task<PageDto<ArticleItem>> GetPostList(PostRequest request)
     {
-        return await _articleRepository.GetArticleList(request);
+        return await _postRepository.GetArticleList(request);
     }
 
     public async Task<List<ArticleItem>> GetLatestPosts(int top)
     {
-        return await _articleRepository.GetLatestPosts(top);
+        return await _postRepository.GetLatestPosts(top);
     }
 
     public async Task<PageDto<ArticleItem>> GetArticleListByCategoryId(PostCategoryRequest request)
@@ -49,7 +49,7 @@ public class PostService : IPostService
 
     public async Task<ArticleDetailItem> GetArticle(int id)
     {
-        var item = await _articleRepository.Where(a => a.Id == id).Include(a => a.Account).Select(a =>
+        var item = await _postRepository.Where(a => a.Id == id).Include(a => a.Account).Select(a =>
             new ArticleDetailItem
             {
                 Id = a.Id,
@@ -75,7 +75,7 @@ public class PostService : IPostService
         await _unitOfWork.BeginTransactionAsync();
         if (request.Id > 0)
         {
-            var article = await _articleRepository.Where(a => a.Id == request.Id)
+            var article = await _postRepository.Where(a => a.Id == request.Id)
                 .Include(a => a.ArticleCategoryRelations).FirstOrDefaultAsync();
             if (article == null)
             {
@@ -85,7 +85,7 @@ public class PostService : IPostService
             article.Text = text;
             article.Summary = text.GetSummary(80);
             article.UpdateTime = DateTime.Now;
-            await _articleRepository.SaveAsync();
+            await _postRepository.SaveAsync();
             var beforeCategories = await _postCategoryRelationRepository.Where(a=>a.Posts==article).Select(a => a.Categories.Id).ToListAsync();
             var afterCategories = await _categoryRepository.Where(a => request.Categories.Contains(a.Id)).Select(a=>a.Id).ToListAsync();
             await _postCategoryRelationRepository.DiffUpdateRelation(article, beforeCategories, afterCategories);
@@ -103,23 +103,28 @@ public class PostService : IPostService
                 Text = text,
                 Summary = text.GetSummary(80)
             };
-            await _articleRepository.AddAsync(entity);
+            await _postRepository.AddAsync(entity);
             var categories = await _categoryRepository.Where(a => request.Categories.Contains(a.Id)).ToListAsync();
             foreach (var category in categories)
             {
                 await _postCategoryRelationRepository.AddRelationAsync(entity, category);
             }
 
-            await _articleRepository.SaveAsync();
+            await _postRepository.SaveAsync();
         }
 
         await _unitOfWork.CommitAsync();
     }
 
-    public async Task<PageDto<AdminArticleItemResponse>> AdminGetList(AdminPostGetListRequest request)
+    public async Task<PageDto<AdminPostItemResponse>> AdminGetList(AdminPostGetListRequest request)
     {
-        var res = await _articleRepository.AdminGetList(request);
+        var res = await _postRepository.AdminGetList(request);
         return res;
 
+    }
+
+    public async Task<PageDto<AdminPostItemResponse>> Search(string keyword)
+    {
+        return await _postRepository.SearchPost(keyword);
     }
 }

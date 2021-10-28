@@ -5,7 +5,7 @@ public class ArticleResponse
     
 }
 
-public class AdminArticleItemResponse
+public class AdminPostItemResponse
 {
     public int Id { get; set; }
 

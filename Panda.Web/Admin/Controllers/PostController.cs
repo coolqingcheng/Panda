@@ -28,7 +28,7 @@ public class ArticleController : AdminBaseController
     }
 
     [HttpGet]
-    public async Task<PageDto<AdminArticleItemResponse>> GetList([FromQuery]AdminPostGetListRequest request)
+    public async Task<PageDto<AdminPostItemResponse>> GetList([FromQuery]AdminPostGetListRequest request)
     {
        var res =   await _articleService.AdminGetList(request);
        return res;

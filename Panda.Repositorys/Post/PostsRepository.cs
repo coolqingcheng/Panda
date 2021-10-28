@@ -9,9 +9,9 @@ using Panda.Tools.Extensions;
 
 namespace Panda.Repository.Article;
 
-public class ArticleRepository : PandaRepository<Posts>
+public class PostRepository : PandaRepository<Posts>
 {
-    public ArticleRepository(PandaContext context) : base(context)
+    public PostRepository(PandaContext context) : base(context)
     {
     }
 
@@ -60,14 +60,14 @@ public class ArticleRepository : PandaRepository<Posts>
         };
     }
 
-    public async Task<PageDto<AdminArticleItemResponse>> AdminGetList(AdminPostGetListRequest request)
+    public async Task<PageDto<AdminPostItemResponse>> AdminGetList(AdminPostGetListRequest request)
     {
         var query = _context.Posts.AsQueryable();
 
         var list = await query.Page(request).Include(a => a.ArticleCategoryRelations)
             .OrderByDescending(a => a.UpdateTime)
             .ThenByDescending(a => a.AddTime).Select(a =>
-                new AdminArticleItemResponse()
+                new AdminPostItemResponse()
                 {
                     Title = a.Title,
                     Id = a.Id,
@@ -78,7 +78,7 @@ public class ArticleRepository : PandaRepository<Posts>
                         CateName = b.Categories.categoryName
                     }).ToList()
                 }).ToListAsync();
-        return new PageDto<AdminArticleItemResponse>()
+        return new PageDto<AdminPostItemResponse>()
         {
             Data = list,
             Total = await query.CountAsync()
@@ -90,13 +90,13 @@ public class ArticleRepository : PandaRepository<Posts>
     /// </summary>
     /// <param name="keyword"></param>
     /// <returns></returns>
-    public async Task<PageDto<AdminArticleItemResponse>> SearchPost(string keyword)
+    public async Task<PageDto<AdminPostItemResponse>> SearchPost(string keyword)
     {
-        var query = _context.Posts.FromSqlRaw("select * from posts where match(title,text) against(@keyword)", keyword);
+        var query = _context.Posts.FromSqlRaw("select * from posts where match(title,text) against(@keyword) order by AddTime desc", keyword);
         var res =
             await query.Include(a => a.ArticleCategoryRelations).OrderByDescending(a => a.UpdateTime)
                 .ThenByDescending(a => a.AddTime).Select(a =>
-                    new AdminArticleItemResponse()
+                    new AdminPostItemResponse()
                     {
                         Title = a.Title,
                         Id = a.Id,
@@ -107,7 +107,7 @@ public class ArticleRepository : PandaRepository<Posts>
                             CateName = b.Categories.categoryName
                         }).ToList()
                     }).ToListAsync();
-        return new PageDto<AdminArticleItemResponse>()
+        return new PageDto<AdminPostItemResponse>()
         {
             Total = query.Count(),
             Data = res

@@ -1,0 +1,18 @@
+﻿@using Panda.Services.FriendlyLink
+@inject IFriendlyLinkService _friendlyLinkService
+<div class="friend-link">
+    <span class="friend-link-item">友情链接：</span>
+    @{
+        var result = await _friendlyLinkService.GetList(new FriendlyLinkRequest()
+        {
+            Index = 1,
+            Size = 20
+        });
+        foreach (var item in result.Data)
+        {
+            <a class="friend-link-item" href="@item.SiteUrl" referrerpolicy="unsafe-url">@item.SiteName</a>
+        }
+    }
+    <a href="/" class="friend-link-item friend-link-apply" target="_blank">[申请友链]</a>
+
+</div>

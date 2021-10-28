@@ -3,6 +3,7 @@ using System.Net.Http.Headers;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Panda.Entity;
@@ -14,8 +15,8 @@ using Panda.Web.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var db =  Environment.GetEnvironmentVariable("MYSQL_DB");
-Console.WriteLine("db: "+db);
+var db = Environment.GetEnvironmentVariable("MYSQL_DB");
+Console.WriteLine("db: " + db);
 if (string.IsNullOrWhiteSpace(db))
 {
     Console.WriteLine("mysql连接没有配置");
@@ -29,7 +30,7 @@ var context = new PandaContext(optionsBuilder.Options);
 context.Database.Migrate();
 
 builder.Services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
-builder.Services.AddDbContext<PandaContext>(
+builder.Services.AddDbContextPool<PandaContext>(
     opt => { opt.UseMySql(db, ServerVersion.AutoDetect(db)); }
 );
 builder.Services.AddEasyCaching(options =>
@@ -47,7 +48,7 @@ builder.Services.AddControllersWithViews(opt =>
 {
     options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
     options.JsonSerializerOptions.Converters.Add(new DateTimeNullConverter());
-}).AddRazorRuntimeCompilation();
+});
 builder.Services.AddTools();
 
 builder.Services.AddAntiforgery(options =>
@@ -82,6 +83,10 @@ if (!app.Environment.IsDevelopment())
 }
 else
 {
+    app.UseForwardedHeaders(new ForwardedHeadersOptions
+    {
+        ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+    });
     app.UseExceptionHandler(builder =>
     {
         builder.Run(async context =>
@@ -99,6 +104,7 @@ else
         });
     });
 }
+
 app.UseStaticFiles();
 
 app.UseRouting();
