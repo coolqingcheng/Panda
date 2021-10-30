@@ -92,15 +92,18 @@ public class PostRepository : PandaRepository<Posts>
     /// <returns></returns>
     public async Task<PageDto<AdminPostItemResponse>> SearchPost(string keyword)
     {
-        var query = _context.Posts.FromSqlRaw("select * from posts where match(title,text) against(@keyword) order by AddTime desc", keyword);
+        var query = _context.Posts.FromSqlRaw("select * from posts where match(title,text) against({0}) order by AddTime desc", keyword);
         var res =
-            await query.Include(a => a.ArticleCategoryRelations).OrderByDescending(a => a.UpdateTime)
+            await query.Include(a => a.ArticleCategoryRelations).Include(a=>a.Account).OrderByDescending(a => a.UpdateTime)
                 .ThenByDescending(a => a.AddTime).Select(a =>
                     new AdminPostItemResponse()
                     {
                         Title = a.Title,
                         Id = a.Id,
                         UpdateTime = a.UpdateTime,
+                        AddTime = a.AddTime,
+                        Summary = a.Summary,
+                        AccountName = a.Account.UserName,
                         CategoryItems = a.ArticleCategoryRelations.Select(b => new AdminCategoryItem()
                         {
                             Id = b.Categories.Id,
@@ -109,7 +112,7 @@ public class PostRepository : PandaRepository<Posts>
                     }).ToListAsync();
         return new PageDto<AdminPostItemResponse>()
         {
-            Total = query.Count(),
+            Total = 0,
             Data = res
         };
     }
