@@ -92,7 +92,7 @@ public class PostRepository : PandaRepository<Posts>
     /// <returns></returns>
     public async Task<PageDto<AdminPostItemResponse>> SearchPost(string keyword)
     {
-        var query = _context.Posts.FromSqlRaw("select * from posts where match(title,text) against({0}) order by AddTime desc", keyword);
+        var query = _context.Posts.FromSqlRaw("select * from posts where match(title,text) against({0}) order by AddTime desc limit 20", keyword);
         var res =
             await query.Include(a => a.ArticleCategoryRelations).Include(a=>a.Account).OrderByDescending(a => a.UpdateTime)
                 .ThenByDescending(a => a.AddTime).Select(a =>
