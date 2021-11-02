@@ -11,10 +11,13 @@ public class AdminPostItemResponse
 
     public string Title { get; set; }
 
+    public string Summary { get; set; }
+
+    public DateTime AddTime { get; set; }
     
     public DateTime UpdateTime { get; set; }
-    
-    
+
+    public string AccountName { get; set; }
 
     public List<AdminCategoryItem> CategoryItems { get; set; }
 }

@@ -25,6 +25,7 @@ public class PostController : Controller
     {
         var res = await _postService.Search(keyword);
         ViewData["res"] = res;
+        ViewData["keyword"] = keyword;
         return View();
     }
 }

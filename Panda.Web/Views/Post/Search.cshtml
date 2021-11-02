@@ -1,1 +1,59 @@
-﻿l>
+﻿@using Panda.Entity.Responses
+@using Panda.Entity.Models
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@{
+    var res = ViewData["res"] as PageDto<AdminPostItemResponse>;
+}
+
+@inject ICategoryService _categoryService
+<div class="row">
+    <div class="col-12">
+         <h1>搜索内容：@ViewData["keyword"]</h1>
+    </div>
+    <div class="col-12">
+        <p>搜索内容最多展示前20条</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
+        <div class="card">
+            @foreach (var item in res?.Data)
+            {
+                <div class="entry-card">
+                    <h2 class="entry-title">
+                        <a href="/post/@(item.Id).html">@item.Title</a>
+                    </h2>
+                    <div class="entry-content">
+                        <p>@item.Summary</p>
+                    </div>
+                    <div class="entry-footer">
+                        <div class="d-flex-row-align-center">
+                            <i class="ri-time-line m-r-1"></i>
+                            <time datetime="@item.AddTime">@item.AddTime.ToString("yyyy年MM月dd日")</time>
+                            <i class="ri-user-line m-l-2 m-r-1"></i>
+                            <span>作者：@item.AccountName</span>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+        </div>
+    </div>
+    <div class="col-12 col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+
+        @{
+            await Html.RenderPartialAsync("_SearchCardPartial");
+        }
+        @{
+            await Html.RenderPartialAsync("_LatestPostPartial");
+        }
+        @{
+            await Html.RenderPartialAsync("_CategoriesPartial");
+        }
+
+    </div>
+</div>
