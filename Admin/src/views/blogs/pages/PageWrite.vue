@@ -27,7 +27,7 @@
 <script lang="ts">
 import { ElForm } from "element-plus";
 import { http } from "shared/http/HttpClient";
-import { defineComponent, ref } from "vue-demi";
+import { defineComponent, ref } from "vue";
 import WangEditor from "../../../components/WangEditor.vue";
 export default defineComponent({
     components: {

@@ -29,7 +29,7 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 # COPY --from=admin /src/Admin ./wwwroot/
-COPY ["./Admin/dist","/app/publish/wwwroot/admin"]
+# COPY ["./Admin/dist","/app/publish/wwwroot/admin"]
 RUN echo "deb http://mirrors.aliyun.com/debian stretch main contrib non-free \
     deb-src http://mirrors.aliyun.com/debian stretch main contrib non-free \
     deb http://mirrors.aliyun.com/debian stretch-updates main contrib non-free \

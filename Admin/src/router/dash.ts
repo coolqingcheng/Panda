@@ -1,14 +1,22 @@
 import { RouteRecordRaw } from "vue-router";
 import Dash from '../views/dashboard/Dash.vue'
 
-import { blog } from './blog'
+
+import Post from "../views/blogs/post.vue"
+import { post } from './post'
 
 const dashRoute: RouteRecordRaw[] = [
     {
         path: '/dash',
         component: Dash,
-        children:[
-            ...blog
+        children: [
+            {
+                path: 'post',
+                component: Post,
+                children: [
+                    ...post
+                ]
+            },
         ]
     }
 ]

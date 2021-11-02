@@ -34,4 +34,22 @@ body,
   margin-bottom: 1rem;
   margin-top: 1rem;
 }
+
+a {
+  text-decoration: none;
+}
+
+@keyframes test1 {
+  0% {
+    opacity: 0.1;
+    transform: translateY(50px);
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.anim1 {
+  animation: test1 0.3s ease-in-out;
+}
 </style>

@@ -16,10 +16,7 @@
                     <el-button type="primary" size="mini" @click="editCategory(scope.row)">编辑</el-button>
                     <el-popconfirm title="确定删除吗？" @confirm="delCategory(scope.row.id)">
                         <template #reference>
-                            <el-button
-                                type="danger"
-                                size="mini"
-                            >删除</el-button>
+                            <el-button type="danger" size="mini">删除</el-button>
                         </template>
                     </el-popconfirm>
                 </template>
@@ -78,12 +75,12 @@ export default {
             }
         }
 
-        const  editCategory = (item:CategoryItem)=>{
+        const editCategory = (item: CategoryItem) => {
             console.log(item)
             console.log(deepCopy(item))
             show.value = true;
             cateItem.value = deepCopy(item)
-            
+
         }
 
         return {
@@ -102,17 +99,4 @@ export default {
 </script>
 
 <style lang="less">
-@keyframes test1 {
-    0% {
-        opacity: 0.1;
-        transform: translateY(100px);
-    }
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-.anim1 {
-    animation: test1 0.5s ease-in-out;
-}
 </style>

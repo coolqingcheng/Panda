@@ -1,37 +1,37 @@
 <template>
-    <el-card class="anim1">
-        <template #header>
-            <h1>{{ title }}</h1>
+    <left-menu>
+        <template #menu></template>
+        <template #content>
+            <el-form
+                label-width="80px"
+                v-loading="loading"
+                :rules="rules"
+                ref="formRef"
+                :model="formModel"
+            >
+                <el-form-item label="标题" prop="title">
+                    <el-input placeholder="输入标题" v-model="formModel.title"></el-input>
+                </el-form-item>
+                <el-form-item label="正文" prop="content">
+                    <WangEditor v-model="formModel.content"></WangEditor>
+                </el-form-item>
+                <el-form-item label="分类" prop="categories">
+                    <el-checkbox-group v-model="formModel.categories">
+                        <el-checkbox
+                            :label="item.id"
+                            v-for="(item,i) in categoryItems"
+                            :key="i"
+                            name="categories"
+                        >{{ item.cateName }}</el-checkbox>
+                    </el-checkbox-group>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="submitForm()">保存</el-button>
+                    <el-button type="default" @click="back()">返回</el-button>
+                </el-form-item>
+            </el-form>
         </template>
-        <el-form
-            label-width="80px"
-            v-loading="loading"
-            :rules="rules"
-            ref="formRef"
-            :model="formModel"
-        >
-            <el-form-item label="标题" prop="title">
-                <el-input placeholder="输入标题" v-model="formModel.title"></el-input>
-            </el-form-item>
-            <el-form-item label="正文" prop="content">
-                <WangEditor v-model="formModel.content"></WangEditor>
-            </el-form-item>
-            <el-form-item label="分类" prop="categories">
-                <el-checkbox-group v-model="formModel.categories">
-                    <el-checkbox
-                        :label="item.id"
-                        v-for="(item,i) in categoryItems"
-                        :key="i"
-                        name="categories"
-                    >{{ item.cateName }}</el-checkbox>
-                </el-checkbox-group>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="submitForm()">保存</el-button>
-                <el-button type="default" @click="back()">返回</el-button>
-            </el-form-item>
-        </el-form>
-    </el-card>
+    </left-menu>
 </template>
 
 <script  lang="ts">
@@ -40,6 +40,7 @@ import { ElForm, ElMessage } from "element-plus";
 import { get, http, post } from "shared/http/HttpClient";
 import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import LeftMenu from "../../../components/LeftMenu.vue";
 import WangEditor from "../../../components/WangEditor.vue";
 import { CategoryItem } from "../categories/CategoryModel";
 
@@ -53,7 +54,8 @@ interface articleItem {
 
 export default defineComponent({
     components: {
-        WangEditor
+        WangEditor,
+        LeftMenu
     },
     setup() {
         const formModel = ref<articleItem>({

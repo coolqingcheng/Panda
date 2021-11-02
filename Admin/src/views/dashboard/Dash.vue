@@ -1,6 +1,6 @@
 <template>
     <el-container>
-        <el-aside width="220px">
+        <el-aside width="220px" v-if="false">
             <div class="q-logo">
                 <p>Admin</p>
             </div>
@@ -9,14 +9,7 @@
         <el-container>
             <el-header>
                 <div class="q-header-container">
-                    <div class="q-header-left">
-                        <div class="q-expand">
-                            <el-icon :size="25">
-                                <expand />
-                            </el-icon>
-                        </div>
-                        <q-breadcrumb></q-breadcrumb>
-                    </div>
+                    <div class="q-header-left"></div>
                     <div class="q-toolbar">
                         <el-popover trigger="hover" :width="300">
                             <template #reference>
@@ -52,6 +45,7 @@
             </el-header>
             <!-- <q-route-tab></q-route-tab> -->
             <el-main>
+                <tab></tab>
                 <router-view></router-view>
             </el-main>
         </el-container>
@@ -119,12 +113,13 @@ export default {
         align-items: center;
         box-sizing: border-box;
         padding: 5px;
+        border-bottom: 0.5px solid #dcdfe6;
         .q-header-container {
             display: flex;
             width: 100%;
             flex-direction: row;
             justify-content: space-between;
-            border-bottom: 0.5px solid #dcdfe6;
+
             .q-header-left {
                 display: flex;
                 flex-direction: row;
