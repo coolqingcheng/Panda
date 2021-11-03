@@ -1,8 +1,11 @@
 <template>
   <left-menu>
     <template #menu>
-      <button>test</button>
-      <router-link to="post/write">写</router-link>
+      <h2 class>操作</h2>
+      <router-link to="post/write">写一篇</router-link>
+      <router-link to="post/write">草稿箱</router-link>
+      <router-link to="post/write">标签管理</router-link>
+      <router-link to="post/write">博客搬家</router-link>
     </template>
     <template v-slot:content>
       <el-table :data="data.list" v-loading="loading">

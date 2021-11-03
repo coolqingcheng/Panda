@@ -5,7 +5,7 @@
             <li
                 v-for="item in tabList"
                 :key="item.label"
-                :class="item.beginWith.indexOf(activePath) > -1 ? 'active' : ''"
+                :class="item.active.indexOf(activePath) > -1 ? 'active' : ''"
             >
                 <router-link :to="item.path">{{ item.label }}</router-link>
             </li>
@@ -30,32 +30,32 @@ export default {
         const tabList = ref([
             {
                 label: '文章',
-                beginWith: ['/dash', '/dash/post', '/dash/categories'],
+                active: ['/dash', '/dash/post', '/dash/post/write', '/dash/post/tags', '/dash/post/categories'],
                 path: '/dash/post'
             },
             {
                 label: '评论',
-                beginWith: '/post',
+                active: '/post',
                 path: '/'
             },
             {
                 label: '标签',
-                beginWith: '/post',
+                active: '/post',
                 path: '/'
             },
             {
                 label: '媒体',
-                beginWith: '/post',
+                active: '/post',
                 path: '/'
             },
             {
                 label: '页面',
-                beginWith: ['/dash/pages', '/dash/pages-write'],
+                active: ['/dash/pages', '/dash/pages-write'],
                 path: '/dash/pages'
             },
             {
                 label: '设置',
-                beginWith: '/post',
+                active: '/post',
                 path: '/'
             }
         ])

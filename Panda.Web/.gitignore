@@ -3,3 +3,4 @@ appsettings.Development.json
 
 /wwwroot/css/*.css
 /wwwroot/css/*.map
+/files

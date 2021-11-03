@@ -23,6 +23,10 @@ public class PandaContext : DbContext
     public DbSet<FriendlyLinks> FriendlyLinks { get; set; }
 
     public DbSet<FriendlyLinkRecord> FriendlyLinkRecords { get; set; }
+    
+    public DbSet<PostTags> PostTags { get; set; }
+
+    public DbSet<TagsRelation> TagsRelations { get; set; }
 
     public PandaContext(DbContextOptions<PandaContext> options) : base(options)
     {
