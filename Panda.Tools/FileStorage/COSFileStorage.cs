@@ -54,10 +54,11 @@ public class CosFileStorage : IFileStorage
         var transferManager = new TransferManager(cosXml, transferConfig);
         // 存储桶名称，此处填入格式必须为 bucketname-APPID, 其中 APPID 获取参考 https://console.cloud.tencent.com/developer
         var bucket = await _dicDataProvider.GetDefaultGroupName("bucket");
-        var cosPath = "exampleobject"; //对象在存储桶中的位置标识符，即称对象键
-
         //保存到本地
         var yyyyMMdd = DateTime.Now.ToString("yyyyMMdd");
+        var cosPath = $"/{yyyyMMdd}/{name}"; //对象在存储桶中的位置标识符，即称对象键
+
+        
         var localPath = Path.Combine(_webHostEnvironment.ContentRootPath, "Content", "Upload", yyyyMMdd);
         if (Directory.Exists(localPath) == false)
         {
@@ -87,7 +88,7 @@ public class CosFileStorage : IFileStorage
         return new UploadFileResult()
         {
             Success = true,
-            Url = "/"
+            Url = cosPath
         };
     }
 }
