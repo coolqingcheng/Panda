@@ -5,10 +5,14 @@ using Panda.Entity.DataModels;
 
 namespace Panda.Repository;
 
-public class PandaRepository<T> where T:PandaBaseTable
+public class PandaRepository<T> where T : PandaBaseTable
 {
     protected readonly PandaContext _context;
 
+    public async Task<IEnumerable<T>> GetAll()
+    {
+        return await _context.Set<T>().AsQueryable().ToListAsync();
+    }
 
     public IQueryable<T> Where(Expression<Func<T, bool>> expression)
     {
@@ -38,15 +42,15 @@ public class PandaRepository<T> where T:PandaBaseTable
 
     public async Task SaveAsync()
     {
-       await  _context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteOne(Expression<Func<T, bool>> expression)
+    public async Task DeleteRange(Expression<Func<T, bool>> expression)
     {
-        var item = await Where(expression).FirstOrDefaultAsync();
-        if (item!=null)
+        var list = await Where(expression).ToListAsync();
+        if (list != null)
         {
-            _context.Remove(item);
+            _context.RemoveRange(list);
             await _context.SaveChangesAsync();
         }
     }

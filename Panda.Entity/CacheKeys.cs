@@ -9,4 +9,9 @@ public class CacheKeys
     /// 所有分类
     /// </summary>
     public const string Categories = "_Categories_";
+
+    /// <summary>
+    /// 字典
+    /// </summary>
+    public const string DicDataGroupNameKey = "_dic_data_";
 }

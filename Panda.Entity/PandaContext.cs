@@ -18,7 +18,7 @@ public class PandaContext : DbContext
 
     public DbSet<Pages> Pages { get; set; }
 
-    public DbSet<Dictionaries> Dictionaries { get; set; }
+    public DbSet<DicDatas> DicDatas { get; set; }
 
     public DbSet<FriendlyLinks> FriendlyLinks { get; set; }
 
@@ -48,6 +48,7 @@ public class PandaContext : DbContext
         modelBuilder.Entity<Posts>().Property(a => a.Text).HasColumnType("longtext");
         modelBuilder.Entity<Posts>().Property(a => a.Content).HasColumnType("longtext");
         modelBuilder.Entity<Posts>().HasIndex(a => new { a.Text, a.Title }).IsFullText(fullText: true, parser: "ngram");
+        modelBuilder.Entity<DicDatas>().Property(a => a.Pid).HasDefaultValue(0);
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())

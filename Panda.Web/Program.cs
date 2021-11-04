@@ -36,7 +36,7 @@ builder.Services.AddDbContextPool<PandaContext>(
 builder.Services.AddEasyCaching(options =>
 {
     //use memory cache that named default
-    options.UseInMemory("default");
+    options.UseInMemory(opt => { opt.DBConfig.SizeLimit = 2000; });
 });
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 builder.Services.AddControllersWithViews(opt =>

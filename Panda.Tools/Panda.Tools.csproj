@@ -19,6 +19,8 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.10" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
         <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.2" />
+        <PackageReference Include="Tencent.QCloud.Cos.Sdk" Version="5.4.24" />
+        <PackageReference Include="TencentCloudSDK" Version="3.0.399" />
     </ItemGroup>
 
 </Project>

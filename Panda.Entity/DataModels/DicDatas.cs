@@ -2,25 +2,27 @@
 
 namespace Panda.Entity.DataModels;
 
-public class Dictionaries:PandaBaseTable
+public class DicDatas : PandaBaseTable
 {
-    /// <summary>
-    /// 分组
-    /// </summary>
-    [Required]
-    public string GroupName { get; set; }
-
     /// <summary>
     /// 字典Key
     /// </summary>
-    [Required]
+    [Required, StringLength(50)]
     public string DicKey { get; set; }
-
 
     /// <summary>
     /// 字典Value
     /// </summary>
     public string DicValue { get; set; }
-    
-    
+
+
+    /// <summary>
+    /// 描述
+    /// </summary>
+    public string Description { get; set; }
+
+    /// <summary>
+    /// 上级
+    /// </summary>
+    public int Pid { get; set; }
 }
