@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using Panda.Entity;
 using Panda.Entity.DataModels;
 
@@ -15,9 +16,10 @@ public class DicDataRepository : PandaRepository<DicDatas>
         var item = Where(a => a.DicKey == groupName && a.Pid == 0);
         return item;
     }
-    public IQueryable<DicDatas> WhereItemsByGroupName(string groupName)
+
+    public async Task<List<DicDatas>> WhereItemsByGroupName(string groupName)
     {
-        var item = Where(a => a.DicKey == groupName && a.Pid == 0);
-        return item;
+        var groupItem = await Where(a => a.DicKey == groupName && a.Pid == 0).FirstOrDefaultAsync();
+        return await Where(a => a.Pid == groupItem.Id).ToListAsync();
     }
 }

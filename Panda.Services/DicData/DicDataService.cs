@@ -89,16 +89,17 @@ public class DicDataService : IDicDataService
 
     public async Task<DicDataChildInfo> GetItem(string groupName, string key)
     {
-        var result = await _caching.GetAsync<DicDataChildInfo>(CacheKeys.DicDataGroupNameKey + groupName, async () =>
-        {
-            var list = await _dataRepository.WhereItemsByGroupName(groupName).ToListAsync();
-            var item = list.Where(a => a.DicKey == key).Select(a => new DicDataChildInfo()
+        var result = await _caching.GetAsync<DicDataChildInfo>(CacheKeys.DicDataGroupNameKey + groupName + key,
+            async () =>
             {
-                Key = a.DicKey, Value = a.DicValue, Description = a.Description
-            }).FirstOrDefault() ?? null;
-            if (item != null) return item;
-            throw new UserException($"没有找到字典组{groupName}下的{key}");
-        }, TimeSpan.FromDays(1));
+                var list = await _dataRepository.WhereItemsByGroupName(groupName);
+                var item = list.Where(a => a.DicKey == key).Select(a => new DicDataChildInfo()
+                {
+                    Key = a.DicKey, Value = a.DicValue, Description = a.Description
+                }).FirstOrDefault() ?? null;
+                if (item != null) return item;
+                throw new UserException($"没有找到字典组{groupName}下的{key}");
+            }, TimeSpan.FromDays(1));
         if (result.HasValue)
         {
             return result.Value;
