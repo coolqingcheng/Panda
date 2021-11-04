@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Panda.Tools.FileStorage;
 using Panda.Tools.Security;
+using Panda.Tools.Web;
 
 namespace Panda.Tools;
 
@@ -10,7 +11,7 @@ public static class PandaToolsExtension
     {
         serviceCollection.AddHttpContextAccessor();
         serviceCollection.AddScoped<IdentitySecurity>();
-        serviceCollection.AddScoped<IFileStorage, LocalFileStorage>();
+        serviceCollection.AddScoped<IFileStorage, CosFileStorage>();
         return serviceCollection;
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Panda.Entity;
 using Panda.Entity.UnitOfWork;
+using Panda.Services.DicData;
 using Panda.Tools;
 using Panda.Tools.Filter;
 using Panda.Tools.Web;
@@ -36,7 +37,11 @@ builder.Services.AddDbContextPool<PandaContext>(
 builder.Services.AddEasyCaching(options =>
 {
     //use memory cache that named default
-    options.UseInMemory(opt => { opt.DBConfig.SizeLimit = 2000; });
+    options.UseInMemory(opt =>
+    {
+        opt.DBConfig.SizeLimit = 2000;
+        opt.CacheNulls = true;
+    });
 });
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 builder.Services.AddControllersWithViews(opt =>
@@ -50,6 +55,7 @@ builder.Services.AddControllersWithViews(opt =>
     options.JsonSerializerOptions.Converters.Add(new DateTimeNullConverter());
 });
 builder.Services.AddTools();
+builder.Services.AddScoped<IDicDataProvider, EFDicDataProvider>();
 
 builder.Services.AddAntiforgery(options =>
     options.HeaderName = "X-CSRF-TOKEN"

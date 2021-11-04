@@ -6,7 +6,7 @@ namespace Panda.Repository.DicData;
 
 public class DicDataRepository : PandaRepository<DicDatas>
 {
-    protected DicDataRepository(PandaContext context) : base(context)
+    public DicDataRepository(PandaContext context) : base(context)
     {
     }
 

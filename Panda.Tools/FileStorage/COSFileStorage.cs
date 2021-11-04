@@ -1,4 +1,5 @@
-﻿using COSXML;
+﻿using System.Diagnostics;
+using COSXML;
 using COSXML.Auth;
 using COSXML.Model.Object;
 using COSXML.Model.Bucket;
@@ -6,6 +7,7 @@ using COSXML.CosException;
 using COSXML.Transfer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Panda.Tools.Exception;
 using Panda.Tools.Web;
 
 namespace Panda.Tools.FileStorage;
@@ -31,17 +33,17 @@ public class CosFileStorage : IFileStorage
         var config = new CosXmlConfig.Builder()
             .SetRegion(await _dicDataProvider
                 .GetDefaultGroupName(
-                    "COS_REGION")) // 设置默认的区域, COS 地域的简称请参照 https://cloud.tencent.com/document/product/436/6224
+                    "cos_region")) // 设置默认的区域, COS 地域的简称请参照 https://cloud.tencent.com/document/product/436/6224
             .Build();
 
         var secretId =
             await _dicDataProvider
                 .GetDefaultGroupName(
-                    "SECRET_ID"); // 云 API 密钥 SecretId, 获取 API 密钥请参照 https://console.cloud.tencent.com/cam/capi
+                    "secret_id"); // 云 API 密钥 SecretId, 获取 API 密钥请参照 https://console.cloud.tencent.com/cam/capi
         var secretKey =
             await _dicDataProvider
                 .GetDefaultGroupName(
-                    "SECRET_KEY"); // 云 API 密钥 SecretKey, 获取 API 密钥请参照 https://console.cloud.tencent.com/cam/capi
+                    "secret_key"); // 云 API 密钥 SecretKey, 获取 API 密钥请参照 https://console.cloud.tencent.com/cam/capi
         long durationSecond = 600; //每次请求签名有效时长，单位为秒
         QCloudCredentialProvider qCloudCredentialProvider = new DefaultQCloudCredentialProvider(secretId,
             secretKey, durationSecond);
@@ -51,7 +53,7 @@ public class CosFileStorage : IFileStorage
         // 初始化 TransferManager
         var transferManager = new TransferManager(cosXml, transferConfig);
         // 存储桶名称，此处填入格式必须为 bucketname-APPID, 其中 APPID 获取参考 https://console.cloud.tencent.com/developer
-        var bucket = await _dicDataProvider.GetDefaultGroupName("Bucket");
+        var bucket = await _dicDataProvider.GetDefaultGroupName("bucket");
         var cosPath = "exampleobject"; //对象在存储桶中的位置标识符，即称对象键
 
         //保存到本地
@@ -68,17 +70,24 @@ public class CosFileStorage : IFileStorage
         var uploadTask = new COSXMLUploadTask(bucket, cosPath);
         uploadTask.SetSrcPath(srcPath);
 
-        uploadTask.progressCallback = (completed, total) =>
-            Console.WriteLine($"progress = {completed * 100.0 / total:##.##}%");
-        var result = await transferManager.UploadAsync(uploadTask);
-        Console.WriteLine(result.GetResultInfo());
-        File.Delete(srcPath);
-        var eTag = result.eTag;
+        try
+        {
+            uploadTask.progressCallback = (completed, total) =>
+                Console.WriteLine($"progress = {completed * 100.0 / total:##.##}%");
+            var result = await transferManager.UploadAsync(uploadTask);
+            Console.WriteLine(result.GetResultInfo());
+            File.Delete(srcPath);
+        }
+        catch (System.Exception e)
+        {
+            Debug.Fail(e.Message, e.StackTrace);
+            throw new UserException("上传失败,请检查配置是否正确");
+        }
 
         return new UploadFileResult()
         {
             Success = true,
-            Url = result.GetResultInfo()
+            Url = "/"
         };
     }
 }

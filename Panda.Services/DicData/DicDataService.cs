@@ -56,6 +56,8 @@ public class DicDataService : IDicDataService
             });
         }
 
+        await _caching.RemoveAsync(CacheKeys.DicDataGroupNameKey);
+
         await _unitOfWork.CommitAsync();
     }
 
@@ -97,6 +99,11 @@ public class DicDataService : IDicDataService
             if (item != null) return item;
             throw new UserException($"没有找到字典组{groupName}下的{key}");
         }, TimeSpan.FromDays(1));
-        return result.Value;
+        if (result.HasValue)
+        {
+            return result.Value;
+        }
+
+        throw new UserException($"没有找到字典组{groupName}下的{key}");
     }
 }
