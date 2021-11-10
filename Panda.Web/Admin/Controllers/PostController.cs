@@ -6,11 +6,11 @@ using Panda.Services.Posts;
 
 namespace Panda.Web.Admin.Controllers;
 
-public class ArticleController : AdminBaseController
+public class PostController : AdminBaseController
 {
     private readonly IPostService _articleService;
 
-    public ArticleController(IPostService articleService)
+    public PostController(IPostService articleService)
     {
         _articleService = articleService;
     }

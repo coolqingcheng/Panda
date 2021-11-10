@@ -85,10 +85,14 @@ public class CosFileStorage : IFileStorage
             throw new UserException("上传失败,请检查配置是否正确");
         }
 
+        var host =  await _dicDataProvider
+            .GetDefaultGroupName(
+                "host");
+
         return new UploadFileResult()
         {
             Success = true,
-            Url = cosPath
+            Url = host + cosPath
         };
     }
 }

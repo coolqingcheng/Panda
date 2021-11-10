@@ -1,6 +1,8 @@
 <template>
-    <left-menu>
-        <template #menu></template>
+    <left-menu-layout>
+        <template #menu>
+            <LeftMenu></LeftMenu>
+        </template>
         <template #content>
             <el-form
                 label-width="80px"
@@ -8,6 +10,7 @@
                 :rules="rules"
                 ref="formRef"
                 :model="formModel"
+                label-position="top"
             >
                 <el-form-item label="标题" prop="title">
                     <el-input placeholder="输入标题" v-model="formModel.title"></el-input>
@@ -31,7 +34,7 @@
                 </el-form-item>
             </el-form>
         </template>
-    </left-menu>
+    </left-menu-layout>
 </template>
 
 <script  lang="ts">
@@ -40,9 +43,10 @@ import { ElForm, ElMessage } from "element-plus";
 import { get, http, post } from "shared/http/HttpClient";
 import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import LeftMenu from "../../../components/LeftMenu.vue";
+import LeftMenuLayout from "../../../components/LeftMenuLayout.vue";
 import WangEditor from "../../../components/WangEditor.vue";
 import { CategoryItem } from "../categories/CategoryModel";
+import LeftMenu from "./LeftMenu.vue";
 
 
 interface articleItem {
@@ -55,7 +59,8 @@ interface articleItem {
 export default defineComponent({
     components: {
         WangEditor,
-        LeftMenu
+        LeftMenu,
+        LeftMenuLayout
     },
     setup() {
         const formModel = ref<articleItem>({
@@ -85,11 +90,13 @@ export default defineComponent({
                 if (valid) {
                     try {
                         loading.value = true;
-                        await post('/admin/article/addorupdate', formModel.value)
+                        await post('/admin/post/addorupdate', formModel.value)
                         ElMessage({
                             type: 'success',
                             message: '保存成功'
                         })
+                        formRef.value?.resetFields();
+                        router.push('/dash/post')
                     } finally {
                         loading.value = false
                     }
@@ -99,13 +106,14 @@ export default defineComponent({
 
         const rules = {
             title: [{
-                required: true, message: '标题不能为空'
+                required: true, message: '标题不能为空',
+                trigger: 'blur'
             }],
             content: [{
                 required: true, message: '内容不能为空'
             }],
             categories: [{
-                required: true, message: '分类至少选择一个'
+                required: true, message: '分类至少选择一个', trigger: 'blur'
             }]
         }
 
@@ -117,6 +125,20 @@ export default defineComponent({
         }
 
         console.log('params:', route.query.id)
+
+        router.afterEach(guard => {
+            console.log('id:' + route.query.id)
+            if (!route.query.id) {
+                reSet();
+            }
+        })
+
+        const reSet = () => {
+            formRef.value?.resetFields();
+            setTimeout(() => {
+                formRef.value?.clearValidate();
+            }, 200);
+        }
 
 
 
@@ -136,6 +158,7 @@ export default defineComponent({
                         id: res.id
                     }
                     console.log('formModel:', JSON.stringify(formModel.value.categories))
+
 
                 }
             } finally {

@@ -48,6 +48,9 @@ public class PandaContext : DbContext
         modelBuilder.Entity<Posts>().Property(a => a.Text).HasColumnType("longtext");
         modelBuilder.Entity<Posts>().Property(a => a.Content).HasColumnType("longtext");
         modelBuilder.Entity<Posts>().HasIndex(a => new { a.Text, a.Title }).IsFullText(fullText: true, parser: "ngram");
+        modelBuilder.Entity<Posts>().HasIndex(a => new { a.Id, a.Status });
+        modelBuilder.Entity<Posts>().HasIndex(a => a.CustomLink);
+        modelBuilder.Entity<Posts>().HasIndex(a => a.UpdateTime);
         modelBuilder.Entity<DicDatas>().Property(a => a.Pid).HasDefaultValue(0);
     }
 

@@ -80,7 +80,7 @@ export default {
         var isLogin = await http.get('/admin/account/islogin')
         console.log('islogin ', isLogin)
         if (isLogin) {
-          router.replace('/dash')
+          router.replace('/admin/dash')
         }
       } finally {
         loading.value = false

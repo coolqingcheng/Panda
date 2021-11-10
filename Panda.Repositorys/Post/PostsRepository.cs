@@ -34,7 +34,7 @@ public class PostRepository : PandaRepository<Posts>
 
     public async Task<PageDto<ArticleItem>> GetArticleList(PostRequest request)
     {
-        var query = _context.Posts.AsQueryable();
+        var query = _context.Posts.Where(a=>a.Status==PostStatus.Publish);
         if (request.CategoryId > 0)
         {
             var category = await _context.Categories.Where(a => a.Id == request.CategoryId).FirstOrDefaultAsync();
@@ -72,6 +72,7 @@ public class PostRepository : PandaRepository<Posts>
                     Title = a.Title,
                     Id = a.Id,
                     UpdateTime = a.UpdateTime,
+                    Status = a.Status,
                     CategoryItems = a.ArticleCategoryRelations.Select(b => new AdminCategoryItem()
                     {
                         Id = b.Categories.Id,

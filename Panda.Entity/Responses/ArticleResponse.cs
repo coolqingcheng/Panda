@@ -1,3 +1,5 @@
+using Panda.Entity.DataModels;
+
 namespace Panda.Entity.Responses;
 
 public class ArticleResponse
@@ -18,6 +20,8 @@ public class AdminPostItemResponse
     public DateTime UpdateTime { get; set; }
 
     public string AccountName { get; set; }
+
+    public PostStatus Status { get; set; }
 
     public List<AdminCategoryItem> CategoryItems { get; set; }
 }

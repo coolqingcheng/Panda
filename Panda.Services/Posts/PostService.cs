@@ -49,17 +49,19 @@ public class PostService : IPostService
 
     public async Task<ArticleDetailItem> GetArticle(int id)
     {
-        var item = await _postRepository.Where(a => a.Id == id).Include(a => a.Account).Select(a =>
-            new ArticleDetailItem
-            {
-                Id = a.Id,
-                Title = a.Title,
-                Summary = a.Summary,
-                Content = a.Content,
-                AddTime = a.AddTime,
-                AccountId = a.Account.Id,
-                AccountName = a.Account.UserName
-            }).FirstOrDefaultAsync();
+        var item = await _postRepository.Where(a => a.Id == id && a.Status == PostStatus.Publish)
+            .Include(a => a.Account).Select(a =>
+                new ArticleDetailItem
+                {
+                    Id = a.Id,
+                    Title = a.Title,
+                    Summary = a.Summary,
+                    Content = a.Content,
+                    AddTime = a.AddTime,
+                    AccountId = a.Account.Id,
+                    AccountName = a.Account.UserName,
+                    Status = a.Status
+                }).FirstOrDefaultAsync();
         var categories = await _categoryRepository.GetCategories(item.Id);
         item.Categories = categories.Select(a => new ArticleCategories()
         {
@@ -81,13 +83,16 @@ public class PostService : IPostService
             {
                 throw new UserException("修改的文章不存在");
             }
+
             article.Content = request.Content;
             article.Text = text;
             article.Summary = text.GetSummary(80);
             article.UpdateTime = DateTime.Now;
             await _postRepository.SaveAsync();
-            var beforeCategories = await _postCategoryRelationRepository.Where(a=>a.Posts==article).Select(a => a.Categories.Id).ToListAsync();
-            var afterCategories = await _categoryRepository.Where(a => request.Categories.Contains(a.Id)).Select(a=>a.Id).ToListAsync();
+            var beforeCategories = await _postCategoryRelationRepository.Where(a => a.Posts == article)
+                .Select(a => a.Categories.Id).ToListAsync();
+            var afterCategories = await _categoryRepository.Where(a => request.Categories.Contains(a.Id))
+                .Select(a => a.Id).ToListAsync();
             await _postCategoryRelationRepository.DiffUpdateRelation(article, beforeCategories, afterCategories);
         }
         else
@@ -120,7 +125,6 @@ public class PostService : IPostService
     {
         var res = await _postRepository.AdminGetList(request);
         return res;
-
     }
 
     public async Task<PageDto<AdminPostItemResponse>> Search(string keyword)

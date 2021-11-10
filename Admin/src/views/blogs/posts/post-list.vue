@@ -1,15 +1,22 @@
 <template>
-  <left-menu>
+  <left-menu-layout>
     <template #menu>
-      <h2 class>操作</h2>
-      <router-link to="post/write">写一篇</router-link>
-      <router-link to="post/write">草稿箱</router-link>
-      <router-link to="post/write">标签管理</router-link>
-      <router-link to="post/write">博客搬家</router-link>
+      <left-menu></left-menu>
     </template>
-    <template v-slot:content>
-      <el-table :data="data.list" v-loading="loading">
-        <el-table-column label="标题" prop="title"></el-table-column>
+    <template #content>
+      <el-table :data="data.list" v-loading="loading" border>
+        <el-table-column label="标题" prop="title">
+          <template #default="scope">
+            <a :href="`/post/${scope.row.id}.html`" target="_blank">{{ scope.row.title }}</a>
+          </template>
+        </el-table-column>
+        <el-table-column label="状态" prop="status" width="80">
+          <template #default="scope">
+            <el-tag v-if="scope.row.status == 0" type="success">发布</el-tag>
+            <el-tag v-if="scope.row.status == 1" type="warning">草稿</el-tag>
+            <el-tag v-if="scope.row.status == 2" type="info">隐藏</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column label="分类" prop="categoryItems" width="200">
           <template #default="scope">
             <el-space>
@@ -31,7 +38,7 @@
         @current-change="currentChange"
       ></el-pagination>
     </template>
-  </left-menu>
+  </left-menu-layout>
 </template>
 
 <script lang="ts">
@@ -41,7 +48,7 @@ import { useRouter } from "vue-router";
 import { get } from 'shared/http/HttpClient'
 
 import { PageResponse } from 'shared/base'
-import LeftMenu from "../../../components/LeftMenu.vue";
+import LeftMenu from "./LeftMenu.vue";
 
 interface ArticleItem {
   id: number
@@ -63,7 +70,7 @@ export default defineComponent({
 
     const router = useRouter();
     const edit = (item: ArticleItem) => {
-      router.push({ path: "/article-write", query: { id: item.id } })
+      router.push({ path: "/admin/post/write", query: { id: item.id } })
     }
 
     const data = ref<{ list: ArticleItem[], total: number }>({
@@ -81,7 +88,7 @@ export default defineComponent({
     const loadData = async () => {
       loading.value = true
       try {
-        var res = await get<PageResponse<ArticleItem>>('/admin/article/getlist', params.value)
+        var res = await get<PageResponse<ArticleItem>>('/admin/post/getlist', params.value)
         data.value.list = res.data
         data.value.total = res.total
       } finally {

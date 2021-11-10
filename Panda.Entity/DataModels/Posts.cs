@@ -1,13 +1,14 @@
-
-
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace Panda.Entity.DataModels;
 
-public class Posts:PandaBaseTable
+public class Posts : PandaBaseTable
 {
-
+    [StringLength(50)]
+    public string CustomLink { get; set; }
     /// <summary>
     /// 标题
     /// </summary>
@@ -34,10 +35,36 @@ public class Posts:PandaBaseTable
     /// </summary>
     public Accounts Account { get; set; }
 
-    /// <summary>
-    /// 修改时间
-    /// </summary>
-    public DateTime UpdateTime { get; set; }
 
-    public List<PostsCategoryRelations> ArticleCategoryRelations { get; set; }
+    /// <summary>
+    /// 状态
+    /// </summary>
+    public PostStatus Status { get; set; }
+
+    /// <summary>
+    /// 是否允许评论
+    /// </summary>
+    [DefaultValue(true)]
+    public bool AllowComment { get; set; }
+
+
+    public ICollection<PostsCategoryRelations> ArticleCategoryRelations { get; set; }
+}
+
+public enum PostStatus
+{
+    /// <summary>
+    /// 发布
+    /// </summary>
+    [Description("发布")] Publish = 0,
+
+    /// <summary>
+    /// 草稿箱
+    /// </summary>
+    [Description("草稿箱")] Draft = 1,
+
+    /// <summary>
+    /// 隐藏
+    /// </summary>
+    [Description("隐藏")] Hide = 2
 }

@@ -1,3 +1,4 @@
+using Panda.Entity.DataModels;
 using Panda.Entity.Requests;
 using Panda.Tools.Models;
 
@@ -25,6 +26,8 @@ public class ArticleItem
     public int? AccountId { get; set; }
 
     public string? AccountName { get; set; }
+
+    public PostStatus Status { get; set; }
 
     /// <summary>
     /// 分类

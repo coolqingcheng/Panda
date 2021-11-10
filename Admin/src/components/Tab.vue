@@ -21,7 +21,6 @@ export default {
     setup() {
         const router = useRouter();
         router.afterEach(guard => {
-            console.log('router:', guard)
             activePath.value = guard.path
         })
 
@@ -29,19 +28,24 @@ export default {
 
         const tabList = ref([
             {
+                label: '仪表盘',
+                active: ['/admin/dash'],
+                path:'/admin/dash'
+            },
+            {
                 label: '文章',
-                active: ['/dash', '/dash/post', '/dash/post/write', '/dash/post/tags', '/dash/post/categories'],
-                path: '/dash/post'
+                active: ['/admin/post', '/admin/post/write'],
+                path: '/admin/post'
             },
             {
                 label: '评论',
-                active: '/post',
+                active: '/admin/',
                 path: '/'
             },
             {
                 label: '标签',
-                active: '/post',
-                path: '/'
+                active: ['/admin/tag','/admin/tag/edit'],
+                path: '/admin/tag'
             },
             {
                 label: '媒体',
@@ -50,13 +54,13 @@ export default {
             },
             {
                 label: '页面',
-                active: ['/dash/pages', '/dash/pages-write'],
-                path: '/dash/pages'
+                active: ['/admin/pages', '/admin/pages-write'],
+                path: '/admin/pages'
             },
             {
                 label: '设置',
-                active: '/post',
-                path: '/'
+                active: ['/admin/setting'],
+                path: '/admin/setting'
             }
         ])
 
@@ -97,7 +101,7 @@ export default {
         li {
             padding: 10px 8px;
             border: 1px solid var(--el-border-color-light);
-            font-size: 18px;
+            font-size: 16px;
             a {
                 color: black;
             }

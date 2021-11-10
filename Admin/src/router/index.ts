@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 
-import { dashRoute } from './dash'
+import { dashRoute } from './admin'
 import { authRoute } from './auth'
 
 

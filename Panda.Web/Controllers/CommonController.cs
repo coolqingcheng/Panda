@@ -43,7 +43,7 @@ public class CommonController : Controller
         var buffer = new byte[stream.Length];
         await stream.ReadAsync(buffer);
         // todo 图片水印功能
-        var file = await _fileStorage.SaveAsync(buffer, $"{Md5Helper.ComputeHash(buffer)}.{regex.Value}");
+        var file = await _fileStorage.SaveAsync(buffer, $"{Md5Helper.ComputeHash(buffer)[..10]}.{regex.Value}");
         if (file.Success == false)
         {
             return new UploadResult {Code = 1, Message = file.Message};

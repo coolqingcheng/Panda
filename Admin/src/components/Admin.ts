@@ -4,7 +4,7 @@ import FullScreen from "./FullScreen.vue";
 import BreadCrumb from "./BreadCrumb.vue"
 import RouteTab from "./RouteTab.vue"
 import Tab from "./Tab.vue"
-import LeftMenu from "./LeftMenu.vue"
+import LeftMenuLayout from "./LeftMenuLayout.vue"
 
 export default {
     install(app: App<Element>) {
@@ -12,6 +12,6 @@ export default {
         app.component(BreadCrumb.name, BreadCrumb)
         app.component(RouteTab.name, RouteTab)
         app.component(Tab.name, Tab)
-        app.component(LeftMenu.name, LeftMenu)
+        app.component(LeftMenuLayout.name, LeftMenuLayout)
     }
 }

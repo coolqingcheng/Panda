@@ -276,9 +276,20 @@ namespace Panda.Entity.Migrations
                     b.Property<DateTime>("AddTime")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<bool>("AllowComment")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<string>("CustomLink")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<string>("Summary")
                         .IsRequired()
@@ -299,6 +310,12 @@ namespace Panda.Entity.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AccountId");
+
+                    b.HasIndex("CustomLink");
+
+                    b.HasIndex("UpdateTime");
+
+                    b.HasIndex("Id", "Status");
 
                     b.HasIndex("Text", "Title")
                         .HasAnnotation("MySql:FullTextIndex", true)

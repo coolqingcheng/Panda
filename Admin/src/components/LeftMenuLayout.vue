@@ -20,7 +20,16 @@ export default {
     display: flex;
     flex-direction: row;
     width: 100%;
-    h2 {
+   
+}
+.menu {
+    min-width: 180px;
+    // border-right: 1px solid var(--el-border-color-light);
+    display: flex;
+    flex-direction: column;
+    padding-right: 10px;
+    box-sizing: border-box;
+     h2 {
         background: #b3c0d1;
         font-size: 14px;
         text-align: center;
@@ -37,14 +46,6 @@ export default {
             text-decoration: underline;
         }
     }
-}
-.menu {
-    min-width: 180px;
-    border-right: 1px solid var(--el-border-color-light);
-    display: flex;
-    flex-direction: column;
-    padding-right: 10px;
-    box-sizing: border-box;
 }
 .content {
     display: flex;
