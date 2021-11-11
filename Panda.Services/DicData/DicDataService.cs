@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Panda.Entity;
 using Panda.Entity.DataModels;
+using Panda.Entity.Migrations;
 using Panda.Entity.Requests;
 using Panda.Entity.Responses;
 using Panda.Entity.UnitOfWork;
@@ -106,5 +107,47 @@ public class DicDataService : IDicDataService
         }
 
         throw new UserException($"没有找到字典组{groupName}下的{key}");
+    }
+}
+
+public class DicDataValidator
+{
+    private readonly List<DicDataRequest> _dicDataRequests = new();
+
+
+    private void Init()
+    {
+        _dicDataRequests.Add(new(groupInfo: new DicDataGroupInfo(name: "tencent_cos", description: "腾讯云COS"),
+            childInfos: new List<DicDataChildInfo>()
+            {
+                new(key: "cos_region", description: "COS 地域的简称"),
+                new(key: "secret_id", description: "云 API 密钥 SecretId"),
+                new(key: "secret_key", description: "云 API 密钥 SecretKey"),
+                new(key: "bucket", description: "存储桶名称，此处填入格式必须为 bucketname-APPID"),
+                new(key: "host", description: "访问默认域名")
+            }));
+    }
+
+    public DicDataRequest Validate(DicUpdateRequest request)
+    {
+        Init();
+        var dicItem = _dicDataRequests.FirstOrDefault(a => a.GroupInfo.Name == request.GroupKey);
+        if (dicItem == null)
+        {
+            throw new UserException("groupKey不能为空");
+        }
+
+        foreach (var childInfo in dicItem.ChildInfos)
+        {
+            var value = request.List.FirstOrDefault(a => a.Key == childInfo.Key).Value;
+            if (value == null)
+            {
+                throw new UserException($"配置项:{childInfo.Key}不能为空");
+            }
+
+            childInfo.Value = value;
+        }
+
+        return dicItem;
     }
 }
