@@ -11,5 +11,14 @@ public interface IDicDataService
 
     Task Delete(string groupName);
 
-    Task<DicDataChildInfo> GetItem(string groupName, string key);
+    /// <summary>
+    /// 获取配置项目，可能是缓存中获取
+    /// </summary>
+    /// <param name="groupName"></param>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    Task<DicDataChildInfo> GetItemByCache(string groupName, string key);
+
+
+    Task<IEnumerable<DicDataChildInfo>> GetItemByGroupName(string groupName);
 }

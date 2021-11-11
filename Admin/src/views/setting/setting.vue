@@ -1,12 +1,13 @@
 <template>
     <el-card>
-        <el-tabs>
+        <el-tabs lazy>
              <el-tab-pane label="站点配置">
                 <Site></Site>
             </el-tab-pane>
             <el-tab-pane label="腾讯云COS配置">
                 <Cos></Cos>
             </el-tab-pane>
+            <el-tab-pane label="微信公众号"></el-tab-pane>
             <el-tab-pane label="系统配置"></el-tab-pane>
             <el-tab-pane label="定时任务"></el-tab-pane>
         </el-tabs>

@@ -62,7 +62,7 @@ export default {
             await http.post("/admin/account/login", { userName: loginForm.userName, password: loginForm.pass })
             setTimeout(() => {
               loading.value = false
-              router.replace('/dash')
+              router.replace('/admin/dash')
               ElMessage({ message: '登录成功！', showClose: false, type: 'success' })
             }, 100);
           } finally {

@@ -30,9 +30,9 @@
 </template>
 
 <script lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { ElForm } from 'element-plus';
-import { post } from 'shared/http/HttpClient';
+import { post, get } from 'shared/http/HttpClient';
 export default {
     setup() {
         const loading = ref(false);
@@ -65,19 +65,42 @@ export default {
 
         const form = ref<InstanceType<typeof ElForm>>()
 
-        const submit = ()=>{
+        const submit = () => {
             console.log(form.value)
-             form.value?.validate(async(valid)=>{
-                 console.log('valid:'+valid)
-                 if(valid){
-                     console.log(formModel.value)
-                     post('/admin/dicdata/update')
-                 }
-             });
+            loading.value = true
+            form.value?.validate(async (valid) => {
+                console.log('valid:' + valid)
+                if (valid) {
+                    console.log(formModel.value)
+                    await post('/admin/dicdata/update', {
+                        groupKey: 'tencent_cos',
+                        list: formModel.value
+                    })
+                }
+                loading.value = false;
+            });
         }
 
+        const load = async () => {
+            loading.value = true
+            var res = await get<any>('/admin/dicdata/get', { groupName: 'tencent_cos' })
+            console.log(res)
+            formModel.value = {
+                cos_region: res.cos_region,
+                secret_id: res.secret_id,
+                secret_key: res.secret_key,
+                bucket: res.bucket,
+                host: res.host
+            }
+            loading.value = false
+        }
+
+        onMounted(() => {
+            load();
+        })
+
         return {
-            loading, formModel, rules,form,submit
+            loading, formModel, rules, form, submit
         }
     }
 }

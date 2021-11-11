@@ -43,7 +43,7 @@ public class DicDataService : IDicDataService
         }
         else
         {
-            await _dataRepository.DeleteRange(a => a.Id == groupInfo.Id);
+            await _dataRepository.DeleteRange(a => a.Pid == groupInfo.Id);
         }
 
         foreach (var item in request.ChildInfos)
@@ -88,7 +88,7 @@ public class DicDataService : IDicDataService
         await _dataRepository.DeleteRange(a => a.DicKey == groupName && a.Pid == 0);
     }
 
-    public async Task<DicDataChildInfo> GetItem(string groupName, string key)
+    public async Task<DicDataChildInfo> GetItemByCache(string groupName, string key)
     {
         var result = await _caching.GetAsync<DicDataChildInfo>(CacheKeys.DicDataGroupNameKey + groupName + key,
             async () =>
@@ -108,46 +108,14 @@ public class DicDataService : IDicDataService
 
         throw new UserException($"没有找到字典组{groupName}下的{key}");
     }
-}
 
-public class DicDataValidator
-{
-    private readonly List<DicDataRequest> _dicDataRequests = new();
-
-
-    private void Init()
+    public async Task<IEnumerable<DicDataChildInfo>> GetItemByGroupName(string groupName)
     {
-        _dicDataRequests.Add(new(groupInfo: new DicDataGroupInfo(name: "tencent_cos", description: "腾讯云COS"),
-            childInfos: new List<DicDataChildInfo>()
-            {
-                new(key: "cos_region", description: "COS 地域的简称"),
-                new(key: "secret_id", description: "云 API 密钥 SecretId"),
-                new(key: "secret_key", description: "云 API 密钥 SecretKey"),
-                new(key: "bucket", description: "存储桶名称，此处填入格式必须为 bucketname-APPID"),
-                new(key: "host", description: "访问默认域名")
-            }));
-    }
+        var groupItems = await _dataRepository.WhereItemsByGroupName(groupName);
 
-    public DicDataRequest Validate(DicUpdateRequest request)
-    {
-        Init();
-        var dicItem = _dicDataRequests.FirstOrDefault(a => a.GroupInfo.Name == request.GroupKey);
-        if (dicItem == null)
+        return groupItems.Select(a => new DicDataChildInfo(a.DicKey, a.Description)
         {
-            throw new UserException("groupKey不能为空");
-        }
-
-        foreach (var childInfo in dicItem.ChildInfos)
-        {
-            var value = request.List.FirstOrDefault(a => a.Key == childInfo.Key).Value;
-            if (value == null)
-            {
-                throw new UserException($"配置项:{childInfo.Key}不能为空");
-            }
-
-            childInfo.Value = value;
-        }
-
-        return dicItem;
+            Value = a.DicValue
+        });
     }
 }

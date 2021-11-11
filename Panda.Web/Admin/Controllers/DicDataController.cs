@@ -20,4 +20,12 @@ public class DicDataController : AdminBaseController
         var dto = new DicDataValidator().Validate(request);
         await _dicDataService.AddOrUpdate(dto);
     }
+
+    [HttpGet]
+    public async Task<Dictionary<string, string>> Get(string groupName)
+    {
+        var list =  await _dicDataService.GetItemByGroupName(groupName);
+
+        return list.ToDictionary(info => info.Key, info => info.Value);
+    }
 }
