@@ -26,6 +26,11 @@ public class Categorys:PandaBaseTable
     /// </summary>
     public int Pid { get; set; }
 
+    /// <summary>
+    /// 关联总数
+    /// </summary>
+    public int Count { get; set; }
+
     
     public List<PostsCategoryRelations> ArticleCategoryRelations { get; set; }
 }

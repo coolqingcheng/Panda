@@ -112,6 +112,7 @@ public class PostService : IPostService
             var categories = await _categoryRepository.Where(a => request.Categories.Contains(a.Id)).ToListAsync();
             foreach (var category in categories)
             {
+                category.Count += 1;
                 await _postCategoryRelationRepository.AddRelationAsync(entity, category);
             }
 

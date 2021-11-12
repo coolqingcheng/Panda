@@ -10,8 +10,11 @@
         <el-form-item label="网站名称" prop="site_name">
             <el-input placeholder="网站名称" v-model="formModel.site_name"></el-input>
         </el-form-item>
+        <el-form-item label="图片懒加载">
+            <el-switch v-model="formModel.img_lazy" active-value="true" inactive-value="false"></el-switch>
+        </el-form-item>
         <el-form-item label="ICP备案号" prop="icp">
-            <el-input type="textarea" rows="5" v-model="formModel.icp"></el-input>
+            <el-input rows="5" v-model="formModel.icp"></el-input>
         </el-form-item>
         <el-form-item label="统计代码" prop="statistics">
             <el-input type="textarea" rows="8" v-model="formModel.statistics"></el-input>
@@ -23,7 +26,6 @@
 </template>
 
 <script lang="ts">
-import { ElForm } from 'element-plus'
 import { onMounted, ref } from 'vue'
 import { usBaseForm } from 'shared/useBaseForm'
 import { post, get } from 'shared/http/HttpClient'
@@ -33,7 +35,8 @@ export default {
         const formModel = ref({
             site_name: '',
             icp: '',
-            statistics: ''
+            statistics: '',
+            img_lazy: 'false'
         })
 
         const { instance, loading } = usBaseForm();
@@ -50,11 +53,14 @@ export default {
         const load = async () => {
             var res = await get<any>('/admin/dicdata/get', { groupName: 'site' })
             formModel.value = {
-                site_name: res.site_name, icp: res.icp, statistics: res.statistics
+                site_name: res.site_name, 
+                icp: res.icp, 
+                statistics: res.statistics, 
+                img_lazy: res.img_lazy
             }
         }
 
-        onMounted(()=>{
+        onMounted(() => {
             load();
         })
 

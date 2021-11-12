@@ -12,6 +12,8 @@ import TagEdit from "../views/blogs/tag/tag-edit.vue"
 
 import TabItemContainer from "../views/TabItemContainer.vue"
 
+import Categories from '../views/blogs/categories/Categories.vue'
+
 const dashRoute: RouteRecordRaw[] = [
     {
         path: '/admin',
@@ -37,6 +39,14 @@ const dashRoute: RouteRecordRaw[] = [
                     },
                     {
                         path: '', component: TagList, name: '标签'
+                    }
+                ]
+            },
+            {
+                path: 'categories', component:TabItemContainer,
+                children:[
+                    {
+                        path:'',component:Categories,name:'分类'
                     }
                 ]
             },

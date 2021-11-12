@@ -118,4 +118,12 @@ public class DicDataService : IDicDataService
             Value = a.DicValue
         });
     }
+
+    public async Task<string> GetItemByCache(string section)
+    {
+        var arr =  section.Split(":");
+        if (arr.Length == 0) throw new UserException("section获取字典内容格式必须用:分割");
+        var item =  await GetItemByCache(arr[0], arr[1]);
+        return item.Value;
+    }
 }

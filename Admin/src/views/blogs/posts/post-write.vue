@@ -149,7 +149,7 @@ export default defineComponent({
                 if (route.query.id) {
                     title.value = "编辑"
                     var res = await get<{ title: string, id: number, content: string, categories: { id: number, cateName: string }[] }>
-                        ('/admin/article/get', { id: route.query.id })
+                        ('/admin/post/get', { id: route.query.id })
                     console.log('res:', res)
                     formModel.value = {
                         title: res.title,

@@ -34,7 +34,7 @@ export default {
             },
             {
                 label: '文章',
-                active: ['/admin/post', '/admin/post/write'],
+                active: ['/admin/post', '/admin/post/write','/admin/categories'],
                 path: '/admin/post'
             },
             {
