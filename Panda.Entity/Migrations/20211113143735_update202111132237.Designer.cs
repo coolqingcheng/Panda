@@ -9,8 +9,8 @@ using Panda.Entity;
 namespace Panda.Entity.Migrations
 {
     [DbContext(typeof(PandaContext))]
-    [Migration("20211025092017_update2110251714")]
-    partial class update2110251714
+    [Migration("20211113143735_update202111132237")]
+    partial class update202111132237
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -100,6 +100,9 @@ namespace Panda.Entity.Migrations
                     b.Property<string>("CategoryDesc")
                         .HasColumnType("longtext");
 
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsShow")
                         .HasColumnType("tinyint(1)");
 
@@ -119,7 +122,7 @@ namespace Panda.Entity.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Panda.Entity.DataModels.Dictionaries", b =>
+            modelBuilder.Entity("Panda.Entity.DataModels.DicDatas", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -128,15 +131,48 @@ namespace Panda.Entity.Migrations
                     b.Property<DateTime>("AddTime")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("DicKey")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("DicValue")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Pid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DicDatas");
+                });
+
+            modelBuilder.Entity("Panda.Entity.DataModels.FriendlyLinkRecord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("AddTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("IP")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("GroupName")
+                    b.Property<int>("LinksId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UA")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -145,7 +181,37 @@ namespace Panda.Entity.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Dictionaries");
+                    b.HasIndex("LinksId");
+
+                    b.ToTable("FriendlyLinkRecords");
+                });
+
+            modelBuilder.Entity("Panda.Entity.DataModels.FriendlyLinks", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("AddTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("SiteName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("SiteUrl")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("Weight")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FriendlyLinks");
                 });
 
             modelBuilder.Entity("Panda.Entity.DataModels.Pages", b =>
@@ -161,16 +227,45 @@ namespace Panda.Entity.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("UrlName")
+                    b.Property<string>("Url")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
                     b.ToTable("Pages");
+                });
+
+            modelBuilder.Entity("Panda.Entity.DataModels.PostTags", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("AddTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("PostCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TagName")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PostTags");
                 });
 
             modelBuilder.Entity("Panda.Entity.DataModels.Posts", b =>
@@ -185,13 +280,24 @@ namespace Panda.Entity.Migrations
                     b.Property<DateTime>("AddTime")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<bool>("AllowComment")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("CustomLink")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<string>("Summary")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
 
                     b.Property<string>("Text")
                         .IsRequired()
@@ -207,6 +313,12 @@ namespace Panda.Entity.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AccountId");
+
+                    b.HasIndex("CustomLink");
+
+                    b.HasIndex("UpdateTime");
+
+                    b.HasIndex("Id", "Status");
 
                     b.HasIndex("Text", "Title")
                         .HasAnnotation("MySql:FullTextIndex", true)
@@ -242,6 +354,44 @@ namespace Panda.Entity.Migrations
                     b.ToTable("ArticleCategoryRelations");
                 });
 
+            modelBuilder.Entity("Panda.Entity.DataModels.TagsRelation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("AddTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("PostsId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TagsId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostsId");
+
+                    b.HasIndex("TagsId");
+
+                    b.ToTable("TagsRelations");
+                });
+
+            modelBuilder.Entity("Panda.Entity.DataModels.FriendlyLinkRecord", b =>
+                {
+                    b.HasOne("Panda.Entity.DataModels.FriendlyLinks", "Links")
+                        .WithMany("Records")
+                        .HasForeignKey("LinksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Links");
+                });
+
             modelBuilder.Entity("Panda.Entity.DataModels.Posts", b =>
                 {
                     b.HasOne("Panda.Entity.DataModels.Accounts", "Account")
@@ -270,9 +420,29 @@ namespace Panda.Entity.Migrations
                     b.Navigation("Posts");
                 });
 
+            modelBuilder.Entity("Panda.Entity.DataModels.TagsRelation", b =>
+                {
+                    b.HasOne("Panda.Entity.DataModels.Posts", "Posts")
+                        .WithMany()
+                        .HasForeignKey("PostsId");
+
+                    b.HasOne("Panda.Entity.DataModels.PostTags", "Tags")
+                        .WithMany()
+                        .HasForeignKey("TagsId");
+
+                    b.Navigation("Posts");
+
+                    b.Navigation("Tags");
+                });
+
             modelBuilder.Entity("Panda.Entity.DataModels.Categorys", b =>
                 {
                     b.Navigation("ArticleCategoryRelations");
+                });
+
+            modelBuilder.Entity("Panda.Entity.DataModels.FriendlyLinks", b =>
+                {
+                    b.Navigation("Records");
                 });
 
             modelBuilder.Entity("Panda.Entity.DataModels.Posts", b =>

@@ -13,7 +13,7 @@ public class DicDatas : PandaBaseTable
     /// <summary>
     /// 字典Value
     /// </summary>
-    public string DicValue { get; set; }
+    public string? DicValue { get; set; }
 
 
     /// <summary>

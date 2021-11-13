@@ -139,7 +139,6 @@ namespace Panda.Entity.Migrations
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("DicValue")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("Pid")
@@ -251,9 +250,6 @@ namespace Panda.Entity.Migrations
                     b.Property<DateTime>("AddTime")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
-
                     b.Property<int>("PostCount")
                         .HasColumnType("int");
 
@@ -290,7 +286,6 @@ namespace Panda.Entity.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("CustomLink")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
@@ -359,15 +354,27 @@ namespace Panda.Entity.Migrations
 
             modelBuilder.Entity("Panda.Entity.DataModels.TagsRelation", b =>
                 {
-                    b.Property<int>("PostsId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("TypeId")
+                    b.Property<DateTime>("AddTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("PostsId")
                         .HasColumnType("int");
+
+                    b.Property<int?>("TagsId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("PostsId");
 
-                    b.HasIndex("TypeId");
+                    b.HasIndex("TagsId");
 
                     b.ToTable("TagsRelations");
                 });
@@ -415,19 +422,15 @@ namespace Panda.Entity.Migrations
                 {
                     b.HasOne("Panda.Entity.DataModels.Posts", "Posts")
                         .WithMany()
-                        .HasForeignKey("PostsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PostsId");
 
-                    b.HasOne("Panda.Entity.DataModels.PostTags", "Type")
+                    b.HasOne("Panda.Entity.DataModels.PostTags", "Tags")
                         .WithMany()
-                        .HasForeignKey("TypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TagsId");
 
                     b.Navigation("Posts");
 
-                    b.Navigation("Type");
+                    b.Navigation("Tags");
                 });
 
             modelBuilder.Entity("Panda.Entity.DataModels.Categorys", b =>

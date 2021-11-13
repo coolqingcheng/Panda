@@ -96,7 +96,7 @@ export default defineComponent({
                             message: '保存成功'
                         })
                         formRef.value?.resetFields();
-                        router.push('/dash/post')
+                        router.push('/admin/post')
                     } finally {
                         loading.value = false
                     }

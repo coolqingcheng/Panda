@@ -98,15 +98,9 @@ public class DicDataService : IDicDataService
                 {
                     Key = a.DicKey, Value = a.DicValue, Description = a.Description
                 }).FirstOrDefault() ?? null;
-                if (item != null) return item;
-                throw new UserException($"没有找到字典组{groupName}下的{key}");
+                return item;
             }, TimeSpan.FromDays(1));
-        if (result.HasValue)
-        {
-            return result.Value;
-        }
-
-        throw new UserException($"没有找到字典组{groupName}下的{key}");
+        return result.HasValue ? result.Value : null;
     }
 
     public async Task<IEnumerable<DicDataChildInfo>> GetItemByGroupName(string groupName)
@@ -119,11 +113,11 @@ public class DicDataService : IDicDataService
         });
     }
 
-    public async Task<string> GetItemByCache(string section)
+    public async Task<string?> GetItemByCache(string section)
     {
         var arr =  section.Split(":");
         if (arr.Length == 0) throw new UserException("section获取字典内容格式必须用:分割");
         var item =  await GetItemByCache(arr[0], arr[1]);
-        return item.Value;
+        return item?.Value;
     }
 }

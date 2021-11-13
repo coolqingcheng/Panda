@@ -22,5 +22,5 @@ public interface IDicDataService
 
     Task<IEnumerable<DicDataChildInfo>> GetItemByGroupName(string groupName);
 
-    Task<string> GetItemByCache(string section);
+    Task<string?> GetItemByCache(string section);
 }

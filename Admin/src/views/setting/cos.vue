@@ -72,10 +72,14 @@ export default {
                 console.log('valid:' + valid)
                 if (valid) {
                     console.log(formModel.value)
-                    await post('/admin/dicdata/update', {
-                        groupKey: 'tencent_cos',
-                        list: formModel.value
-                    })
+                    try {
+                        await post('/admin/dicdata/update', {
+                            groupKey: 'tencent_cos',
+                            list: formModel.value
+                        })
+                    } finally {
+                        loading.value = false
+                    }
                 }
                 loading.value = false;
             });

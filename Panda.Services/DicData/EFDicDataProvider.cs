@@ -18,13 +18,13 @@ public class EFDicDataProvider : IDicDataProvider
         DefaultGroupName = groupName;
     }
 
-    public async Task<string> GetDefaultGroupName(string key)
+    public async Task<string?> GetDefaultGroupName(string key)
     {
         var item = await _dicDataService.GetItemByCache(DefaultGroupName, key);
         return item.Value;
     }
 
-    public async Task<string> Get(string @group, string key)
+    public async Task<string?> Get(string @group, string key)
     {
         var item = await _dicDataService.GetItemByCache(@group, key);
         return item.Value;

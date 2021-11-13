@@ -20,6 +20,10 @@ public class DicDataRepository : PandaRepository<DicDatas>
     public async Task<List<DicDatas>> WhereItemsByGroupName(string groupName)
     {
         var groupItem = await Where(a => a.DicKey == groupName && a.Pid == 0).FirstOrDefaultAsync();
+        if (groupItem==null)
+        {
+            return new List<DicDatas>();
+        }
         return await Where(a => a.Pid == groupItem.Id).ToListAsync();
     }
 }

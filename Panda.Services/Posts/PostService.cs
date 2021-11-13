@@ -9,6 +9,7 @@ using Panda.Repository.ArticleCategoryRelation;
 using Panda.Repository.Category;
 using Panda.Tools.Exception;
 using Panda.Tools.Extensions;
+using Panda.Tools.Web.Html;
 using PostRequest = Panda.Entity.Models.PostRequest;
 
 namespace Panda.Services.Posts;
@@ -45,6 +46,13 @@ public class PostService : IPostService
     public async Task<PageDto<ArticleItem>> GetArticleListByCategoryId(PostCategoryRequest request)
     {
         return await Task.FromResult(new PageDto<ArticleItem>());
+    }
+
+    public async Task<ArticleDetailItem> AdminGetArticle(int id)
+    {
+        var item = await GetArticle(id);
+        item.Content = item.Content.RestoreLazyHandler()!;
+        return item;
     }
 
     public async Task<ArticleDetailItem> GetArticle(int id)
@@ -84,7 +92,7 @@ public class PostService : IPostService
                 throw new UserException("修改的文章不存在");
             }
 
-            article.Content = request.Content;
+            article.Content = request.Content.LazyHandler(request.Title)!;
             article.Text = text;
             article.Summary = text.GetSummary(80);
             article.UpdateTime = DateTime.Now;
@@ -102,7 +110,7 @@ public class PostService : IPostService
             var entity = new Entity.DataModels.Posts()
             {
                 Title = request.Title,
-                Content = request.Content,
+                Content = request.Content.LazyHandler(request.Title)!,
                 AddTime = DateTime.Now,
                 UpdateTime = DateTime.Now,
                 Text = text,
