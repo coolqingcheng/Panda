@@ -5,6 +5,8 @@ import BreadCrumb from "./BreadCrumb.vue"
 import RouteTab from "./RouteTab.vue"
 import Tab from "./Tab.vue"
 import LeftMenuLayout from "./LeftMenuLayout.vue"
+import TagBox from "./TagBox.vue"
+import CropperBox from "./CropperBox.vue";
 
 export default {
     install(app: App<Element>) {
@@ -13,5 +15,7 @@ export default {
         app.component(RouteTab.name, RouteTab)
         app.component(Tab.name, Tab)
         app.component(LeftMenuLayout.name, LeftMenuLayout)
+        app.component(TagBox.name,TagBox)
+        app.component(CropperBox.name,CropperBox)
     }
 }

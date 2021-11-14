@@ -24,7 +24,7 @@ public class PostController : AdminBaseController
     [HttpGet]
     public async Task<ArticleDetailItem> Get(int id)
     {
-        return await _articleService.GetArticle(id);
+        return await _articleService.AdminGetArticle(id);
     }
 
     [HttpGet]

@@ -10,6 +10,7 @@
   "dependencies": {
     "@element-plus/icons": "^0.0.11",
     "axios": "^0.21.3",
+    "cropperjs": "^1.5.12",
     "element-plus": "^1.1.0-beta.8",
     "remixicon": "^2.5.0",
     "vue": "^3.2.6",

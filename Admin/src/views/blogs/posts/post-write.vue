@@ -10,7 +10,7 @@
                 :rules="rules"
                 ref="formRef"
                 :model="formModel"
-                label-position="top"
+                label-position="left"
             >
                 <el-form-item label="标题" prop="title">
                     <el-input placeholder="输入标题" v-model="formModel.title"></el-input>
@@ -27,6 +27,14 @@
                             name="categories"
                         >{{ item.cateName }}</el-checkbox>
                     </el-checkbox-group>
+                </el-form-item>
+                <el-form-item label="标签">
+                    <el-select></el-select>
+                </el-form-item>
+                <el-form-item label="封面图">
+                    <el-upload>
+                        <el-button type="info">上传一张封面图</el-button>
+                    </el-upload>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="submitForm()">保存</el-button>

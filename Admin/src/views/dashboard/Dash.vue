@@ -7,7 +7,7 @@
             <SlideMenu></SlideMenu>
         </el-aside>
         <el-container>
-            <el-header>
+            <el-header v-if="false">
                 <div class="q-header-container">
                     <div class="q-header-left"></div>
                     <div class="q-toolbar">

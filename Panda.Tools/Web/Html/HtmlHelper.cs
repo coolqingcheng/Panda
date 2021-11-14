@@ -21,7 +21,6 @@ public static class HtmlHelper
             {
                 img.ClassList.Add("lazy");
             }
-
             var src = img.GetAttribute("src");
             if (string.IsNullOrWhiteSpace(src) != false) continue;
             img.RemoveAttribute("src");
