@@ -10,7 +10,6 @@ public static class PandaToolsExtension
     public static IServiceCollection AddTools(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddHttpContextAccessor();
-        serviceCollection.AddScoped<IdentitySecurity>();
         serviceCollection.AddScoped<IFileStorage, CosFileStorage>();
         return serviceCollection;
     }
