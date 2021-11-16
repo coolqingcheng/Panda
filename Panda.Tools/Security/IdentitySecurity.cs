@@ -1,10 +1,11 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Security.Cryptography;
 
 namespace Panda.Tools.Security;
 
 public class IdentitySecurity
 {
-    public string HashPassword(string password)
+    public static string HashPassword(string password)
     {
         if (password == null)
         {
@@ -25,9 +26,9 @@ public class IdentitySecurity
         return Convert.ToBase64String(array);
     }
 
-    public bool VerifyHashedPassword(string hashedPassword, string password)
+    public static bool VerifyHashedPassword(string hashedPassword, string password)
     {
-        if (hashedPassword == null)
+        if (string.IsNullOrWhiteSpace(hashedPassword))
         {
             return false;
         }
@@ -56,7 +57,7 @@ public class IdentitySecurity
         return ByteArraysEqual(array3, bytes);
     }
 
-    private bool ByteArraysEqual(byte[] a, byte[] b)
+    private static bool ByteArraysEqual(byte[] a, byte[] b)
     {
         if (ReferenceEquals(a, b))
         {
