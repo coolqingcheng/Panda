@@ -17,13 +17,6 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "MYSQL_DB": "Data Source=129.211.57.2;Port=53200;User ID=qingcheng;Password=qingcheng; Initial Catalog=q_blog;Charset=utf8; SslMode=none;Min pool size=1"
       }
-    },
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
     }
   }
 }

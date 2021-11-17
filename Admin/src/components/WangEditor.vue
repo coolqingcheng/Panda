@@ -35,8 +35,9 @@ export default defineComponent({
                 }
             }
             editor.config.height = 600;
+            editor.config.zIndex = 10;
             editor.create();
-            editor.config.zIndex = 1000;
+            
             editor.txt.html(props.modelValue)
             editor.config.onchangeTimeout = 1000;
             editor.config.pasteFilterStyle = false;

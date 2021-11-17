@@ -15,7 +15,7 @@
 import { ref } from 'vue'
 export default {
   setup() {
-    const visible = ref(true)
+    const visible = ref(false)
 
     const url = ref('')
 
@@ -24,8 +24,6 @@ export default {
     }
 
     const close = (e: { base64: string }) => {
-      // visible.value = false
-      console.log(e)
       url.value = e.base64
 
     }

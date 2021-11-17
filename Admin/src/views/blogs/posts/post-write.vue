@@ -29,12 +29,13 @@
                     </el-checkbox-group>
                 </el-form-item>
                 <el-form-item label="标签">
-                    <el-select></el-select>
+                    <tag-box></tag-box>
                 </el-form-item>
                 <el-form-item label="封面图">
-                    <el-upload>
-                        <el-button type="info">上传一张封面图</el-button>
-                    </el-upload>
+                    <div @click="selectImage()">
+                        <el-button type="info" v-if="!formModel.cover">上传一张封面图</el-button>
+                        <img :src="formModel.cover" />
+                    </div>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="submitForm()">保存</el-button>
@@ -43,6 +44,7 @@
             </el-form>
         </template>
     </left-menu-layout>
+    <cropper-box v-model="showCropper" @cropper="cropperSelect"></cropper-box>
 </template>
 
 <script  lang="ts">
@@ -51,7 +53,9 @@ import { ElForm, ElMessage } from "element-plus";
 import { get, http, post } from "shared/http/HttpClient";
 import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import CropperBox from "../../../components/CropperBox.vue";
 import LeftMenuLayout from "../../../components/LeftMenuLayout.vue";
+import TagBox from "../../../components/TagBox.vue";
 import WangEditor from "../../../components/WangEditor.vue";
 import { CategoryItem } from "../categories/CategoryModel";
 import LeftMenu from "./LeftMenu.vue";
@@ -61,21 +65,25 @@ interface articleItem {
     id: number
     title: string
     content: string
-    categories: number[]
+    categories: number[],
+    cover: string
 }
 
 export default defineComponent({
     components: {
         WangEditor,
         LeftMenu,
-        LeftMenuLayout
+        LeftMenuLayout,
+        CropperBox,
+        TagBox
     },
     setup() {
         const formModel = ref<articleItem>({
             id: 0,
             categories: [],
             title: '',
-            content: ''
+            content: '',
+            cover: ''
         })
         const title = ref("新建")
         const loading = ref(false)
@@ -175,6 +183,17 @@ export default defineComponent({
 
         }
 
+        const showCropper = ref(false)
+
+        const cropperSelect = (data: { base64: string }) => {
+            console.log(data.base64)
+            formModel.value.cover = data.base64;
+        }
+
+        const selectImage = () => {
+            showCropper.value = true;
+        }
+
         return {
             formModel,
             categoryItems,
@@ -183,7 +202,10 @@ export default defineComponent({
             back,
             rules,
             formRef,
-            title
+            title,
+            showCropper,
+            cropperSelect,
+            selectImage
         }
     }
 })
