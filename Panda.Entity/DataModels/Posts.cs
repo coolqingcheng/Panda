@@ -7,8 +7,8 @@ namespace Panda.Entity.DataModels;
 
 public class Posts : PandaBaseTable
 {
-    [StringLength(50)]
-    public string? CustomLink { get; set; }
+    [StringLength(50)] public string? CustomLink { get; set; }
+
     /// <summary>
     /// 标题
     /// </summary>
@@ -47,8 +47,16 @@ public class Posts : PandaBaseTable
     [DefaultValue(true)]
     public bool AllowComment { get; set; }
 
+    /// <summary>
+    /// 封面图
+    /// </summary>
+    public string Cover { get; set; }
+
 
     public ICollection<PostsCategoryRelations> ArticleCategoryRelations { get; set; }
+
+    
+    public ICollection<TagsRelation> TagsRelations { get; set; }
 }
 
 public enum PostStatus

@@ -13,14 +13,12 @@ public class PostTagsRepository:PandaRepository<PostTags>
     public async Task<PostTags> GetWithCreate(string tagName)
     {
        var tagItem = await  Where(a => a.TagName == tagName).FirstOrDefaultAsync();
-       if (tagItem == null)
+       if (tagItem != null) return tagItem;
+       tagItem = new PostTags()
        {
-           tagItem = new PostTags()
-           {
-               TagName = tagName
-           };
-            await AddAsync(tagItem);
-       }
+           TagName = tagName
+       };
+       await AddAsync(tagItem);
 
        return tagItem;
     }

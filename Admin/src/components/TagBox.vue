@@ -7,11 +7,10 @@
             closable
             size="medium"
             type="success"
-            effect="Plain"
             @close="close(index)"
         >{{ tag }}</el-tag>
         <li>
-            <el-input placeholder="输入标签" @keydown.enter="enter()" v-model="v"></el-input>
+            <el-input placeholder="输入标签" @keydown.enter="enter()" v-model="v" v-if="tags.length<=5"></el-input>
         </li>
     </ul>
 </template>
@@ -23,7 +22,8 @@ export default defineComponent({
     props: {
         modelValue: {
             type: Array as PropType<string[]>,
-            required: true
+            required: true,
+            default:[]
         }
     },
     emits: ["update:modelValue"],
@@ -38,6 +38,9 @@ export default defineComponent({
                 tags.value.push(v.value)
                 v.value = ''
                 context.emit('update:modelValue', tags.value)
+            }
+            else{
+                console.log('enter')
             }
         }
 

@@ -21,23 +21,28 @@ export default defineComponent({
         onMounted(() => {
             editor = new E(container.value);
             editor.config.customAlert = (s: string, t: any) => {
-                ElMessage({
-                    type: t,
-                    message: s
-                })
+                console.log('customAlert',t,s)
+              
             }
             editor.config.uploadImgServer = "/upload";
             editor.config.uploadImgHooks = {
                 customInsert: function (insertImgFn: any, result: any) {
+                    console.log(result)
                     if (result.code == 0) {
                         insertImgFn(result.url);
                     }
+                },
+                error: function (xhr, e) {
+                    
+                    ElMessage({
+                        message: JSON.parse(xhr.response).message
+                    })
                 }
             }
             editor.config.height = 600;
             editor.config.zIndex = 10;
             editor.create();
-            
+
             editor.txt.html(props.modelValue)
             editor.config.onchangeTimeout = 1000;
             editor.config.pasteFilterStyle = false;

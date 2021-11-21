@@ -2,9 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Panda.Tools.Exception;
 using System;
+using System.Runtime.InteropServices;
+using Panda.Models;
 using Panda.Tools.FileStorage;
 using Panda.Tools.Models;
 using Panda.Tools.Security;
+using Panda.Tools.Web;
 
 namespace Panda.Controllers;
 
@@ -29,16 +32,19 @@ public class CommonController : Controller
         {
             throw new UserException("服务器没有收到文件");
         }
+
         if (files[0].Length >= (1024 * 1024 * 4)) //图片不能大于4M
         {
             throw new UserException("图片不能大于4M");
         }
-        var list = new List<string>() {"jpg", "png", "jpge","gif"};
+
+        var list = new List<string>() { "jpg", "png", "jpeg", "gif" };
         var regex = Regex.Match(files[0].FileName, @"[^\.]\w*$");
         if (regex.Success == false || list.Contains(regex.Value) == false)
         {
             throw new UserException("文件格式不支持！");
         }
+
         await using var stream = files[0].OpenReadStream();
         var buffer = new byte[stream.Length];
         await stream.ReadAsync(buffer);
@@ -46,9 +52,32 @@ public class CommonController : Controller
         var file = await _fileStorage.SaveAsync(buffer, $"{Md5Helper.ComputeHash(buffer)[..10]}.{regex.Value}");
         if (file.Success == false)
         {
-            return new UploadResult {Code = 1, Message = file.Message};
+            return new UploadResult { Code = 1, Message = file.Message };
         }
+
         return new UploadResult
+        {
+            Code = 0,
+            Url = file.Url
+        };
+    }
+
+    [IgnoreAntiforgeryToken]
+    [HttpPost("/uploadbase64")]
+    public async Task<UploadResult> UploadBase64(UploadBase64Model request)
+    {
+        var bytes = Convert.FromBase64String(Base64Utils.GetBase64byImage(request.Base64));
+        request.Base64 = ImageUtils.GetPicThumbnail(bytes, 300, 300);
+        var mime = Base64Utils.GetBase64Mime(request.Base64);
+        var extName = MimeUtils.GetMimeExtName(mime);
+        ;
+        var file = await _fileStorage.SaveAsync(bytes, $"{Md5Helper.ComputeHash(bytes)[..10]}.{extName}");
+        if (file.Success == false)
+        {
+            return new UploadResult { Code = 1, Message = file.Message };
+        }
+
+        return new UploadResult()
         {
             Code = 0,
             Url = file.Url

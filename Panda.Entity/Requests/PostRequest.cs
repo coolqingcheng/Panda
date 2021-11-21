@@ -16,6 +16,13 @@ public class PostAddOrUpdate
     
     [Required]
     public List<int> Categories { get; set; }
+
+    public string[] Tags { get; set; }
+
+    /// <summary>
+    /// 封面图
+    /// </summary>
+    public string Cover { get; set; }
 }
 
 public class AdminPostGetListRequest:BasePageRequest

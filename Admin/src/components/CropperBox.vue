@@ -35,6 +35,14 @@ export default defineComponent(
             },
             url: {
                 type: String
+            },
+            width: {
+                type: Number,
+                default: 300
+            },
+            height: {
+                type: Number,
+                default: 300
             }
         },
         emits: ['cropper', 'update:modelValue'],
@@ -58,6 +66,7 @@ export default defineComponent(
                         preview: preview.value,
                         checkCrossOrigin: true,
                         aspectRatio: 5 / 5,
+
                     })
                 }
             }
@@ -104,7 +113,7 @@ export default defineComponent(
 
             const save = () => {
                 console.log('执行close')
-                let base64 = cropper.getCroppedCanvas().toDataURL("image/png")
+                let base64 = cropper.getCroppedCanvas().toDataURL("image/png",0.3)
 
                 context.emit('update:modelValue', false)
                 context.emit('cropper', { base64: base64 })
@@ -118,9 +127,9 @@ export default defineComponent(
 
             const open = () => {
                 console.log('open')
-               nextTick(()=>{
+                nextTick(() => {
                     initCropper();
-               })
+                })
             }
 
             return {

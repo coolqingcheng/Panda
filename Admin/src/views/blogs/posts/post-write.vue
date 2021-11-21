@@ -28,8 +28,8 @@
                         >{{ item.cateName }}</el-checkbox>
                     </el-checkbox-group>
                 </el-form-item>
-                <el-form-item label="标签">
-                    <tag-box></tag-box>
+                <el-form-item label="标签" prop="tags">
+                    <tag-box v-model="formModel.tags"></tag-box>
                 </el-form-item>
                 <el-form-item label="封面图">
                     <div @click="selectImage()">
@@ -49,7 +49,7 @@
 
 <script  lang="ts">
 import { defineComponent, onMounted, toRefs } from "@vue/runtime-core";
-import { ElForm, ElMessage } from "element-plus";
+import { ElForm, ElLoading, ElMessage } from "element-plus";
 import { get, http, post } from "shared/http/HttpClient";
 import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -66,7 +66,8 @@ interface articleItem {
     title: string
     content: string
     categories: number[],
-    cover: string
+    cover: string,
+    tags: string[]
 }
 
 export default defineComponent({
@@ -83,8 +84,10 @@ export default defineComponent({
             categories: [],
             title: '',
             content: '',
-            cover: ''
+            cover: '',
+            tags: []
         })
+        const coverBase64 = ref<string>("")
         const title = ref("新建")
         const loading = ref(false)
         const categoryItems = ref<CategoryItem[]>()
@@ -164,14 +167,16 @@ export default defineComponent({
                 loading.value = true
                 if (route.query.id) {
                     title.value = "编辑"
-                    var res = await get<{ title: string, id: number, content: string, categories: { id: number, cateName: string }[] }>
+                    var res = await get<{ title: string, id: number, content: string, categories: { id: number, cateName: string }[], tags: string[], cover: string }>
                         ('/admin/post/get', { id: route.query.id })
                     console.log('res:', res)
                     formModel.value = {
                         title: res.title,
                         content: res.content,
                         categories: res.categories.map(a => a.id),
-                        id: res.id
+                        id: res.id,
+                        tags: res.tags,
+                        cover: res.cover
                     }
                     console.log('formModel:', JSON.stringify(formModel.value.categories))
 
@@ -186,8 +191,18 @@ export default defineComponent({
         const showCropper = ref(false)
 
         const cropperSelect = (data: { base64: string }) => {
-            console.log(data.base64)
-            formModel.value.cover = data.base64;
+            coverBase64.value = data.base64;
+            let loading = ElLoading.service({
+                text: '上传图片中'
+            })
+            post('/uploadbase64', {
+                base64: data.base64
+            }).then((res: any) => {
+                console.log(res)
+                formModel.value.cover = res.url
+            }).finally(() => {
+                loading.close();
+            })
         }
 
         const selectImage = () => {

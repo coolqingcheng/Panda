@@ -19,7 +19,11 @@
         </PackageReference>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.10" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+        <PackageReference Include="Mime" Version="3.2.3" />
         <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.2" />
+        <PackageReference Include="SixLabors.ImageSharp" Version="1.0.4" />
+        <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta13" />
+        <PackageReference Include="SixLabors.ImageSharp.Web" Version="1.0.4" />
         <PackageReference Include="Tencent.QCloud.Cos.Sdk" Version="5.4.24" />
         <PackageReference Include="TencentCloudSDK" Version="3.0.399" />
     </ItemGroup>

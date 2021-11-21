@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Panda.Entity;
 
 namespace Panda.Entity.Migrations
 {
     [DbContext(typeof(PandaContext))]
-    partial class PandaContextModelSnapshot : ModelSnapshot
+    [Migration("20211121135309_202111212151")]
+    partial class _202111212151
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
