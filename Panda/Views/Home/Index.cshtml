@@ -5,7 +5,7 @@
 }
 
 @{
-    var res = ViewData["res"] as PageDto<ArticleItem>;
+    var res = ViewData["res"] as PageDto<PostItem>;
 }
 
 @inject ICategoryService _categoryService
@@ -27,7 +27,7 @@
                             <i class="ri-time-line m-r-1"></i>
                             <time datetime="@item.AddTime">@item.AddTime.ToString("yyyy年MM月dd日")</time>
                             <i class="ri-user-line m-l-2 m-r-1"></i>
-                            <span>作者：@item.AccountName</span>
+                            <span>作者：@item.Account?.UserName</span>
                         </div>
                     </div>
                 </div>

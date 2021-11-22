@@ -41,45 +41,49 @@ public class PostService : IPostService
         _postTagsRepository = postTagsRepository;
     }
 
-    public async Task<PageDto<ArticleItem>> GetPostList(PostRequest request)
+    public async Task<PageDto<PostItem>> GetPostList(PostRequest request)
     {
         return await _postRepository.GetArticleList(request);
     }
 
-    public async Task<List<ArticleItem>> GetLatestPosts(int top)
+    public async Task<List<PostItem>> GetLatestPosts(int top)
     {
         return await _postRepository.GetLatestPosts(top);
     }
 
-    public async Task<PageDto<ArticleItem>> GetArticleListByCategoryId(PostCategoryRequest request)
+    public async Task<PageDto<PostItem>> GetArticleListByCategoryId(PostCategoryRequest request)
     {
-        return await Task.FromResult(new PageDto<ArticleItem>());
+        return await Task.FromResult(new PageDto<PostItem>());
     }
 
-    public async Task<ArticleDetailItem> AdminGetArticle(int id)
+    public async Task<PostDetailItem> AdminGetArticle(int id)
     {
         var item = await GetArticle(id);
         item.Content = item.Content.RestoreLazyHandler()!;
         return item;
     }
 
-    public async Task<ArticleDetailItem> GetArticle(int id)
+    public async Task<PostDetailItem> GetArticle(int id)
     {
         var item = await _postRepository.Where(a => a.Id == id && a.Status == PostStatus.Publish)
-            .Include(a => a.Account).Select(a =>
-                new ArticleDetailItem
+            .Include(a => a.Account).Include(a => a.TagsRelations).Select(a =>
+                new PostDetailItem
                 {
                     Id = a.Id,
                     Title = a.Title,
                     Summary = a.Summary,
                     Content = a.Content,
                     AddTime = a.AddTime,
-                    AccountId = a.Account.Id,
-                    AccountName = a.Account.UserName,
-                    Status = a.Status
+                    Account = a.Account,
+                    Status = a.Status,
+                    TagItems = a.TagsRelations.Select(b => new PostTagItem()
+                    {
+                        Id = b.Tags.Id,
+                        TagName = b.Tags.TagName
+                    })
                 }).FirstOrDefaultAsync();
         var categories = await _categoryRepository.GetCategories(item.Id);
-        item.Categories = categories.Select(a => new ArticleCategories()
+        item.Categories = categories.Select(a => new PostCategories()
         {
             Id = a.Id,
             CateName = a.categoryName
@@ -162,5 +166,30 @@ public class PostService : IPostService
     public async Task<PageDto<AdminPostItemResponse>> Search(string keyword)
     {
         return await _postRepository.SearchPost(keyword);
+    }
+
+    public async Task<PageDto<PostItem>> GetPostListByTagId(int tagId)
+    {
+        var query = _tagRelationRepository.Where(a => a.Tags.Id == tagId);
+        var tagItem = await query
+            .Include(a => a.Posts)
+            .Select(a => new PostItem()
+            {
+                Id = a.Posts.Id,
+                Account = a.Posts.Account,
+                AddTime = a.AddTime,
+                Summary = a.Posts.Summary,
+                Title = a.Posts.Title,
+                Categories =
+                    a.Posts.ArticleCategoryRelations.Select(b => new PostCategories()
+                            { Id = b.Categories.Id, CateName = b.Categories.categoryName })
+                        .ToList()
+            }).OrderByDescending(a => a.AddTime).ToListAsync();
+
+        return new PageDto<PostItem>()
+        {
+            Data = tagItem,
+            Total = await query.CountAsync()
+        };
     }
 }

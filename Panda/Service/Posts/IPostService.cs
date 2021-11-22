@@ -7,15 +7,15 @@ namespace Panda.Services.Posts;
 
 public interface IPostService
 {
-    Task<PageDto<ArticleItem>> GetPostList(PostRequest request);
+    Task<PageDto<PostItem>> GetPostList(PostRequest request);
 
-    Task<List<ArticleItem>> GetLatestPosts(int top);
+    Task<List<PostItem>> GetLatestPosts(int top);
     
     
-    Task<PageDto<ArticleItem>> GetArticleListByCategoryId(PostCategoryRequest request);
+    Task<PageDto<PostItem>> GetArticleListByCategoryId(PostCategoryRequest request);
     
-    Task<ArticleDetailItem> AdminGetArticle(int id);
-    Task<ArticleDetailItem> GetArticle(int id);
+    Task<PostDetailItem> AdminGetArticle(int id);
+    Task<PostDetailItem> GetArticle(int id);
 
     Task AddOrUpdate(PostAddOrUpdate request);
 
@@ -23,4 +23,7 @@ public interface IPostService
 
 
     Task<PageDto<AdminPostItemResponse>> Search(string keyword);
+
+
+    Task<PageDto<PostItem>> GetPostListByTagId(int tagId);
 }

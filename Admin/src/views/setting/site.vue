@@ -10,6 +10,9 @@
         <el-form-item label="网站名称" prop="site_name">
             <el-input placeholder="网站名称" v-model="formModel.site_name"></el-input>
         </el-form-item>
+        <el-form-item label="网站域名" prop="host">
+            <el-input placeholder="网站主域名 https://xxxx.com" v-model="formModel.host"></el-input>
+        </el-form-item>
         <el-form-item label="图片懒加载">
             <el-switch v-model="formModel.img_lazy" active-value="true" inactive-value="false"></el-switch>
         </el-form-item>
@@ -36,7 +39,8 @@ export default {
             site_name: '',
             icp: '',
             statistics: '',
-            img_lazy: 'false'
+            img_lazy: 'false',
+            host:''
         })
 
         const { instance, loading } = usBaseForm();
@@ -47,6 +51,11 @@ export default {
                 {
                     required: true, message: '站点名称不能为空'
                 }
+            ],
+            host:[
+                {
+                    required:true,message:'域名不能为空'
+                }
             ]
         }
 
@@ -56,7 +65,8 @@ export default {
                 site_name: res.site_name, 
                 icp: res.icp, 
                 statistics: res.statistics, 
-                img_lazy: res.img_lazy
+                img_lazy: res.img_lazy,
+                host:res.host
             }
         }
 

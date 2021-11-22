@@ -15,15 +15,15 @@ public class PostRepository : PandaRepository<Posts>
     {
     }
 
-    public async Task<List<ArticleItem>> GetLatestPosts(int top)
+    public async Task<List<PostItem>> GetLatestPosts(int top)
     {
-        var res = await _context.Posts.OrderByDescending(a => a.AddTime).Take(top).Select(a => new ArticleItem()
+        var res = await _context.Posts.OrderByDescending(a => a.AddTime).Take(top).Select(a => new PostItem()
         {
             Id = a.Id,
             Title = a.Title,
             Summary = a.Summary,
             AddTime = a.AddTime,
-            Categories = a.ArticleCategoryRelations.Select(b => new ArticleCategories()
+            Categories = a.ArticleCategoryRelations.Select(b => new PostCategories()
             {
                 Id = b.Categories.Id,
                 CateName = b.Categories.categoryName
@@ -32,7 +32,7 @@ public class PostRepository : PandaRepository<Posts>
         return res;
     }
 
-    public async Task<PageDto<ArticleItem>> GetArticleList(PostRequest request)
+    public async Task<PageDto<PostItem>> GetArticleList(PostRequest request)
     {
         var query = _context.Posts.Where(a=>a.Status==PostStatus.Publish);
         if (request.CategoryId > 0)
@@ -41,19 +41,19 @@ public class PostRepository : PandaRepository<Posts>
             query = query.Where(a => a.ArticleCategoryRelations.Any(b => b.Categories == category));
         }
 
-        var res = await query.OrderByDescending(a=>a.UpdateTime).Page(request).Select(a => new ArticleItem()
+        var res = await query.OrderByDescending(a=>a.UpdateTime).Page(request).Select(a => new PostItem()
         {
             Id = a.Id,
             Title = a.Title,
             Summary = a.Summary,
             AddTime = a.AddTime,
-            Categories = a.ArticleCategoryRelations.Select(b => new ArticleCategories()
+            Categories = a.ArticleCategoryRelations.Select(b => new PostCategories()
             {
                 Id = b.Categories.Id,
                 CateName = b.Categories.categoryName
             }).ToList()
         }).ToListAsync();
-        return new PageDto<ArticleItem>()
+        return new PageDto<PostItem>()
         {
             Total = await query.CountAsync(),
             Data = res

@@ -34,7 +34,7 @@ public class RssController : Controller
             model.Item.Add(new RssItem()
             {
                 Title = item.Title,
-                Link = $"{host}/post/{item.Id}.html",
+                Link = $"{host?.Value}/post/{item.Id}.html",
                 Description = item.Summary
             });
         }

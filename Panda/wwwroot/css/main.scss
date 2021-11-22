@@ -153,6 +153,35 @@ body {
     }
   }
 
+  .post-footer {
+    .tags {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+
+      .tag {
+        margin-right: 10px;
+        background: $theme-color;
+        border-radius: 5px;
+        padding: 3px 5px;
+        box-sizing: border-box;
+        border: 1px solid $theme-color;
+
+        a {
+          color: white;
+        }
+
+        &:hover {
+          background: white;
+
+          a {
+            color: $theme-color;
+          }
+        }
+      }
+    }
+  }
+
 }
 
 
@@ -173,12 +202,14 @@ footer {
       margin-right: .8rem;
       line-height: 1.8;
     }
-    .friend-link-apply{
-      color:$a_hover_color;
+
+    .friend-link-apply {
+      color: $a_hover_color;
     }
 
     a {
       text-decoration: none;
+
       &:hover {
         text-decoration: underline;
         cursor: pointer;
@@ -199,6 +230,7 @@ footer {
     padding: .5rem;
   }
 }
-.search-card{
-  
+
+.search-card {
+
 }

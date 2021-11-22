@@ -1,0 +1,12 @@
+@using Panda.Entity.Responses
+@using Panda.Entity.Models
+@{
+    Layout = "_Layout";
+    var res = ViewData["list"] as PageDto<PostItem>;
+}
+
+<h1>标签:@ViewData["tag"]</h1>
+
+@{
+    await Html.RenderPartialAsync("_PostItemPartial", res);
+}

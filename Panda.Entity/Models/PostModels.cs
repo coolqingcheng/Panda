@@ -4,7 +4,7 @@ using Panda.Tools.Models;
 
 namespace Panda.Entity.Models;
 
-public class ArticleItem
+public class PostItem
 {
     public int Id { get; set; }
 
@@ -23,27 +23,39 @@ public class ArticleItem
     /// </summary>
     public DateTime AddTime { get; set; }
 
-    public int? AccountId { get; set; }
-
-    public string? AccountName { get; set; }
+    /// <summary>
+    /// 添加人
+    /// </summary>
+    public Accounts? Account { get; set; }
 
     public PostStatus Status { get; set; }
 
     /// <summary>
     /// 分类
     /// </summary>
-    public List<ArticleCategories> Categories { get; set; }
+    public List<PostCategories> Categories { get; set; }
 }
 
-public class ArticleDetailItem : ArticleItem
+public class PostDetailItem : PostItem
 {
     /// <summary>
     /// html内容
     /// </summary>
     public string Content { get; set; }
+
+    public IEnumerable<PostTagItem> TagItems { get; set; }
+    
+    
 }
 
-public class ArticleCategories
+public class PostTagItem
+{
+    public int Id { get; set; }
+
+    public string TagName { get; set; }
+}
+
+public class PostCategories
 {
     public int Id { get; set; }
 

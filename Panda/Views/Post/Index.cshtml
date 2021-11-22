@@ -1,4 +1,4 @@
-@model Panda.Entity.Models.ArticleDetailItem
+@model Panda.Entity.Models.PostDetailItem
 @{
     ViewData["Title"] = "post";
 }
@@ -19,7 +19,7 @@
                 </header>
                 <div class="post-desc">
                     <i class="ri-time-line m-r-1"></i><time datetime="@Model.AddTime" class="p-r-4">@Model.AddTime.ToString("yyyy年MM月dd日")</time>
-                    <i class="ri-user-line m-r-1"></i><span class="p-r-4">@(Model.AccountName==null?"管理员":Model.AccountName)</span>
+                    <i class="ri-user-line m-r-1"></i><span class="p-r-4">@(Model.Account?.UserName)</span>
                     <span>
                         分类:
                         @foreach (var item in Model.Categories)
@@ -30,6 +30,16 @@
                 </div>
                 <div class="post-body">
                     @(Html.Raw(Model.Content))
+                </div>
+                <div class="post-footer">
+                    <p class="tags">
+                        @foreach (var item in Model.TagItems)
+                        {
+                            <span class="tag">
+                                <a href="/tag/@item.Id">@item.TagName</a>
+                            </span>
+                        }
+                    </p>
                 </div>
             </div>
         </div>

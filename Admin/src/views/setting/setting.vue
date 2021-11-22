@@ -8,7 +8,9 @@
                 <Cos></Cos>
             </el-tab-pane>
             <el-tab-pane label="微信公众号"></el-tab-pane>
-            <el-tab-pane label="系统配置"></el-tab-pane>
+            <el-tab-pane label="系统配置">
+                <system></system>
+            </el-tab-pane>
             <el-tab-pane label="定时任务"></el-tab-pane>
         </el-tabs>
     </el-card>
@@ -18,8 +20,9 @@
 import TabItemContainer from '../TabItemContainer.vue'
 import Cos from './cos.vue'
 import Site from './site.vue'
+import System from './system.vue'
 export default {
-    components: { TabItemContainer, Cos, Site },
+    components: { TabItemContainer, Cos, Site, System },
 
 }
 </script>
