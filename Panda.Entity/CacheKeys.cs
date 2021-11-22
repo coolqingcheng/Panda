@@ -14,4 +14,10 @@ public class CacheKeys
     /// 字典
     /// </summary>
     public const string DicDataGroupNameKey = "_dic_data_";
+
+
+    /// <summary>
+    /// 通知缓存
+    /// </summary>
+    public const string NoticeCacheKey = "_NoticeCacheKey_";
 }

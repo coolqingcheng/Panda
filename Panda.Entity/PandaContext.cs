@@ -23,22 +23,25 @@ public class PandaContext : DbContext
     public DbSet<FriendlyLinks> FriendlyLinks { get; set; }
 
     public DbSet<FriendlyLinkRecord> FriendlyLinkRecords { get; set; }
-    
+
     public DbSet<PostTags> PostTags { get; set; }
 
     public DbSet<TagsRelation> TagsRelations { get; set; }
+
+
+    public DbSet<Notices> Notices { get; set; }
 
     public PandaContext(DbContextOptions<PandaContext> options) : base(options)
     {
     }
 
-//     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//     {
-//         base.OnConfiguring(optionsBuilder);
-// #if DEBUG
-//         optionsBuilder.LogTo(Console.WriteLine);
-// #endif
-//     }
+    //     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //     {
+    //         base.OnConfiguring(optionsBuilder);
+    // #if DEBUG
+    //         optionsBuilder.LogTo(Console.WriteLine);
+    // #endif
+    //     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -52,6 +55,8 @@ public class PandaContext : DbContext
         modelBuilder.Entity<Posts>().HasIndex(a => a.CustomLink);
         modelBuilder.Entity<Posts>().HasIndex(a => a.UpdateTime);
         modelBuilder.Entity<DicDatas>().Property(a => a.Pid).HasDefaultValue(0);
+        modelBuilder.Entity<FriendlyLinks>().Property(a => a.AuditStatus).HasDefaultValue(AuditStatusEnum.unaudit);
+        modelBuilder.Entity<Notices>().Property(a => a.IsTop).HasDefaultValue(false);
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())

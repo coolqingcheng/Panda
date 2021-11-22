@@ -3,7 +3,7 @@
 <div class="friend-link">
     <span class="friend-link-item">友情链接：</span>
     @{
-        var result = await _friendlyLinkService.GetList(new FriendlyLinkRequest()
+        var result = await _friendlyLinkService.AdminGetList(new FriendlyLinkRequest()
         {
             Index = 1,
             Size = 20

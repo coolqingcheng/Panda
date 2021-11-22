@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Panda.Entity;
 
 namespace Panda.Entity.Migrations
 {
     [DbContext(typeof(PandaContext))]
-    partial class PandaContextModelSnapshot : ModelSnapshot
+    [Migration("20211122065646_update202111221456")]
+    partial class update202111221456
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -215,36 +217,6 @@ namespace Panda.Entity.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FriendlyLinks");
-                });
-
-            modelBuilder.Entity("Panda.Entity.DataModels.Notices", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("AddTime")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<bool>("IsTop")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint(1)")
-                        .HasDefaultValue(false);
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("UpdateTime")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Notices");
                 });
 
             modelBuilder.Entity("Panda.Entity.DataModels.Pages", b =>

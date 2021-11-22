@@ -16,7 +16,7 @@ public class DicDataValidator
             {
                 new(key: "cos_region", description: "COS 地域的简称"),
                 new(key: "secret_id", description: "云 API 密钥 SecretId"),
-                new(key: "secret_key", description: "云 API 密钥 SecretKey"),
+                new(key: "secret_key", description: "云 API 密钥 SecretKey",true),
                 new(key: "bucket", description: "存储桶名称，此处填入格式必须为 bucketname-APPID"),
                 new(key: "host", description: "访问默认域名")
             }));
@@ -25,7 +25,8 @@ public class DicDataValidator
             new("site_name", "网站名称"),
             new("icp", "备案号"),
             new("statistics", "统计代码"),
-            new("img_lazy", "图片是否开启懒加载")
+            new("img_lazy", "图片是否开启懒加载"),
+            new("host","网站域名")
         }));
     }
 
@@ -43,7 +44,7 @@ public class DicDataValidator
             var value = request.List.FirstOrDefault(a => a.Key == childInfo.Key).Value;
             if (value == null)
             {
-                throw new UserException($"配置项:{childInfo.Key}不能为空");
+                throw new UserException($"配置项:{childInfo.Key}-[{childInfo.Description}]不能为空");
             }
 
             childInfo.Value = value;
