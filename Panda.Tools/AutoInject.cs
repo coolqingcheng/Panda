@@ -18,9 +18,9 @@ public static class AutoInject
     {
         var option = new AutoInjectOption();
         action(option);
-        foreach (var item in option.AssemblyStringList)
+        foreach (var item in option.Options)
         {
-            var types = Assembly.Load(item.AssemblyName).GetTypes().Where(a => a.IsClass && a.IsPublic);
+            var types = Assembly.GetCallingAssembly().GetTypes().Where(a => a.IsClass && a.IsPublic);
             foreach (var type in types)
             {
                 if (item.InjectSelf == false)
@@ -69,15 +69,11 @@ public static class AutoInject
 
 public class AutoInjectOption
 {
-    public readonly List<AutoInjectOptionItem> AssemblyStringList = new();
+    public readonly List<AutoInjectOptionItem> Options = new();
 }
 
 public class AutoInjectOptionItem
 {
-    /// <summary>
-    /// 名称
-    /// </summary>
-    public string AssemblyName { get; set; }
 
     /// <summary>
     /// 结尾

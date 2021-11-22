@@ -23,12 +23,6 @@ if (string.IsNullOrWhiteSpace(db))
     return;
 }
 
-var optionsBuilder = new DbContextOptionsBuilder<PandaContext>();
-optionsBuilder.UseMySql(db, ServerVersion.AutoDetect(db));
-
-var context = new PandaContext(optionsBuilder.Options);
-context.Database.Migrate();
-
 builder.Services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
 builder.Services.AddDbContextPool<PandaContext>(
     opt => { opt.UseMySql(db, ServerVersion.AutoDetect(db)); }
@@ -63,14 +57,12 @@ builder.Services.AddAntiforgery(options =>
 
 builder.Services.AddAutoInject(opt =>
 {
-    opt.AssemblyStringList.Add(new AutoInjectOptionItem()
+    opt.Options.Add(new AutoInjectOptionItem()
     {
-        AssemblyName = "Panda",
         EndWdith = "Service"
     });
-    opt.AssemblyStringList.Add(new AutoInjectOptionItem()
+    opt.Options.Add(new AutoInjectOptionItem()
     {
-        AssemblyName = "Panda",
         EndWdith = "Repository",
         InjectSelf = true
     });
@@ -96,11 +88,11 @@ else
     {
         builder.Run(async context =>
         {
-            context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
+            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             if (context.Request.Headers["X-Requested-With"] == "XMLHttpRequest" ||
                 context.Request.Query["X-Requested-With"] == "XMLHttpRequest")
             {
-                await context.Response.WriteAsJsonAsync(new {message = "服务器繁忙"});
+                await context.Response.WriteAsJsonAsync(new { message = "服务器繁忙" });
             }
             else
             {
