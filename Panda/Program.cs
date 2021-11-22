@@ -17,7 +17,6 @@ using Panda.Filters;
 var builder = WebApplication.CreateBuilder(args);
 
 var db = Environment.GetEnvironmentVariable("MYSQL_DB");
-Console.WriteLine("db: " + db);
 if (string.IsNullOrWhiteSpace(db))
 {
     Console.WriteLine("mysql连接没有配置");

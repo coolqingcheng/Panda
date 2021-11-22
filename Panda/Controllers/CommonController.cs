@@ -67,7 +67,7 @@ public class CommonController : Controller
     public async Task<UploadResult> UploadBase64(UploadBase64Model request)
     {
         var bytes = Convert.FromBase64String(Base64Utils.GetBase64byImage(request.Base64));
-        request.Base64 = ImageUtils.GetPicThumbnail(bytes, 300, 300);
+        request.Base64 = ImageUtils.GetPicThumbnail(bytes, request.W, request.H);
         var mime = Base64Utils.GetBase64Mime(request.Base64);
         var extName = MimeUtils.GetMimeExtName(mime);
         ;
