@@ -46,4 +46,4 @@ ENV TZ=Asia/Shanghai
 ENV BLOG_MYSQL_DB ""
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN sed -i 's/TLSv1.2/TLSv1.0/g' /etc/ssl/openssl.cnf
-ENTRYPOINT ["dotnet", "Panda.Web.dll"]
+ENTRYPOINT ["dotnet", "Panda.dll"]
