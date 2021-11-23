@@ -41,7 +41,7 @@ public class AccountController : AdminBaseController
     [HttpGet]
     public async Task<IActionResult> Test()
     {
-        
+
         await _accountService.InitAsync();
         return Content("初始化账号成功");
     }
@@ -55,9 +55,9 @@ public class AccountController : AdminBaseController
         return res;
     }
 
-    //[HttpPost]
-    //public Task ChangePwd(ChangePwdRequest request)
-    //{
-        
-    //}
+    [HttpPost]
+    public async Task ChangePwd(ChangePwdRequest request)
+    {
+        await _accountService.ChangePwdAsync(request.OldPwd, request.NewPwd);
+    }
 }

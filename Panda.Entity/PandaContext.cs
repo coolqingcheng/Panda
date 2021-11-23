@@ -58,7 +58,6 @@ public class PandaContext : DbContext
         modelBuilder.Entity<DicDatas>().Property(a => a.Pid).HasDefaultValue(0);
         modelBuilder.Entity<FriendlyLinks>().Property(a => a.AuditStatus).HasDefaultValue(AuditStatusEnum.unaudit);
         modelBuilder.Entity<Notices>().Property(a => a.IsTop).HasDefaultValue(false);
-
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
