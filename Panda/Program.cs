@@ -14,68 +14,11 @@ using Panda.Tools.Filter;
 using Panda.Tools.Web;
 using Panda.Filters;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using Panda;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var db = Environment.GetEnvironmentVariable("MYSQL_DB");
-if (string.IsNullOrWhiteSpace(db))
-{
-    Console.WriteLine("mysql连接没有配置");
-    return;
-}
-
-builder.Services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
-builder.Services.AddDbContextPool<PandaContext>(
-    opt =>
-    {
-        opt.UseMySql(db, ServerVersion.AutoDetect(db)).EnableSensitiveDataLogging()
-                .EnableDetailedErrors();
-
-
-    }
-);
-builder.Services.AddEasyCaching(options =>
-{
-    //use memory cache that named default
-    options.UseInMemory(opt =>
-    {
-        opt.DBConfig.SizeLimit = 2000;
-        opt.CacheNulls = true;
-    });
-});
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
-builder.Services.AddControllersWithViews(opt =>
-{
-    opt.Filters.Add<GlobalExceptionFilter>();
-    opt.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
-    opt.Filters.Add<CSRFFilter>();
-}).AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
-    options.JsonSerializerOptions.Converters.Add(new DateTimeNullConverter());
-});
-builder.Services.AddTools();
-builder.Services.AddScoped<IDicDataProvider, EFDicDataProvider>();
-
-builder.Services.AddAntiforgery(options =>
-    options.HeaderName = "X-CSRF-TOKEN"
-);
-
-
-builder.Services.AddAutoInject(opt =>
-{
-    opt.Options.Add(new AutoInjectOptionItem()
-    {
-        EndWdith = "Service"
-    });
-    opt.Options.Add(new AutoInjectOptionItem()
-    {
-        EndWdith = "Repository",
-        InjectSelf = true
-    });
-});
-builder.Services.AddScoped<IUnitOfWork, EFUnitOfWork>();
-
+builder.Services.AddPanda();
 
 var app = builder.Build();
 
@@ -110,12 +53,9 @@ else
 }
 
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
