@@ -86,7 +86,7 @@ public class CategoryService : ICategoryService
             throw new UserException("分类不为空，无法删除");
         }
 
-        await _categoryRepository.DeleteRange(a => a.Id == id);
+        await _categoryRepository.DeleteWhere(a => a.Id == id);
     }
 
     public async Task<List<CategoryItem>> GetCategoriesByCache(CategoryPageRequest request, TimeSpan timeSpan)

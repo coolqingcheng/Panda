@@ -1,17 +1,28 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Panda.Entity.DataModels;
 
-public class PandaBaseTable
+public class PandaBaseTable : BaseTable
 {
-    [Key] public int Id { get; set; }
 
-    
+}
+
+public class KeyGuidTable : PandaBaseTable
+{
+    [Key]
+    public new Guid Id { get; set; }
+}
+
+public class BaseTable
+{
+    [Key] public virtual int Id { get; set; }
+
+
     /// <summary>
     /// 添加时间
     /// </summary>
     public DateTime AddTime { get; set; }
-
 
     /// <summary>
     /// 修改时间

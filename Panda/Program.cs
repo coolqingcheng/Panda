@@ -13,6 +13,7 @@ using Panda.Tools;
 using Panda.Tools.Filter;
 using Panda.Tools.Web;
 using Panda.Filters;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +26,13 @@ if (string.IsNullOrWhiteSpace(db))
 
 builder.Services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
 builder.Services.AddDbContextPool<PandaContext>(
-    opt => { opt.UseMySql(db, ServerVersion.AutoDetect(db)); }
+    opt =>
+    {
+        opt.UseMySql(db, ServerVersion.AutoDetect(db)).EnableSensitiveDataLogging()
+                .EnableDetailedErrors();
+
+
+    }
 );
 builder.Services.AddEasyCaching(options =>
 {

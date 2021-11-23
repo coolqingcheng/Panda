@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Panda.Entity.DataModels;
 using Panda.Repository.Account;
 using Panda.Tools.Auth;
+using Panda.Tools.Exception;
+using Panda.Tools.Extensions;
 using Panda.Tools.Security;
 
 namespace Panda.Services.Account;
@@ -28,11 +30,11 @@ public class AccountService : IAccountService
     public async Task InitAsync()
     {
         var any = await _accountRepository.AnyAsync();
-        if (any==false)
+        if (any == false)
         {
             await _accountRepository.AddAsync(new Accounts()
             {
-                UserName = "admin",
+                UserName = "管理员",
                 Passwd = IdentitySecurity.HashPassword("admin"),
                 AddTime = DateTime.Now,
                 Email = "qingchengcode@qq.com"
@@ -40,9 +42,9 @@ public class AccountService : IAccountService
         }
     }
 
-    public async Task<AuthResult> LoginAsync(string userName, string password)
+    public async Task<AuthResult> LoginAsync(string email, string password)
     {
-        var account = await _accountRepository.Where(a => a.UserName == userName || a.Email == userName)
+        var account = await _accountRepository.Where(a => a.Email == email)
             .FirstOrDefaultAsync();
         var result = new AuthResult();
         if (account == null)
@@ -77,5 +79,29 @@ public class AccountService : IAccountService
         if (_httpContextAccessor.HttpContext != null)
             await _httpContextAccessor.HttpContext.SignInAsync(claimsPrincipal);
         return result;
+    }
+
+
+    public async Task ChangePwdAsync(string oldPwd, string newPwd)
+    {
+        var account = await GetCurrentAccount();
+        if (IdentitySecurity.VerifyHashedPassword(account.Passwd, oldPwd) == false)
+        {
+            throw new UserException("旧密码错误！");
+        }
+        account.Passwd = IdentitySecurity.HashPassword(newPwd);
+        await _accountRepository.SaveAsync();
+        await SignOutAsync();
+    }
+
+    public async Task<Accounts> GetCurrentAccount()
+    {
+        return await _accountRepository.GetCurrentAccountsAsync();
+    }
+
+    public async Task SignOutAsync()
+    {
+        if (_httpContextAccessor.HttpContext != null)
+            await _httpContextAccessor.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
     }
 }

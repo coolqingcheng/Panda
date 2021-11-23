@@ -1,6 +1,6 @@
 namespace Panda.Entity.DataModels;
 
-public class Accounts : PandaBaseTable
+public class Accounts : KeyGuidTable
 {
     /// <summary>
     /// 用户名

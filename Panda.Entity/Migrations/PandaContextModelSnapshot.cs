@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Panda.Entity;
 
+#nullable disable
+
 namespace Panda.Entity.Migrations
 {
     [DbContext(typeof(PandaContext))]
@@ -14,21 +16,21 @@ namespace Panda.Entity.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 64)
-                .HasAnnotation("ProductVersion", "5.0.10");
+                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Panda.Entity.DataModels.Accounts", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("AddTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("LastLoginTime")
                         .HasColumnType("datetime(6)");
@@ -48,11 +50,11 @@ namespace Panda.Entity.Migrations
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserName")
+                    b.HasIndex("Email")
                         .IsUnique();
 
                     b.ToTable("Accounts");
@@ -276,39 +278,14 @@ namespace Panda.Entity.Migrations
                     b.ToTable("Pages");
                 });
 
-            modelBuilder.Entity("Panda.Entity.DataModels.PostTags", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("AddTime")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("PostCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TagName")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<DateTime>("UpdateTime")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PostTags");
-                });
-
             modelBuilder.Entity("Panda.Entity.DataModels.Posts", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("AccountId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("AccountId")
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("AddTime")
                         .HasColumnType("datetime(6)");
@@ -391,6 +368,31 @@ namespace Panda.Entity.Migrations
                     b.ToTable("ArticleCategoryRelations");
                 });
 
+            modelBuilder.Entity("Panda.Entity.DataModels.PostTags", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("AddTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("PostCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TagName")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PostTags");
+                });
+
             modelBuilder.Entity("Panda.Entity.DataModels.TagsRelation", b =>
                 {
                     b.Property<int>("Id")
@@ -403,7 +405,7 @@ namespace Panda.Entity.Migrations
                     b.Property<int>("PostsId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TagsId")
+                    b.Property<int>("TagsId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdateTime")
@@ -433,7 +435,9 @@ namespace Panda.Entity.Migrations
                 {
                     b.HasOne("Panda.Entity.DataModels.Accounts", "Account")
                         .WithMany()
-                        .HasForeignKey("AccountId");
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Account");
                 });
@@ -467,7 +471,9 @@ namespace Panda.Entity.Migrations
 
                     b.HasOne("Panda.Entity.DataModels.PostTags", "Tags")
                         .WithMany()
-                        .HasForeignKey("TagsId");
+                        .HasForeignKey("TagsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Posts");
 

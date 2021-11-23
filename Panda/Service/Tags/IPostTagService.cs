@@ -70,7 +70,7 @@ public class PostTagService : IPostTagService
 
     public async Task RemoveRelation(Entity.DataModels.Posts post, PostTags tag)
     {
-        await _relationRepository.DeleteRange(a => a.Posts == post && a.Tags == tag);
+        await _relationRepository.DeleteWhere(a => a.Posts == post && a.Tags == tag);
     }
 
     public async Task<PostTags> GetId(int Id)

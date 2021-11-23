@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Panda.Entity;
 using Panda.Entity.DataModels;
-using Panda.Entity.Migrations;
 using Panda.Entity.Requests;
 using Panda.Entity.Responses;
 using Panda.Entity.UnitOfWork;
@@ -43,7 +42,7 @@ public class DicDataService : IDicDataService
         }
         else
         {
-            await _dataRepository.DeleteRange(a => a.Pid == groupInfo.Id);
+            await _dataRepository.DeleteWhere(a => a.Pid == groupInfo.Id);
         }
 
         foreach (var item in request.ChildInfos)
@@ -84,8 +83,8 @@ public class DicDataService : IDicDataService
     public async Task Delete(string groupName)
     {
         var groupInfo = await _dataRepository.Where(a => a.DicKey == groupName && a.Pid == 0).FirstOrDefaultAsync();
-        if (groupInfo != null) await _dataRepository.DeleteRange(a => a.Pid == groupInfo.Id);
-        await _dataRepository.DeleteRange(a => a.DicKey == groupName && a.Pid == 0);
+        if (groupInfo != null) await _dataRepository.DeleteWhere(a => a.Pid == groupInfo.Id);
+        await _dataRepository.DeleteWhere(a => a.DicKey == groupName && a.Pid == 0);
     }
 
     public async Task<DicDataChildInfo?> GetItemByCache(string groupName, string key)

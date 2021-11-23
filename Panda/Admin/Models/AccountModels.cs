@@ -15,3 +15,13 @@ public class AccountLoginRequest
     [Required]
     public string Password { get; set; }
 }
+
+
+public class ChangePwdRequest
+{
+    [Required]
+    public string OldPwd { get; set; }
+
+    [Required]
+    public string NewPwd { get; set; }
+}

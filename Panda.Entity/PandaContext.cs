@@ -46,7 +46,8 @@ public class PandaContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<Accounts>().HasIndex(a => a.UserName).IsUnique();
+        modelBuilder.Entity<Accounts>().HasIndex(a => a.Email).IsUnique();
+
         modelBuilder.Entity<Posts>().Property(a => a.Summary).HasMaxLength(250);
         modelBuilder.Entity<Posts>().Property(a => a.Text).HasColumnType("longtext");
         modelBuilder.Entity<Posts>().Property(a => a.Content).HasColumnType("longtext");
@@ -57,6 +58,7 @@ public class PandaContext : DbContext
         modelBuilder.Entity<DicDatas>().Property(a => a.Pid).HasDefaultValue(0);
         modelBuilder.Entity<FriendlyLinks>().Property(a => a.AuditStatus).HasDefaultValue(AuditStatusEnum.unaudit);
         modelBuilder.Entity<Notices>().Property(a => a.IsTop).HasDefaultValue(false);
+
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
@@ -88,8 +90,7 @@ public class PandaContext : DbContext
     {
         foreach (var entry in ChangeTracker.Entries().Where(a => a.State == EntityState.Added))
         {
-            DateTime time;
-            if (!entry.CurrentValues.TryGetValue<DateTime>("UpdateTime", out time)) continue;
+            if (!entry.CurrentValues.TryGetValue<DateTime>("UpdateTime", out DateTime time)) continue;
             if (time == default)
             {
                 entry.CurrentValues["UpdateTime"] = DateTime.Now;
@@ -100,6 +101,7 @@ public class PandaContext : DbContext
             {
                 entry.CurrentValues["AddTime"] = DateTime.Now;
             }
+
         }
     }
 }

@@ -7,5 +7,9 @@ public interface IAccountService
 {
     Task InitAsync();
 
-    Task<AuthResult> LoginAsync(string userName, string password);
+    Task<AuthResult> LoginAsync(string email, string password);
+
+    Task ChangePwdAsync(string oldPwd, string newPwd);
+
+    Task<Accounts> GetCurrentAccount();
 }

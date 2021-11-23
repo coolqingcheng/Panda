@@ -14,12 +14,10 @@ public class AccountController : AdminBaseController
 {
     private readonly IAccountService _accountService;
 
-    private readonly IAntiforgery _antiforgery;
 
-    public AccountController(IAccountService accountService, IAntiforgery antiforgery)
+    public AccountController(IAccountService accountService)
     {
         _accountService = accountService;
-        _antiforgery = antiforgery;
     }
 
     [AllowAnonymous]
@@ -43,6 +41,7 @@ public class AccountController : AdminBaseController
     [HttpGet]
     public async Task<IActionResult> Test()
     {
+        
         await _accountService.InitAsync();
         return Content("初始化账号成功");
     }
@@ -52,7 +51,13 @@ public class AccountController : AdminBaseController
     [HttpGet]
     public bool IsLogin()
     {
-        var res = HttpContext.User.Identity is {IsAuthenticated: true};
+        var res = HttpContext.User.Identity is { IsAuthenticated: true };
         return res;
     }
+
+    //[HttpPost]
+    //public Task ChangePwd(ChangePwdRequest request)
+    //{
+        
+    //}
 }
