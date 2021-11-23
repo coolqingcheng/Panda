@@ -1,19 +1,5 @@
 using System.Net;
-using System.Net.Http.Headers;
-using System.Text.Encodings.Web;
-using System.Text.Unicode;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Panda.Entity;
-using Panda.Entity.UnitOfWork;
-using Panda.Services.DicData;
-using Panda.Tools;
-using Panda.Tools.Filter;
-using Panda.Tools.Web;
-using Panda.Filters;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Panda;
 
 var builder = WebApplication.CreateBuilder(args);

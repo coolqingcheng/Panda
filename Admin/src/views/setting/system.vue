@@ -4,8 +4,7 @@
             <el-button type="primary" @click="changePwd()">点击修改密码</el-button>
         </el-form-item>
     </el-form>
-    {{showChangePwd}}
-    <change-pwd v-model="showChangePwd"></change-pwd>
+    <ChangePwd v-model="showChangePwd"></ChangePwd>
 </template>
 
 <script lang="ts">
@@ -15,7 +14,7 @@ export default defineComponent(
     {
         components: { ChangePwd },
         setup() {
-            const changePwd = ()=>{
+            const changePwd = () => {
                 showChangePwd.value = !showChangePwd.value
             }
 
@@ -23,7 +22,7 @@ export default defineComponent(
 
 
             return {
-                showChangePwd,changePwd
+                showChangePwd, changePwd
             }
         }
 

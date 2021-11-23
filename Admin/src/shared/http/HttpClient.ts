@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { ElMessage } from "element-plus"
+import { router } from "../../router/index"
 
 const http = axios.create({
     headers: {
@@ -51,6 +52,8 @@ http.interceptors.response.use((response) => {
             message: "访问需要登录",
             type: 'warning'
         })
+        router.push('/login')
+
     }
     if (error.response?.status == 404) {
         ElMessage({

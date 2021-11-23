@@ -20,20 +20,25 @@ public static class AutoInject
         action(option);
         foreach (var item in option.Options)
         {
-            var types = Assembly.GetCallingAssembly().GetTypes().Where(a => a.IsClass && a.IsPublic);
+            var types = Assembly.GetCallingAssembly().GetTypes().Where(a => a.IsClass && a.IsPublic)
+                .Where(a => a.Name.EndsWith(item.EndWdith));
             foreach (var type in types)
             {
                 if (item.InjectSelf == false)
                 {
-                    if (!type.Name.EndsWith(item.EndWdith) || type.GetInterfaces().Length <= 0 ||
-                        !type.GetInterfaces()[0].Name.EndsWith(item.EndWdith)) continue;
-                    var impInterface = type.GetInterfaces()[0];
-                    Inject(serviceCollection, type, impInterface);
+                    if (type.Name.EndsWith(item.EndWdith) && type.GetInterfaces().Length > 0 &&
+                        type.GetInterfaces().Any(a => a.Name.EndsWith(item.EndWdith)))
+                    {
+                        var impInterface = type.GetInterfaces().FirstOrDefault();
+                        Inject(serviceCollection, type, impInterface);
+                    }
                 }
                 else
                 {
-                    if (type.IsGenericType == false)
+                    if (type.IsGenericType == false && type.IsInterface == false)
+                    {
                         Inject(serviceCollection, type, type);
+                    }
                 }
             }
         }
@@ -74,7 +79,6 @@ public class AutoInjectOption
 
 public class AutoInjectOptionItem
 {
-
     /// <summary>
     /// 结尾
     /// </summary>

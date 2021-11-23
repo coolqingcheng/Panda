@@ -15,7 +15,7 @@ namespace Panda
 {
     public static class PandaExtension
     {
-        public static void AddPanda(this IServiceCollection Services)
+        public static void AddPanda(this IServiceCollection services)
         {
 
             var db = Environment.GetEnvironmentVariable("MYSQL_DB");
@@ -25,15 +25,15 @@ namespace Panda
                 return;
             }
 
-            Services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
-            Services.AddDbContextPool<PandaContext>(
+            services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
+            services.AddDbContextPool<PandaContext>(
                 opt =>
                 {
                     opt.UseMySql(db, ServerVersion.AutoDetect(db)).EnableSensitiveDataLogging()
                             .EnableDetailedErrors();
                 }
             );
-            Services.AddEasyCaching(options =>
+            services.AddEasyCaching(options =>
             {
                 //use memory cache that named default
                 options.UseInMemory(opt =>
@@ -42,8 +42,8 @@ namespace Panda
                     opt.CacheNulls = true;
                 });
             });
-            Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
-            Services.AddControllersWithViews(opt =>
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+            services.AddControllersWithViews(opt =>
             {
                 opt.Filters.Add<GlobalExceptionFilter>();
                 opt.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
@@ -53,15 +53,15 @@ namespace Panda
                 options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
                 options.JsonSerializerOptions.Converters.Add(new DateTimeNullConverter());
             });
-            Services.AddTools();
-            Services.AddScoped<IDicDataProvider, EFDicDataProvider>();
+            services.AddTools();
+            services.AddScoped<IDicDataProvider, EFDicDataProvider>();
 
-            Services.AddAntiforgery(options =>
+            services.AddAntiforgery(options =>
                 options.HeaderName = "X-CSRF-TOKEN"
             );
 
 
-            Services.AddAutoInject(opt =>
+            services.AddAutoInject(opt =>
             {
                 opt.Options.Add(new AutoInjectOptionItem()
                 {
@@ -73,7 +73,7 @@ namespace Panda
                     InjectSelf = true
                 });
             });
-            Services.AddScoped<IUnitOfWork, EFUnitOfWork>();
+            services.AddScoped<IUnitOfWork, EFUnitOfWork>();
 
         }
     }

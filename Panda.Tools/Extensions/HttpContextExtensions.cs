@@ -17,13 +17,10 @@ namespace Panda.Tools.Extensions
         /// <returns></returns>
         public static Guid? CurrentAccountId(this HttpContext http)
         {
-            var identity = http.User.Identities.Where(a => a.Name == "Id").Where(a => a.AuthenticationType == CookieAuthenticationDefaults.AuthenticationScheme).SelectMany(a => a.Claims).ToList();
-            var claim = identity.Where(a => a.Type == "Id").FirstOrDefault();
-            if (claim != null)
-            {
-                return Guid.Parse(claim.Value);
-            }
-            return Guid.Empty;
+            var identity = http.User;
+            var id = identity.Claims.Where(a => a.Type == "Id")
+                .Select(a=>a.Value).FirstOrDefault();
+            return id != null ? Guid.Parse(id) : Guid.Empty;
         }
     }
 }
