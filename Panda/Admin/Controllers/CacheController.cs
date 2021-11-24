@@ -13,7 +13,7 @@ namespace Panda.Admin.Controllers
         public IActionResult Index()
         {
             var a = CacheKeys.NoticeCacheKey;
-            return View();
+            return Content("");
         }
     }
 }

@@ -4,6 +4,7 @@ using Panda.Entity.Models;
 using Panda.Entity.Requests;
 using Panda.Entity.Responses;
 using Panda.Entity.UnitOfWork;
+using Panda.Repository.Account;
 using Panda.Repository.Article;
 using Panda.Repository.ArticleCategoryRelation;
 using Panda.Repository.Category;
@@ -29,9 +30,11 @@ public class PostService : IPostService
 
     private readonly PostTagsRepository _postTagsRepository;
 
+    private AccountRepository _accountRepository;
+
     public PostService(PostRepository postRepository, CategoryRepository categoryRepository,
         IUnitOfWork unitOfWork, PostCategoryRelationRepository postCategoryRelationRepository,
-        TagRelationRepository tagRelationRepository, PostTagsRepository postTagsRepository)
+        TagRelationRepository tagRelationRepository, PostTagsRepository postTagsRepository, AccountRepository accountRepository)
     {
         _postRepository = postRepository;
         _categoryRepository = categoryRepository;
@@ -39,6 +42,7 @@ public class PostService : IPostService
         _postCategoryRelationRepository = postCategoryRelationRepository;
         _tagRelationRepository = tagRelationRepository;
         _postTagsRepository = postTagsRepository;
+        _accountRepository = accountRepository;
     }
 
     public async Task<PageDto<PostItem>> GetPostList(PostRequest request)
@@ -94,6 +98,7 @@ public class PostService : IPostService
 
     public async Task AddOrUpdate(PostAddOrUpdate request)
     {
+        var account = await _accountRepository.GetCurrentAccountsAsync();
         var text = request.Content.GetHtmlText();
         await _unitOfWork.BeginTransactionAsync();
         if (request.Id > 0)
@@ -110,6 +115,7 @@ public class PostService : IPostService
             post.Summary = text.GetSummary(80);
             post.UpdateTime = DateTime.Now;
             post.Cover = request.Cover;
+            post.Account = account;
             await _postRepository.SaveAsync();
             var beforeCategories = await _postCategoryRelationRepository.Where(a => a.Posts == post)
                 .Select(a => a.Categories.Id).ToListAsync();
@@ -136,7 +142,8 @@ public class PostService : IPostService
                 UpdateTime = DateTime.Now,
                 Text = text,
                 Summary = text.GetSummary(80),
-                Cover = request.Cover
+                Cover = request.Cover,
+                Account = account
             };
             await _postRepository.AddAsync(post);
             var categories = await _categoryRepository.Where(a => request.Categories.Contains(a.Id)).ToListAsync();

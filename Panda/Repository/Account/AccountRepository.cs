@@ -45,10 +45,12 @@ public class AccountRepository : PandaRepository<Accounts>
         await _context.SaveChangesAsync();
     }
 
-    public async Task<Accounts?> GetCurrentAccountsAsync()
+    public async Task<Accounts> GetCurrentAccountsAsync()
     {
         var accountId = _httpContextAccessor.HttpContext?.CurrentAccountId();
         var account = await Where(a => a.Id == accountId).FirstOrDefaultAsync();
-        return account;
+
+        account.IsNullThrow("登录身份验证失败，请重新登录");
+        return account!;
     }
 }

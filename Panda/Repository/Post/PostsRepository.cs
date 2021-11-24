@@ -41,12 +41,13 @@ public class PostRepository : PandaRepository<Posts>
             query = query.Where(a => a.ArticleCategoryRelations.Any(b => b.Categories == category));
         }
 
-        var res = await query.OrderByDescending(a=>a.UpdateTime).Page(request).Select(a => new PostItem()
+        var res = await query.Include(a=>a.Account).OrderByDescending(a=>a.UpdateTime).Page(request).Select(a => new PostItem()
         {
             Id = a.Id,
             Title = a.Title,
             Summary = a.Summary,
             AddTime = a.AddTime,
+            Account = a.Account,
             Categories = a.ArticleCategoryRelations.Select(b => new PostCategories()
             {
                 Id = b.Categories.Id,

@@ -122,8 +122,23 @@ public class IdentitySecurity
 /// </summary>
 public enum Strength
 {
-    Invalid = 0, //无效密码
-    Weak = 1, //低强度密码
-    Normal = 2, //中强度密码
-    Strong = 3 //高强度密码
+    /// <summary>
+    /// 无效密码
+    /// </summary>
+    Invalid = 0,
+
+    /// <summary>
+    /// 低强度密码
+    /// </summary>
+    Weak = 1,
+
+    /// <summary>
+    /// 中强度密码
+    /// </summary>
+    Normal = 2,
+
+    /// <summary>
+    /// 高强度密码
+    /// </summary>
+    Strong = 3
 };
