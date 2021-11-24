@@ -16,7 +16,7 @@ public class PostController : Controller
     [HttpGet("/post/{id:int}.html")]
     public async Task<IActionResult> Index(int id)
     {
-        var res =  await _postService.GetArticle(id);
+        var res =  await _postService.GetPost(id);
         return View(res);
     }
 

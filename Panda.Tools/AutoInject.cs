@@ -30,7 +30,7 @@ public static class AutoInject
                         type.GetInterfaces().Any(a => a.Name.EndsWith(item.EndWdith)))
                     {
                         var impInterface = type.GetInterfaces().FirstOrDefault();
-                        Inject(serviceCollection, type, impInterface);
+                        Inject(serviceCollection, type, impInterface!);
                     }
                 }
                 else

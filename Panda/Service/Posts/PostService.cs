@@ -56,14 +56,14 @@ public class PostService : IPostService
         return await Task.FromResult(new PageDto<PostItem>());
     }
 
-    public async Task<PostDetailItem> AdminGetArticle(int id)
+    public async Task<PostDetailItem> AdminGetPost(int id)
     {
-        var item = await GetArticle(id);
+        var item = await GetPost(id);
         item.Content = item.Content.RestoreLazyHandler()!;
         return item;
     }
 
-    public async Task<PostDetailItem> GetArticle(int id)
+    public async Task<PostDetailItem> GetPost(int id)
     {
         var item = await _postRepository.Where(a => a.Id == id && a.Status == PostStatus.Publish)
             .Include(a => a.Account).Include(a => a.TagsRelations).Select(a =>
@@ -82,7 +82,8 @@ public class PostService : IPostService
                         TagName = b.Tags.TagName
                     })
                 }).FirstOrDefaultAsync();
-        var categories = await _categoryRepository.GetCategories(item.Id);
+        item.IsNullThrow("找不到当前的文章Id");
+        var categories = await _categoryRepository.GetCategories(item!.Id);
         item.Categories = categories.Select(a => new PostCategories()
         {
             Id = a.Id,
@@ -182,7 +183,7 @@ public class PostService : IPostService
                 Title = a.Posts.Title,
                 Categories =
                     a.Posts.ArticleCategoryRelations.Select(b => new PostCategories()
-                            { Id = b.Categories.Id, CateName = b.Categories.categoryName })
+                    { Id = b.Categories.Id, CateName = b.Categories.categoryName })
                         .ToList()
             }).OrderByDescending(a => a.AddTime).ToListAsync();
 

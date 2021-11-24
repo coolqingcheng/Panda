@@ -75,6 +75,8 @@ public class PostTagService : IPostTagService
 
     public async Task<PostTags> GetId(int Id)
     {
-        return await _tagsRepository.Where(a => a.Id == Id).FirstOrDefaultAsync();
+        var item =  await _tagsRepository.Where(a => a.Id == Id).FirstOrDefaultAsync();
+        item.IsNullThrow("标签Id为空！");
+        return item!;
     }
 }

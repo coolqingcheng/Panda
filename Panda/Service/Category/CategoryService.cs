@@ -15,7 +15,7 @@ public class CategoryService : ICategoryService
 {
     private readonly CategoryRepository _categoryRepository;
 
-    private IEasyCachingProvider _easyCachingProvider;
+    private readonly IEasyCachingProvider _easyCachingProvider;
 
     public CategoryService(CategoryRepository categoryRepository, IEasyCachingProvider easyCachingProvider)
     {
@@ -27,7 +27,7 @@ public class CategoryService : ICategoryService
     {
         var res = await _categoryRepository.Where(a => a.IsShow)
             .WhereIf(string.IsNullOrWhiteSpace(request.CateName) == false,
-                a => a.categoryName.Contains(request.CateName))
+                a => a.categoryName.Contains(request.CateName!))
             .OrderByDescending(a => a.AddTime).Page(request).Select(a => new CategoryItem()
             {
                 CateName = a.categoryName,
@@ -74,7 +74,7 @@ public class CategoryService : ICategoryService
         var res = await _categoryRepository.Where(a => a.Id == id).Select(a => new
         {
             a.Id,
-            Count = a.ArticleCategoryRelations.Count
+            a.ArticleCategoryRelations.Count
         }).FirstOrDefaultAsync();
         if (res == null)
         {
@@ -104,12 +104,13 @@ public class CategoryService : ICategoryService
 
     public async Task<CategoryItem> GetCategoryById(int id)
     {
-       var item = await  _categoryRepository.Where(a => a.Id == id).Select(a=>new CategoryItem()
-       {
-           Id = a.Id,
-           CateName = a.categoryName,
-           Pid = a.Pid
-       }).FirstOrDefaultAsync();
-       return item;
+        var item = await _categoryRepository.Where(a => a.Id == id).Select(a => new CategoryItem()
+        {
+            Id = a.Id,
+            CateName = a.categoryName,
+            Pid = a.Pid
+        }).FirstOrDefaultAsync();
+        item.IsNullThrow("分类为空！");
+        return item!;
     }
 }

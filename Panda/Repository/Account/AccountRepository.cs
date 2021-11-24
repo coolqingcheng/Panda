@@ -33,7 +33,7 @@ public class AccountRepository : PandaRepository<Accounts>
     }
 
 
-    private bool IsLocked(Accounts account)
+    private static bool IsLocked(Accounts account)
     {
         return account.LockedTime > DateTime.Now;
     }
@@ -45,7 +45,7 @@ public class AccountRepository : PandaRepository<Accounts>
         await _context.SaveChangesAsync();
     }
 
-    public async Task<Accounts> GetCurrentAccountsAsync()
+    public async Task<Accounts?> GetCurrentAccountsAsync()
     {
         var accountId = _httpContextAccessor.HttpContext?.CurrentAccountId();
         var account = await Where(a => a.Id == accountId).FirstOrDefaultAsync();

@@ -85,7 +85,8 @@ public class AccountService : IAccountService
     public async Task ChangePwdAsync(string oldPwd, string newPwd)
     {
         var account = await GetCurrentAccount();
-        if (IdentitySecurity.VerifyHashedPassword(account.Passwd, oldPwd) == false)
+        account.IsNullThrow("登录信息读取失败，请重新登录！");
+        if (IdentitySecurity.VerifyHashedPassword(account!.Passwd, oldPwd) == false)
         {
             throw new UserException("旧密码错误！");
         }
@@ -94,7 +95,7 @@ public class AccountService : IAccountService
         await SignOutAsync();
     }
 
-    public async Task<Accounts> GetCurrentAccount()
+    public async Task<Accounts?> GetCurrentAccount()
     {
         return await _accountRepository.GetCurrentAccountsAsync();
     }

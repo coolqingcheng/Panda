@@ -14,8 +14,8 @@ public interface IPostService
     
     Task<PageDto<PostItem>> GetArticleListByCategoryId(PostCategoryRequest request);
     
-    Task<PostDetailItem> AdminGetArticle(int id);
-    Task<PostDetailItem> GetArticle(int id);
+    Task<PostDetailItem> AdminGetPost(int id);
+    Task<PostDetailItem> GetPost(int id);
 
     Task AddOrUpdate(PostAddOrUpdate request);
 

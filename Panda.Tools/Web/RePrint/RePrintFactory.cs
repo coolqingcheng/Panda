@@ -4,10 +4,10 @@ namespace Panda.Tools.Web.RePrint;
 
 public class RePrintFactory
 {
-    public async Task<RePrintPostModel> RePrint(string url)
+    public static async Task<RePrintPostModel> RePrint(string url)
     {
         var matchRes =  Regex.Match(url, @"(?<=\/\/).*?(?=\/)");
-        IRePrint rePrint = null;
+        IRePrint? rePrint = null;
         switch (matchRes.Value)
         {
             case "blog.csdn.net":
@@ -26,9 +26,9 @@ public class RePrintFactory
 
 public class RePrintPostModel
 {
-    public string Title { get; set; }
+    public string? Title { get; set; }
 
-    public string Content { get; set; }
+    public string? Content { get; set; }
 
-    public string Images { get; set; }
+    public string? Images { get; set; }
 }

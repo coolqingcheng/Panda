@@ -23,21 +23,28 @@ public class RssController : Controller
         var list = await _postService.GetLatestPosts(100);
         var host = await _dicDataService.GetItemByCache("site", "host");
         var siteName = await _dicDataService.GetItemByCache("site", "site_name");
-        var model = new RssModel()
+        if (host != null && siteName != null)
         {
-            Title = siteName?.Value,
-            Link = host?.Value,
-            Description = "我的博客"
-        };
-        foreach (var item in list)
-        {
-            model.Item.Add(new RssItem()
+            var model = new RssModel()
             {
-                Title = item.Title,
-                Link = $"{host?.Value}/post/{item.Id}.html",
-                Description = item.Summary
-            });
+                Title = siteName.Value!,
+                Link = host.Value!,
+                Description = "我的博客"
+            };
+            foreach (var item in list)
+            {
+                model.Item.Add(new RssItem()
+                {
+                    Title = item.Title,
+                    Link = $"{host?.Value}/post/{item.Id}.html",
+                    Description = item.Summary
+                });
+            }
+            return Content(RssUtils.ToRssXml(model), "text/xml");
         }
-        return Content(RssUtils.ToRssXml(model), "text/xml");
+        else
+        {
+            return Content("<h1>rss没有配置！</h1>", "text/html");
+        }
     }
 }

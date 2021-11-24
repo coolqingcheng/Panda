@@ -89,7 +89,7 @@ public class DicDataService : IDicDataService
 
     public async Task<DicDataChildInfo?> GetItemByCache(string groupName, string key)
     {
-        var result = await _caching.GetAsync<DicDataChildInfo>(CacheKeys.DicDataGroupNameKey + groupName + key,
+        var result = await _caching.GetAsync(CacheKeys.DicDataGroupNameKey + groupName + key,
             async () =>
             {
                 var list = await _dataRepository.WhereItemsByGroupName(groupName);
