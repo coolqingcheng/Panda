@@ -56,7 +56,7 @@ public class DicDataService : IDicDataService
             });
         }
 
-        await _caching.RemoveAsync(CacheKeys.DicDataGroupNameKey);
+        await _caching.RemoveByPrefixAsync(CacheKeys.DicDataGroupNameKey);
 
         await _unitOfWork.CommitAsync();
     }
@@ -95,7 +95,9 @@ public class DicDataService : IDicDataService
                 var list = await _dataRepository.WhereItemsByGroupName(groupName);
                 var item = list.Where(a => a.DicKey == key).Select(a => new DicDataChildInfo()
                 {
-                    Key = a.DicKey, Value = a.DicValue, Description = a.Description
+                    Key = a.DicKey,
+                    Value = a.DicValue,
+                    Description = a.Description
                 }).FirstOrDefault();
                 return item;
             }, TimeSpan.FromDays(1));
@@ -114,9 +116,9 @@ public class DicDataService : IDicDataService
 
     public async Task<string?> GetItemByCache(string section)
     {
-        var arr =  section.Split(":");
+        var arr = section.Split(":");
         if (arr.Length == 0) throw new UserException("section获取字典内容格式必须用:分割");
-        var item =  await GetItemByCache(arr[0], arr[1]);
+        var item = await GetItemByCache(arr[0], arr[1]);
         return item?.Value;
     }
 }
