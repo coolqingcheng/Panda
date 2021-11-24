@@ -23,6 +23,7 @@ public class DicDataService : IDicDataService
         _dataRepository = dataRepository;
         _unitOfWork = unitOfWork;
         _caching = caching;
+        
     }
 
     public async Task AddOrUpdate(DicDataRequest request)
