@@ -104,7 +104,7 @@ export default defineComponent({
         var formRef = ref<InstanceType<typeof ElForm>>()
 
         const submitForm = async () => {
-
+            console.log(formModel.value)
             formRef.value?.validate(async (valid) => {
                 if (valid) {
                     try {

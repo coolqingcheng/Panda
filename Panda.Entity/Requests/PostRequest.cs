@@ -17,12 +17,12 @@ public class PostAddOrUpdate
     [Required]
     public List<int> Categories { get; set; }
 
-    public string[] Tags { get; set; }
+    public string[] Tags { get; set; } = Array.Empty<string>();
 
     /// <summary>
     /// 封面图
     /// </summary>
-    public string Cover { get; set; }
+    public string Cover { get; set; } = string.Empty;
 }
 
 public class AdminPostGetListRequest:BasePageRequest
