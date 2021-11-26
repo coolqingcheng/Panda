@@ -11,14 +11,14 @@
                         label-position="top"
                         ref="form.instance"
                         :model="formModel"
-                        v-loading="form.loading"
+                        v-loading="loading"
                         :rules="rules"
                     >
                         <el-form-item label="标签名称" prop="tag">
                             <el-input placeholder="标签名称" v-model="formModel.tag"></el-input>
                         </el-form-item>
                         <el-form-item label>
-                            <el-button type="primary" @click="save()">保存{{ form.loading }}</el-button>
+                            <el-button type="primary" @click="save()">保存{{ loading }}</el-button>
                             <el-button type="default" @click="back()">返回</el-button>
                         </el-form-item>
                     </el-form>
@@ -54,7 +54,6 @@ export default {
         })
 
         onMounted(() => {
-
         })
 
         const save = () => {
@@ -64,7 +63,7 @@ export default {
         return {
             back,
             formModel,
-            form,
+            ...form,
             rules,
             save
         }
