@@ -15,10 +15,10 @@
                         :rules="rules"
                     >
                         <el-form-item label="标签名称" prop="tag">
-                            <el-input placeholder="标签名称" v-model="formModel.tag"></el-input>
+                            <el-input placeholder="标签名称" v-model="formModel.tagName"></el-input>
                         </el-form-item>
                         <el-form-item label>
-                            <el-button type="primary" @click="save()">保存{{ loading }}</el-button>
+                            <el-button type="primary" @click="save()">保存</el-button>
                             <el-button type="default" @click="back()">返回</el-button>
                         </el-form-item>
                     </el-form>
@@ -33,6 +33,7 @@ import { useRouter } from 'vue-router'
 import LeftMenuLayout from '../../../components/LeftMenuLayout.vue'
 import { onMounted, ref } from 'vue'
 import { useForm } from "shared/useForm"
+import { post } from 'shared/http/HttpClient'
 export default {
     components: { LeftMenuLayout },
     setup() {
@@ -43,21 +44,26 @@ export default {
         const form = useForm();
 
         const rules = {
-            tag: [
+            tagName: [
                 { required: true, message: '标签数量不能为空' }
             ]
         }
 
         const formModel = ref({
             id: 0,
-            tag: ''
+            tagName: ''
         })
 
         onMounted(() => {
         })
 
         const save = () => {
-
+            form.loading.value = true
+            post('/admin/tag/addorupdate', formModel.value).then(() => {
+                // router.back()
+            }).finally(() => {
+                form.loading.value = false
+            })
         }
 
         return {

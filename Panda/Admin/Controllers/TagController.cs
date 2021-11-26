@@ -25,4 +25,10 @@ public class TagController : AdminBaseController
     {
         return await _tagService.SearchTag(key);
     }
+
+    [HttpPost]
+    public async Task AddOrUpdate(TagAddRequest request)
+    {
+        await _tagService.AddOrUpdate(request);
+    }
 }
