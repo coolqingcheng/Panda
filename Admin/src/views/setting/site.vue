@@ -30,7 +30,7 @@
 
 <script lang="ts">
 import { onMounted, ref } from 'vue'
-import { usBaseForm } from 'shared/useBaseForm'
+import { useForm } from 'shared/useForm'
 import { post, get } from 'shared/http/HttpClient'
 export default {
     setup() {
@@ -40,10 +40,10 @@ export default {
             icp: '',
             statistics: '',
             img_lazy: 'false',
-            host:''
+            host: ''
         })
 
-        const { instance, loading } = usBaseForm();
+        const { instance, loading } = useForm();
 
 
         const rules = {
@@ -52,9 +52,9 @@ export default {
                     required: true, message: '站点名称不能为空'
                 }
             ],
-            host:[
+            host: [
                 {
-                    required:true,message:'域名不能为空'
+                    required: true, message: '域名不能为空'
                 }
             ]
         }
@@ -62,11 +62,11 @@ export default {
         const load = async () => {
             var res = await get<any>('/admin/dicdata/get', { groupName: 'site' })
             formModel.value = {
-                site_name: res.site_name, 
-                icp: res.icp, 
-                statistics: res.statistics, 
+                site_name: res.site_name,
+                icp: res.icp,
+                statistics: res.statistics,
                 img_lazy: res.img_lazy,
-                host:res.host
+                host: res.host
             }
         }
 
