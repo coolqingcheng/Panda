@@ -30,11 +30,11 @@ export default {
             {
                 label: '仪表盘',
                 active: ['/admin/dash'],
-                path:'/admin/dash'
+                path: '/admin/dash'
             },
             {
                 label: '文章',
-                active: ['/admin/post', '/admin/post/write','/admin/categories'],
+                active: ['/admin/post', '/admin/post/write', '/admin/categories'],
                 path: '/admin/post'
             },
             {
@@ -44,7 +44,7 @@ export default {
             },
             {
                 label: '标签',
-                active: ['/admin/tag','/admin/tag/edit'],
+                active: ['/admin/tag', '/admin/tag/edit'],
                 path: '/admin/tag'
             },
             {
@@ -56,6 +56,11 @@ export default {
                 label: '页面',
                 active: ['/admin/pages', '/admin/pages-write'],
                 path: '/admin/pages'
+            },
+            {
+                label: '友情链接',
+                active: ['/admin/friendlink'],
+                path: '/admin/friendlink'
             },
             {
                 label: '设置',

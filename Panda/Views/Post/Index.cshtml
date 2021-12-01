@@ -1,6 +1,7 @@
 @model Panda.Entity.Models.PostDetailItem
 @{
-    ViewData["Title"] = "post";
+    ViewData["Title"] = Model?.Title;
+    ViewData["Description"] = Model?.Summary;
 }
 @{
     if (Model == null)
@@ -53,11 +54,6 @@
         </div>
     </div>
 </div>
-
-@section css{
-    <link rel="stylesheet" href="~/css/highlight.css" asp-append-version="true"/>
-}
-
 @section Scripts
 {
     <script src="~/js/highlight.js"></script>

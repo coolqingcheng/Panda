@@ -16,7 +16,7 @@ public class TagController : AdminBaseController
     }
 
     [HttpGet]
-    public async Task<PageDto<TagResponse>> GetList(TagRequest request)
+    public async Task<PageDto<TagResponse>> GetList([FromQuery]TagRequest request)
     {
         return await _tagService.GetList(request);
     }

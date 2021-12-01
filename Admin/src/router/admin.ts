@@ -14,6 +14,8 @@ import TabItemContainer from "../views/TabItemContainer.vue"
 
 import Categories from '../views/blogs/categories/Categories.vue'
 
+import FriendLink from "../views/blogs/friendlink/FriendLink.vue"
+
 const dashRoute: RouteRecordRaw[] = [
     {
         path: '/admin',
@@ -49,6 +51,9 @@ const dashRoute: RouteRecordRaw[] = [
                         path:'',component:Categories,name:'分类'
                     }
                 ]
+            },
+            {
+                path:'friendlink',component:FriendLink
             },
             ...setting,
 

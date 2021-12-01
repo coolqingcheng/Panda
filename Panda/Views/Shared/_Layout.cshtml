@@ -1,16 +1,20 @@
 ﻿@using Panda.Services.DicData
+@inject ICategoryService _categoryService
+@inject IDicDataService _dicDataService
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
+    <title>@ViewData["Title"] - @await _dicDataService.GetItemByCache("site:site_name")</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - Panda</title>
+    @if (ViewData["Description"] != null)
+    {
+        <meta name="description" content="@ViewData["Description"]"/>
+    }
     <link rel="stylesheet" href="~/css/index.css" asp-append-version="true"/>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     @await RenderSectionAsync("css", required: false)
 </head>
-@inject ICategoryService _categoryService
-@inject IDicDataService _dicDataService
 <body>
 <header>
     <nav class="navbar">
