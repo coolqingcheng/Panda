@@ -20,6 +20,8 @@ public interface IPostTagService
 
     Task<PostTags> GetId(int Id);
 
+
+    Task AddOrUpdate(TagAddRequest request);
 }
 
 public class PostTagService : IPostTagService
@@ -75,8 +77,29 @@ public class PostTagService : IPostTagService
 
     public async Task<PostTags> GetId(int Id)
     {
-        var item =  await _tagsRepository.Where(a => a.Id == Id).FirstOrDefaultAsync();
+        var item = await _tagsRepository.Where(a => a.Id == Id).FirstOrDefaultAsync();
         item.IsNullThrow("标签Id为空！");
         return item!;
+    }
+
+    public async Task AddOrUpdate(TagAddRequest request)
+    {
+        if (request.Id != 0)
+        {
+            var tag = await _tagsRepository.Where(a => a.Id == request.Id).FirstOrDefaultAsync();
+            if (tag != null) tag.TagName = request.TagName;
+            await _tagsRepository.SaveAsync();
+        }
+        else
+        {
+            var any = await _tagsRepository.Where(a => a.TagName == request.TagName).AnyAsync();
+            if (any == false)
+            {
+                await _tagsRepository.AddAsync(new PostTags()
+                {
+                    TagName = request.TagName
+                });
+            }
+        }
     }
 }

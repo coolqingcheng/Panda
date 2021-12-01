@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Panda.Entity;
 
@@ -10,9 +11,10 @@ using Panda.Entity;
 namespace Panda.Entity.Migrations
 {
     [DbContext(typeof(PandaContext))]
-    partial class PandaContextModelSnapshot : ModelSnapshot
+    [Migration("20211125021425_update202111251014")]
+    partial class update202111251014
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,7 +59,7 @@ namespace Panda.Entity.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Accounts", (string)null);
+                    b.ToTable("Accounts");
                 });
 
             modelBuilder.Entity("Panda.Entity.DataModels.AuditLogs", b =>
@@ -85,7 +87,7 @@ namespace Panda.Entity.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AuditLogs", (string)null);
+                    b.ToTable("AuditLogs");
                 });
 
             modelBuilder.Entity("Panda.Entity.DataModels.Categorys", b =>
@@ -119,7 +121,7 @@ namespace Panda.Entity.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Panda.Entity.DataModels.DicDatas", b =>
@@ -153,7 +155,7 @@ namespace Panda.Entity.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DicDatas", (string)null);
+                    b.ToTable("DicDatas");
                 });
 
             modelBuilder.Entity("Panda.Entity.DataModels.FriendlyLinkRecord", b =>
@@ -183,7 +185,7 @@ namespace Panda.Entity.Migrations
 
                     b.HasIndex("LinksId");
 
-                    b.ToTable("FriendlyLinkRecords", (string)null);
+                    b.ToTable("FriendlyLinkRecords");
                 });
 
             modelBuilder.Entity("Panda.Entity.DataModels.FriendlyLinks", b =>
@@ -216,7 +218,7 @@ namespace Panda.Entity.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FriendlyLinks", (string)null);
+                    b.ToTable("FriendlyLinks");
                 });
 
             modelBuilder.Entity("Panda.Entity.DataModels.Notices", b =>
@@ -246,7 +248,7 @@ namespace Panda.Entity.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Notices", (string)null);
+                    b.ToTable("Notices");
                 });
 
             modelBuilder.Entity("Panda.Entity.DataModels.Pages", b =>
@@ -275,7 +277,7 @@ namespace Panda.Entity.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Pages", (string)null);
+                    b.ToTable("Pages");
                 });
 
             modelBuilder.Entity("Panda.Entity.DataModels.Posts", b =>
@@ -337,7 +339,7 @@ namespace Panda.Entity.Migrations
                         .HasAnnotation("MySql:FullTextIndex", true)
                         .HasAnnotation("MySql:FullTextParser", "ngram");
 
-                    b.ToTable("Posts", (string)null);
+                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("Panda.Entity.DataModels.PostsCategoryRelations", b =>
@@ -364,7 +366,7 @@ namespace Panda.Entity.Migrations
 
                     b.HasIndex("PostsId");
 
-                    b.ToTable("ArticleCategoryRelations", (string)null);
+                    b.ToTable("ArticleCategoryRelations");
                 });
 
             modelBuilder.Entity("Panda.Entity.DataModels.PostTags", b =>
@@ -389,7 +391,7 @@ namespace Panda.Entity.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PostTags", (string)null);
+                    b.ToTable("PostTags");
                 });
 
             modelBuilder.Entity("Panda.Entity.DataModels.TagsRelation", b =>
@@ -416,7 +418,7 @@ namespace Panda.Entity.Migrations
 
                     b.HasIndex("TagsId");
 
-                    b.ToTable("TagsRelations", (string)null);
+                    b.ToTable("TagsRelations");
                 });
 
             modelBuilder.Entity("Panda.Entity.DataModels.FriendlyLinkRecord", b =>

@@ -27,7 +27,7 @@
 <script lang="ts">
 import { ElForm, ElMessage } from "element-plus";
 import { defineComponent, nextTick, ref, toRefs, watch } from "vue";
-import { usBaseForm } from 'shared/useBaseForm'
+import { useForm } from 'shared/useForm'
 import { post } from 'shared/http/HttpClient'
 
 export default defineComponent({
@@ -45,7 +45,7 @@ export default defineComponent({
 
         const show = ref(modelValue.value)
 
-        const { loading, instance,clearForm } = usBaseForm();
+        const { loading, instance, clearForm } = useForm();
 
 
         const formModel = ref({
@@ -123,7 +123,7 @@ export default defineComponent({
             })
         }
 
-        
+
 
         return {
             close,

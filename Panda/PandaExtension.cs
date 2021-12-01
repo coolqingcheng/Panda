@@ -8,6 +8,8 @@ using Panda.Services.DicData;
 using Panda.Tools;
 using Panda.Tools.Filter;
 using Panda.Tools.Web;
+using System.Net;
+using System.Net.Mime;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 
@@ -52,7 +54,17 @@ namespace Panda
             {
                 options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
                 options.JsonSerializerOptions.Converters.Add(new DateTimeNullConverter());
-            });
+            }).ConfigureApiBehaviorOptions(options =>
+            {
+                options.InvalidModelStateResponseFactory = context =>
+                {
+                    var errors = context.ModelState.Values.SelectMany(a => a.Errors).Select(a => new { a.ErrorMessage });
+                    string errMsg = string.Join("|", errors);
+                    var result = new JsonResult(new { Message = errMsg });
+                    context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return result;
+                };
+            }); ;
             services.AddTools();
             services.AddScoped<IDicDataProvider, EFDicDataProvider>();
 

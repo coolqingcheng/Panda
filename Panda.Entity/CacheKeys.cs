@@ -15,10 +15,10 @@ public class CacheKeys
     /// <returns></returns>
     public static void ValidteKeyRepetition()
     {
-        var item = typeof(CacheKeys).GetFields().Select(a => a.GetValue(a))
+        var item = typeof(CacheKeys).GetFields()
+            .Select(a => a.GetValue(a))
             .GroupBy(a => a)
-            .Select(a => new { a, count = a.Count() })
-            .Where(a => a.count > 1).FirstOrDefault();
+            .Select(a => new { a, count = a.Count<object?>() }).FirstOrDefault(a => a.count > 1);
         if (item != null)
         {
             throw new ValidateFailException($"缓存key有重复，重复项为：{ item.a }");
@@ -39,5 +39,11 @@ public class CacheKeys
     /// 通知缓存
     /// </summary>
     public const string NoticeCacheKey = "NoticeCacheKey";
+
+
+    /// <summary>
+    /// 验证码前缀
+    /// </summary>
+    public const string ValidateCode = "ValidateCode_";
 
 }

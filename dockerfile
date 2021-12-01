@@ -31,15 +31,6 @@ WORKDIR /app
 # COPY --from=admin /src/Admin ./wwwroot/
 # COPY ["./Admin/dist","/app/publish/wwwroot/admin"]
 COPY ./publish .
-RUN echo "deb http://mirrors.aliyun.com/debian stretch main contrib non-free \
-    deb-src http://mirrors.aliyun.com/debian stretch main contrib non-free \
-    deb http://mirrors.aliyun.com/debian stretch-updates main contrib non-free \
-    deb-src http://mirrors.aliyun.com/debian stretch-updates main contrib non-free \
-    deb http://mirrors.aliyun.com/debian-security stretch/updates main contrib non-free \
-    deb-src http://mirrors.aliyun.com/debian-security stretch/updates main contrib non-free \
-    deb http://mirrors.aliyun.com/debian/ stretch-backports main non-free contrib \
-    deb-src http://mirrors.aliyun.com/debian/ stretch-backports main non-free contrib" > /etc/apt/sources.list
-RUN apt-get update && apt-get install libgdiplus -y && ln -s libgdiplus.so gdiplus.dll
 
 ENV LANG C.UTF-8
 ENV TZ=Asia/Shanghai

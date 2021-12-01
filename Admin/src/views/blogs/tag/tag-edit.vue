@@ -1,3 +1,4 @@
+
 <template>
     <left-menu-layout>
         <template #menu>
@@ -23,7 +24,7 @@
 
 <script lang="ts" setup>
 import { post } from 'shared/http/HttpClient'
-import { usBaseForm } from 'shared/useBaseForm'
+import { useForm } from 'shared/useForm'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import LeftMenuLayout from '../../../components/LeftMenuLayout.vue'
@@ -32,7 +33,7 @@ const back = () => {
     router.back()
 }
 
-const { loading, instance } = usBaseForm();
+const { loading, instance } = useForm();
 
 const formModel = ref({
     id: 0,
@@ -42,7 +43,7 @@ const save = () => {
     loading.value = true;
 
     console.log(instance.value?.validate)
-    instance.value?.validate()?.then(valid => {
+    instance.value?.validate()?.then((valid:any) => {
 
         console.log('instance.value' + valid)
         if (valid) {

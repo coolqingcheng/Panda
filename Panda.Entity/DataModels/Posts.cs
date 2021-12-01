@@ -50,7 +50,7 @@ public class Posts : PandaBaseTable
     /// <summary>
     /// 封面图
     /// </summary>
-    public string Cover { get; set; }
+    public string? Cover { get; set; }
 
 
     public ICollection<PostsCategoryRelations> ArticleCategoryRelations { get; set; }

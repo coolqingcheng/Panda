@@ -124,10 +124,13 @@ public class PostService : IPostService
             await _postCategoryRelationRepository.DiffUpdateRelation(post, beforeCategories, afterCategories);
 
             await _tagRelationRepository.PostDeleteRelation(post);
-            foreach (var tag in request.Tags)
+            if (request.Tags != null)
             {
-                var tagItem = await _postTagsRepository.GetWithCreate(tag);
-                await _tagRelationRepository.AddRelationAsync(post, tagItem);
+                foreach (var tag in request.Tags)
+                {
+                    var tagItem = await _postTagsRepository.GetWithCreate(tag);
+                    await _tagRelationRepository.AddRelationAsync(post, tagItem);
+                }
             }
         }
         else
@@ -153,10 +156,13 @@ public class PostService : IPostService
                 await _postCategoryRelationRepository.AddRelationAsync(post, category);
             }
 
-            foreach (var tagName in request.Tags)
+            if (request.Tags != null)
             {
-                var tag = await _postTagsRepository.GetWithCreate(tagName);
-                await _tagRelationRepository.AddRelationAsync(post, tag);
+                foreach (var tagName in request.Tags)
+                {
+                    var tag = await _postTagsRepository.GetWithCreate(tagName);
+                    await _tagRelationRepository.AddRelationAsync(post, tag);
+                }
             }
 
             await _postRepository.SaveAsync();

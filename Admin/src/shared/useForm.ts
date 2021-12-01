@@ -1,15 +1,15 @@
 import { ElForm } from "element-plus";
-import { nextTick, reactive, ref } from "vue";
+import { nextTick, ref } from "vue";
 
-export function usBaseForm() {
+export function useForm() {
 
     const loading = ref(false);
 
     const instance = ref<InstanceType<typeof ElForm>>();
 
-    const clearForm = ()=>{
+    const clearForm = () => {
         instance.value?.resetFields()
-        nextTick(()=>{
+        nextTick(() => {
             instance.value?.clearValidate();
         })
     }
