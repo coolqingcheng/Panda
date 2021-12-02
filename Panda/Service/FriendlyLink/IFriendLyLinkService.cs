@@ -10,6 +10,9 @@ public interface IFriendlyLinkService
 
 
     Task<PageDto<FriendlyLinkResponse>> GetList(FriendlyLinkRequest request);
+    
+    Task<PageDto<FriendlyLinkResponse>> GetListByCache(FriendlyLinkRequest request);
+
 
 
     Task Delete(int id);

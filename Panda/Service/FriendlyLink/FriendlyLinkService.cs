@@ -1,5 +1,7 @@
-﻿using Mapster;
+﻿using EasyCaching.Core;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
+using Panda.Entity;
 using Panda.Entity.DataModels;
 using Panda.Entity.Requests;
 using Panda.Entity.Responses;
@@ -13,9 +15,13 @@ public class FriendlyLinkService : IFriendlyLinkService
 {
     private readonly FriendLinkRepository _friendLinkRepository;
 
-    public FriendlyLinkService(FriendLinkRepository friendLinkRepository)
+
+    private readonly IEasyCachingProvider _easyCachingProvider;
+
+    public FriendlyLinkService(FriendLinkRepository friendLinkRepository, IEasyCachingProvider easyCachingProvider)
     {
         _friendLinkRepository = friendLinkRepository;
+        _easyCachingProvider = easyCachingProvider;
     }
 
 
@@ -32,9 +38,18 @@ public class FriendlyLinkService : IFriendlyLinkService
         };
     }
 
+    public async Task<PageDto<FriendlyLinkResponse>> GetListByCache(FriendlyLinkRequest request)
+    {
+        var res = await _easyCachingProvider.GetAsync(
+            CacheKeys.FriendLinkList + request.Index,
+            async () => await GetList(request), TimeSpan.FromHours(2));
+        return res.Value;
+    }
+
     public async Task Delete(int id)
     {
         await _friendLinkRepository.DeleteWhereAsync(a => a.Id == id);
+        await _easyCachingProvider.RemoveByPrefixAsync(CacheKeys.FriendLinkList);
     }
 
     public async Task Audit(int id, AuditStatusEnum auditStatus)
@@ -44,6 +59,7 @@ public class FriendlyLinkService : IFriendlyLinkService
         {
             item.AuditStatus = auditStatus;
             await _friendLinkRepository.SaveAsync();
+            await _easyCachingProvider.RemoveByPrefixAsync(CacheKeys.FriendLinkList);
         }
     }
 
@@ -82,7 +98,9 @@ public class FriendlyLinkService : IFriendlyLinkService
             {
                 item.AuditStatus = (AuditStatusEnum) request.AuditStatus;
             }
+
             await _friendLinkRepository.SaveAsync();
         }
+        await _easyCachingProvider.RemoveByPrefixAsync(CacheKeys.FriendLinkList);
     }
 }

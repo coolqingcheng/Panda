@@ -3,16 +3,16 @@
 <div class="friend-link">
     <span class="friend-link-item">友情链接：</span>
     @{
-        var result = await _friendlyLinkService.AdminGetList(new FriendlyLinkRequest()
+        var result = await _friendlyLinkService.GetListByCache(new FriendlyLinkRequest()
         {
             Index = 1,
             Size = 20
         });
         foreach (var item in result.Data)
         {
-            <a class="friend-link-item" href="@item.SiteUrl" referrerpolicy="unsafe-url">@item.SiteName</a>
+            <a class="friend-link-item" href="@item.SiteUrl" referrerpolicy="unsafe-url" target="_blank">@item.SiteName</a>
         }
     }
-    <a href="/" class="friend-link-item friend-link-apply" target="_blank">[申请友链]</a>
+    <a href="/" class="friend-link-item" target="_blank">[申请友链]</a>
 
 </div>

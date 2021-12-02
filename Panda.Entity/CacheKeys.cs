@@ -40,6 +40,11 @@ public class CacheKeys
     [Description("分类")] public const string Categories = "Categories";
 
     /// <summary>
+    /// 友情链接列表
+    /// </summary>
+    [Description("友情链接列表")] public const string FriendLinkList = "FriendLinkList";
+
+    /// <summary>
     /// 字典
     /// </summary>
     [Description("字典")] public const string DicDataGroupNameKey = "DicData_";
