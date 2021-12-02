@@ -5,7 +5,7 @@ using Panda.Services.Tags;
 
 namespace Panda.Admin.Controllers;
 
-public class TagController : AdminBaseController
+public class TagController : AdminController
 {
 
     private readonly IPostTagService _tagService;

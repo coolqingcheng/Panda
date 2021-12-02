@@ -6,14 +6,34 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Panda.Admin.Controllers
 {
-    public class CacheController : AdminBaseController
+    public class CacheController : AdminController
     {
-        [AllowAnonymous]
-        [HttpGet("/cache")]
-        public IActionResult Index()
+        private readonly IEasyCachingProvider _cachingProvider;
+
+        public CacheController(IEasyCachingProvider cachingProvider)
         {
-            var a = CacheKeys.NoticeCacheKey;
-            return Content("");
+            _cachingProvider = cachingProvider;
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public Dictionary<string, string> GetAllKv()
+        {
+            var a = CacheKeys.GetAllKv();
+            return a!;
+        }
+
+        [HttpGet]
+        public async Task Clear(string key)
+        {
+            if (key.EndsWith("_"))
+            {
+                await _cachingProvider.RemoveByPrefixAsync(key);
+            }
+            else
+            {
+                await _cachingProvider.RemoveAsync(key);
+            }
         }
     }
 }

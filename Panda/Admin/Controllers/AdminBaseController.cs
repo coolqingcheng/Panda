@@ -9,7 +9,7 @@ namespace Panda.Admin.Controllers;
 [Route("/admin/[controller]/[action]")]
 [Authorize]
 [ApiController]
-public class AdminBaseController:Controller
+public class AdminController:Controller
 {
     
 }

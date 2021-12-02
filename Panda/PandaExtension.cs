@@ -86,7 +86,7 @@ namespace Panda
                 });
             });
             services.AddScoped<IUnitOfWork, EFUnitOfWork>();
-            CacheKeys.ValidteKeyRepetition();
+            CacheKeys.ValidateKeyRepetition();
         }
     }
 }

@@ -5,7 +5,7 @@ using Panda.Services.Pages;
 
 namespace Panda.Admin.Controllers;
 
-public class PagesController : AdminBaseController
+public class PagesController : AdminController
 {
     private readonly IPageService _pageService;
 

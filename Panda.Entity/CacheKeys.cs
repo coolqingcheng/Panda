@@ -1,4 +1,6 @@
-﻿using Panda.Models;
+﻿using System.ComponentModel;
+using System.Reflection;
+using Panda.Models;
 using Panda.Tools.Exception;
 
 namespace Panda.Entity;
@@ -13,37 +15,44 @@ public class CacheKeys
     /// 验证重复Key
     /// </summary>
     /// <returns></returns>
-    public static void ValidteKeyRepetition()
+    public static void ValidateKeyRepetition()
     {
         var item = typeof(CacheKeys).GetFields()
             .Select(a => a.GetValue(a))
             .GroupBy(a => a)
-            .Select(a => new { a, count = a.Count<object?>() }).FirstOrDefault(a => a.count > 1);
+            .Select(a => new {a, count = a.Count<object?>()}).FirstOrDefault(a => a.count > 1);
         if (item != null)
         {
-            throw new ValidateFailException($"缓存key有重复，重复项为：{ item.a }");
+            throw new ValidateFailException($"缓存key有重复，重复项为：{item.a}");
         }
     }
+
+    public static Dictionary<string, string?> GetAllKv()
+    {
+        var list = typeof(CacheKeys).GetFields().Select(a => new
+            {v = a.GetValue(a), k = a.GetCustomAttribute<DescriptionAttribute>()?.Description}).Where(a => a.v != null);
+        return list.ToDictionary(a => a.k!, a => a.v?.ToString());
+    }
+
     /// <summary>
     /// 所有分类
     /// </summary>
-    public const string Categories = "Categories";
+    [Description("分类")] public const string Categories = "Categories";
 
     /// <summary>
     /// 字典
     /// </summary>
-    public const string DicDataGroupNameKey = "DicData_";
+    [Description("字典")] public const string DicDataGroupNameKey = "DicData_";
 
 
     /// <summary>
     /// 通知缓存
     /// </summary>
-    public const string NoticeCacheKey = "NoticeCacheKey";
+    [Description("通知")] public const string NoticeCacheKey = "NoticeCacheKey";
 
 
     /// <summary>
     /// 验证码前缀
     /// </summary>
-    public const string ValidateCode = "ValidateCode_";
-
+    [Description("验证码")] public const string ValidateCode = "ValidateCode_";
 }

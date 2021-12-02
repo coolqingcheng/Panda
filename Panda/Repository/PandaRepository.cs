@@ -45,7 +45,7 @@ public class PandaRepository<T> where T : PandaBaseTable
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteWhere(Expression<Func<T, bool>> expression)
+    public async Task DeleteWhereAsync(Expression<Func<T, bool>> expression)
     {
         var list = await Where(expression).ToListAsync();
         if (list != null)

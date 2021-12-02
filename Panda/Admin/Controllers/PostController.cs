@@ -6,7 +6,7 @@ using Panda.Services.Posts;
 
 namespace Panda.Admin.Controllers;
 
-public class PostController : AdminBaseController
+public class PostController : AdminController
 {
     private readonly IPostService _articleService;
 

@@ -12,8 +12,11 @@ public interface IFriendlyLinkService
     Task<PageDto<FriendlyLinkResponse>> GetList(FriendlyLinkRequest request);
 
 
-    Task Audit(int Id, AuditStatusEnum auditStatus);
+    Task Delete(int id);
 
 
-    Task AddFriendLink(AddFriendLinkRequest request, AuditStatusEnum auditStatus = AuditStatusEnum.unaudit);
+    Task Audit(int id, AuditStatusEnum auditStatus);
+
+
+    Task AddOrUpdateFriendLink(AddFriendLinkRequest request);
 }

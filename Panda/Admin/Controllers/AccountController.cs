@@ -10,7 +10,7 @@ using Panda.Admin.Models;
 
 namespace Panda.Admin.Controllers;
 
-public class AccountController : AdminBaseController
+public class AccountController : AdminController
 {
     private readonly IAccountService _accountService;
 

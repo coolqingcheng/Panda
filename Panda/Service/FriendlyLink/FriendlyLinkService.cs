@@ -19,7 +19,6 @@ public class FriendlyLinkService : IFriendlyLinkService
     }
 
 
-
     public async Task<PageDto<FriendlyLinkResponse>> AdminGetList(FriendlyLinkRequest request)
     {
         var query = _friendLinkRepository.Queryable();
@@ -33,9 +32,14 @@ public class FriendlyLinkService : IFriendlyLinkService
         };
     }
 
-    public async Task Audit(int Id, AuditStatusEnum auditStatus)
+    public async Task Delete(int id)
     {
-        var item = await _friendLinkRepository.Where(a => a.Id == Id).FirstOrDefaultAsync();
+        await _friendLinkRepository.DeleteWhereAsync(a => a.Id == id);
+    }
+
+    public async Task Audit(int id, AuditStatusEnum auditStatus)
+    {
+        var item = await _friendLinkRepository.Where(a => a.Id == id).FirstOrDefaultAsync();
         if (item != null)
         {
             item.AuditStatus = auditStatus;
@@ -57,12 +61,28 @@ public class FriendlyLinkService : IFriendlyLinkService
     }
 
 
-    public async Task AddFriendLink(AddFriendLinkRequest request, AuditStatusEnum auditStatus = AuditStatusEnum.unaudit)
+    public async Task AddOrUpdateFriendLink(AddFriendLinkRequest request)
     {
-        await _friendLinkRepository.AddAsync(new FriendlyLinks()
+        var item = await _friendLinkRepository.Where(a => a.Id == request.Id).FirstOrDefaultAsync();
+        if (item == null)
         {
-            SiteName = request.Name,
-            SiteUrl = request.Url
-        });
+            item = new FriendlyLinks()
+            {
+                SiteName = request.Name,
+                SiteUrl = request.Url,
+                AuditStatus = request.AuditStatus ?? AuditStatusEnum.unaudit
+            };
+            await _friendLinkRepository.AddAsync(item);
+        }
+        else
+        {
+            item.SiteUrl = request.Url;
+            item.SiteName = request.Name;
+            if (request.AuditStatus != null)
+            {
+                item.AuditStatus = (AuditStatusEnum) request.AuditStatus;
+            }
+            await _friendLinkRepository.SaveAsync();
+        }
     }
 }

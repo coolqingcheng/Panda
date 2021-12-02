@@ -6,7 +6,7 @@ using Panda.Admin.Models;
 
 namespace Panda.Admin.Controllers;
 
-public class CategoryController : AdminBaseController
+public class CategoryController : AdminController
 {
     private readonly ICategoryService _categoryService;
 

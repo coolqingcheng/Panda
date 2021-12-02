@@ -5,7 +5,7 @@ using Panda.Services.DicData;
 
 namespace Panda.Admin.Controllers;
 
-public class DicDataController : AdminBaseController
+public class DicDataController : AdminController
 {
     private readonly IDicDataService _dicDataService;
 
