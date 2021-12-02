@@ -18,7 +18,7 @@ export default {
                 title.value = a.name.toString()
             }
         })
-        
+
 
         onMounted(() => {
             let name = router.currentRoute.value.name;
