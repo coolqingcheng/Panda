@@ -70,7 +70,7 @@ export default {
         ])
 
         onMounted(() => {
-            console.log('path', router.currentRoute.value)
+            // console.log('path', router.currentRoute.value)
             let path = router.currentRoute.value.path;
             activePath.value = path
         })

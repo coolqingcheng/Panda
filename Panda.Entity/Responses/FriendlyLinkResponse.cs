@@ -1,4 +1,6 @@
-﻿namespace Panda.Entity.Responses;
+﻿using Panda.Entity.DataModels;
+
+namespace Panda.Entity.Responses;
 
 public class FriendlyLinkResponse
 {
@@ -9,4 +11,8 @@ public class FriendlyLinkResponse
     public string SiteUrl { get; set; }
 
     public int Weight { get; set; }
+
+    public DateTime AddTime { get; set; }
+
+    public AuditStatusEnum AuditStatus { get; set; }
 }

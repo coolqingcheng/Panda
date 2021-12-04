@@ -9,6 +9,7 @@ import { router } from './router/index'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 
 
+
 const app = createApp(App)
 app.use(Admin)
 app.use(router)

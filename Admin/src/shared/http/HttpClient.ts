@@ -66,17 +66,29 @@ http.interceptors.response.use((response) => {
 })
 
 const get = async <T>(url: string, params: {}): Promise<T> => {
-    var res = await http.get(url, { params: params })
+    let res = await http.get(url, { params: params })
+    return res as any
+}
+
+const del = async <T>(url: string, params: {}): Promise<T> => {
+    let res = await http.delete(url, { params: params })
     return res as any
 }
 
 const post = async <T>(url: string, body: {}): Promise<T> => {
-    var res = await http.post(url, body)
+    let res = await http.post(url, body)
     return res as any
+}
+
+const PageRequest = {
+    index:1,
+    size:10
 }
 
 export {
     http,
     get,
-    post
+    post,
+    del,
+    PageRequest
 }

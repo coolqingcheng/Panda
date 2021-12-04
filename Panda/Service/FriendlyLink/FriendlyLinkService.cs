@@ -52,6 +52,13 @@ public class FriendlyLinkService : IFriendlyLinkService
         await _easyCachingProvider.RemoveByPrefixAsync(CacheKeys.FriendLinkList);
     }
 
+    public async Task<FriendlyLinkResponse?> Get(int id)
+    {
+        var item = await _friendLinkRepository.Where(a => a.Id == id).ProjectToType<FriendlyLinkResponse>()
+            .FirstOrDefaultAsync();
+        return item;
+    }
+
     public async Task Audit(int id, AuditStatusEnum auditStatus)
     {
         var item = await _friendLinkRepository.Where(a => a.Id == id).FirstOrDefaultAsync();
@@ -84,23 +91,24 @@ public class FriendlyLinkService : IFriendlyLinkService
         {
             item = new FriendlyLinks()
             {
-                SiteName = request.Name,
-                SiteUrl = request.Url,
+                SiteName = request.siteName,
+                SiteUrl = request.siteUrl,
                 AuditStatus = request.AuditStatus ?? AuditStatusEnum.unaudit
             };
             await _friendLinkRepository.AddAsync(item);
         }
         else
         {
-            item.SiteUrl = request.Url;
-            item.SiteName = request.Name;
+            item.SiteUrl = request.siteUrl;
+            item.SiteName = request.siteName;
             if (request.AuditStatus != null)
             {
-                item.AuditStatus = (AuditStatusEnum) request.AuditStatus;
+                item.AuditStatus = (AuditStatusEnum)request.AuditStatus;
             }
 
             await _friendLinkRepository.SaveAsync();
         }
+
         await _easyCachingProvider.RemoveByPrefixAsync(CacheKeys.FriendLinkList);
     }
 }

@@ -38,4 +38,10 @@ public class FriendLinkController : AdminController
     {
         await _friendlyLinkService.AddOrUpdateFriendLink(request);
     }
+
+    [HttpGet]
+    public async Task<FriendlyLinkResponse?> Get(int id)
+    {
+        return await _friendlyLinkService.Get(id);
+    }
 }

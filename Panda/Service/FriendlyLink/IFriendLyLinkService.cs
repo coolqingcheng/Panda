@@ -17,6 +17,8 @@ public interface IFriendlyLinkService
 
     Task Delete(int id);
 
+    Task<FriendlyLinkResponse?> Get(int id);
+
 
     Task Audit(int id, AuditStatusEnum auditStatus);
 

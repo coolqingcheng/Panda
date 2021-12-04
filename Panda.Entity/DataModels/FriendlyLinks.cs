@@ -14,9 +14,6 @@ public class FriendlyLinks : PandaBaseTable
     [Required]
     public int Weight { get; set; }
 
-    /// <summary>
-    /// ÉóºË×´Ì¬
-    /// </summary>
     public AuditStatusEnum AuditStatus { get; set; }
 
     public List<FriendlyLinkRecord> Records { get; set; }
@@ -35,10 +32,10 @@ public class FriendlyLinkRecord : PandaBaseTable
 
 public enum AuditStatusEnum
 {
-    [Description("´ıÉóºË")]
+    [Description("æœªå®¡æ ¸")]
     unaudit = 0,
-    [Description("Í¨¹ı")]
+    [Description("Í¨å®¡æ ¸é€šè¿‡")]
     Pass = 1,
-    [Description("¾Ü¾ø")]
+    [Description("æ‹’ç»")]
     Reject = 2
 }

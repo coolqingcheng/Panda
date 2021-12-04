@@ -16,9 +16,9 @@ public class AddFriendLinkRequest
     /// 站点名称
     /// </summary>
     [Required]
-    public string Name { get; set; }
+    public string siteName { get; set; }
 
-    [Required] public string Url { get; set; }
+    [Required] public string siteUrl { get; set; }
 
     public AuditStatusEnum? AuditStatus { get; set; }
 }
