@@ -40,9 +40,6 @@ const currentChange = (index: number) => {
 const showEditValue = ref(false)
 const id = ref(0)
 
-watch(showEditValue, () => {
-  getData()
-})
 
 const showEdit = () => {
   showEditValue.value = true;
@@ -75,11 +72,18 @@ const delItem = (item: FriendLinkDto) => {
       <el-button type="primary" @click="showEdit()">
         添加链接
       </el-button>
-      <EditFriendLink v-model="showEditValue" :id="id"></EditFriendLink>
+      <EditFriendLink v-model="showEditValue" :id="id" @success="getData()"></EditFriendLink>
     </el-row>
     <el-table v-loading="loading" :data="data.list" border>
       <el-table-column prop="siteName" label="名称"></el-table-column>
       <el-table-column prop="siteUrl" label="域名"></el-table-column>
+      <el-table-column prop="auditStatus" label="审核状态">
+        <template #default="scope">
+          <el-tag v-if="scope.row.auditStatus==0">未审核</el-tag>
+          <el-tag v-if="scope.row.auditStatus==1" type="success">通过</el-tag>
+          <el-tag v-if="scope.row.auditStatus==2" type="danger">拒绝</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column prop="addTime" label="添加时间"></el-table-column>
       <el-table-column label="操作">
         <template #default="scope">

@@ -35,7 +35,7 @@ const props = withDefaults(defineProps<{ modelValue: boolean, id: number }>(), {
   modelValue: false, id: 0
 })
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue','success']);
 
 const showDialog = ref(false)
 
@@ -94,6 +94,7 @@ const save = () => {
   loading.value = true;
   post('/admin/friendlink/addorupdate', formModel.value).then(() => {
     close()
+    emit('success')
   }).finally(() => loading.value = false)
 }
 
