@@ -51,9 +51,17 @@
             @{
                 await Html.RenderPartialAsync("_CategoriesPartial");
             }
+            @{
+                await Html.RenderPartialAsync("_siteInfoPartial");
+            }
         </div>
     </div>
 </div>
+
+@section Css{
+    <link rel="stylesheet" href="~/css/vs2015.min.css"/>
+}
+
 @section Scripts
 {
     <script src="~/js/highlight.js"></script>

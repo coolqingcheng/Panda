@@ -19,6 +19,12 @@ public class PandaRepository<T> where T : PandaBaseTable
         return _context.Set<T>().Where(expression);
     }
 
+    public async Task RemoveAsync(T item)
+    {
+         _context.Set<T>().Remove(item);
+         await _context.SaveChangesAsync();
+    }
+
     public IQueryable<T> Queryable()
     {
         return _context.Set<T>().AsQueryable();
@@ -48,10 +54,7 @@ public class PandaRepository<T> where T : PandaBaseTable
     public async Task DeleteWhereAsync(Expression<Func<T, bool>> expression)
     {
         var list = await Where(expression).ToListAsync();
-        if (list != null)
-        {
-            _context.RemoveRange(list);
-            await _context.SaveChangesAsync();
-        }
+        _context.RemoveRange(list);
+        await _context.SaveChangesAsync();
     }
 }

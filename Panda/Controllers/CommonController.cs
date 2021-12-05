@@ -33,7 +33,7 @@ public class CommonController : Controller
             throw new UserException("服务器没有收到文件");
         }
 
-        if (files[0].Length >= (1024 * 1024 * 4)) //图片不能大于4M
+        if (files[0].Length >= (1024 * 1024 * 8)) //图片不能大于4M
         {
             throw new UserException("图片不能大于4M");
         }

@@ -5,11 +5,18 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
     <title>@ViewData["Title"] - @await _dicDataService.GetItemByCache("site:site_name")</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="applicable-device" content="pc,mobile"/>
     @if (ViewData["Description"] != null)
     {
         <meta name="description" content="@ViewData["Description"]"/>
+    }
+    else
+    {
+        <meta name="description" content="青城的网络博客，分享大前端相关的知识点，包括javascript，html5，css3，swift，iOS开发，Android开发，以及开源项目收集和分享"/>
     }
     <link rel="stylesheet" href="~/css/index.css" asp-append-version="true"/>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
@@ -27,7 +34,7 @@
                 </li>
                 <li>
                     <i class="ri-contacts-line"></i>
-                    <a href="/">与我联系</a>
+                    <a href="/contact.html">与我联系</a>
                 </li>
                 <li>
                     <i class="ri-rss-line"></i>

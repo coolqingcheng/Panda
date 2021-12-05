@@ -61,9 +61,9 @@ public class HomeController : Controller
     public IActionResult Error()
     {
         HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-        return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
-    
+
     /// <summary>
     /// 后台Spa页面
     /// </summary>
@@ -74,10 +74,21 @@ public class HomeController : Controller
     public ActionResult AdminHtml([FromServices] IWebHostEnvironment env)
     {
         var path = Path.Combine(env.WebRootPath, "admin", "index.html");
-        if (System.IO.File.Exists(path)==false)
+        if (System.IO.File.Exists(path) == false)
         {
             return Content("后台文件找不到，请确定已经发布");
         }
+
         return PhysicalFile(path, "text/html; charset=utf-8");
+    }
+
+    /// <summary>
+    /// 联系我
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("/contact.html")]
+    public IActionResult Contact()
+    {
+        return View();
     }
 }

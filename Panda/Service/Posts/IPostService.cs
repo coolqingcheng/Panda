@@ -17,6 +17,9 @@ public interface IPostService
     Task<PostDetailItem> AdminGetPost(int id);
     Task<PostDetailItem> GetPost(int id);
 
+
+    Task Delete(int id);
+
     Task AddOrUpdate(PostAddOrUpdate request);
 
     Task<PageDto<AdminPostItemResponse>> AdminGetList(AdminPostGetListRequest request);

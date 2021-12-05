@@ -18,15 +18,31 @@ public class PostCategoryRelationRepository : PandaRepository<PostsCategoryRelat
             Posts = post,
             Categories = category
         });
+        category.Count += 1;
         await _context.SaveChangesAsync();
+    }
+
+    public async Task RemoveRelationAsync(Posts post)
+    {
+        var res = await _context.Posts.Where(a => a.Id == 100).ToListAsync();
+        var list = await Where(a => a.Posts == post).Include(a => a.Categories).ToListAsync();
+        foreach (var category in list)
+        {
+            category.Categories.Count -= 1;
+        }
+
+        await DeleteWhereAsync(a => a.Posts == post);
+
+        await SaveAsync();
     }
 
     public async Task DiffUpdateRelation(Posts post, List<int> delIds, List<int> addList)
     {
-       //移除
-       var delList = await _context.ArticleCategoryRelations.Where(a => delIds.Contains(a.Categories.Id) &&a.Posts==post).ToListAsync();
-       _context.ArticleCategoryRelations.RemoveRange(delList);
-       await _context.SaveChangesAsync();
+        //移除
+        var delList = await _context.ArticleCategoryRelations
+            .Where(a => delIds.Contains(a.Categories.Id) && a.Posts == post).ToListAsync();
+        _context.ArticleCategoryRelations.RemoveRange(delList);
+        await _context.SaveChangesAsync();
         var addCateList = _context.Categories.Where(a => addList.Contains(a.Id)).ToList();
         foreach (var category in addCateList)
         {

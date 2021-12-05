@@ -10,7 +10,7 @@ public class TagRelationRepository : PandaRepository<TagsRelation>
     {
     }
 
-    public async Task PostDeleteRelation(Posts post)
+    public async Task PostDeleteRelationAsync(Posts post)
     {
         var relations = await _context.TagsRelations.Include(a => a.Tags).Where(a => a.Posts == post).ToListAsync();
         foreach (var relation in relations)

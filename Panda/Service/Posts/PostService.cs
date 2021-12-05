@@ -34,7 +34,8 @@ public class PostService : IPostService
 
     public PostService(PostRepository postRepository, CategoryRepository categoryRepository,
         IUnitOfWork unitOfWork, PostCategoryRelationRepository postCategoryRelationRepository,
-        TagRelationRepository tagRelationRepository, PostTagsRepository postTagsRepository, AccountRepository accountRepository)
+        TagRelationRepository tagRelationRepository, PostTagsRepository postTagsRepository,
+        AccountRepository accountRepository)
     {
         _postRepository = postRepository;
         _categoryRepository = categoryRepository;
@@ -96,6 +97,20 @@ public class PostService : IPostService
         return item;
     }
 
+    public async Task Delete(int id)
+    {
+        await _unitOfWork.BeginTransactionAsync();
+        var postItem = await _postRepository.Where(a => a.Id == id).FirstOrDefaultAsync();
+        if (postItem != null)
+        {
+            await _tagRelationRepository.PostDeleteRelationAsync(postItem);
+            await _postCategoryRelationRepository.RemoveRelationAsync(postItem);
+            await _postRepository.RemoveAsync(postItem);
+        }
+
+        await _unitOfWork.CommitAsync();
+    }
+
     public async Task AddOrUpdate(PostAddOrUpdate request)
     {
         var account = await _accountRepository.GetCurrentAccountsAsync();
@@ -123,7 +138,7 @@ public class PostService : IPostService
                 .Select(a => a.Id).ToListAsync();
             await _postCategoryRelationRepository.DiffUpdateRelation(post, beforeCategories, afterCategories);
 
-            await _tagRelationRepository.PostDeleteRelation(post);
+            await _tagRelationRepository.PostDeleteRelationAsync(post);
             if (request.Tags != null)
             {
                 foreach (var tag in request.Tags)
@@ -196,7 +211,7 @@ public class PostService : IPostService
                 Title = a.Posts.Title,
                 Categories =
                     a.Posts.ArticleCategoryRelations.Select(b => new PostCategories()
-                    { Id = b.Categories.Id, CateName = b.Categories.categoryName })
+                            { Id = b.Categories.Id, CateName = b.Categories.categoryName })
                         .ToList()
             }).OrderByDescending(a => a.AddTime).ToListAsync();
 
