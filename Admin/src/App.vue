@@ -34,6 +34,9 @@ body,
 .tool-bar {
   margin-bottom: 1rem;
   margin-top: 1rem;
+  background: #f7f8fa;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
 a {
