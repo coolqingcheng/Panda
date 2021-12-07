@@ -7,7 +7,7 @@
       <el-table :data="data.list" v-loading="loading" border>
         <el-table-column label="标题" prop="title">
           <template #default="scope">
-            <a :href="`/post/${scope.row.id}.html`" target="_blank">{{ scope.row.title }}</a>
+            <el-link :href="`/post/${scope.row.id}.html`" target="_blank">{{ scope.row.title }}</el-link>
           </template>
         </el-table-column>
         <el-table-column label="状态" prop="status" width="80">

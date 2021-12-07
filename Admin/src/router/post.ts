@@ -1,7 +1,7 @@
 import { RouteRecordRaw } from 'vue-router'
 
-import PostWrite from "../views/blogs/posts/post-write.vue"
-import PostList from "../views/blogs/posts/post-list.vue"
+import PostWrite from "../views/blogs/posts/PostWrite.vue"
+import PostList from "../views/blogs/posts/PostList.vue"
 
 var post: RouteRecordRaw[] = [
  
