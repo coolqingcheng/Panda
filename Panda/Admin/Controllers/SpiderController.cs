@@ -59,7 +59,7 @@ public class SpiderController : AdminController
             {
                 var href = element.GetAttribute("href");
                 if (string.IsNullOrWhiteSpace(href) != false) continue;
-                if (href.StartsWith("/"))
+                if (href.StartsWith("/") == false)
                 {
                     element.SetAttribute("href", $"/toUrl?url={HttpUtility.UrlEncode(href)}");
                 }
