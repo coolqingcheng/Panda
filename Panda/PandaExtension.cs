@@ -19,7 +19,7 @@ namespace Panda
     {
         public static void AddPanda(this IServiceCollection services)
         {
-
+            
             var db = Environment.GetEnvironmentVariable("MYSQL_DB");
             if (string.IsNullOrWhiteSpace(db))
             {
@@ -28,6 +28,7 @@ namespace Panda
             }
 
             services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
+            services.AddHttpClient();
             services.AddDbContextPool<PandaContext>(
                 opt =>
                 {

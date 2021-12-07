@@ -51,6 +51,7 @@ import {PageResponse} from 'shared/base'
 import LeftMenu from "./LeftMenu.vue";
 import {ElMessageBox} from "element-plus";
 import {ElMessage} from "element-plus/es";
+import Reprint from "./Reprint.vue";
 
 interface ArticleItem {
   id: number
@@ -66,7 +67,7 @@ interface Categories {
 }
 
 export default defineComponent({
-  components: {LeftMenu},
+  components: {Reprint, LeftMenu},
   setup() {
 
     const router = useRouter();

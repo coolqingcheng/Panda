@@ -55,10 +55,10 @@ public class CosFileStorage : IFileStorage
         // 存储桶名称，此处填入格式必须为 bucketname-APPID, 其中 APPID 获取参考 https://console.cloud.tencent.com/developer
         var bucket = await _dicDataProvider.GetDefaultGroupName("bucket");
         //保存到本地
-        var yyyyMMdd = DateTime.Now.ToString("yyyyMMdd");
+        var yyyyMMdd = DateTime.Now.ToString("yyyyMM");
         var cosPath = $"/{yyyyMMdd}/{name}"; //对象在存储桶中的位置标识符，即称对象键
 
-        
+
         var localPath = Path.Combine(_webHostEnvironment.ContentRootPath, "Content", "Upload", yyyyMMdd);
         if (Directory.Exists(localPath) == false)
         {
@@ -85,7 +85,7 @@ public class CosFileStorage : IFileStorage
             throw new UserException("上传失败,请检查配置是否正确");
         }
 
-        var host =  await _dicDataProvider
+        var host = await _dicDataProvider
             .GetDefaultGroupName(
                 "host");
 

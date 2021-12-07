@@ -1,12 +1,12 @@
-import axios, { AxiosError } from "axios";
-import { ElMessage } from "element-plus"
-import { router } from "../../router/index"
+import axios, {AxiosError} from "axios";
+import {ElMessage} from "element-plus"
+import {router} from "../../router/index"
 
 const http = axios.create({
     headers: {
         "token": 'you token'
     },
-    timeout: 1000 * 10
+    timeout: 1000 * 60 * 10
 })
 
 const getCookie = (name: string) => {
@@ -66,12 +66,12 @@ http.interceptors.response.use((response) => {
 })
 
 const get = async <T>(url: string, params: {}): Promise<T> => {
-    let res = await http.get(url, { params: params })
+    let res = await http.get(url, {params: params})
     return res as any
 }
 
 const del = async <T>(url: string, params: {}): Promise<T> => {
-    let res = await http.delete(url, { params: params })
+    let res = await http.delete(url, {params: params})
     return res as any
 }
 
@@ -81,8 +81,8 @@ const post = async <T>(url: string, body: {}): Promise<T> => {
 }
 
 const PageRequest = {
-    index:1,
-    size:10
+    index: 1,
+    size: 10
 }
 
 export {
