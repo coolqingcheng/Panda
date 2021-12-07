@@ -56,7 +56,10 @@ const delItem = (item: FriendLinkDto) => {
   ElMessageBox.confirm(`是否确定删除【${item.siteName}】?`).then(() => {
     loading.value = true;
     del('/admin/friendlink/delete', {id: item.id}).then(() => {
-      ElNotification.success('删除成功！')
+      ElNotification({
+        type: 'success',
+        message: '删除成功'
+      })
       nextTick(() => getData())
     }).finally(() => loading.value = false)
   })
