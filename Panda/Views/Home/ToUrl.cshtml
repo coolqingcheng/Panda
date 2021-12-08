@@ -1,0 +1,24 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "网站安全中心";
+    Layout = "_Layout";
+}
+
+<div class="jump">
+    <h2>正在跳出网站</h2>
+    <p>即将跳转到:@ViewData["Url"]</p>
+
+    <button id="btn-jump">立即跳转</button>
+</div>
+
+@section Scripts
+{
+    <script>
+    (function (){
+        $("#btn-jump").click(function (){
+            window.location.href='@ViewData["Url"]';  
+        })
+    })
+    </script>
+}

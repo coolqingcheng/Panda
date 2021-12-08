@@ -60,8 +60,8 @@ public class HomeController : Controller
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
-        HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        HttpContext.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
+        return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
     }
 
     /// <summary>
@@ -89,6 +89,13 @@ public class HomeController : Controller
     [HttpGet("/contact.html")]
     public IActionResult Contact()
     {
+        return View();
+    }
+
+    [HttpGet("/toUrl")]
+    public IActionResult ToUrl(string url)
+    {
+        ViewData["Url"] = url;
         return View();
     }
 }
