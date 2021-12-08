@@ -1,6 +1,7 @@
 using Panda.Entity.DataModels;
 using Panda.Entity.Requests;
 using Panda.Tools.Models;
+using System.ComponentModel;
 
 namespace Panda.Entity.Models;
 
@@ -45,7 +46,29 @@ public class PostDetailItem : PostItem
 
     public IEnumerable<PostTagItem> TagItems { get; set; }
     
-    
+}
+
+public class PostNextItem
+{
+    public int Id { get; set; }
+
+    public string Title { get; set; }
+
+    public PostNextType Type { get; set; }
+}
+
+public enum PostNextType
+{
+    /// <summary>
+    /// 下一条
+    /// </summary>
+    [Description("下一条")]
+    Next = 1,
+    /// <summary>
+    /// 上一条
+    /// </summary>
+    [Description("上一条")]
+    Pre = 0
 }
 
 public class PostTagItem

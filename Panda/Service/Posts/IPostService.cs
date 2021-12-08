@@ -29,4 +29,12 @@ public interface IPostService
 
 
     Task<PageDto<PostItem>> GetPostListByTagId(int tagId);
+
+
+    /// <summary>
+    /// 获取上一条下一条
+    /// </summary>
+    /// <param name="PostId"></param>
+    /// <returns></returns>
+    Task<List<PostNextItem>> GetNextPostItem(int PostId);
 }

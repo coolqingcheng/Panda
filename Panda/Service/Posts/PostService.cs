@@ -211,7 +211,7 @@ public class PostService : IPostService
                 Title = a.Posts.Title,
                 Categories =
                     a.Posts.ArticleCategoryRelations.Select(b => new PostCategories()
-                            { Id = b.Categories.Id, CateName = b.Categories.categoryName })
+                    { Id = b.Categories.Id, CateName = b.Categories.categoryName })
                         .ToList()
             }).OrderByDescending(a => a.AddTime).ToListAsync();
 
@@ -220,5 +220,31 @@ public class PostService : IPostService
             Data = tagItem,
             Total = await query.CountAsync()
         };
+    }
+
+    public async Task<List<PostNextItem>> GetNextPostItem(int PostId)
+    {
+        var list = new List<PostNextItem>();
+        var nextPost = await _postRepository.Where(a => a.Id == PostId).OrderBy(a => a.AddTime).Take(1).Select(a => new PostNextItem()
+        {
+            Id = a.Id,
+            Title = a.Title,
+            Type = PostNextType.Next
+        }).FirstOrDefaultAsync();
+        var prePost = await _postRepository.Where(a => a.Id == PostId).OrderByDescending(a => a.AddTime).Take(1).Select(a => new PostNextItem()
+        {
+            Id = a.Id,
+            Title = a.Title,
+            Type = PostNextType.Pre
+        }).FirstOrDefaultAsync();
+        if (nextPost != null)
+        {
+            list.Add(nextPost);
+        }
+        if (prePost != null)
+        {
+            list.Add(prePost);
+        }
+        return list;
     }
 }

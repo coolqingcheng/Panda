@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Text.Unicode;
 
-namespace Panda.Tools.Extensions;
+namespace Panda;
 
 public static class StringExtension
 {
