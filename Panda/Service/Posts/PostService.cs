@@ -124,7 +124,7 @@ public class PostService : IPostService
             {
                 throw new UserException("修改的文章不存在");
             }
-
+            post.Title = request.Title;
             post.Content = request.Content.LazyHandler(request.Title)!;
             post.Text = text;
             post.Summary = text.GetSummary(80);
