@@ -34,14 +34,14 @@ public class PostRepository : PandaRepository<Posts>
 
     public async Task<PageDto<PostItem>> GetArticleList(PostRequest request)
     {
-        var query = _context.Posts.Where(a=>a.Status==PostStatus.Publish);
+        var query = _context.Posts.Where(a => a.Status == PostStatus.Publish);
         if (request.CategoryId > 0)
         {
             var category = await _context.Categories.Where(a => a.Id == request.CategoryId).FirstOrDefaultAsync();
             query = query.Where(a => a.ArticleCategoryRelations.Any(b => b.Categories == category));
         }
 
-        var res = await query.Include(a=>a.Account).OrderByDescending(a=>a.UpdateTime).Page(request).Select(a => new PostItem()
+        var res = await query.Include(a => a.Account).OrderByDescending(a => a.UpdateTime).Page(request).Select(a => new PostItem()
         {
             Id = a.Id,
             Title = a.Title,
@@ -66,14 +66,15 @@ public class PostRepository : PandaRepository<Posts>
         var query = _context.Posts.AsQueryable();
 
         var list = await query.Page(request).Include(a => a.ArticleCategoryRelations)
-            .OrderByDescending(a => a.UpdateTime)
-            .ThenByDescending(a => a.AddTime).Select(a =>
+            .OrderByDescending(a => a.AddTime)
+            .ThenByDescending(a => a.UpdateTime).Select(a =>
                 new AdminPostItemResponse()
                 {
                     Title = a.Title,
                     Id = a.Id,
                     UpdateTime = a.UpdateTime,
                     Status = a.Status,
+                    AddTime = a.AddTime,
                     CategoryItems = a.ArticleCategoryRelations.Select(b => new AdminCategoryItem()
                     {
                         Id = b.Categories.Id,
@@ -96,7 +97,7 @@ public class PostRepository : PandaRepository<Posts>
     {
         var query = _context.Posts.FromSqlRaw("select * from posts where match(title,text) against({0}) order by AddTime desc limit 20", keyword);
         var res =
-            await query.Include(a => a.ArticleCategoryRelations).Include(a=>a.Account).OrderByDescending(a => a.UpdateTime)
+            await query.Include(a => a.ArticleCategoryRelations).Include(a => a.Account).OrderByDescending(a => a.UpdateTime)
                 .ThenByDescending(a => a.AddTime).Select(a =>
                     new AdminPostItemResponse()
                     {
