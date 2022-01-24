@@ -100,6 +100,16 @@ public class AccountService : IAccountService
         return await _accountRepository.GetCurrentAccountsAsync();
     }
 
+    public async Task InitAdminPassword()
+    {
+        var account =  await _accountRepository.Where(a => a.Email == "qingchengcode@qq.com").FirstOrDefaultAsync();
+        if (account!=null)
+        {
+            account.Passwd = IdentitySecurity.HashPassword("zxcv123.");
+            await _accountRepository.SaveAsync();
+        }
+    }
+
     public async Task SignOutAsync()
     {
         if (_httpContextAccessor.HttpContext != null)

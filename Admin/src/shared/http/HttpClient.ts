@@ -1,6 +1,6 @@
-import axios, {AxiosError} from "axios";
-import {ElMessage} from "element-plus"
-import {router} from "../../router/index"
+import axios, { AxiosError } from "axios";
+import { ElMessage } from "element-plus"
+import { router } from "../../router/index"
 
 const http = axios.create({
     headers: {
@@ -66,12 +66,12 @@ http.interceptors.response.use((response) => {
 })
 
 const get = async <T>(url: string, params: {}): Promise<T> => {
-    let res = await http.get(url, {params: params})
+    let res = await http.get(url, { params: params })
     return res as any
 }
 
 const del = async <T>(url: string, params: {}): Promise<T> => {
-    let res = await http.delete(url, {params: params})
+    let res = await http.delete(url, { params: params })
     return res as any
 }
 

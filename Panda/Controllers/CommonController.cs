@@ -4,6 +4,7 @@ using Panda.Tools.Exception;
 using System;
 using System.Runtime.InteropServices;
 using Panda.Models;
+using Panda.Services.Account;
 using Panda.Tools.FileStorage;
 using Panda.Tools.Models;
 using Panda.Tools.Security;
@@ -17,10 +18,14 @@ public class CommonController : Controller
     private readonly IFileStorage _fileStorage;
     private readonly IWebHostEnvironment _webHostEnvironment;
 
-    public CommonController(IFileStorage fileStorage, IWebHostEnvironment webHostEnvironment)
+    private readonly IAccountService _accountService;
+
+    public CommonController(IFileStorage fileStorage, IWebHostEnvironment webHostEnvironment,
+        IAccountService accountService)
     {
         _fileStorage = fileStorage;
         _webHostEnvironment = webHostEnvironment;
+        _accountService = accountService;
     }
 
     [IgnoreAntiforgeryToken]
@@ -38,7 +43,7 @@ public class CommonController : Controller
             throw new UserException("图片不能大于4M");
         }
 
-        var list = new List<string>() { "jpg", "png", "jpeg", "gif" };
+        var list = new List<string>() {"jpg", "png", "jpeg", "gif"};
         var regex = Regex.Match(files[0].FileName, @"[^\.]\w*$");
         if (regex.Success == false || list.Contains(regex.Value) == false)
         {
@@ -52,7 +57,7 @@ public class CommonController : Controller
         var file = await _fileStorage.SaveAsync(buffer, $"{Md5Helper.ComputeHash(buffer)[..10]}.{regex.Value}");
         if (file.Success == false)
         {
-            return new UploadResult { Code = 1, Message = file.Message };
+            return new UploadResult {Code = 1, Message = file.Message};
         }
 
         return new UploadResult
@@ -74,7 +79,7 @@ public class CommonController : Controller
         var file = await _fileStorage.SaveAsync(bytes, $"{Md5Helper.ComputeHash(bytes)[..10]}.{extName}");
         if (file.Success == false)
         {
-            return new UploadResult { Code = 1, Message = file.Message };
+            return new UploadResult {Code = 1, Message = file.Message};
         }
 
         return new UploadResult()
@@ -91,5 +96,12 @@ public class CommonController : Controller
         var path = Path.Combine(_webHostEnvironment.ContentRootPath, "Content", "Upload", day, file);
         var ext = new FileInfo(path).Extension;
         return PhysicalFile(path, $"image/{ext[1..]}");
+    }
+
+    [HttpGet("/initadmin")]
+    public async Task<IActionResult> InitAdminAsync()
+    {
+        await _accountService.InitAdminPassword();
+        return Content("ok:" + DateTime.Now);
     }
 }

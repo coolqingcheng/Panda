@@ -12,4 +12,7 @@ public interface IAccountService
     Task ChangePwdAsync(string oldPwd, string newPwd);
 
     Task<Accounts?> GetCurrentAccount();
+
+    Task InitAdminPassword();
+
 }

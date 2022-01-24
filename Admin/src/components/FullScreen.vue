@@ -3,7 +3,8 @@
     <i class="ri-fullscreen-exit-line" v-if="isFullScreen" @click="exitFullScreen()"></i>
 </template>
 
-<script lang="ts">import { ref } from "@vue/reactivity";
+<script lang="ts">
+import { ref } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
 
 export default {
