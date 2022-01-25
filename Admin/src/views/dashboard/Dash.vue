@@ -7,9 +7,21 @@
       <SlideMenu></SlideMenu>
     </el-aside>
     <el-container>
-      <el-header v-if="false">
+      <el-header v-if="true" :class="[isOpen?'':'el-header-close']">
         <div class="q-header-container">
-          <div class="q-header-left"></div>
+          <div class="q-header-left">
+            <div class="q-header-item" @click="expandMenu()">
+              <div class="q-toolbar-item pointer">
+                <i class="ri-menu-fold-line"></i>
+              </div>
+            </div>
+            <div class="q-header-item">
+              <el-breadcrumb :separator-icon="ArrowRight">
+                <el-breadcrumb-item :to="{ path: '/' }">主页 {{ isOpen }}</el-breadcrumb-item>
+                <el-breadcrumb-item>当前页面</el-breadcrumb-item>
+              </el-breadcrumb>
+            </div>
+          </div>
           <div class="q-toolbar">
             <el-popover trigger="hover" :width="300">
               <template #reference>
@@ -44,16 +56,18 @@
         </div>
       </el-header>
       <el-main>
-        <tab></tab>
-        <div class="q-content">
-          <router-view></router-view>
+        <tab :open="isOpen"></tab>
+        <div :class="[isOpen?'q-content-open':'q-content-close']" class="q-content">
+          <el-card>
+            <router-view></router-view>
+          </el-card>
         </div>
       </el-main>
     </el-container>
   </el-container>
 </template>
 <script lang="ts">
-import SlideMenu from "./SlideMenu.vue";
+import SlideMenu from "../../components/SlideMenu.vue";
 import {Expand, FullScreen} from '@element-plus/icons'
 import {useRouter} from "vue-router";
 import {ref} from "@vue/reactivity";
@@ -70,7 +84,7 @@ export default {
     const quit = async () => {
       try {
         await http.get('/admin/account/LoginOut')
-        router.replace({
+        router?.replace({
           path: '/login'
         })
       } catch (error) {
@@ -80,12 +94,20 @@ export default {
     const fullScreen = () => {
     }
 
+    const isOpen = ref(true)
+
+    const expandMenu = () => {
+      isOpen.value = !isOpen.value
+    }
+
     const notifySelect = ref('notify')
 
     return {
       quit,
       fullScreen,
-      notifySelect
+      notifySelect,
+      isOpen,
+      expandMenu
     }
   }
 }
@@ -93,6 +115,16 @@ export default {
 <style lang="less" scoped>
 
 .q-content {
+  margin-top: 60px;
+  background: #f6f8f9;
+  transition: margin-left 0.3s linear;
+}
+
+.q-content-open {
+  margin-left: 270px;
+}
+
+.q-content-close {
   margin-left: 70px;
 }
 
@@ -115,6 +147,11 @@ export default {
     }
   }
 
+  .el-header-close {
+    left: 70px !important;
+    transition: left 0.3s linear;
+  }
+
   .el-header {
     background: #fff;
     box-shadow: 0 0 1px #ccc;
@@ -124,6 +161,12 @@ export default {
     box-sizing: border-box;
     padding: 5px;
     border-bottom: 0.5px solid #dcdfe6;
+    position: fixed;
+    left: 270px;
+    right: 0;
+    height: 60px;
+    z-index: 999;
+    transition: left 0.3s linear;
 
     .q-header-container {
       display: flex;
@@ -134,6 +177,17 @@ export default {
       .q-header-left {
         display: flex;
         flex-direction: row;
+        align-items: center;
+      }
+
+      .q-header-item {
+        margin-left: 15px;
+        min-height: 45px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        min-width: 45px;
+        box-sizing: border-box;
       }
     }
 

@@ -38,7 +38,9 @@ body,
   padding: 1rem;
   box-sizing: border-box;
 }
-
+.pointer{
+  cursor: pointer;
+}
 a {
   text-decoration: none;
 }
