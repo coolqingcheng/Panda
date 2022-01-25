@@ -19,7 +19,7 @@
 <script lang="ts">
 import {useRouter} from 'vue-router'
 import {onMounted, ref, computed, defineComponent} from 'vue';
-import SlideMenu, {SubMenu} from "./SlideMenu.vue";
+import SlideMenu, {SubMenu, MenuItem} from "./SlideMenu.vue";
 import {reactive} from "@vue/reactivity";
 
 export interface ModuleItem {
@@ -41,6 +41,7 @@ export default defineComponent({
     router.afterEach(guard => {
       activePath.value = guard.path
     })
+
 
     const isOpen = computed(() => {
       console.log('props变化:' + props.open)
@@ -165,6 +166,7 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     align-items: center;
+
     i {
       font-size: 24px;
       margin-bottom: 5px;

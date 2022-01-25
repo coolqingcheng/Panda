@@ -97,7 +97,7 @@ export default {
     const isOpen = ref(true)
 
     const expandMenu = () => {
-      isOpen.value = !isOpen.value
+      // isOpen.value = !isOpen.value
     }
 
     const notifySelect = ref('notify')

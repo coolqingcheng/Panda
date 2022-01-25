@@ -1,10 +1,10 @@
-import { RouteRecordRaw } from 'vue-router'
+import {RouteRecordRaw} from 'vue-router'
 
 import PostWrite from "../views/blogs/posts/PostWrite.vue"
 import PostList from "../views/blogs/posts/PostList.vue"
 
-var post: RouteRecordRaw[] = [
- 
+const post: RouteRecordRaw[] = [
+
     {
         path: 'write', component: PostWrite, name: '编辑'
     },
