@@ -7,7 +7,7 @@
       <SlideMenu></SlideMenu>
     </el-aside>
     <el-container>
-      <el-header v-if="true" :class="[isOpen?'':'el-header-close']">
+      <el-header v-if="true" :class="[isOpen ? '' : 'el-header-close']">
         <div class="q-header-container">
           <div class="q-header-left">
             <div class="q-header-item" @click="expandMenu()">
@@ -16,7 +16,7 @@
               </div>
             </div>
             <div class="q-header-item">
-              <el-breadcrumb :separator-icon="ArrowRight">
+              <el-breadcrumb>
                 <el-breadcrumb-item :to="{ path: '/' }">主页 {{ isOpen }}</el-breadcrumb-item>
                 <el-breadcrumb-item>当前页面</el-breadcrumb-item>
               </el-breadcrumb>
@@ -56,8 +56,8 @@
         </div>
       </el-header>
       <el-main>
-        <tab :open="isOpen"></tab>
-        <div :class="[isOpen?'q-content-open':'q-content-close']" class="q-content">
+        <tab v-model:expand="isOpen"></tab>
+        <div :class="[isOpen ? 'q-content-open' : 'q-content-close']" class="q-content">
           <el-card>
             <router-view></router-view>
           </el-card>
@@ -68,12 +68,13 @@
 </template>
 <script lang="ts">
 import SlideMenu from "../../components/SlideMenu.vue";
-import {Expand, FullScreen} from '@element-plus/icons'
-import {useRouter} from "vue-router";
-import {ref} from "@vue/reactivity";
-import {http} from "shared/http/HttpClient"
+import { Expand, FullScreen } from '@element-plus/icons'
+import { useRouter } from "vue-router";
+import { ref } from "@vue/reactivity";
+import { http } from "shared/http/HttpClient"
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   components: {
     SlideMenu,
     Expand,
@@ -110,10 +111,9 @@ export default {
       expandMenu
     }
   }
-}
+})
 </script>
 <style lang="less" scoped>
-
 .q-content {
   margin-top: 60px;
   background: #f6f8f9;

@@ -1,26 +1,31 @@
 <template>
   <div class="tab">
     <ul>
-      <li class="q-module-item"
-          v-for="item in moduleList"
-          :key="item.label"
-          :class="item.active ? 'active' : ''" @click="handlerItem(item)">
-        <!--        <router-link :to="item.path">{{ item.label }}</router-link>-->
+      <li
+        class="q-module-item"
+        v-for="(item, i) in moduleList"
+        :key="i"
+        :class="item.active ? 'active' : ''"
+        @click="handlerItem(item)"
+      >
         <i v-if="item.icon" :class="item.icon"></i>
-        <a href="#">{{ item.label }}</a>
+        <span>{{ item.label }}</span>
       </li>
     </ul>
   </div>
-  <div class="q-menu-container" :class="[isOpen?'q-menu-open':'q-menu-close']">
-    <SlideMenu :sub-menu="[]"></SlideMenu>
+  <div class="q-menu-container" :class="[isOpen ? 'q-menu-open' : 'q-menu-close']">
+    <template v-for="(item, i) in moduleList">
+      <SlideMenu :sub-menu="item.subMenu" v-if="item.active"></SlideMenu>
+    </template>
   </div>
 </template>
 
 <script lang="ts">
-import {useRouter} from 'vue-router'
-import {onMounted, ref, computed, defineComponent} from 'vue';
-import SlideMenu, {SubMenu, MenuItem} from "./SlideMenu.vue";
-import {reactive} from "@vue/reactivity";
+import { useRouter } from 'vue-router'
+import { onMounted, ref, computed, defineComponent } from 'vue';
+import SlideMenu from "./SlideMenu.vue";
+import { reactive } from "@vue/reactivity";
+import { SubMenu, MenuItem, PostMenu } from "./MenuConfig"
 
 export interface ModuleItem {
   label: string
@@ -32,11 +37,12 @@ export interface ModuleItem {
 
 export default defineComponent({
   name: 'tab',
-  components: {SlideMenu},
+  components: { SlideMenu },
   props: {
-    open: Boolean
+    expand: Boolean
   },
-  setup(props) {
+  emits: ['update:expand'],
+  setup(props, context) {
     const router = useRouter();
     router.afterEach(guard => {
       activePath.value = guard.path
@@ -44,8 +50,8 @@ export default defineComponent({
 
 
     const isOpen = computed(() => {
-      console.log('props变化:' + props.open)
-      return props.open
+      console.log('props变化:' + props.expand)
+      return props.expand
     })
 
     const activePath = ref('')
@@ -103,7 +109,8 @@ export default defineComponent({
         label: '文章',
         begin: '/dash',
         active: true,
-        icon: 'ri-article-line'
+        icon: 'ri-article-line',
+        subMenu: PostMenu
       },
       {
         label: '评论',
@@ -126,14 +133,23 @@ export default defineComponent({
       }
     ])
 
-    onMounted(() => {
-      // console.log('path', router.currentRoute.value)
-      let path = router.currentRoute.value.path;
-      activePath.value = path
-    })
+    // onMounted(() => {
+    //   // console.log('path', router.currentRoute.value)
+    //   let path = router.currentRoute.value.path;
+    //   activePath.value = path
+    // })
 
-    const handlerItem = () => {
-
+    const handlerItem = (item: ModuleItem) => {
+      moduleList.forEach(temp => {
+        temp.active = temp == item;
+        if (temp.active) {
+          if (!temp.subMenu || temp.subMenu.length == 0) {
+            context.emit('update:expand', false)
+          } else {
+            context.emit('update:expand', true)
+          }
+        }
+      });
     }
 
     return {
@@ -159,14 +175,15 @@ export default defineComponent({
   bottom: 0;
   top: 0;
   background: #282c34;
-  box-shadow: 3px 0px 6px rgba(0, 0, 0, .3);
+  box-shadow: 3px 0px 6px rgba(0, 0, 0, 0.3);
   z-index: 999;
 
   .q-module-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    padding: 8px 0 8px 0;
+    box-sizing: border-box;
     i {
       font-size: 24px;
       margin-bottom: 5px;
@@ -215,8 +232,6 @@ export default defineComponent({
       background: #1890ff;
     }
   }
-
-
 }
 
 .q-menu-open {
