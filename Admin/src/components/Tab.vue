@@ -2,11 +2,11 @@
   <div class="tab">
     <ul>
       <li
-        class="q-module-item"
-        v-for="(item, i) in moduleList"
-        :key="i"
-        :class="item.active ? 'active' : ''"
-        @click="handlerItem(item)"
+          class="q-module-item"
+          v-for="(item, i) in moduleList"
+          :key="i"
+          :class="item.active ? 'active' : ''"
+          @click="handlerItem(item,true)"
       >
         <i v-if="item.icon" :class="item.icon"></i>
         <span>{{ item.label }}</span>
@@ -21,15 +21,16 @@
 </template>
 
 <script lang="ts">
-import { useRouter } from 'vue-router'
-import { onMounted, ref, computed, defineComponent } from 'vue';
+import {useRouter} from 'vue-router'
+import {onMounted, ref, computed, defineComponent, nextTick} from 'vue';
 import SlideMenu from "./SlideMenu.vue";
-import { reactive } from "@vue/reactivity";
-import { SubMenu, MenuItem, PostMenu } from "./MenuConfig"
+import {reactive} from "@vue/reactivity";
+import {SubMenu, MenuItem, PostMenu, settingMenu, tagMenu} from "./MenuConfig"
+import {forEach} from "wangeditor/dist/utils/util";
 
 export interface ModuleItem {
   label: string
-  begin: string
+  index?: string
   icon?: string
   subMenu?: SubMenu[]
   active?: boolean
@@ -37,7 +38,7 @@ export interface ModuleItem {
 
 export default defineComponent({
   name: 'tab',
-  components: { SlideMenu },
+  components: {SlideMenu},
   props: {
     expand: Boolean
   },
@@ -46,6 +47,7 @@ export default defineComponent({
     const router = useRouter();
     router.afterEach(guard => {
       activePath.value = guard.path
+
     })
 
 
@@ -55,6 +57,13 @@ export default defineComponent({
     })
 
     const activePath = ref('')
+
+    onMounted(() => {
+      activePath.value = router.currentRoute.value.path
+      nextTick(() => {
+        updateSelectStatus();
+      })
+    })
 
     const tabList = ref([
       {
@@ -102,44 +111,39 @@ export default defineComponent({
     const moduleList = reactive<ModuleItem[]>([
       {
         label: '仪表盘',
-        begin: '/dash',
+        active: true,
+        index: '/admin/dash',
         icon: 'ri-dashboard-2-line'
       },
       {
         label: '文章',
-        begin: '/dash',
-        active: true,
         icon: 'ri-article-line',
         subMenu: PostMenu
       },
       {
         label: '评论',
-        begin: '/dash',
         icon: 'ri-message-3-line'
-      }, {
+      },
+      {
         label: '标签',
-        begin: '/dash',
-        icon: 'ri-price-tag-3-line'
+        index: '/admin/tag',
+        icon: 'ri-price-tag-3-line',
+        subMenu: tagMenu
+
       },
       {
         label: '友链',
-        begin: '/dash',
-        icon: 'ri-links-line'
+        icon: 'ri-links-line',
+        index: '/admin/friendlink'
       },
       {
         label: '设置',
-        begin: '/dash',
+        index: '/admin/setting',
         icon: 'ri-settings-3-line'
       }
     ])
 
-    // onMounted(() => {
-    //   // console.log('path', router.currentRoute.value)
-    //   let path = router.currentRoute.value.path;
-    //   activePath.value = path
-    // })
-
-    const handlerItem = (item: ModuleItem) => {
+    const handlerItem = (item: ModuleItem, updateRouter: boolean) => {
       moduleList.forEach(temp => {
         temp.active = temp == item;
         if (temp.active) {
@@ -148,10 +152,37 @@ export default defineComponent({
           } else {
             context.emit('update:expand', true)
           }
+          if (updateRouter) {
+            if (temp.subMenu && temp.subMenu.length > 0) {
+              router.replace(temp.subMenu[0].children[0]?.index)
+            } else {
+              router.replace(temp.index!)
+            }
+          }
         }
       });
-    }
 
+
+    }
+    const updateSelectStatus = () => {
+      console.log('当前的路由:', activePath.value)
+      let path = activePath.value;
+      moduleList.forEach(item => {
+        if (item.index == path) {
+          handlerItem(item, false)
+        }
+        item.subMenu?.forEach(subItem => {
+          if (subItem.label == path) {
+            handlerItem(item, false)
+          }
+          subItem.children?.forEach(childrenItem => {
+            if (childrenItem.index == path) {
+              handlerItem(item, false)
+            }
+          })
+        })
+      })
+    }
     return {
       tabList,
       activePath,
@@ -184,6 +215,7 @@ export default defineComponent({
     align-items: center;
     padding: 8px 0 8px 0;
     box-sizing: border-box;
+
     i {
       font-size: 24px;
       margin-bottom: 5px;
@@ -250,13 +282,21 @@ export default defineComponent({
   bottom: 0;
   background: #ffffff;
   z-index: 900;
+  padding-top: 10px;
+  box-sizing: border-box;
 
   .el-menu-item-group {
     padding: 0 10px 0 10px;
   }
 
-  .el-menu-item.is-active {
+  .el-menu-item {
+    margin: 0 10px 0 10px;
+    box-sizing: border-box;
     border-radius: 10px;
+  }
+
+  .el-menu-item.is-active {
+
     background: var(--el-color-primary-light-8);
     color: #0d1b25;
   }

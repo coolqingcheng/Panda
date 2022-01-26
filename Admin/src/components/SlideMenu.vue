@@ -1,18 +1,24 @@
 <template>
-  <el-menu default-active :default-openeds="defaultOpened">
-    <el-sub-menu :index="item.index" v-for="(item, index) in menuData" :key="index">
-      <template #title>{{ item.label }}</template>
-      <el-menu-item-group v-for="(item, i) in item.children" :key="i">
+  <el-menu :default-active="currActivePath" :default-openeds="defaultOpened" router>
+    <template v-for="(item, index) in menuData" :key="index">
+      <el-sub-menu :index="item.index" v-if="!item.hideGroup">
+        <template #title>{{ item.label }} - {{ item.hideGroup }}</template>
+        <el-menu-item-group v-for="(item, i) in item.children" :key="i">
+          <el-menu-item :index="item.index">{{ item.label }}</el-menu-item>
+        </el-menu-item-group>
+      </el-sub-menu>
+      <template v-for="(item, i) in item.children" :key="i" v-if="item.hideGroup">
         <el-menu-item :index="item.index">{{ item.label }}</el-menu-item>
-      </el-menu-item-group>
-    </el-sub-menu>
+      </template>
+    </template>
+
   </el-menu>
 </template>
 
 <script lang="ts">
-import { useRouter } from "vue-router"
-import { onMounted, ref, defineComponent, PropType, watch, reactive } from 'vue'
-import { SubMenu } from "./MenuConfig"
+import {useRouter} from "vue-router"
+import {onMounted, ref, defineComponent, PropType, watch, reactive, nextTick} from 'vue'
+import {SubMenu} from "./MenuConfig"
 
 
 export default defineComponent({
@@ -22,7 +28,7 @@ export default defineComponent({
   setup(props) {
     const currActivePath = ref<string>();
 
-    const defaultOpened = ref(['1'])
+    const defaultOpened = ref([])
 
 
     const menuData = reactive<SubMenu[]>([])
@@ -44,10 +50,18 @@ export default defineComponent({
     const handleClose = () => {
     }
     const router = useRouter();
-    // onMounted(() => {
-    //   console.log(router.currentRoute.value.path)
-    //   currActivePath.value = router.currentRoute.value.path
-    // })
+    onMounted(() => {
+      console.log(router.currentRoute.value.path)
+      currActivePath.value = router.currentRoute.value.path
+      nextTick(() => {
+
+      })
+    })
+    router.afterEach(() => {
+      currActivePath.value = router.currentRoute.value.path
+    })
+
+
     return {
       handleOpen,
       handleClose,

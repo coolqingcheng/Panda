@@ -1,10 +1,4 @@
 <template>
-  <left-menu-layout>
-    <template #menu>
-      <LeftMenu></LeftMenu>
-    </template>
-    <template #content>
-
       <div class="tool-bar">
         <reprint v-if="formModel.id==0" @complate='spiderComplate'></reprint>
       </div>
@@ -47,8 +41,6 @@
           <el-button type="default" @click="back()">返回</el-button>
         </el-form-item>
       </el-form>
-    </template>
-  </left-menu-layout>
   <cropper-box v-model="showCropper" @cropper="cropperSelect"></cropper-box>
 </template>
 
