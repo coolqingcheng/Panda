@@ -1,47 +1,49 @@
 <template>
-      <div class="tool-bar">
-        <reprint v-if="formModel.id==0" @complate='spiderComplate'></reprint>
-      </div>
-      <el-form
-          label-width="80px"
-          v-loading="loading"
-          :rules="rules"
-          ref="formRef"
-          :model="formModel"
-          label-position="left"
-      >
-        <el-form-item label="标题" prop="title">
-          <el-input placeholder="输入标题" v-model="formModel.title"></el-input>
-        </el-form-item>
-        <el-form-item label="正文" prop="content">
-          <WangEditor v-model="formModel.content"></WangEditor>
-        </el-form-item>
-        <el-form-item label="分类" prop="categories">
-          <el-checkbox-group v-model="formModel.categories">
-            <el-checkbox
-                :label="item.id"
-                v-for="(item,i) in categoryItems"
-                :key="i"
-                name="categories"
-            >{{ item.cateName }}
-            </el-checkbox>
-          </el-checkbox-group>
-        </el-form-item>
-        <el-form-item label="标签" prop="tags">
-          <tag-box v-model="formModel.tags"></tag-box>
-        </el-form-item>
-        <el-form-item label="封面图">
-          <div @click="selectImage()">
-            <el-button type="info" v-if="!formModel.cover">上传一张封面图</el-button>
-            <img :src="formModel.cover"/>
-          </div>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitForm()">保存</el-button>
-          <el-button type="default" @click="back()">返回</el-button>
-        </el-form-item>
-      </el-form>
-  <cropper-box v-model="showCropper" @cropper="cropperSelect"></cropper-box>
+  <el-card>
+    <div class="tool-bar">
+      <reprint v-if="formModel.id==0" @complate='spiderComplate'></reprint>
+    </div>
+    <el-form
+        label-width="80px"
+        v-loading="loading"
+        :rules="rules"
+        ref="formRef"
+        :model="formModel"
+        label-position="left"
+    >
+      <el-form-item label="标题" prop="title">
+        <el-input placeholder="输入标题" v-model="formModel.title"></el-input>
+      </el-form-item>
+      <el-form-item label="正文" prop="content">
+        <WangEditor v-model="formModel.content"></WangEditor>
+      </el-form-item>
+      <el-form-item label="分类" prop="categories">
+        <el-checkbox-group v-model="formModel.categories">
+          <el-checkbox
+              :label="item.id"
+              v-for="(item,i) in categoryItems"
+              :key="i"
+              name="categories"
+          >{{ item.cateName }}
+          </el-checkbox>
+        </el-checkbox-group>
+      </el-form-item>
+      <el-form-item label="标签" prop="tags">
+        <tag-box v-model="formModel.tags"></tag-box>
+      </el-form-item>
+      <el-form-item label="封面图">
+        <div @click="selectImage()">
+          <el-button type="info" v-if="!formModel.cover">上传一张封面图</el-button>
+          <img :src="formModel.cover"/>
+        </div>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="submitForm()">保存</el-button>
+        <el-button type="default" @click="back()">返回</el-button>
+      </el-form-item>
+    </el-form>
+    <cropper-box v-model="showCropper" @cropper="cropperSelect"></cropper-box>
+  </el-card>
 </template>
 
 <script lang="ts">

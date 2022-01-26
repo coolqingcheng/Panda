@@ -13,20 +13,24 @@
       </li>
     </ul>
   </div>
-  <div class="q-menu-container" :class="[isOpen ? 'q-menu-open' : 'q-menu-close']">
+  <div class="q-menu-container" :class="[expandState ? 'q-menu-open' : 'q-menu-close']">
     <template v-for="(item, i) in moduleList">
       <SlideMenu :sub-menu="item.subMenu" v-if="item.active"></SlideMenu>
     </template>
   </div>
+
+  <TopBar v-model:expand="expand"></TopBar>
 </template>
 
 <script lang="ts">
 import {useRouter} from 'vue-router'
 import {onMounted, ref, computed, defineComponent, nextTick} from 'vue';
-import SlideMenu from "./SlideMenu.vue";
+import SlideMenu from "../../components/SlideMenu.vue";
 import {reactive} from "@vue/reactivity";
-import {SubMenu, MenuItem, PostMenu, settingMenu, tagMenu} from "./MenuConfig"
-import {forEach} from "wangeditor/dist/utils/util";
+import {SubMenu, MenuItem, PostMenu, settingMenu, tagMenu} from "../../components/MenuConfig"
+import {ElMessage} from 'element-plus'
+import TopBar from "./TopBar.vue";
+import {expandState} from "./ExpandState"
 
 export interface ModuleItem {
   label: string
@@ -38,76 +42,23 @@ export interface ModuleItem {
 
 export default defineComponent({
   name: 'tab',
-  components: {SlideMenu},
+  components: {SlideMenu, TopBar},
   props: {
     expand: Boolean
   },
   emits: ['update:expand'],
   setup(props, context) {
     const router = useRouter();
-    router.afterEach(guard => {
-      activePath.value = guard.path
-
-    })
-
-
     const isOpen = computed(() => {
-      console.log('props变化:' + props.expand)
       return props.expand
     })
-
     const activePath = ref('')
-
     onMounted(() => {
       activePath.value = router.currentRoute.value.path
       nextTick(() => {
         updateSelectStatus();
       })
     })
-
-    const tabList = ref([
-      {
-        label: '仪表盘',
-        active: ['/admin/dash'],
-        path: '/admin/dash'
-      },
-      {
-        label: '文章',
-        active: ['/admin/post', '/admin/post/write', '/admin/categories'],
-        path: '/admin/post'
-      },
-      {
-        label: '评论',
-        active: '/admin/',
-        path: '/'
-      },
-      {
-        label: '标签',
-        active: ['/admin/tag', '/admin/tag/edit'],
-        path: '/admin/tag'
-      },
-      {
-        label: '媒体',
-        active: '/post',
-        path: '/'
-      },
-      {
-        label: '页面',
-        active: ['/admin/pages', '/admin/pages-write'],
-        path: '/admin/pages'
-      },
-      {
-        label: '友情链接',
-        active: ['/admin/friendlink'],
-        path: '/admin/friendlink'
-      },
-      {
-        label: '设置',
-        active: ['/admin/setting'],
-        path: '/admin/setting'
-      }
-    ])
-
     const moduleList = reactive<ModuleItem[]>([
       {
         label: '仪表盘',
@@ -137,6 +88,9 @@ export default defineComponent({
         index: '/admin/friendlink'
       },
       {
+        label: '用户', icon: 'ri-user-line'
+      },
+      {
         label: '设置',
         index: '/admin/setting',
         icon: 'ri-settings-3-line'
@@ -153,10 +107,19 @@ export default defineComponent({
             context.emit('update:expand', true)
           }
           if (updateRouter) {
+            let path = '';
             if (temp.subMenu && temp.subMenu.length > 0) {
-              router.replace(temp.subMenu[0].children[0]?.index)
+              path = temp.subMenu[0].children[0]?.index;
             } else {
-              router.replace(temp.index!)
+              path = temp.index!
+            }
+            if (path) {
+              router.replace(path)
+            } else {
+              ElMessage({
+                message: '跳转路径不存在',
+                type: 'error'
+              })
             }
           }
         }
@@ -184,11 +147,11 @@ export default defineComponent({
       })
     }
     return {
-      tabList,
       activePath,
       isOpen,
       handlerItem,
-      moduleList
+      moduleList,
+      expandState
     }
 
   }

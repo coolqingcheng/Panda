@@ -1,18 +1,27 @@
-
 <template>
-  <el-card>
-    <h1 @click="test()">Home {{ visible }}</h1>
-    <cropper-box
-      v-model="visible"
-      @cropper="close"
-      url="https://img2.baidu.com/it/u=1232855683,1763177858&fm=253&fmt=auto&app=138&f=PNG?w=499&h=270"
-    ></cropper-box>
-    <img :src="url" />
-  </el-card>
+  <div class="dash-content">
+    <el-row :gutter="20">
+      <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="6" v-for="item in 4" :key="item">
+        <el-card shadow="never" class="dash-card">
+          访问统计
+        </el-card>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col>
+        <el-card shadow="never">
+          <template #header>
+            <h2>今日评论</h2>
+          </template>
+        </el-card>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script lang="ts">
-import { ref } from 'vue'
+import {ref} from 'vue'
+
 export default {
   setup() {
     const visible = ref(false)
@@ -37,5 +46,13 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+.dash-content {
+  padding: 10px;
+}
+
+.dash-card {
+  min-height: 170px;
+  margin-bottom: 20px;
+}
 </style>

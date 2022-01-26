@@ -45,6 +45,11 @@ a {
   text-decoration: none;
 }
 
+h1,h2,h3{
+  padding: 0;
+  margin: 0;
+}
+
 @keyframes test1 {
   0% {
     opacity: 0.1;
