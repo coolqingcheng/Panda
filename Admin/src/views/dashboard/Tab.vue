@@ -14,7 +14,7 @@
     </ul>
   </div>
   <div class="q-menu-container" :class="[expandState ? 'q-menu-open' : 'q-menu-close']">
-    <template v-for="(item, i) in moduleList">
+    <template v-for="(item, i) in moduleList" :key="i">
       <SlideMenu :sub-menu="item.subMenu" v-if="item.active"></SlideMenu>
     </template>
   </div>
@@ -27,10 +27,10 @@ import {useRouter} from 'vue-router'
 import {onMounted, ref, computed, defineComponent, nextTick} from 'vue';
 import SlideMenu from "../../components/SlideMenu.vue";
 import {reactive} from "@vue/reactivity";
-import {SubMenu, MenuItem, PostMenu, settingMenu, tagMenu} from "../../components/MenuConfig"
+import {SubMenu, PostMenu, tagMenu} from "../../components/MenuConfig"
 import {ElMessage} from 'element-plus'
 import TopBar from "./TopBar.vue";
-import {expandState} from "./ExpandState"
+import {expandState, handlerExpand, showExpandButton} from "./ExpandState"
 
 export interface ModuleItem {
   label: string
@@ -47,13 +47,19 @@ export default defineComponent({
     expand: Boolean
   },
   emits: ['update:expand'],
-  setup(props, context) {
+  setup(props) {
     const router = useRouter();
     const isOpen = computed(() => {
       return props.expand
     })
     const activePath = ref('')
     onMounted(() => {
+      activePath.value = router.currentRoute.value.path
+      nextTick(() => {
+        updateSelectStatus();
+      })
+    })
+    router.afterEach(() => {
       activePath.value = router.currentRoute.value.path
       nextTick(() => {
         updateSelectStatus();
@@ -102,16 +108,19 @@ export default defineComponent({
         temp.active = temp == item;
         if (temp.active) {
           if (!temp.subMenu || temp.subMenu.length == 0) {
-            context.emit('update:expand', false)
+            handlerExpand(false)
+            showExpandButton.value = false
           } else {
-            context.emit('update:expand', true)
+            handlerExpand(true)
           }
           if (updateRouter) {
             let path = '';
             if (temp.subMenu && temp.subMenu.length > 0) {
-              path = temp.subMenu[0].children[0]?.index;
+              path = temp.subMenu[0].children?.[0]?.index!;
+              showExpandButton.value = true
             } else {
               path = temp.index!
+              showExpandButton.value = false
             }
             if (path) {
               router.replace(path)
@@ -169,7 +178,7 @@ export default defineComponent({
   bottom: 0;
   top: 0;
   background: #282c34;
-  box-shadow: 3px 0px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 3px 0 6px rgba(0, 0, 0, 0.3);
   z-index: 999;
 
   .q-module-item {

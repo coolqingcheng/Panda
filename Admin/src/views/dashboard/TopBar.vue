@@ -2,7 +2,7 @@
   <el-header :class="[expandState?'open':'close']">
     <div class="q-header-container">
       <div class="q-header-left">
-        <div class="q-header-item" @click="handlerExpand()">
+        <div class="q-header-item" @click="handlerExpand(!expandState)" v-if="showExpandButton">
           <div class="q-toolbar-item pointer">
             <i class="ri-menu-fold-line"></i>
           </div>
@@ -38,8 +38,8 @@
           </div>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item>主页</el-dropdown-item>
-              <el-dropdown-item>个人设置</el-dropdown-item>
+              <el-dropdown-item @click="toHome()">主页</el-dropdown-item>
+              <el-dropdown-item @click="toSetting()">个人设置</el-dropdown-item>
               <el-dropdown-item divided @click="quit()">退出</el-dropdown-item>
             </el-dropdown-menu>
           </template>
@@ -56,7 +56,7 @@ import {ref} from "@vue/reactivity";
 import {defineComponent} from 'vue'
 import {useRouter} from "vue-router";
 
-import {expandState, handlerExpand} from './ExpandState'
+import {expandState, handlerExpand,showExpandButton} from './ExpandState'
 
 export default defineComponent({
   name: "TopBar",
@@ -80,11 +80,23 @@ export default defineComponent({
       }
     }
 
+    const toSetting = () => {
+      router.push('/admin/setting?type=3')
+    }
+
+    const toHome = () => {
+      router.replace("/admin/dash")
+    }
+
     const notifySelect = ref('notify')
     return {
       quit,
       notifySelect,
-      expandState, handlerExpand
+      expandState,
+      handlerExpand,
+      toSetting,
+      toHome,
+      showExpandButton
     }
   }
 })

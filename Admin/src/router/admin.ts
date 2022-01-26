@@ -1,6 +1,6 @@
 import { RouteRecordRaw } from "vue-router";
 import Dash from '../views/dashboard/Dash.vue'
-import Home from '../views/dashboard/home.vue'
+import Home from '../views/dashboard/Home.vue'
 
 
 import Post from "../views/blogs/posts/post.vue"
