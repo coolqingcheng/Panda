@@ -9,7 +9,7 @@
         </div>
         <div class="q-header-item">
           <el-breadcrumb>
-            <el-breadcrumb-item :to="{ path: '/' }">主页 {{ isOpen }}</el-breadcrumb-item>
+            <el-breadcrumb-item :to="{ path: '/' }">主页</el-breadcrumb-item>
             <el-breadcrumb-item>当前页面</el-breadcrumb-item>
           </el-breadcrumb>
         </div>
