@@ -16,6 +16,8 @@ public class EFUnitOfWork : IUnitOfWork
 
     private IDbContextTransaction? _transaction = null;
 
+    private int _index = 0;
+
     public EFUnitOfWork(PandaContext context)
     {
         _context = context;
@@ -24,10 +26,17 @@ public class EFUnitOfWork : IUnitOfWork
     public async Task BeginTransactionAsync()
     {
         _transaction = await _context.Database.BeginTransactionAsync();
+        _index += 1;
     }
 
     public async Task CommitAsync()
     {
+        if (_index > 1)
+        {
+            _index -= 1;
+            return;
+        }
+
         if (_transaction != null) await _transaction.CommitAsync();
     }
 

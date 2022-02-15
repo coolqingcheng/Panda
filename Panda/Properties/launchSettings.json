@@ -16,7 +16,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation",
-        "MYSQL_DB": "Data Source=129.211.57.2;Port=53200;User ID=qingcheng;Password=qingcheng; Initial Catalog=q_blog;Charset=utf8; SslMode=none;Min pool size=1"
+        "MYSQL_DB": "Data Source=localhost;Port=3306;User ID=zhangsan;Password=zhangsan; Initial Catalog=q_blogs;Charset=utf8; SslMode=none;Min pool size=1"
       }
     }
   }
