@@ -17,6 +17,7 @@
     "remixicon": "^2.5.0",
     "vue": "^3.2.6",
     "vue-router": "4",
+    "vuex": "^4.0.2",
     "wangeditor": "^4.7.9"
   },
   "devDependencies": {

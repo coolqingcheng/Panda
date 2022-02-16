@@ -1,8 +1,14 @@
-<script setup lang="ts"></script>
+
 <template>
   <router-view></router-view>
 </template>
+<script lang="ts">
+import { defineComponent } from "vue";
 
+export default defineComponent({
+
+})
+</script>
 <style>
 body {
   background: #f1f1f1;
@@ -25,7 +31,7 @@ body,
 
 #app {
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
-  "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
@@ -38,14 +44,16 @@ body,
   padding: 1rem;
   box-sizing: border-box;
 }
-.pointer{
+.pointer {
   cursor: pointer;
 }
 a {
   text-decoration: none;
 }
 
-h1,h2,h3{
+h1,
+h2,
+h3 {
   padding: 0;
   margin: 0;
 }
