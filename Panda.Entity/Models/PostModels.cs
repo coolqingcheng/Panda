@@ -30,6 +30,8 @@ public class PostItem
     public Accounts? Account { get; set; }
 
     public PostStatus Status { get; set; }
+    
+    public string MarkDown { get; set; }
 
     /// <summary>
     /// 分类

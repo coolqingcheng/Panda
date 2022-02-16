@@ -160,7 +160,7 @@ const loadArticleData = async () => {
     loading.value = true
     if (route.query.id) {
       title.value = "编辑"
-      var res = await get<{ title: string, id: number, content: string, categories: { id: number, cateName: string }[], tags: string[], cover: string }>
+      var res = await get<{ title: string, id: number, content: string, categories: { id: number, cateName: string }[], tags: string[], cover: string, markdown: string }>
         ('/admin/post/get', { id: route.query.id })
       console.log('res:', res)
       formModel.value = {
@@ -169,7 +169,8 @@ const loadArticleData = async () => {
         categories: res.categories.map(a => a.id),
         id: res.id,
         tags: res.tags,
-        cover: res.cover
+        cover: res.cover,
+        markdown: res.markdown
       }
       console.log('formModel:', JSON.stringify(formModel.value.categories))
 
