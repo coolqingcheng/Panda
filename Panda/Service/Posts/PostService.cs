@@ -131,6 +131,7 @@ public class PostService : IPostService
             post.UpdateTime = DateTime.Now;
             post.Cover = request.Cover;
             post.Account = account;
+            post.MarkDown = request.MarkDown;
             await _postRepository.SaveAsync();
             var beforeCategories = await _postCategoryRelationRepository.Where(a => a.Posts == post)
                 .Select(a => a.Categories.Id).ToListAsync();
@@ -161,7 +162,8 @@ public class PostService : IPostService
                 Text = text,
                 Summary = text.GetSummary(80),
                 Cover = request.Cover,
-                Account = account
+                Account = account,
+                MarkDown = request.MarkDown
             };
             await _postRepository.AddAsync(post);
             var categories = await _categoryRepository.Where(a => request.Categories.Contains(a.Id)).ToListAsync();

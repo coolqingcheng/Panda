@@ -13,6 +13,11 @@ public class PostAddOrUpdate
 
     [Required]
     public string Content { get; set; }
+
+    /// <summary>
+    /// markdown语法
+    /// </summary>
+    public string MarkDown { get; set; }
     
     [Required]
     public List<int> Categories { get; set; }

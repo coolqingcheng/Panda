@@ -80,6 +80,12 @@ const post = async <T>(url: string, body: {}): Promise<T> => {
     return res as any
 }
 
+const upload = async <T>(url: string, formData: FormData): Promise<T> => {
+    let res = await http.post(url, formData)
+
+    return res as any
+}
+
 const PageRequest = {
     index: 1,
     size: 10
@@ -90,5 +96,6 @@ export {
     get,
     post,
     del,
-    PageRequest
+    PageRequest,
+    upload
 }

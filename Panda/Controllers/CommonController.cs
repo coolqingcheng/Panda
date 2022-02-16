@@ -52,7 +52,7 @@ public class CommonController : Controller
 
         await using var stream = files[0].OpenReadStream();
         var buffer = new byte[stream.Length];
-        await stream.ReadAsync(buffer);
+        var readAsync = await stream.ReadAsync(buffer);
         // todo 图片水印功能
         var file = await _fileStorage.SaveAsync(buffer, $"{Md5Helper.ComputeHash(buffer)[..10]}.{regex.Value}");
         if (file.Success == false)
