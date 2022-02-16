@@ -38,7 +38,7 @@ public class AccountController : AdminController
     }
 
     [AllowAnonymous]
-    [HttpGet]
+    [HttpGet("/initaccount")]
     public async Task<IActionResult> Test()
     {
 

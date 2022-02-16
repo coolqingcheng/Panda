@@ -11,7 +11,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      "/admin": "https://qingchengblog.com",
+      "/admin": "http://localhost:5151",
       "/upload": "http://localhost:5151",
       "/img": "http://localhost:5151"
     }

@@ -51,12 +51,15 @@ public class DicDataChildInfo
     {
     }
 
-    public DicDataChildInfo(string key, string description, bool isSecrecy = false)
+    public DicDataChildInfo(string key, string description, bool isSecrecy = false,bool isRequired = true)
     {
         Key = key;
         Description = description;
         IsSecrecy = isSecrecy;
+        IsRequired = isRequired;
     }
+
+    public bool IsRequired { get; set; }
 
     [Required] public string Key { get; set; }
     [Required] public string? Value { get; set; }

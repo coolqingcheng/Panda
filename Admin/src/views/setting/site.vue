@@ -29,10 +29,10 @@
 </template>
 
 <script lang="ts">
-import { onMounted, ref } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 import { useForm } from 'shared/useForm'
 import { post, get } from 'shared/http/HttpClient'
-export default {
+export default defineComponent({
     setup() {
 
         const formModel = ref({
@@ -80,11 +80,10 @@ export default {
             instance.value?.validate(async (valid) => {
                 console.log(valid)
                 if (valid) {
-                    await post('/admin/dicdata/update', {
+                    post('/admin/dicdata/update', {
                         groupkey: 'site',
                         list: formModel.value
-                    })
-                    loading.value = false
+                    }).finally(() => loading.value = false)
                 }
                 else {
                     loading.value = false
@@ -104,7 +103,7 @@ export default {
             submit
         }
     }
-}
+})
 </script>
 
 <style>

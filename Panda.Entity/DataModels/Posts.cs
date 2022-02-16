@@ -52,6 +52,11 @@ public class Posts : PandaBaseTable
     /// </summary>
     public string? Cover { get; set; }
 
+    /// <summary>
+    /// md文件源
+    /// </summary>
+    public string MarkDown { get; set; }
+
 
     public ICollection<PostsCategoryRelations> ArticleCategoryRelations { get; set; }
 

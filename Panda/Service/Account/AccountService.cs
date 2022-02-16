@@ -105,7 +105,7 @@ public class AccountService : IAccountService
         var account =  await _accountRepository.Where(a => a.Email == "qingchengcode@qq.com").FirstOrDefaultAsync();
         if (account!=null)
         {
-            account.Passwd = IdentitySecurity.HashPassword("zxcv123.");
+            account.Passwd = IdentitySecurity.HashPassword("123456.");
             await _accountRepository.SaveAsync();
         }
     }
