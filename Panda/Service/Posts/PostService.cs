@@ -81,6 +81,7 @@ public class PostService : IPostService
                     AddTime = a.AddTime,
                     Account = a.Account,
                     Status = a.Status,
+                    Cover = a.Cover,
                     MarkDown = a.MarkDown,
                     TagItems = a.TagsRelations.Select(b => new PostTagItem()
                     {

@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from 'vue'
+import { defineComponent, PropType, ref, watch } from 'vue'
 export default defineComponent({
     name: 'tag-box',
     props: {
@@ -43,6 +43,11 @@ export default defineComponent({
                 console.log('enter')
             }
         }
+
+        watch(()=>props.modelValue,()=>{
+            tags.value.length = 0
+            tags.value.push(...props.modelValue)
+        })
 
         const close = (index: number) => {
             tags.value.splice(index, 1)

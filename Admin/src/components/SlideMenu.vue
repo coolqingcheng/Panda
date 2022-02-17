@@ -2,7 +2,7 @@
   <el-menu :default-active="currActivePath" :default-openeds="defaultOpened" router>
     <template v-for="(item, index) in menuData" :key="index">
       <el-sub-menu :index="item.index" v-if="!item.hideGroup">
-        <template #title>{{ item.label }} - {{ item.hideGroup }}</template>
+        <template #title>{{ item.label }}</template>
         <el-menu-item-group v-for="(subItem, i) in item.children" :key="i">
           <el-menu-item :index="subItem.index">{{ subItem.label }}</el-menu-item>
         </el-menu-item-group>

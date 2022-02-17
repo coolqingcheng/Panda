@@ -15,12 +15,13 @@
         <el-input placeholder="输入标题" v-model="formModel.title"></el-input>
       </el-form-item>
       <el-form-item label="正文" prop="content">
-        <!-- <WangEditor v-model="formModel.content"></WangEditor> -->
+        <!-- <p>{{formModel.markdown}}</p> -->
         <v-md-editor
-          height="400px"
+          height="500px"
           @upload-image="uploadImage"
           :disabled-menus="[]"
           @change="mdChange"
+          v-model="formModel.markdown"
         ></v-md-editor>
       </el-form-item>
       <el-form-item label="分类" prop="categories">
@@ -82,6 +83,7 @@ const formModel = ref<articleItem>({
   cover: '',
   tags: []
 })
+
 const coverBase64 = ref<string>("")
 const title = ref("新建")
 const loading = ref(false)
@@ -160,7 +162,8 @@ const loadArticleData = async () => {
     loading.value = true
     if (route.query.id) {
       title.value = "编辑"
-      var res = await get<{ title: string, id: number, content: string, categories: { id: number, cateName: string }[], tags: string[], cover: string, markdown: string }>
+      var res = await get<
+      { title: string, id: number, content: string, categories: { id: number, cateName: string }[], tags: string[], cover: string, markDown: string }>
         ('/admin/post/get', { id: route.query.id })
       console.log('res:', res)
       formModel.value = {
@@ -170,9 +173,9 @@ const loadArticleData = async () => {
         id: res.id,
         tags: res.tags,
         cover: res.cover,
-        markdown: res.markdown
+        markdown: res.markDown
       }
-      console.log('formModel:', JSON.stringify(formModel.value.categories))
+      console.log('formModel:', formModel.value.tags)
 
 
     }

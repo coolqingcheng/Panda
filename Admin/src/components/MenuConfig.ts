@@ -16,7 +16,7 @@ const PostMenu: SubMenu[] = [
     {
         index: '文章',
         label: '文章',
-        hideGroup: true,
+        hideGroup: false,
         children: [
             {
                 index: '/admin/post/write',
@@ -25,6 +25,20 @@ const PostMenu: SubMenu[] = [
             {
                 index: '/admin/post',
                 label: '文章管理',
+            },
+            {
+                index: '/admin/',
+                label: '分类管理'
+            }
+        ]
+    },{
+        label:'分类',
+        index:'分类',
+        hideGroup:false,
+        children:[
+            {
+                index: '/admin/categories',
+                label: '分类管理'
             }
         ]
     }

@@ -2,6 +2,7 @@ using Panda.Entity.DataModels;
 using Panda.Entity.Requests;
 using Panda.Tools.Models;
 using System.ComponentModel;
+using TencentCloud.Ssl.V20191205.Models;
 
 namespace Panda.Entity.Models;
 
@@ -30,8 +31,13 @@ public class PostItem
     public Accounts? Account { get; set; }
 
     public PostStatus Status { get; set; }
-    
+
     public string MarkDown { get; set; }
+
+    /// <summary>
+    /// 封面图
+    /// </summary>
+    public string? Cover { get; set; }
 
     /// <summary>
     /// 分类
@@ -47,7 +53,11 @@ public class PostDetailItem : PostItem
     public string Content { get; set; }
 
     public IEnumerable<PostTagItem> TagItems { get; set; }
-    
+
+    public List<string> Tags
+    {
+        get { return TagItems.Select(a => a.TagName).ToList(); }
+    }
 }
 
 public class PostNextItem
@@ -64,13 +74,12 @@ public enum PostNextType
     /// <summary>
     /// 下一条
     /// </summary>
-    [Description("下一条")]
-    Next = 1,
+    [Description("下一条")] Next = 1,
+
     /// <summary>
     /// 上一条
     /// </summary>
-    [Description("上一条")]
-    Pre = 0
+    [Description("上一条")] Pre = 0
 }
 
 public class PostTagItem
@@ -87,7 +96,6 @@ public class PostCategories
     public string CateName { get; set; }
 }
 
-
 public class PostRequest : BasePageRequest
 {
     public int CategoryId { get; set; }
@@ -95,6 +103,5 @@ public class PostRequest : BasePageRequest
 
 public class PostCategoryRequest : BasePageRequest
 {
-    
     public int CategoryId { get; set; }
 }
