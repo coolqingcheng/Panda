@@ -15,7 +15,6 @@
         <el-input placeholder="输入标题" v-model="formModel.title"></el-input>
       </el-form-item>
       <el-form-item label="正文" prop="content">
-        <!-- <p>{{formModel.markdown}}</p> -->
         <v-md-editor
           height="500px"
           @upload-image="uploadImage"
@@ -38,9 +37,9 @@
         <tag-box v-model="formModel.tags"></tag-box>
       </el-form-item>
       <el-form-item label="封面图">
-        <div @click="selectImage()">
+        <div @click="selectImage()" style="display: inline-block;">
           <el-button type="info" v-if="!formModel.cover">上传一张封面图</el-button>
-          <img :src="formModel.cover" />
+          <img style="width: 200px;" :src="formModel.cover" />
         </div>
       </el-form-item>
       <el-form-item>

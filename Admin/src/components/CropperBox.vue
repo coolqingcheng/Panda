@@ -66,7 +66,6 @@ export default defineComponent(
                         preview: preview.value,
                         checkCrossOrigin: true,
                         aspectRatio: 5 / 5,
-
                     })
                 }
             }
@@ -106,14 +105,14 @@ export default defineComponent(
             }
 
             const close = () => {
-                console.log('执行close')
+                // console.log('执行close')
                 context.emit('update:modelValue', false)
 
             }
 
             const save = () => {
-                console.log('执行close')
-                let base64 = cropper.getCroppedCanvas().toDataURL("image/png",0.3)
+                // console.log('执行close')
+                let base64 = cropper.getCroppedCanvas().toDataURL("image/jpeg",0.3)
 
                 context.emit('update:modelValue', false)
                 context.emit('cropper', { base64: base64 })
