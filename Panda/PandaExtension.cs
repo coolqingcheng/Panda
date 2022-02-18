@@ -17,21 +17,15 @@ namespace Panda
 {
     public static class PandaExtension
     {
-        public static void AddPanda(this IServiceCollection services)
+        public static void AddPanda(this WebApplicationBuilder app)
         {
-            
-            var db = Environment.GetEnvironmentVariable("MYSQL_DB");
-            if (string.IsNullOrWhiteSpace(db))
-            {
-                Console.WriteLine("mysql连接没有配置");
-                return;
-            }
-
+            var services = app.Services;
             services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
             services.AddHttpClient();
             services.AddDbContextPool<PandaContext>(
                 opt =>
                 {
+                    var db = app.Configuration.GetConnectionString("MYSQL_DB");
                     opt.UseMySql(db, ServerVersion.AutoDetect(db)).EnableSensitiveDataLogging()
                             .EnableDetailedErrors();
                 }

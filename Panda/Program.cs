@@ -4,7 +4,7 @@ using Panda;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddPanda();
+builder.AddPanda();
 
 var app = builder.Build();
 

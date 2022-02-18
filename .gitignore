@@ -353,3 +353,4 @@ MigrationBackup/
 .vscode/
 build.sh
 publish/
+wwwroot/admin

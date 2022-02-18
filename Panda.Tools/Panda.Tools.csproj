@@ -16,24 +16,24 @@
 
     <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App" />
-        <PackageReference Include="HtmlSanitizer" Version="6.0.453" />
+        <PackageReference Include="HtmlSanitizer" Version="7.1.475" />
         <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="6.0.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="6.0.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0">
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.2" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="6.0.2" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="6.0.2" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.2">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.2" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
-        <PackageReference Include="Mime" Version="3.2.3" />
-        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.0" />
-        <PackageReference Include="SixLabors.ImageSharp" Version="1.0.4" />
+        <PackageReference Include="Mime" Version="3.3.0" />
+        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.1" />
+        <PackageReference Include="SixLabors.ImageSharp" Version="2.0.0" />
         <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta13" />
-        <PackageReference Include="SixLabors.ImageSharp.Web" Version="1.0.4" />
-        <PackageReference Include="Tencent.QCloud.Cos.Sdk" Version="5.4.24" />
-        <PackageReference Include="TencentCloudSDK" Version="3.0.411" />
+        <PackageReference Include="SixLabors.ImageSharp.Web" Version="1.0.5" />
+        <PackageReference Include="Tencent.QCloud.Cos.Sdk" Version="5.4.25" />
+        <PackageReference Include="TencentCloudSDK" Version="3.0.462" />
     </ItemGroup>
 
 </Project>

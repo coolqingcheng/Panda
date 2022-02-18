@@ -16,15 +16,16 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Panda.Entity\Panda.Entity.csproj" />
+      <ProjectReference Include="..\Panda.Migrations\Panda.Migrations.csproj" />
       <ProjectReference Include="..\Panda.Tools\Panda.Tools.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="EasyCaching.Core" Version="1.4.1" />
-      <PackageReference Include="EasyCaching.InMemory" Version="1.4.1" />
+      <PackageReference Include="EasyCaching.Core" Version="1.5.0" />
+      <PackageReference Include="EasyCaching.InMemory" Version="1.5.0" />
       <PackageReference Include="Mapster" Version="7.2.0" />
-      <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.0" />
-      <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.2" />
+      <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.1" />
     </ItemGroup>
 
     <ItemGroup>
