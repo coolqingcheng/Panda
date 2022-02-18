@@ -1,9 +1,14 @@
-<div class="card m-b-5">
-    <div class="card-header">
-        <h2 class="card-title d-flex-row-align-center"><i class="ri-file-line m-r-1"></i>关注本站</h2>
+@using Panda.Services.DicData
+@inject IDicDataService DicDataService
+@if (string.IsNullOrWhiteSpace(await DicDataService.GetItemByCache("wechat:wechat_official_account_desc")) == false)
+{
+    <div class="card m-b-5">
+        <div class="card-header">
+            <h2 class="card-title d-flex-row-align-center"><i class="ri-file-line m-r-1"></i>关注本站</h2>
+        </div>
+        <div class="card-body">
+            <p>@Html.Raw(await DicDataService.GetItemByCache("wechat:wechat_official_account_desc"))</p>
+            <img src="@await DicDataService.GetItemByCache("wechat:wechat_official_account_pic")" alt="@await DicDataService.GetItemByCache("wechat:wechat_official_account_desc")" style="max-width: 100%"/>
+        </div>
     </div>
-    <div class="card-body">
-        <p>欢迎关注本站公众号【前端小助手】，不定时和你分享一些实用的文章</p>
-        <img src="~/img/qr.jpg" style="max-width: 100%"/>
-    </div>
-</div>
+}

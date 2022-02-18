@@ -28,6 +28,12 @@ public class DicDataValidator
             new("img_lazy", "图片是否开启懒加载", isRequired: false),
             new("host", "网站域名")
         }));
+        _dicDataRequests.Add(new DicDataRequest(new DicDataGroupInfo("wechat", "desc"),
+            childInfos: new List<DicDataChildInfo>()
+            {
+                new("wechat_official_account_desc", "公众号说明", isRequired: false),
+                new("wechat_official_account_pic", "关注公众号", isRequired: false)
+            }));
     }
 
     public DicDataRequest Validate(DicUpdateRequest request)

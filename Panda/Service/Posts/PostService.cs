@@ -230,20 +230,22 @@ public class PostService : IPostService
     public async Task<List<PostNextItem>> GetNextPostItem(int PostId)
     {
         var list = new List<PostNextItem>();
-        var nextPost = await _postRepository.Where(a => a.Id == PostId).OrderBy(a => a.AddTime).Take(1).Select(a =>
-            new PostNextItem()
-            {
-                Id = a.Id,
-                Title = a.Title,
-                Type = PostNextType.Next
-            }).FirstOrDefaultAsync();
-        var prePost = await _postRepository.Where(a => a.Id == PostId).OrderByDescending(a => a.AddTime).Take(1).Select(
-            a => new PostNextItem()
-            {
-                Id = a.Id,
-                Title = a.Title,
-                Type = PostNextType.Pre
-            }).FirstOrDefaultAsync();
+        var nextPost = await _postRepository.Where(a => a.Id == PostId).OrderBy(a => a.AddTime).Skip(1).Take(1).Select(
+            a =>
+                new PostNextItem()
+                {
+                    Id = a.Id,
+                    Title = a.Title,
+                    Type = PostNextType.Next
+                }).FirstOrDefaultAsync();
+        var prePost = await _postRepository.Where(a => a.Id == PostId).OrderByDescending(a => a.AddTime).Skip(1).Take(1)
+            .Select(
+                a => new PostNextItem()
+                {
+                    Id = a.Id,
+                    Title = a.Title,
+                    Type = PostNextType.Pre
+                }).FirstOrDefaultAsync();
         if (nextPost != null)
         {
             list.Add(nextPost);
