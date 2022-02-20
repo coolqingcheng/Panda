@@ -11,7 +11,7 @@ import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import VMdEditor from '@kangc/v-md-editor/lib/codemirror-editor';
 import '@kangc/v-md-editor/lib/style/codemirror-editor.css';
 import githubTheme from '@kangc/v-md-editor/lib/theme/github.js';
-import createLineNumbertPlugin from '@kangc/v-md-editor/lib/plugins/line-number/index';
+// import createLineNumbertPlugin from '@kangc/v-md-editor/lib/plugins/line-number/index';
 
 import '@kangc/v-md-editor/lib/theme/style/github.css';
 
@@ -44,7 +44,7 @@ VMdEditor.Codemirror = Codemirror;
 VMdEditor.use(githubTheme, {
   Hljs: hljs,
 });
-VMdEditor.use(createLineNumbertPlugin());
+// VMdEditor.use(createLineNumbertPlugin());
 
 
 const app = createApp(App)

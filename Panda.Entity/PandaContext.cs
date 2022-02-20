@@ -31,17 +31,20 @@ public class PandaContext : DbContext
 
     public DbSet<Notices> Notices { get; set; }
 
+
+    #region Wiki
+
+    public DbSet<Wiki> Wikis { get; set; }
+
+    public DbSet<WikiDoc> WikiDocs { get; set; }
+
+    public DbSet<WikiGroup> WikiGroups { get; set; }
+
+    #endregion
+
     public PandaContext(DbContextOptions<PandaContext> options) : base(options)
     {
     }
-
-    //     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //     {
-    //         base.OnConfiguring(optionsBuilder);
-    // #if DEBUG
-    //         optionsBuilder.LogTo(Console.WriteLine);
-    // #endif
-    //     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -59,6 +62,8 @@ public class PandaContext : DbContext
         modelBuilder.Entity<DicDatas>().Property(a => a.Pid).HasDefaultValue(0);
         modelBuilder.Entity<FriendlyLinks>().Property(a => a.AuditStatus).HasDefaultValue(AuditStatusEnum.unaudit);
         modelBuilder.Entity<Notices>().Property(a => a.IsTop).HasDefaultValue(false);
+
+        modelBuilder.Entity<WikiDoc>().Property(a => a.WikiContent).HasColumnType("longtext");
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
@@ -101,7 +106,6 @@ public class PandaContext : DbContext
             {
                 entry.CurrentValues["AddTime"] = DateTime.Now;
             }
-
         }
     }
 }

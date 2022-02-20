@@ -988,6 +988,12 @@ body {
     border-bottom: 1px solid #e7eaf0; }
   .post-main .post-body img {
     max-width: 100%; }
+  .post-main .post-body ul {
+    margin: 10px 0 10px 20px; }
+  .post-main .post-body li {
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    list-style-type: disc; }
 .post-main .post-footer .tags {
   display: flex;
   flex-direction: row;
@@ -1047,6 +1053,22 @@ footer {
   margin-bottom: 20px;
   padding-bottom: 10px;
   border-bottom: 1px solid #e7eaf0; }
+
+.line-numbers-mode {
+  position: relative; }
+
+.line-numbers-wrapper {
+  position: absolute;
+  top: 0;
+  width: 3.5rem;
+  padding: 16px 0;
+  color: #f3f6fa;
+  font-size: 85%;
+  line-height: 1.45;
+  text-align: center; }
+
+code[class='hljs'] {
+  padding-left: 40px; }
 
 .d-flex-row-align-center {
   display: flex;
