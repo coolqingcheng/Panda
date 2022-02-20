@@ -2,7 +2,7 @@
   <div class="q-login">
     <div class="q-login-box" v-loading="loading">
       <div class="q-login-header">
-        <h1>Element-Plus-Admin</h1>
+        <h1>Panda博客系统后台</h1>
       </div>
       <el-form :model="loginForm" label-width="70px" :rules="loginRules" ref="form">
         <el-form-item label="用户名" prop="userName">
@@ -22,84 +22,73 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { reactive, ref } from "@vue/reactivity";
 import { ElForm } from "element-plus/lib/components/form"
 import { useRouter } from "vue-router";
 import { ElMessage } from 'element-plus/lib/components/message'
 import { http } from "shared/http/HttpClient"
 import { onMounted } from 'vue';
-export default {
-  setup() {
-    const loginForm = reactive({
-      userName: "admin",
-      pass: "admin",
-    });
-    const loading = ref<boolean>(false);
-    const loginRules = {
-      userName: [
-        {
-          required: true,
-          message: "用户名不能为空",
-          trigger: 'blur'
-        },
-      ],
-      pass: [
-        {
-          required: true,
-          message: "密码不能为空",
-          trigger: 'blur'
-        },
-      ],
-    };
-    const form = ref<InstanceType<typeof ElForm>>();
-    const router = useRouter();
-    const loginHandler = async () => {
-      loading.value = true
-      await form.value?.validate(async (valid) => {
-        if (valid) {
-          try {
-            await http.post("/admin/account/login", { userName: loginForm.userName, password: loginForm.pass })
-            setTimeout(() => {
-              loading.value = false
-              router.replace('/admin/dash')
-              ElMessage({ message: '登录成功！', showClose: false, type: 'success' })
-            }, 100);
-          } finally {
-            loading.value = false
-          }
-        } else {
-          loading.value = false
-        }
-      });
-    }
 
-    const checkLogin = async () => {
-      loading.value = true
+const loginForm = reactive({
+  userName: "",
+  pass: "",
+});
+const loading = ref<boolean>(false);
+const loginRules = {
+  userName: [
+    {
+      required: true,
+      message: "用户名不能为空",
+      trigger: 'blur'
+    },
+  ],
+  pass: [
+    {
+      required: true,
+      message: "密码不能为空",
+      trigger: 'blur'
+    },
+  ],
+};
+const form = ref<InstanceType<typeof ElForm>>();
+const router = useRouter();
+const loginHandler = async () => {
+  loading.value = true
+  await form.value?.validate(async (valid) => {
+    if (valid) {
       try {
-        var isLogin = await http.get('/admin/account/islogin')
-        console.log('islogin ', isLogin)
-        if (isLogin) {
+        await http.post("/admin/account/login", { userName: loginForm.userName, password: loginForm.pass })
+        setTimeout(() => {
+          loading.value = false
           router.replace('/admin/dash')
-        }
+          ElMessage({ message: '登录成功！', showClose: false, type: 'success' })
+        }, 100);
       } finally {
         loading.value = false
       }
+    } else {
+      loading.value = false
     }
-    onMounted(() => {
-      console.log('Mounted')
-      checkLogin();
-    })
+  });
+}
 
-    return {
-      loginForm,
-      loginRules,
-      loginHandler,
-      loading,
-      form
-    };
-  },
-};
+const checkLogin = async () => {
+  loading.value = true
+  try {
+    var isLogin = await http.get('/admin/account/islogin')
+    console.log('islogin ', isLogin)
+    if (isLogin) {
+      router.replace('/admin/dash')
+    }
+  } finally {
+    loading.value = false
+  }
+}
+onMounted(() => {
+  console.log('Mounted')
+  checkLogin();
+})
 </script>
 
 <style lang="less" scoped>

@@ -934,9 +934,11 @@ body {
             margin-right: 5px; }
   html main .entry-card,
   body main .entry-card {
-    padding-bottom: 1.8rem;
-    margin-top: 1rem;
-    border-bottom: 1px solid #e7eaf0; }
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-left: 10px;
+    box-sizing: border-box; }
     html main .entry-card .entry-title a,
     body main .entry-card .entry-title a {
       color: #333;
@@ -949,7 +951,7 @@ body {
         transition: all 0.3s; }
     html main .entry-card .entry-content,
     body main .entry-card .entry-content {
-      margin: 1.2rem 0 1.2rem 0; }
+      margin: .5rem 0 .8rem 0; }
       html main .entry-card .entry-content p,
       body main .entry-card .entry-content p {
         color: #555; }
@@ -1032,10 +1034,34 @@ footer {
   .page li {
     padding: .5rem; }
 
+.cover-img {
+  width: 200px;
+  height: 180px; }
+
+.summary {
+  box-sizing: border-box; }
+
+.post-list-item {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e7eaf0; }
+
 .d-flex-row-align-center {
   display: flex;
   flex-direction: row;
   align-items: center; }
+
+.flex-row {
+  display: flex;
+  flex-direction: row; }
+
+.flex-row-align-end {
+  align-content: end; }
+
+.flex-1 {
+  flex: 1; }
 
 .p-button {
   height: 2rem;

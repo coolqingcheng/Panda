@@ -43,7 +43,7 @@ public class CommonController : Controller
             throw new UserException("图片不能大于4M");
         }
 
-        var list = new List<string>() {"jpg", "png", "jpeg", "gif"};
+        var list = new List<string>() { "jpg", "png", "jpeg", "gif" };
         var regex = Regex.Match(files[0].FileName, @"[^\.]\w*$");
         if (regex.Success == false || list.Contains(regex.Value) == false)
         {
@@ -57,7 +57,7 @@ public class CommonController : Controller
         var file = await _fileStorage.SaveAsync(buffer, $"{Md5Helper.ComputeHash(buffer)[..10]}.{regex.Value}");
         if (file.Success == false)
         {
-            return new UploadResult {Code = 1, Message = file.Message};
+            return new UploadResult { Code = 1, Message = file.Message };
         }
 
         return new UploadResult
@@ -79,7 +79,7 @@ public class CommonController : Controller
         var file = await _fileStorage.SaveAsync(bytes, $"{Md5Helper.ComputeHash(bytes)[..10]}.{extName}");
         if (file.Success == false)
         {
-            return new UploadResult {Code = 1, Message = file.Message};
+            return new UploadResult { Code = 1, Message = file.Message };
         }
 
         return new UploadResult()
@@ -94,6 +94,11 @@ public class CommonController : Controller
     {
         // todo 防盗链处理
         var path = Path.Combine(_webHostEnvironment.ContentRootPath, "Content", "Upload", day, file);
+        if (System.IO.File.Exists(path) == false)
+        {
+            return new NotFoundResult();
+        }
+
         var ext = new FileInfo(path).Extension;
         return PhysicalFile(path, $"image/{ext[1..]}");
     }
