@@ -18,4 +18,9 @@ public class CategoryItem
     /// 分类上级Id
     /// </summary>
     public int Pid { get; set; }
+
+    /// <summary>
+    /// 关联文章数量
+    /// </summary>
+    public int Count { get; set; }
 }

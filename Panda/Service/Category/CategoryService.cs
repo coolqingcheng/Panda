@@ -32,7 +32,8 @@ public class CategoryService : ICategoryService
             {
                 CateName = a.categoryName,
                 Id = a.Id,
-                Pid = a.Pid
+                Pid = a.Pid,
+                Count = a.Count
             }).ToListAsync();
         return res;
     }
@@ -98,7 +99,7 @@ public class CategoryService : ICategoryService
         }
 
         var res = await GetCategories(request);
-        await _easyCachingProvider.SetAsync(CacheKeys.Categories, res, timeSpan);
+        await _easyCachingProvider.SetAsync(CacheKeys.Categories, res.Where(a => a.Count > 0), timeSpan);
         return res;
     }
 
