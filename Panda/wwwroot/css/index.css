@@ -994,6 +994,12 @@ body {
     line-height: 1.5;
     margin-bottom: 1rem;
     list-style-type: disc; }
+  .post-main .post-body blockquote {
+    margin-left: 0;
+    margin-right: 0;
+    border-left: 5px solid #DA4453;
+    padding: 10px;
+    background-color: #f7f7f7; }
 .post-main .post-footer .tags {
   display: flex;
   flex-direction: row;
@@ -1115,5 +1121,51 @@ code[class='hljs'] {
   justify-content: center; }
   [id^='cnzz'] a {
     padding: 0 .5rem; }
+
+.comments {
+  display: flex;
+  flex-direction: column; }
+
+.comments .right {
+  display: flex;
+  flex-direction: row;
+  align-content: center; }
+
+.comment-item-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; }
+
+.comment-item-children {
+  margin-left: 20px; }
+
+.paging {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  min-width: 100px; }
+
+.paging > select {
+  margin: 0 10px 0 10px; }
+
+.comment-header {
+  border-left: 3px solid #DA4453;
+  padding-left: 10px;
+  margin-bottom: 20px; }
+
+.comment-item {
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+  margin-top: 5px; }
+  .comment-item .comment-item-body {
+    padding: 10px; }
+  .comment-item .separator {
+    padding: 0 5px 0 5px; }
+  .comment-item .nickName {
+    margin-left: 5px; }
+
+.paging {
+  margin-top: 15px; }
 
 /*# sourceMappingURL=index.css.map */
