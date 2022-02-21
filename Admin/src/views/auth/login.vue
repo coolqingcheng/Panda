@@ -4,8 +4,8 @@
       <div class="q-login-header">
         <h1>Panda博客系统后台</h1>
       </div>
-      <el-form :model="loginForm" label-width="70px" :rules="loginRules" ref="form">
-        <el-form-item label="用户名" prop="userName">
+      <el-form :model="loginForm" label-width="70px" :rules="rules" ref="form">
+        <el-form-item label="账号" prop="userName">
           <el-input placeholder="输入用户名" v-model="loginForm.userName"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="pass">
@@ -23,19 +23,21 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "@vue/reactivity";
-import { ElForm } from "element-plus/lib/components/form"
-import { useRouter } from "vue-router";
-import { ElMessage } from 'element-plus/lib/components/message'
-import { http } from "shared/http/HttpClient"
-import { onMounted } from 'vue';
+
+import {reactive, ref} from "@vue/reactivity";
+import {ElForm} from "element-plus"
+import {useRouter} from "vue-router";
+import {ElMessage} from 'element-plus/lib/components/message'
+import {onMounted} from 'vue';
+import {http} from "shared/http/HttpClient";
+
 
 const loginForm = reactive({
   userName: "",
   pass: "",
 });
 const loading = ref<boolean>(false);
-const loginRules = {
+const rules = {
   userName: [
     {
       required: true,
@@ -58,11 +60,11 @@ const loginHandler = async () => {
   await form.value?.validate(async (valid) => {
     if (valid) {
       try {
-        await http.post("/admin/account/login", { userName: loginForm.userName, password: loginForm.pass })
+        await http.post("/admin/account/login", {userName: loginForm.userName, password: loginForm.pass})
         setTimeout(() => {
           loading.value = false
           router.replace('/admin/dash')
-          ElMessage({ message: '登录成功！', showClose: false, type: 'success' })
+          ElMessage({message: '登录成功！', showClose: false, type: 'success'})
         }, 100);
       } finally {
         loading.value = false
@@ -98,6 +100,7 @@ onMounted(() => {
   background: url("../../assets/login_bg.svg");
   padding-top: 200px;
   box-sizing: border-box;
+
   .q-login-box {
     width: 300px;
     padding: 2rem;
@@ -105,8 +108,9 @@ onMounted(() => {
     background-color: white;
     margin: 0 auto;
     box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.1);
+
     .q-login-header {
-      padding-bottom: 1rem;
+      padding-bottom: 2rem;
       h1 {
         font-size: 18px;
         text-align: center;

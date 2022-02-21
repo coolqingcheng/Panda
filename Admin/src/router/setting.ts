@@ -1,9 +1,9 @@
 
 import { RouteRecordRaw } from 'vue-router'
-import Setting from '../views/setting/setting.vue'
-import Site from "../views/setting/site.vue"
-import system from "../views/setting/system.vue"
-import Cos from '../views/setting/cos.vue'
+import Setting from '../views/setting/Setting.vue'
+import Site from "../views/setting/Site-Setting.vue"
+import system from "../views/setting/System-Setting.vue"
+import Cos from '../views/setting/Cos-Setting.vue'
 
 const setting: RouteRecordRaw[] = [
     {

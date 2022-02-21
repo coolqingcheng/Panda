@@ -1,7 +1,6 @@
-import { RouteRecordRaw,useRoute,useRouter } from "vue-router";
+import { RouteRecordRaw} from "vue-router";
 import Login from '../views/auth/Login.vue'
 
-const router = useRouter();
 
 const authRoute: RouteRecordRaw[] = [
     {

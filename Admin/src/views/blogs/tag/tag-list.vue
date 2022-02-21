@@ -10,16 +10,15 @@
     </el-table-column>
   </el-table>
   <el-pagination
-      layout="total , prev, pager, next"
-      :total="data?.total"
-      @current-change="currentChange"
+    layout="total , prev, pager, next"
+    :total="data?.total"
+    @current-change="currentChange"
   ></el-pagination>
 </template>
 <script lang="ts" setup>
-import {get} from 'shared/http/HttpClient';
-import {onMounted, ref} from 'vue';
-import LeftMenuLayout from '../../../components/LeftMenuLayout.vue'
-import {PageResponse} from 'shared/base'
+import { get } from 'shared/http/HttpClient';
+import { onMounted, ref } from 'vue';
+import { PageResponse } from 'shared/base'
 
 interface TagItem {
   tagName: ''

@@ -3,9 +3,9 @@ import { ElMessage } from "element-plus"
 import { router } from "../../router/index"
 
 const http = axios.create({
-    headers: {
-        "token": 'you token'
-    },
+    // headers: {
+    //     "token": 'you token'
+    // },
     timeout: 1000 * 60 * 10
 })
 

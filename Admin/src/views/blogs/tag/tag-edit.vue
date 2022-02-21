@@ -15,18 +15,17 @@
 </template>
 
 <script lang="ts" setup>
-import {post} from 'shared/http/HttpClient'
-import {useForm} from 'shared/useForm'
-import {ref} from 'vue'
-import {useRouter} from 'vue-router'
-import LeftMenuLayout from '../../../components/LeftMenuLayout.vue'
+import { post } from 'shared/http/HttpClient';
+import { useForm } from 'shared/useForm'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const back = () => {
   router.back()
 }
 
-const {loading, instance} = useForm();
+const { loading, instance } = useForm();
 
 const formModel = ref({
   id: 0,

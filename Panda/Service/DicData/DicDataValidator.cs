@@ -24,6 +24,7 @@ public class DicDataValidator
         {
             new("site_name", "网站名称"),
             new("icp", "备案号", isRequired: false),
+            new("site_description","网站描述",isRequired:true),
             new("statistics", "统计代码", isRequired: false),
             new("img_lazy", "图片是否开启懒加载", isRequired: false),
             new("host", "网站域名")
