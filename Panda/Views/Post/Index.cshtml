@@ -13,6 +13,7 @@
 @using Panda.Services.Posts;
 @inject IPostService postService;
 
+
 <div class="post-main">
     <div class="row">
         <div class="col-12 col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
@@ -61,9 +62,9 @@
             <div class="card">
                 <h2 class="comment-header">评论</h2>
                 <div id="app">
+                    <input-box></input-box>
                     <div class="comments">
                         <comment-item v-bind:info="test">
-                            slot
                         </comment-item>
                         <paging v-bind:total="100" v-bind:size="5" v-bind:curr="3"></paging>
                     </div>
@@ -85,19 +86,22 @@
 </div>
 
 @section Css{
-<link rel="stylesheet" href="~/css/vs2015.min.css" />
+    <link rel="stylesheet" href="~/css/vs2015.min.css"/>
+
 }
 
 @section Scripts
 {
-<script src="~/js/highlight.js"></script>
-<script type="text/javascript">
+    <script src="~/js/highlight.js"></script>
+    <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', (event) => {
       document.querySelectorAll('pre code').forEach((el) => {
         hljs.highlightElement(el);
       });
     });
 </script>
-@* <script src="~/js/vue.min.js"></script> *@
-@* <script src="~/js/comments.js" asp-append-version="true"></script> *@
+    <environment include="Development">
+        <script src="~/js/vue.min.js"></script>
+        <script src="~/js/comments.js" asp-append-version="true"></script>
+    </environment>
 }

@@ -1168,4 +1168,8 @@ code[class='hljs'] {
 .paging {
   margin-top: 15px; }
 
+.input-body {
+  display: flex;
+  flex-direction: column; }
+
 /*# sourceMappingURL=index.css.map */

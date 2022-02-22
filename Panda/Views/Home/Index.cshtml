@@ -8,37 +8,39 @@
     var res = ViewData["res"] as PageDto<PostItem>;
 }
 
-@inject ICategoryService _categoryService
+@inject ICategoryService CategoryService
 
 <div class="row">
     <div class="col-12 col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
         <div class="card">
-            @foreach (var item in res?.Data)
+            @if (res != null)
             {
-                <div class="post-list-item">
-                    <img class="cover-img" src="@item.Cover" data-original="@item.Cover" alt="@item.Title"/>
-                    <div class="entry-card">
+                @foreach (var item in res.Data)
+                {
+                    <div class="post-list-item">
+                        <img class="cover-img" src="@item.Cover" data-original="@item.Cover" alt="@item.Title"/>
+                        <div class="entry-card">
 
-                        <h2 class="entry-title">
-                            <a href="/post/@(item.Id).html">@item.Title</a>
-                        </h2>
-                        <div class="entry-content flex-1">
-                            <div class="summary">
-                                <p>@item.Summary</p>
+                            <h2 class="entry-title">
+                                <a href="/post/@(item.Id).html">@item.Title</a>
+                            </h2>
+                            <div class="entry-content flex-1">
+                                <div class="summary">
+                                    <p>@item.Summary</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="entry-footer">
-                            <div class="d-flex-row-align-center">
-                                <i class="ri-time-line m-r-1"></i>
-                                <time datetime="@item.AddTime">@item.AddTime.ToString("yyyy年MM月dd日")</time>
-                                <i class="ri-user-line m-l-2 m-r-1"></i>
-                                <span>作者：@item.Account?.UserName</span>
+                            <div class="entry-footer">
+                                <div class="d-flex-row-align-center">
+                                    <i class="ri-time-line m-r-1"></i>
+                                    <time datetime="@item.AddTime">@item.AddTime.ToString("yyyy年MM月dd日")</time>
+                                    <i class="ri-user-line m-l-2 m-r-1"></i>
+                                    <span>作者：@item.Account?.UserName</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
             }
-
         </div>
         <div>
             @{

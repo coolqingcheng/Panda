@@ -25,6 +25,7 @@
       <PackageReference Include="EasyCaching.InMemory" Version="1.5.0" />
       <PackageReference Include="Mapster" Version="7.2.0" />
       <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.2" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.2" />
       <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.1" />
     </ItemGroup>
 

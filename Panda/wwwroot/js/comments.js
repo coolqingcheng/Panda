@@ -70,6 +70,24 @@ Vue.component("paging", {
         '</div>' +
         '</div>'
 })
+
+
+Vue.component('input-box', {
+    props: {},
+    data: function () {
+        return {}
+    },
+    template:
+        '<div class="input-mask">' +
+        '<div class="input-box">' +
+        '<div class="input-toolbar"></div>' +
+        '<div class="input-body">' +
+        '<textarea></textarea>' +
+        '</div>' +
+        '</div>' +
+        '</div>'
+})
+
 new Vue({
     el: "#app",
     data: {
