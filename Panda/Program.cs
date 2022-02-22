@@ -1,6 +1,8 @@
 using System.Net;
 using Microsoft.AspNetCore.HttpOverrides;
 using Panda;
+using global::Panda.Tools.Extensions;
+
 
 var builder = WebApplication.CreateBuilder(args);
 

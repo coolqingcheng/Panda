@@ -1,64 +1,107 @@
 @import "./config.scss";
 
 .comments {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+
+  [class^="ri-"] {
+    align-self: center;
+    margin-right: 5px;
+  }
+
 }
 
 .comments .right {
-    display: flex;
-    flex-direction: row;
-    align-content: center;
+  display: flex;
+  flex-direction: row;
+  align-content: flex-end;
+  align-items: center;
 }
 
 .comment-item-header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .comment-item-children {
-    margin-left: 20px;
+  margin-left: 20px;
 }
 
 .paging {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    min-width: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  min-width: 100px;
 }
 
 .paging > select {
-    margin: 0 10px 0 10px
+  margin: 0 10px 0 10px
 }
 
 .comment-header {
-    border-left: 3px solid $theme-color;
-    padding-left: 10px;
-    margin-bottom: 20px;
+  border-left: 3px solid $theme-color;
+  padding-left: 10px;
+  margin-bottom: 20px;
 }
 
 .comment-item {
-    border: 1px solid $border-color;
-    padding: 5px;
-    border-radius: 5px;
-    margin-top: 5px;
-    .comment-item-body {
-        padding: 10px;
-    }
-    .separator{
-        padding: 0 5px 0 5px;
-    }
-    .nickName{
-        margin-left: 5px;
-    }
+  border: 1px solid $border-color;
+  padding: 5px;
+  border-radius: 5px;
+  margin-top: 5px;
+
+  .comment-item-body {
+    padding: 10px;
+  }
+
+  .separator {
+    padding: 0 5px 0 5px;
+  }
+
+  .nickName {
+    margin-left: 5px;
+  }
 }
 
-.paging{
-    margin-top: 15px;
+.paging {
+  margin-top: 15px;
 }
 
-.input-body{
+.input-mask {
+  position: relative;
+
+  .input-loading {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+  }
+}
+
+.input-body {
+  display: flex;
+  flex-direction: column;
+
+  .submit {
+    align-self: flex-end;
+    margin-top: 10px;
+    padding: 0 20px;
+  }
+
+  textarea {
+    outline: none;
+    min-height: 150px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-color: $border-color;
+  }
 }

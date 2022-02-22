@@ -1124,12 +1124,17 @@ code[class='hljs'] {
 
 .comments {
   display: flex;
-  flex-direction: column; }
+  flex-direction: column;
+  margin-top: 20px; }
+  .comments [class^="ri-"] {
+    align-self: center;
+    margin-right: 5px; }
 
 .comments .right {
   display: flex;
   flex-direction: row;
-  align-content: center; }
+  align-content: flex-end;
+  align-items: center; }
 
 .comment-item-header {
   display: flex;
@@ -1168,8 +1173,33 @@ code[class='hljs'] {
 .paging {
   margin-top: 15px; }
 
+.input-mask {
+  position: relative; }
+  .input-mask .input-loading {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff; }
+
 .input-body {
   display: flex;
   flex-direction: column; }
+  .input-body .submit {
+    align-self: flex-end;
+    margin-top: 10px;
+    padding: 0 20px; }
+  .input-body textarea {
+    outline: none;
+    min-height: 150px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-color: #ccc; }
 
 /*# sourceMappingURL=index.css.map */

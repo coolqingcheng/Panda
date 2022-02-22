@@ -5,7 +5,7 @@ using Panda.Entity.Requests;
 using Panda.Entity.Responses;
 using Panda.Entity.UnitOfWork;
 using Panda.Repository.Account;
-using Panda.Repository.Article;
+using Panda.Repository.Post;
 using Panda.Repository.ArticleCategoryRelation;
 using Panda.Repository.Category;
 using Panda.Repository.Tags;

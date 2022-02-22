@@ -19,8 +19,29 @@ namespace Panda.Tools.Extensions
         {
             var identity = http.User;
             var id = identity.Claims.Where(a => a.Type == "Id")
-                .Select(a=>a.Value).FirstOrDefault();
+                .Select(a => a.Value).FirstOrDefault();
             return id != null ? Guid.Parse(id) : Guid.Empty;
+        }
+
+        /// <summary>
+        /// 获取客户端的真实IP地址
+        /// </summary>
+        /// <param name="httpContextAccessor"></param>
+        /// <returns></returns>
+        public static string GetClientIP(this IHttpContextAccessor httpContextAccessor)
+        {
+            var request = httpContextAccessor.HttpContext!.Request;
+            if (request.Headers.ContainsKey("X-Real-IP"))
+            {
+                return request.Headers["X-Real-IP"].ToString();
+            }
+
+            if (request.Headers.ContainsKey("X-Forwarded-For"))
+            {
+                return request.Headers["X-Forwarded-For"].ToString();
+            }
+
+            return "";
         }
     }
 }

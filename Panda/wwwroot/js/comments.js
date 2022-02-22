@@ -73,16 +73,40 @@ Vue.component("paging", {
 
 
 Vue.component('input-box', {
-    props: {},
+    props: {
+        loading: {
+            type: Boolean,
+            default: true
+        }
+    },
     data: function () {
-        return {}
+        return {
+            showLoading: false
+        }
+    },
+    created() {
+        this.showLoading = this.loading;
+    },
+    methods: {
+        submit() {
+            console.log('提交评价')
+            this.showLoading = true;
+            let that = this;
+            setTimeout(function () {
+                that.showLoading = false
+            }, 1000)
+        }
     },
     template:
         '<div class="input-mask">' +
+        '<div class="input-loading" v-show="showLoading">' +
+        '<div>提交中.. {{loading}}</div>' +
+        '</div>' +
         '<div class="input-box">' +
         '<div class="input-toolbar"></div>' +
         '<div class="input-body">' +
-        '<textarea></textarea>' +
+        '<textarea placeholder="支持输入markdown语法"></textarea>' +
+        '<button @click="submit()" class="p-button submit">提交</button>' +
         '</div>' +
         '</div>' +
         '</div>'
@@ -91,6 +115,7 @@ Vue.component('input-box', {
 new Vue({
     el: "#app",
     data: {
+        loading: false,
         message: 'vue bind',
         comments: [],
         replyId: 0,
@@ -111,4 +136,13 @@ new Vue({
             ]
         }
     },
+    template:
+        '<div>' +
+        ' <input-box  v-bind:loading="this.loading"></input-box>' +
+        '     <div class="comments">' +
+        '       <comment-item v-bind:info="this.test">' +
+        '       </comment-item>' +
+        '      <paging v-bind:total="100" v-bind:size="5" v-bind:curr="3"></paging>' +
+        '</div>' +
+        '</div>'
 });

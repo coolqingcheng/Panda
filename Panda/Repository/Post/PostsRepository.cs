@@ -5,9 +5,10 @@ using Panda.Entity.DataModels;
 using Panda.Entity.Models;
 using Panda.Entity.Requests;
 using Panda.Entity.Responses;
+using Panda.Tools.Exception;
 using Panda.Tools.Extensions;
 
-namespace Panda.Repository.Article;
+namespace Panda.Repository.Post;
 
 public class PostRepository : PandaRepository<Posts>
 {
@@ -122,5 +123,23 @@ public class PostRepository : PandaRepository<Posts>
             Total = 0,
             Data = res
         };
+    }
+
+    public async Task CheckPostIdExist(int id)
+    {
+        if ((await _context.Posts.AnyAsync(a => a.Id == id)) == false)
+        {
+        }
+    }
+
+    public async Task<Posts> FindById(int Id)
+    {
+        var post = await _context.Posts.FirstOrDefaultAsync(a => a.Id == Id);
+        if (post == null)
+        {
+            throw new UserException("没有找到对应Post的ID");
+        }
+
+        return post;
     }
 }

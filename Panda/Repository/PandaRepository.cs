@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Panda.Entity;
 using Panda.Entity.DataModels;
+using Panda.Tools.Exception;
 
 namespace Panda.Repository;
 
@@ -21,8 +22,8 @@ public class PandaRepository<T> where T : PandaBaseTable
 
     public async Task RemoveAsync(T item)
     {
-         _context.Set<T>().Remove(item);
-         await _context.SaveChangesAsync();
+        _context.Set<T>().Remove(item);
+        await _context.SaveChangesAsync();
     }
 
     public IQueryable<T> Queryable()
@@ -56,5 +57,14 @@ public class PandaRepository<T> where T : PandaBaseTable
         var list = await Where(expression).ToListAsync();
         _context.RemoveRange(list);
         await _context.SaveChangesAsync();
+    }
+
+    public async Task CheckExist(Expression<Func<T, bool>> expression, string message)
+    {
+        var exist = await Where(expression).AnyAsync();
+        if (exist == false)
+        {
+            throw new UserException(message);
+        }
     }
 }

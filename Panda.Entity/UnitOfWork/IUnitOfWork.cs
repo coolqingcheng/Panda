@@ -37,7 +37,13 @@ public class EFUnitOfWork : IUnitOfWork
             return;
         }
 
-        if (_transaction != null) await _transaction.CommitAsync();
+        if (_transaction != null)
+        {
+            await _transaction.CommitAsync();
+            _index = 0;
+        }
+
+        ;
     }
 
     public async Task RollBackAsync()

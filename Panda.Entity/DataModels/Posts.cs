@@ -60,8 +60,13 @@ public class Posts : PandaBaseTable
 
     public ICollection<PostsCategoryRelations> ArticleCategoryRelations { get; set; }
 
-    
+
     public ICollection<TagsRelation> TagsRelations { get; set; }
+
+    /// <summary>
+    /// 评论
+    /// </summary>
+    public ICollection<PostComments> Comments { get; set; }
 }
 
 public enum PostStatus

@@ -12,6 +12,7 @@ using System.Net;
 using System.Net.Mime;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using Panda.Repository.Post;
 
 namespace Panda
 {
