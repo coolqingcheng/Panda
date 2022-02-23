@@ -39,6 +39,7 @@ public class EFUnitOfWork : IUnitOfWork
 
         if (_transaction != null)
         {
+            await _context.SaveChangesAsync();
             await _transaction.CommitAsync();
             _index = 0;
         }

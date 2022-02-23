@@ -3,6 +3,7 @@ using Panda.Entity.DataModels;
 using Panda.Entity.Responses;
 using Panda.Entity.UnitOfWork;
 using Panda.Models;
+using Panda.Repository.Account;
 using Panda.Repository.Post;
 using Panda.Tools.Exception;
 using Panda.Tools.Extensions;
@@ -20,13 +21,16 @@ public class CommentService : ICommentService
 
     private readonly IUnitOfWork _unitOfWork;
 
+    private readonly AccountRepository _accountRepository;
+
     public CommentService(PostRepository postRepository, PostCommentRepository commentRepository,
-        IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork)
+        IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork, AccountRepository accountRepository)
     {
         _postRepository = postRepository;
         _commentRepository = commentRepository;
         _httpContextAccessor = httpContextAccessor;
         _unitOfWork = unitOfWork;
+        _accountRepository = accountRepository;
     }
 
     public async Task Submit(CommentRequest request)
@@ -38,12 +42,15 @@ public class CommentService : ICommentService
             throw new UserException("当前评论未开启");
         }
 
+        var account = await _accountRepository.Where(a => a.Email == "qingchengcode@qq.com").FirstOrDefaultAsync();
+
         var userAgent = _httpContextAccessor.HttpContext!.Request.Headers.UserAgent.ToString();
 
         var comment = await _commentRepository.Where(a => a.Id == request.CommentId).FirstOrDefaultAsync();
 
         post.Comments.Add(new PostComments()
         {
+            Account = account!,
             Content = request.Message,
             ReplyId = comment?.Id,
             UserAgent = userAgent,
@@ -55,7 +62,7 @@ public class CommentService : ICommentService
     public async Task<PageDto<CommentItem>> GetComments(GetCommentRequest request)
     {
         var query = _commentRepository.Where(a => a.Post.Id == request.PostId && a.Pid == 0);
-        var commentList = await query.Select(a => new CommentItem()
+        var commentList = await query.Page(request).Select(a => new CommentItem()
         {
             Id = a.Id,
             Content = a.Content,
@@ -68,7 +75,7 @@ public class CommentService : ICommentService
                 Id = b.Id, Content = b.Content, NickName = b.Account.NickName,
                 ReplyId = b.ReplyId, UserAgent = b.UserAgent
             }).ToList()
-        }).Page(request).ToListAsync();
+        }).ToListAsync();
         foreach (var item in commentList)
         {
             ParseUserAgent(item);

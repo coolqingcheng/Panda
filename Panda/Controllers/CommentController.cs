@@ -6,8 +6,9 @@ using Panda.Service.Comment;
 
 namespace Panda.Controllers;
 
-[ApiController()]
+
 [Route("/api/[controller]/[action]")]
+[ApiController]
 public class CommentController : Controller
 {
     private readonly ICommentService _commentService;
@@ -17,10 +18,18 @@ public class CommentController : Controller
         _commentService = commentService;
     }
 
-    [HttpPost]
+    [IgnoreAntiforgeryToken]
+    [HttpPost()]
     public async Task Submit(CommentRequest commentRequest)
     {
         await _commentService.Submit(commentRequest);
+    }
+
+    [IgnoreAntiforgeryToken]
+    [HttpPost()]
+    public string Test()
+    {
+        return DateTime.Now.ToString();
     }
 
     [HttpGet]

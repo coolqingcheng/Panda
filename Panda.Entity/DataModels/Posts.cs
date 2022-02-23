@@ -58,15 +58,15 @@ public class Posts : PandaBaseTable
     public string MarkDown { get; set; }
 
 
-    public ICollection<PostsCategoryRelations> ArticleCategoryRelations { get; set; }
+    public virtual ICollection<PostsCategoryRelations> ArticleCategoryRelations { get; set; }
 
 
-    public ICollection<TagsRelation> TagsRelations { get; set; }
+    public virtual ICollection<TagsRelation> TagsRelations { get; set; }
 
     /// <summary>
     /// 评论
     /// </summary>
-    public ICollection<PostComments> Comments { get; set; }
+    public virtual ICollection<PostComments> Comments { get; set; } = new List<PostComments>();
 }
 
 public enum PostStatus
