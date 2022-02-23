@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Panda.Entity.Responses;
 using Panda.Models;
 using Panda.Service.Comment;
 
@@ -20,5 +21,11 @@ public class CommentController : Controller
     public async Task Submit(CommentRequest commentRequest)
     {
         await _commentService.Submit(commentRequest);
+    }
+
+    [HttpGet]
+    public async Task<PageDto<CommentItem>> GetComments([FromQuery] GetCommentRequest request)
+    {
+        return await _commentService.GetComments(request);
     }
 }

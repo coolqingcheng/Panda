@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Panda.Entity.DataModels;
 
 public class Accounts : KeyGuidTable
@@ -6,6 +8,12 @@ public class Accounts : KeyGuidTable
     /// 用户名
     /// </summary>
     public string UserName { get; set; }
+
+    /// <summary>
+    /// 昵称
+    /// </summary>
+    [StringLength(50)]
+    public string NickName { get; set; }
 
     /// <summary>
     /// 邮箱

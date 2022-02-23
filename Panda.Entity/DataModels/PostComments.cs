@@ -4,8 +4,14 @@ namespace Panda.Entity.DataModels;
 
 public class PostComments : PandaBaseTable
 {
+    /// <summary>
+    /// 文章
+    /// </summary>
     public virtual Posts Post { get; set; }
 
+    /// <summary>
+    /// 作者
+    /// </summary>
     public virtual Accounts Account { get; set; }
 
     /// <summary>
@@ -28,4 +34,9 @@ public class PostComments : PandaBaseTable
     /// Ip地址
     /// </summary>
     public string Ip { get; set; }
+
+    /// <summary>
+    /// 上级评论
+    /// </summary>
+    public PostComments? ParentComment { get; set; }
 }
