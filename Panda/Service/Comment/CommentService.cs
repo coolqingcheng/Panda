@@ -6,6 +6,7 @@ using Panda.Models;
 using Panda.Repository.Post;
 using Panda.Tools.Exception;
 using Panda.Tools.Extensions;
+using UAParser;
 
 namespace Panda.Service.Comment;
 
@@ -44,7 +45,7 @@ public class CommentService : ICommentService
         post.Comments.Add(new PostComments()
         {
             Content = request.Message,
-            AnswerComment = comment,
+            ReplyId = comment?.Id,
             UserAgent = userAgent,
             Ip = _httpContextAccessor.GetClientIP()
         });
@@ -53,19 +54,45 @@ public class CommentService : ICommentService
 
     public async Task<PageDto<CommentItem>> GetComments(GetCommentRequest request)
     {
-        var query = _commentRepository.Where(a => a.Post.Id == request.PostId && a.ParentComment == null);
+        var query = _commentRepository.Where(a => a.Post.Id == request.PostId && a.Pid == 0);
         var commentList = await query.Select(a => new CommentItem()
         {
             Id = a.Id,
             Content = a.Content,
             AddTime = a.AddTime,
             NickName = a.Account.UserName,
-            AnswerId = a.AnswerComment.Id
+            ReplyId = a.ReplyId,
+            UserAgent = a.UserAgent,
+            Children = _commentRepository.Where(b => b.Pid == a.Id).Take(20).Select(b => new CommentItem()
+            {
+                Id = b.Id, Content = b.Content, NickName = b.Account.NickName,
+                ReplyId = b.ReplyId, UserAgent = b.UserAgent
+            }).ToList()
         }).Page(request).ToListAsync();
+        foreach (var item in commentList)
+        {
+            ParseUserAgent(item);
+            foreach (var itemChild in item.Children)
+            {
+                ParseUserAgent(itemChild);
+            }
+        }
+
         return new PageDto<CommentItem>()
         {
             Data = commentList,
             Total = await query.CountAsync()
         };
+    }
+
+    private static void ParseUserAgent(CommentItem item)
+    {
+        var client = Parser.GetDefault().Parse(item.UserAgent);
+        if (client != null)
+        {
+            item.Browser = $"{client.UA.Family}:{client.UA.Major}-{client.UA.Minor}";
+            item.Os = $"{client.OS.Family}:{client.OS.Major}-{client.OS.Minor}";
+            item.Device = client.Device.Family;
+        }
     }
 }

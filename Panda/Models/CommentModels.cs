@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using Panda.Entity.Requests;
 using Panda.Tools.Models;
 
@@ -34,16 +35,21 @@ public class CommentItem
 
     public string Os { get; set; }
 
+    public string Device { get; set; }
+
     public string Content { get; set; }
 
     public DateTime AddTime { get; set; }
 
     public int Index { get; set; }
 
+    [JsonIgnore]
+    public string UserAgent { get; set; }
+
     /// <summary>
     /// 回复某Id
     /// </summary>
-    public int? AnswerId { get; set; }
+    public int? ReplyId { get; set; }
 
     public string AnswerNickName { get; set; }
 

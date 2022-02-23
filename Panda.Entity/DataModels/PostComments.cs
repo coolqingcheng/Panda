@@ -4,6 +4,12 @@ namespace Panda.Entity.DataModels;
 
 public class PostComments : PandaBaseTable
 {
+    public PostComments()
+    {
+        Pid = 0;
+        ReplyId = 0;
+    }
+
     /// <summary>
     /// 文章
     /// </summary>
@@ -22,7 +28,7 @@ public class PostComments : PandaBaseTable
     /// <summary>
     /// 回复某条评论
     /// </summary>
-    public PostComments? AnswerComment { get; set; }
+    public int? ReplyId { get; set; }
 
     /// <summary>
     /// 浏览器UA
@@ -38,5 +44,5 @@ public class PostComments : PandaBaseTable
     /// <summary>
     /// 上级评论
     /// </summary>
-    public PostComments? ParentComment { get; set; }
+    public int Pid { get; set; }
 }

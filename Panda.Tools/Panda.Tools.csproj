@@ -34,6 +34,7 @@
         <PackageReference Include="SixLabors.ImageSharp.Web" Version="1.0.5" />
         <PackageReference Include="Tencent.QCloud.Cos.Sdk" Version="5.4.25" />
         <PackageReference Include="TencentCloudSDK" Version="3.0.462" />
+        <PackageReference Include="UAParser" Version="3.1.47" />
     </ItemGroup>
 
 </Project>
