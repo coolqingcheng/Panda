@@ -98,15 +98,7 @@ public class CommonController : Controller
         {
             return new NotFoundResult();
         }
-
         var ext = new FileInfo(path).Extension;
         return PhysicalFile(path, $"image/{ext[1..]}");
-    }
-
-    [HttpGet("/initadmin")]
-    public async Task<IActionResult> InitAdminAsync()
-    {
-        await _accountService.InitAdminPassword();
-        return Content("ok:" + DateTime.Now);
     }
 }

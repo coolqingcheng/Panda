@@ -7,6 +7,7 @@ using Panda.Entity.UnitOfWork;
 using Panda.Services.Account;
 using Panda.Services.Posts;
 using Panda.Models;
+using Panda.Services.DicData;
 
 namespace Panda.Controllers;
 
@@ -18,13 +19,16 @@ public class HomeController : Controller
 
     private readonly IPostService _postService;
 
+    private readonly IDicDataService _dicDataService;
+
 
     public HomeController(ILogger<HomeController> logger, IAccountService accountService,
-        IPostService postService)
+        IPostService postService, IDicDataService dicDataService)
     {
         _logger = logger;
         _accountService = accountService;
         _postService = postService;
+        _dicDataService = dicDataService;
     }
 
     /// <summary>
@@ -41,6 +45,8 @@ public class HomeController : Controller
         });
         ViewData["res"] = res;
         ViewData["index"] = index;
+        ViewData["description"] = await _dicDataService.GetItemByCache("site:site_description");
+        ;
         return View();
     }
 
@@ -60,8 +66,8 @@ public class HomeController : Controller
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
-        HttpContext.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
-        return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
+        HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 
     /// <summary>

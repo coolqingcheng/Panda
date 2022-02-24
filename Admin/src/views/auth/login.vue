@@ -23,23 +23,12 @@
 </template>
 
 <script lang="ts" setup>
-<<<<<<< Updated upstream
-
 import {reactive, ref} from "@vue/reactivity";
 import {ElForm} from "element-plus"
 import {useRouter} from "vue-router";
 import {ElMessage} from 'element-plus/lib/components/message'
 import {onMounted} from 'vue';
 import {http} from "shared/http/HttpClient";
-
-=======
-import { reactive, ref } from "@vue/reactivity";
-import { ElForm } from "element-plus"
-import { useRouter } from "vue-router";
-import { ElMessage } from 'element-plus/lib/components/message'
-import { http } from "shared/http/HttpClient"
-import { onMounted } from 'vue';
->>>>>>> Stashed changes
 
 const loginForm = reactive({
   userName: "",
