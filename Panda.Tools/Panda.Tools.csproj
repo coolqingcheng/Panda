@@ -17,6 +17,7 @@
     <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App" />
         <PackageReference Include="HtmlSanitizer" Version="7.1.475" />
+        <PackageReference Include="MailKit" Version="3.1.1" />
         <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.2" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="6.0.2" />
@@ -28,6 +29,7 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.2" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
         <PackageReference Include="Mime" Version="3.3.0" />
+        <PackageReference Include="MimeKit" Version="3.1.1" />
         <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.1" />
         <PackageReference Include="SixLabors.ImageSharp" Version="2.0.0" />
         <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta13" />
