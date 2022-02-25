@@ -10,9 +10,11 @@
     <title>@ViewData["Title"] - @await _dicDataService.GetItemByCache("site:site_name")</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="applicable-device" content="pc,mobile"/>
-    @if (ViewData["Description"] != null)
+    @{
+    }
+    @if (ViewData["description"] != null)
     {
-        <meta name="description" content="@ViewData["Description"]"/>
+        <meta name="description" content="@ViewData["description"]"/>
     }
     else
     {

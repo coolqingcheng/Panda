@@ -2,10 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using Panda.Entity.Responses;
 using Panda.Models;
 using Panda.Service.Comment;
+using Panda.Tools.Email;
 
 
 namespace Panda.Controllers;
-
 
 [Route("/api/[controller]/[action]")]
 [ApiController]
@@ -13,9 +13,12 @@ public class CommentController : Controller
 {
     private readonly ICommentService _commentService;
 
-    public CommentController(ICommentService commentService)
+    private IEmailSender _emailSender;
+
+    public CommentController(ICommentService commentService, IEmailSender emailSender)
     {
         _commentService = commentService;
+        _emailSender = emailSender;
     }
 
     [IgnoreAntiforgeryToken]
@@ -26,9 +29,10 @@ public class CommentController : Controller
     }
 
     [IgnoreAntiforgeryToken]
-    [HttpPost()]
+    [HttpGet()]
     public string Test()
     {
+        _emailSender.SendEmail("984587039@qq.com", "9845", "测试标题", "您的验证码:<span style=\"color:red\">7777</span>");
         return DateTime.Now.ToString();
     }
 

@@ -23,14 +23,12 @@
 </template>
 
 <script lang="ts" setup>
-
 import {reactive, ref} from "@vue/reactivity";
 import {ElForm} from "element-plus"
 import {useRouter} from "vue-router";
 import {ElMessage} from 'element-plus/lib/components/message'
 import {onMounted} from 'vue';
 import {http} from "shared/http/HttpClient";
-
 
 const loginForm = reactive({
   userName: "",

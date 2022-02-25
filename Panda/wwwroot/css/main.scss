@@ -148,6 +148,13 @@ body {
     p {
       margin: 10px auto;
       line-height: 1.7;
+
+      code {
+        background: lighten($theme-color,10%);
+        color: white;
+        padding: 0 5px 0 5px;
+        border-radius: 3px;
+      }
     }
 
     h1,
@@ -171,7 +178,8 @@ body {
       margin-bottom: 1rem;
       list-style-type: disc;
     }
-    blockquote{
+
+    blockquote {
       margin-left: 0;
       margin-right: 0;
       border-left: 5px solid $theme-color;

@@ -980,6 +980,11 @@ body {
   .post-main .post-body p {
     margin: 10px auto;
     line-height: 1.7; }
+    .post-main .post-body p code {
+      background: #e26f7a;
+      color: white;
+      padding: 0 5px 0 5px;
+      border-radius: 3px; }
   .post-main .post-body h1,
   .post-main .post-body h2,
   .post-main .post-body h3 {

@@ -23,7 +23,6 @@ public class DicDataService : IDicDataService
         _dataRepository = dataRepository;
         _unitOfWork = unitOfWork;
         _caching = caching;
-        
     }
 
     public async Task AddOrUpdate(DicDataRequest request)
@@ -90,19 +89,24 @@ public class DicDataService : IDicDataService
 
     public async Task<DicDataChildInfo?> GetItemByCache(string groupName, string key)
     {
-        var result = await _caching.GetAsync(CacheKeys.DicDataGroupNameKey + groupName + key,
+        var result = await _caching.GetAsync(CacheKeys.DicDataGroupNameKey + groupName,
             async () =>
             {
                 var list = await _dataRepository.WhereItemsByGroupName(groupName);
-                var item = list.Where(a => a.DicKey == key).Select(a => new DicDataChildInfo()
+                var item = list.Select(a => new DicDataChildInfo()
                 {
                     Key = a.DicKey,
                     Value = a.DicValue,
                     Description = a.Description
-                }).FirstOrDefault();
+                }).ToList();
                 return item;
             }, TimeSpan.FromDays(1));
-        return result.HasValue ? result.Value : null;
+        if (result.HasValue)
+        {
+            return result.Value.FirstOrDefault(a => a.Key == key);
+        }
+
+        return null;
     }
 
     public async Task<IEnumerable<DicDataChildInfo>> GetItemByGroupName(string groupName)
