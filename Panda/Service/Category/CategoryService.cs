@@ -1,4 +1,5 @@
 ﻿using EasyCaching.Core;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Panda.Entity;
@@ -25,16 +26,10 @@ public class CategoryService : ICategoryService
 
     public async Task<List<CategoryItem>> GetCategories(CategoryPageRequest request)
     {
-        var res = await _categoryRepository.Where(a => a.IsShow)
+        var res = await _categoryRepository.Queryable()
             .WhereIf(string.IsNullOrWhiteSpace(request.CateName) == false,
-                a => a.categoryName.Contains(request.CateName!))
-            .OrderByDescending(a => a.AddTime).Page(request).Select(a => new CategoryItem()
-            {
-                CateName = a.categoryName,
-                Id = a.Id,
-                Pid = a.Pid,
-                Count = a.Count
-            }).ToListAsync();
+                a => a.CategoryName.Contains(request.CateName!))
+            .OrderByDescending(a => a.AddTime).Page(request).ProjectToType<CategoryItem>().ToListAsync();
         return res;
     }
 
@@ -48,25 +43,19 @@ public class CategoryService : ICategoryService
                 throw new UserException("更新的分类不存");
             }
 
-            item.categoryName = request.CateName;
-            item.Pid = request.Pid;
-
+            request.Adapt(item);
             await _categoryRepository.SaveAsync();
         }
         else
         {
-            var any = await _categoryRepository.Where(a => a.categoryName == request.CateName).AnyAsync();
+            var any = await _categoryRepository.Where(a => a.CategoryName == request.CategoryName).AnyAsync();
             if (any)
             {
                 throw new UserException("新增分类已经存在");
             }
 
-            await _categoryRepository.AddAsync(new Categorys()
-            {
-                categoryName = request.CateName,
-                Pid = request.Pid,
-                IsShow = true
-            });
+            var entity = request.Adapt<Categorys>();
+            await _categoryRepository.AddAsync(entity);
         }
     }
 
@@ -98,19 +87,14 @@ public class CategoryService : ICategoryService
             return cache.Value;
         }
 
-        var res = await GetCategories(request);
-        await _easyCachingProvider.SetAsync(CacheKeys.Categories, res.Where(a => a.Count > 0), timeSpan);
+        var res = (await GetCategories(request)).Where(a => a.Count > 0 && a.IsShow).ToList();
+        await _easyCachingProvider.SetAsync(CacheKeys.Categories, res, timeSpan);
         return res;
     }
 
     public async Task<CategoryItem> GetCategoryById(int id)
     {
-        var item = await _categoryRepository.Where(a => a.Id == id).Select(a => new CategoryItem()
-        {
-            Id = a.Id,
-            CateName = a.categoryName,
-            Pid = a.Pid
-        }).FirstOrDefaultAsync();
+        var item = await _categoryRepository.Where(a => a.Id == id).ProjectToType<CategoryItem>().FirstOrDefaultAsync();
         item.IsNullThrow("分类为空！");
         return item!;
     }

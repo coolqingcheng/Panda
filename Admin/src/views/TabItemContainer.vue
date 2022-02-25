@@ -1,7 +1,7 @@
 
 <template>
     <el-card>
-        <template #header>{{ title }}</template>
+        <template #header></template>
         <router-view></router-view>
     </el-card>
 </template>

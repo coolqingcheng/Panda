@@ -1,8 +1,10 @@
 interface CategoryItem{
     id?:number
-    cateName?:string
+    categoryName?:string
     pid?:number
     num?:number
+    categoryDesc?:string
+    isShow:boolean
 }
 
 export {

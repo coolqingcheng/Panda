@@ -25,10 +25,6 @@ const PostMenu: SubMenu[] = [
             {
                 index: '/admin/post',
                 label: '文章管理',
-            },
-            {
-                index: '/admin/',
-                label: '分类管理'
             }
         ]
     },{
@@ -36,6 +32,10 @@ const PostMenu: SubMenu[] = [
         index:'分类',
         hideGroup:false,
         children:[
+            {
+                index:'/admin/editcate',
+                label:'添加分类'
+            },
             {
                 index: '/admin/categories',
                 label: '分类管理'

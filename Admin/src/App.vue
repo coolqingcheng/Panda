@@ -9,7 +9,7 @@ export default defineComponent({
 
 })
 </script>
-<style>
+<style lang="scss">
 body {
   background: #f1f1f1;
 }
@@ -49,6 +49,12 @@ body,
 }
 a {
   text-decoration: none;
+}
+
+.el-card__header {
+  h1 {
+    color: var(--el-text-color-regular);
+  }
 }
 
 h1,

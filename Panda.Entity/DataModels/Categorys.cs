@@ -9,7 +9,7 @@ public class Categorys:PandaBaseTable
     ///  名称
     /// </summary>
     [StringLength(20)]
-    public string categoryName { get; set; }
+    public string CategoryName { get; set; }
 
     /// <summary>
     /// 说明

@@ -12,7 +12,12 @@ public class CategoryItem
     /// <summary>
     /// 分类名称
     /// </summary>
-    public string CateName { get; set; }
+    public string CategoryName { get; set; }
+
+    /// <summary>
+    /// 描述
+    /// </summary>
+    public string CategoryDesc { get; set; }
 
     /// <summary>
     /// 分类上级Id
@@ -23,4 +28,6 @@ public class CategoryItem
     /// 关联文章数量
     /// </summary>
     public int Count { get; set; }
+
+    public bool IsShow { get; set; }
 }

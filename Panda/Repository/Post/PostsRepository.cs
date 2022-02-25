@@ -27,7 +27,7 @@ public class PostRepository : PandaRepository<Posts>
             Categories = a.ArticleCategoryRelations.Select(b => new PostCategories()
             {
                 Id = b.Categories.Id,
-                CateName = b.Categories.categoryName
+                CateName = b.Categories.CategoryName
             }).ToList()
         }).ToListAsync();
         return res;
@@ -54,7 +54,7 @@ public class PostRepository : PandaRepository<Posts>
                 Categories = a.ArticleCategoryRelations.Select(b => new PostCategories()
                 {
                     Id = b.Categories.Id,
-                    CateName = b.Categories.categoryName
+                    CateName = b.Categories.CategoryName
                 }).ToList()
             }).ToListAsync();
         return new PageDto<PostItem>()
@@ -81,7 +81,7 @@ public class PostRepository : PandaRepository<Posts>
                     CategoryItems = a.ArticleCategoryRelations.Select(b => new AdminCategoryItem()
                     {
                         Id = b.Categories.Id,
-                        CateName = b.Categories.categoryName
+                        CateName = b.Categories.CategoryName
                     }).ToList()
                 }).ToListAsync();
         return new PageDto<AdminPostItemResponse>()
@@ -115,7 +115,7 @@ public class PostRepository : PandaRepository<Posts>
                         CategoryItems = a.ArticleCategoryRelations.Select(b => new AdminCategoryItem()
                         {
                             Id = b.Categories.Id,
-                            CateName = b.Categories.categoryName
+                            CateName = b.Categories.CategoryName
                         }).ToList()
                     }).ToListAsync();
         return new PageDto<AdminPostItemResponse>()

@@ -30,7 +30,7 @@
             v-for="(item, i) in categoryItems"
             :key="i"
             name="categories"
-          >{{ item.cateName }}</el-checkbox>
+          >{{ item.categoryName }}</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
       <el-form-item label="标签" prop="tags">

@@ -32,7 +32,7 @@ public class CategoryController : Controller
             Size = 10
         });
         var categoryItem = await _categoryService.GetCategoryById(id);
-        ViewData["cateName"] = categoryItem.CateName;
+        ViewData["cateName"] = categoryItem.CategoryName;
         ViewData["res"] = list;
         return View();
     }

@@ -94,7 +94,7 @@ public class PostService : IPostService
         item.Categories = categories.Select(a => new PostCategories()
         {
             Id = a.Id,
-            CateName = a.categoryName
+            CateName = a.CategoryName
         }).ToList();
         return item;
     }
@@ -172,7 +172,6 @@ public class PostService : IPostService
             var categories = await _categoryRepository.Where(a => request.Categories.Contains(a.Id)).ToListAsync();
             foreach (var category in categories)
             {
-                category.Count += 1;
                 await _postCategoryRelationRepository.AddRelationAsync(post, category);
             }
 
@@ -216,7 +215,7 @@ public class PostService : IPostService
                 Title = a.Posts.Title,
                 Categories =
                     a.Posts.ArticleCategoryRelations.Select(b => new PostCategories()
-                            { Id = b.Categories.Id, CateName = b.Categories.categoryName })
+                            { Id = b.Categories.Id, CateName = b.Categories.CategoryName })
                         .ToList()
             }).OrderByDescending(a => a.AddTime).ToListAsync();
 
