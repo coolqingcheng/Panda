@@ -95,6 +95,7 @@ export default defineComponent({
             try {
                 loading.value = true
                 await http.delete('/admin/category/delete', { params: { categoryId: id } })
+                getData();
             } finally {
                 loading.value = false
             }
