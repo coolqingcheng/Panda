@@ -5,8 +5,10 @@ using Panda.Entity.DataModels;
 using Panda.Entity.Models;
 using Panda.Entity.Requests;
 using Panda.Entity.Responses;
+using Panda.SiteMap;
 using Panda.Tools.Exception;
 using Panda.Tools.Extensions;
+using SimpleMvcSitemap;
 
 namespace Panda.Repository.Post;
 
@@ -41,6 +43,9 @@ public class PostRepository : PandaRepository<Posts>
             var category = await _context.Categories.Where(a => a.Id == request.CategoryId).FirstOrDefaultAsync();
             query = query.Where(a => a.ArticleCategoryRelations.Any(b => b.Categories == category));
         }
+
+
+       
 
         var res = await query.Include(a => a.Account).OrderByDescending(a => a.UpdateTime).Page(request).Select(a =>
             new PostItem()

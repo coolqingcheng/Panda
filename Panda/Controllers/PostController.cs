@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Panda.Services.Posts;
+using Panda.SiteMap;
 
 namespace Panda.Controllers;
 

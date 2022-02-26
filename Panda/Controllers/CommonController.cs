@@ -3,12 +3,18 @@ using Microsoft.AspNetCore.Mvc;
 using Panda.Tools.Exception;
 using System;
 using System.Runtime.InteropServices;
+using Microsoft.EntityFrameworkCore;
+using Panda.Entity;
+using Panda.Entity.DataModels;
 using Panda.Models;
 using Panda.Services.Account;
+using Panda.Services.DicData;
+using Panda.SiteMap;
 using Panda.Tools.FileStorage;
 using Panda.Tools.Models;
 using Panda.Tools.Security;
 using Panda.Tools.Web;
+using SimpleMvcSitemap;
 
 namespace Panda.Controllers;
 
@@ -20,12 +26,18 @@ public class CommonController : Controller
 
     private readonly IAccountService _accountService;
 
+    private readonly PandaContext _context;
+
+    private readonly IDicDataService _dicDataService;
+
     public CommonController(IFileStorage fileStorage, IWebHostEnvironment webHostEnvironment,
-        IAccountService accountService)
+        IAccountService accountService, PandaContext context, IDicDataService dicDataService)
     {
         _fileStorage = fileStorage;
         _webHostEnvironment = webHostEnvironment;
         _accountService = accountService;
+        _context = context;
+        _dicDataService = dicDataService;
     }
 
     [IgnoreAntiforgeryToken]
@@ -98,7 +110,18 @@ public class CommonController : Controller
         {
             return new NotFoundResult();
         }
+
         var ext = new FileInfo(path).Extension;
         return PhysicalFile(path, $"image/{ext[1..]}");
+    }
+
+    [HttpGet("/sitemap.xml")]
+    public IActionResult SiteMap()
+    {
+        var query = _context.Set<Posts>().OrderByDescending(a => a.UpdateTime);
+        var sitemapConfig = new PostSiteMapConfiguration(query, 2);
+
+        return new DynamicSitemapIndexProvider().CreateSitemapIndex(
+            new SitemapProvider(new BaseUrlProvider(_dicDataService)), sitemapConfig);
     }
 }
