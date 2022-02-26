@@ -58,11 +58,9 @@ watch(() => route.params, params => {
     console.log('监听:', params)
 })
 
-console.log(route.params.obj)
-
-let item = JSON.parse(route.params.obj.toString()) as CategoryItem
-
-formModel.value = item
+if (route.params.obj) {
+    formModel.value = JSON.parse(route.params.obj.toString()) as CategoryItem
+}
 
 onMounted(() => {
 })

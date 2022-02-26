@@ -39,6 +39,7 @@ public class HomeController : Controller
     [HttpGet("/"), HttpGet("/page/{index:int}")]
     public async Task<IActionResult> Index(int index = 1)
     {
+        _logger.LogInformation("Index Log");
         var res = await _postService.GetPostList(new PostRequest()
         {
             Index = index, Size = 10
@@ -46,7 +47,6 @@ public class HomeController : Controller
         ViewData["res"] = res;
         ViewData["index"] = index;
         ViewData["description"] = await _dicDataService.GetItemByCache("site:site_description");
-        ;
         return View();
     }
 

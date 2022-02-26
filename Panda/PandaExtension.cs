@@ -13,6 +13,7 @@ using System.Net.Mime;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using Panda.Repository.Post;
+using Panda.Tools.NLog;
 
 namespace Panda
 {
@@ -20,6 +21,7 @@ namespace Panda
     {
         public static void AddPanda(this WebApplicationBuilder app)
         {
+            app.AddNLog();
             var services = app.Services;
             services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
             services.AddHttpClient();
@@ -27,8 +29,9 @@ namespace Panda
                 opt =>
                 {
                     var db = app.Configuration.GetConnectionString("MYSQL_DB");
-                    opt.UseMySql(db, ServerVersion.AutoDetect(db)).EnableSensitiveDataLogging()
-                            .EnableDetailedErrors();
+                    opt.UseMySql(db, ServerVersion.AutoDetect(db), builder => { builder.EnableRetryOnFailure(); })
+                        .EnableSensitiveDataLogging()
+                        .EnableDetailedErrors();
                 }
             );
             services.AddEasyCaching(options =>
@@ -54,13 +57,15 @@ namespace Panda
             {
                 options.InvalidModelStateResponseFactory = context =>
                 {
-                    var errors = context.ModelState.Values.SelectMany(a => a.Errors).Select(a => new { a.ErrorMessage });
+                    var errors = context.ModelState.Values.SelectMany(a => a.Errors)
+                        .Select(a => new { a.ErrorMessage });
                     string errMsg = string.Join("|", errors);
                     var result = new JsonResult(new { Message = errMsg });
                     context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return result;
                 };
-            }); ;
+            });
+            ;
             services.AddTools();
             services.AddScoped<IDicDataProvider, EFDicDataProvider>();
 
