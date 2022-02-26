@@ -1053,7 +1053,14 @@ footer {
 
 .cover-img {
   width: 200px;
-  height: 180px; }
+  height: 200px;
+  background: #636467; }
+  @media screen and (max-width: 760px) {
+    .cover-img {
+      display: none; } }
+  .cover-img img {
+    width: 200px;
+    height: 200px; }
 
 .summary {
   box-sizing: border-box; }

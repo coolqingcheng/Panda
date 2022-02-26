@@ -18,7 +18,9 @@
                 @foreach (var item in res.Data)
                 {
                     <div class="post-list-item">
-                        <img class="cover-img" src="@item.Cover" data-original="@item.Cover" alt="@item.Title"/>
+                        <div class="cover-img">
+                            <img src="@item.Cover" data-original="@item.Cover" alt="@item.Title"/>
+                        </div>
                         <div class="entry-card">
 
                             <h2 class="entry-title">

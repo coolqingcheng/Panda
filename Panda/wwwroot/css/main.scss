@@ -150,7 +150,7 @@ body {
       line-height: 1.7;
 
       code {
-        background: lighten($theme-color,10%);
+        background: lighten($theme-color, 10%);
         color: white;
         padding: 0 5px 0 5px;
         border-radius: 3px;
@@ -270,7 +270,16 @@ footer {
 
 .cover-img {
   width: 200px;
-  height: 180px;
+  height: 200px;
+  background: $card_header_color;
+  @media screen and (max-width: 760px) {
+    display: none;
+  }
+
+  img {
+    width: 200px;
+    height: 200px;
+  }
 }
 
 .summary {
