@@ -133,6 +133,10 @@ body {
   .post-body {
     margin-top: 3rem;
 
+    pre code {
+      overflow-x: auto;
+    }
+
     h1 {
       font-size: 2rem;
     }

@@ -971,6 +971,8 @@ body {
   margin-top: 1rem; }
 .post-main .post-body {
   margin-top: 3rem; }
+  .post-main .post-body pre code {
+    overflow-x: auto; }
   .post-main .post-body h1 {
     font-size: 2rem; }
   .post-main .post-body h2 {
