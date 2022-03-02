@@ -104,4 +104,11 @@ public class HomeController : Controller
         ViewData["Url"] = url;
         return View();
     }
+
+    [HttpGet("/404.html")]
+    public IActionResult Page404()
+    {
+        HttpContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
+        return View();
+    }
 }

@@ -17,6 +17,13 @@ public interface IPostService
     Task<PostDetailItem> AdminGetPost(int id);
     Task<PostDetailItem> GetPost(int id);
 
+    /// <summary>
+    /// 自定义链接获取文章
+    /// </summary>
+    /// <param name="link"></param>
+    /// <returns></returns>
+    Task<PostDetailItem> GetPostByLink(string link);
+
 
     Task Delete(int id);
 

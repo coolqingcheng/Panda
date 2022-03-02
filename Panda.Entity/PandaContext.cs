@@ -57,7 +57,7 @@ public class PandaContext : DbContext
         modelBuilder.Entity<Posts>().Property(a => a.MarkDown).HasColumnType("longtext");
         modelBuilder.Entity<Posts>().HasIndex(a => new { a.Text, a.Title }).IsFullText(fullText: true, parser: "ngram");
         modelBuilder.Entity<Posts>().HasIndex(a => new { a.Id, a.Status });
-        modelBuilder.Entity<Posts>().HasIndex(a => a.CustomLink);
+        modelBuilder.Entity<Posts>().HasIndex(a => a.CustomLink).IsUnique();
         modelBuilder.Entity<Posts>().HasIndex(a => a.UpdateTime);
         modelBuilder.Entity<DicDatas>().Property(a => a.Pid).HasDefaultValue(0);
         modelBuilder.Entity<FriendlyLinks>().Property(a => a.AuditStatus).HasDefaultValue(AuditStatusEnum.unaudit);
@@ -98,13 +98,13 @@ public class PandaContext : DbContext
             if (!entry.CurrentValues.TryGetValue<DateTime>("UpdateTime", out DateTime time)) continue;
             if (time == default)
             {
-                entry.CurrentValues["UpdateTime"] = DateTime.Now;
+                entry.CurrentValues["UpdateTime"] = DateTimeOffset.UtcNow;
             }
 
             if (!entry.CurrentValues.TryGetValue<DateTime>("AddTime", out time)) continue;
             if (time == default)
             {
-                entry.CurrentValues["AddTime"] = DateTime.Now;
+                entry.CurrentValues["AddTime"] = DateTimeOffset.UtcNow;
             }
         }
     }

@@ -166,7 +166,8 @@ public class PostService : IPostService
                 Summary = text.GetSummary(80),
                 Cover = request.Cover,
                 Account = account,
-                MarkDown = request.MarkDown
+                MarkDown = request.MarkDown,
+                CustomLink = Guid.NewGuid().ToString("N"),
             };
             await _postRepository.AddAsync(post);
             var categories = await _categoryRepository.Where(a => request.Categories.Contains(a.Id)).ToListAsync();
@@ -215,7 +216,7 @@ public class PostService : IPostService
                 Title = a.Posts.Title,
                 Categories =
                     a.Posts.ArticleCategoryRelations.Select(b => new PostCategories()
-                            { Id = b.Categories.Id, CateName = b.Categories.CategoryName })
+                    { Id = b.Categories.Id, CateName = b.Categories.CategoryName })
                         .ToList()
             }).OrderByDescending(a => a.AddTime).ToListAsync();
 
@@ -256,5 +257,36 @@ public class PostService : IPostService
         }
 
         return list;
+    }
+
+    public async Task<PostDetailItem> GetPostByLink(string link)
+    {
+        var item = await _postRepository.Where(a => a.CustomLink == link && a.Status == PostStatus.Publish)
+            .Include(a => a.Account).Include(a => a.TagsRelations).Select(a =>
+                new PostDetailItem
+                {
+                    Id = a.Id,
+                    Title = a.Title,
+                    Summary = a.Summary,
+                    Content = a.Content,
+                    AddTime = a.AddTime,
+                    Account = a.Account,
+                    Status = a.Status,
+                    Cover = a.Cover,
+                    MarkDown = a.MarkDown,
+                    TagItems = a.TagsRelations.Select(b => new PostTagItem()
+                    {
+                        Id = b.Tags.Id,
+                        TagName = b.Tags.TagName
+                    })
+                }).FirstOrDefaultAsync();
+        item.IsNullThrow("找不到当前的文章Id");
+        var categories = await _categoryRepository.GetCategories(item!.Id);
+        item.Categories = categories.Select(a => new PostCategories()
+        {
+            Id = a.Id,
+            CateName = a.CategoryName
+        }).ToList();
+        return item;
     }
 }

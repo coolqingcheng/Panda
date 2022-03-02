@@ -7,7 +7,7 @@ namespace Panda.Entity.DataModels;
 
 public class Posts : PandaBaseTable
 {
-    [StringLength(50)] public string? CustomLink { get; set; }
+    [StringLength(100)] public string? CustomLink { get; set; }
 
     /// <summary>
     /// 标题
