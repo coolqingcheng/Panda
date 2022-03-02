@@ -18,12 +18,12 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
 });
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
-}
-else
-{
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseDeveloperExceptionPage();
+//}
+//else
+//{
     app.UseExceptionHandler(builder =>
     {
         builder.Run(async context =>
@@ -40,7 +40,7 @@ else
             }
         });
     });
-}
+//}
 
 
 app.UseStaticFiles();
