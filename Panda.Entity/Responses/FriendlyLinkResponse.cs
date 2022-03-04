@@ -12,7 +12,7 @@ public class FriendlyLinkResponse
 
     public int Weight { get; set; }
 
-    public DateTime AddTime { get; set; }
+    public DateTimeOffset AddTime { get; set; }
 
     public AuditStatusEnum AuditStatus { get; set; }
 }

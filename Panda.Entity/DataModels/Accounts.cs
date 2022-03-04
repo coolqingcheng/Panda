@@ -28,15 +28,20 @@ public class Accounts : KeyGuidTable
     /// <summary>
     /// 上次登录时间
     /// </summary>
-    public DateTime LastLoginTime { get; set; }
+    public DateTimeOffset LastLoginTime { get; set; }
 
     /// <summary>
     /// 锁定时间
     /// </summary>
-    public DateTime LockedTime { get; set; }
+    public DateTimeOffset LockedTime { get; set; }
 
     /// <summary>
     /// 登录失败次数
     /// </summary>
     public int LoginFailCount { get; set; }
+
+    /// <summary>
+    /// 是否禁用
+    /// </summary>
+    public bool IsDisable { get; set; }
 }
