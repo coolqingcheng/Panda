@@ -83,6 +83,7 @@ public class PostService : IPostService
                     Status = a.Status,
                     Cover = a.Cover,
                     MarkDown = a.MarkDown,
+                    CustomLink = a.CustomLink!,
                     TagItems = a.TagsRelations.Select(b => new PostTagItem()
                     {
                         Id = b.Tags.Id,
@@ -214,6 +215,7 @@ public class PostService : IPostService
                 AddTime = a.AddTime,
                 Summary = a.Posts.Summary,
                 Title = a.Posts.Title,
+                CustomLink = a.Posts.CustomLink!,
                 Categories =
                     a.Posts.ArticleCategoryRelations.Select(b => new PostCategories()
                     { Id = b.Categories.Id, CateName = b.Categories.CategoryName })
@@ -236,6 +238,7 @@ public class PostService : IPostService
                 {
                     Id = a.Id,
                     Title = a.Title,
+                    CustomLink = a.CustomLink!,
                     Type = PostNextType.Next
                 }).FirstOrDefaultAsync();
         var prePost = await _postRepository.Where(a => a.Id == PostId).OrderByDescending(a => a.AddTime).Skip(1).Take(1)
@@ -244,6 +247,7 @@ public class PostService : IPostService
                 {
                     Id = a.Id,
                     Title = a.Title,
+                    CustomLink = a.CustomLink!,
                     Type = PostNextType.Pre
                 }).FirstOrDefaultAsync();
         if (nextPost != null)
@@ -274,6 +278,7 @@ public class PostService : IPostService
                     Status = a.Status,
                     Cover = a.Cover,
                     MarkDown = a.MarkDown,
+                    CustomLink = a.CustomLink!,
                     TagItems = a.TagsRelations.Select(b => new PostTagItem()
                     {
                         Id = b.Tags.Id,

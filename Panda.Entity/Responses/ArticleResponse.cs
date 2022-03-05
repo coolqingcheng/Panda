@@ -24,6 +24,9 @@ public class AdminPostItemResponse
     public PostStatus Status { get; set; }
 
     public List<AdminCategoryItem> CategoryItems { get; set; }
+
+
+    public string CustomLink { get; set; }
 }
 
 public class AdminCategoryItem

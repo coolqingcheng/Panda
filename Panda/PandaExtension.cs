@@ -29,7 +29,7 @@ namespace Panda
                 opt =>
                 {
                     var db = app.Configuration.GetConnectionString("MYSQL_DB");
-                    opt.UseMySql(db, ServerVersion.AutoDetect(db), builder => { builder.EnableRetryOnFailure(); })
+                    opt.UseMySql(db, ServerVersion.AutoDetect(db))
                         .EnableSensitiveDataLogging()
                         .EnableDetailedErrors();
                 }

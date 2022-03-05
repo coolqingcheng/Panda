@@ -56,7 +56,7 @@ public class AccountService : IAccountService
             return result;
         }
 
-        if (account.IsDisable == false)
+        if (account.IsDisable)
         {
             result.Message = "账户已经被禁用";
             return result;

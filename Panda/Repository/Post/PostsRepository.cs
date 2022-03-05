@@ -45,8 +45,6 @@ public class PostRepository : PandaRepository<Posts>
         }
 
 
-       
-
         var res = await query.Include(a => a.Account).OrderByDescending(a => a.UpdateTime).Page(request).Select(a =>
             new PostItem()
             {
@@ -56,6 +54,7 @@ public class PostRepository : PandaRepository<Posts>
                 AddTime = a.AddTime,
                 Account = a.Account,
                 Cover = a.Cover,
+                CustomLink = a.CustomLink!,
                 Categories = a.ArticleCategoryRelations.Select(b => new PostCategories()
                 {
                     Id = b.Categories.Id,
@@ -83,6 +82,7 @@ public class PostRepository : PandaRepository<Posts>
                     UpdateTime = a.UpdateTime,
                     Status = a.Status,
                     AddTime = a.AddTime,
+                    CustomLink = a.CustomLink!,
                     CategoryItems = a.ArticleCategoryRelations.Select(b => new AdminCategoryItem()
                     {
                         Id = b.Categories.Id,
@@ -117,6 +117,7 @@ public class PostRepository : PandaRepository<Posts>
                         AddTime = a.AddTime,
                         Summary = a.Summary,
                         AccountName = a.Account.UserName,
+                        CustomLink = a.CustomLink!,
                         CategoryItems = a.ArticleCategoryRelations.Select(b => new AdminCategoryItem()
                         {
                             Id = b.Categories.Id,

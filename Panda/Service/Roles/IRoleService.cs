@@ -22,7 +22,7 @@ public class RoleService : IRoleService
 
     private readonly AccountRepository _accountRepository;
 
-    private RoleService(RoleRepository roleRepository, AccountRoleRepository accountRoleRepository,
+    public RoleService(RoleRepository roleRepository, AccountRoleRepository accountRoleRepository,
         AccountRepository accountRepository)
     {
         _roleRepository = roleRepository;

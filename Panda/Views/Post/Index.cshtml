@@ -52,7 +52,7 @@
                             @foreach (var item in nextItems)
                             {
                                 <li>
-                                    [@item.Type.Description()]<a href="/post/@(item.Id).html" target="_blank">@item.Title</a>
+                                    [@item.Type.Description()]<a href="/post/@(item.CustomLink).html" target="_blank">@item.Title</a>
                                 </li>
                             }
                         </ul>

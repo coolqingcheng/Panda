@@ -11,6 +11,11 @@ public class PostItem
     public int Id { get; set; }
 
     /// <summary>
+    /// 自定义链接
+    /// </summary>
+    public string CustomLink { get; set; }
+
+    /// <summary>
     /// 标题
     /// </summary>
     public string Title { get; set; }
@@ -67,6 +72,9 @@ public class PostNextItem
     public string Title { get; set; }
 
     public PostNextType Type { get; set; }
+
+
+    public string CustomLink { get; set; }
 }
 
 public enum PostNextType
