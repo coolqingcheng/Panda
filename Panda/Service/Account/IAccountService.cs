@@ -1,4 +1,6 @@
 using Panda.Entity.DataModels;
+using Panda.Entity.Requests;
+using Panda.Entity.Responses;
 using Panda.Tools.Auth;
 
 namespace Panda.Services.Account;
@@ -15,4 +17,10 @@ public interface IAccountService
 
     Task InitAdminPassword();
 
+    Task<PageDto<AccountResp>> GetAccountList(AccountReq req);
+
+
+    Task Disable(Guid accountId, bool status);
+    
+    
 }

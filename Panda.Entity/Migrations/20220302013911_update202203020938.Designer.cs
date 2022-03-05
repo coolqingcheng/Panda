@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Panda.Entity;
 
@@ -10,9 +11,10 @@ using Panda.Entity;
 namespace Panda.Entity.Migrations
 {
     [DbContext(typeof(PandaContext))]
-    partial class PandaContextModelSnapshot : ModelSnapshot
+    [Migration("20220302013911_update202203020938")]
+    partial class update202203020938
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,20 +27,17 @@ namespace Panda.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTimeOffset>("AddTime")
+                    b.Property<DateTime>("AddTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.Property<bool>("IsDisable")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<DateTimeOffset>("LastLoginTime")
+                    b.Property<DateTime>("LastLoginTime")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTimeOffset>("LockedTime")
+                    b.Property<DateTime>("LockedTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int>("LoginFailCount")
@@ -53,7 +52,7 @@ namespace Panda.Entity.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTimeOffset>("UpdateTime")
+                    b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("UserName")
@@ -74,7 +73,7 @@ namespace Panda.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("AddTime")
+                    b.Property<DateTime>("AddTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int>("AuditType")
@@ -88,7 +87,7 @@ namespace Panda.Entity.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTimeOffset>("UpdateTime")
+                    b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
@@ -102,7 +101,7 @@ namespace Panda.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("AddTime")
+                    b.Property<DateTime>("AddTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("CategoryDesc")
@@ -122,7 +121,7 @@ namespace Panda.Entity.Migrations
                     b.Property<int>("Pid")
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("UpdateTime")
+                    b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
@@ -136,7 +135,7 @@ namespace Panda.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("AddTime")
+                    b.Property<DateTime>("AddTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Description")
@@ -156,7 +155,7 @@ namespace Panda.Entity.Migrations
                         .HasColumnType("int")
                         .HasDefaultValue(0);
 
-                    b.Property<DateTimeOffset>("UpdateTime")
+                    b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
@@ -170,7 +169,7 @@ namespace Panda.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("AddTime")
+                    b.Property<DateTime>("AddTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("IP")
@@ -184,7 +183,7 @@ namespace Panda.Entity.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTimeOffset>("UpdateTime")
+                    b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
@@ -200,7 +199,7 @@ namespace Panda.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("AddTime")
+                    b.Property<DateTime>("AddTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int>("AuditStatus")
@@ -216,7 +215,7 @@ namespace Panda.Entity.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTimeOffset>("UpdateTime")
+                    b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int>("Weight")
@@ -233,7 +232,7 @@ namespace Panda.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("AddTime")
+                    b.Property<DateTime>("AddTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Content")
@@ -249,7 +248,7 @@ namespace Panda.Entity.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTimeOffset>("UpdateTime")
+                    b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
@@ -263,7 +262,7 @@ namespace Panda.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("AddTime")
+                    b.Property<DateTime>("AddTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Content")
@@ -274,7 +273,7 @@ namespace Panda.Entity.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTimeOffset>("UpdateTime")
+                    b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Url")
@@ -295,7 +294,7 @@ namespace Panda.Entity.Migrations
                     b.Property<Guid>("AccountId")
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTimeOffset>("AddTime")
+                    b.Property<DateTime>("AddTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Content")
@@ -315,7 +314,7 @@ namespace Panda.Entity.Migrations
                     b.Property<int?>("ReplyId")
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("UpdateTime")
+                    b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("UserAgent")
@@ -341,7 +340,7 @@ namespace Panda.Entity.Migrations
                     b.Property<Guid>("AccountId")
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTimeOffset>("AddTime")
+                    b.Property<DateTime>("AddTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<bool>("AllowComment")
@@ -378,7 +377,7 @@ namespace Panda.Entity.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.Property<DateTimeOffset>("UpdateTime")
+                    b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
@@ -405,7 +404,7 @@ namespace Panda.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("AddTime")
+                    b.Property<DateTime>("AddTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int>("CategoriesId")
@@ -414,7 +413,7 @@ namespace Panda.Entity.Migrations
                     b.Property<int>("PostsId")
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("UpdateTime")
+                    b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
@@ -432,7 +431,7 @@ namespace Panda.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("AddTime")
+                    b.Property<DateTime>("AddTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int>("PostCount")
@@ -443,7 +442,7 @@ namespace Panda.Entity.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
-                    b.Property<DateTimeOffset>("UpdateTime")
+                    b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
@@ -457,7 +456,7 @@ namespace Panda.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("AddTime")
+                    b.Property<DateTime>("AddTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int>("PostsId")
@@ -466,7 +465,7 @@ namespace Panda.Entity.Migrations
                     b.Property<int>("TagsId")
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("UpdateTime")
+                    b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
@@ -484,7 +483,7 @@ namespace Panda.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("AddTime")
+                    b.Property<DateTime>("AddTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Name")
@@ -492,7 +491,7 @@ namespace Panda.Entity.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<DateTimeOffset>("UpdateTime")
+                    b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
@@ -506,10 +505,10 @@ namespace Panda.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("AddTime")
+                    b.Property<DateTime>("AddTime")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTimeOffset>("UpdateTime")
+                    b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("WikiContent")
@@ -537,7 +536,7 @@ namespace Panda.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("AddTime")
+                    b.Property<DateTime>("AddTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("GroupName")
@@ -545,7 +544,7 @@ namespace Panda.Entity.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
-                    b.Property<DateTimeOffset>("UpdateTime")
+                    b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int?>("WikiId")

@@ -23,7 +23,7 @@ public class PostItem
     /// <summary>
     /// 添加时间
     /// </summary>
-    public DateTime AddTime { get; set; }
+    public DateTimeOffset AddTime { get; set; }
 
     /// <summary>
     /// 添加人

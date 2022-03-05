@@ -55,14 +55,13 @@ public class PandaContext : DbContext
         modelBuilder.Entity<Posts>().Property(a => a.Text).HasColumnType("longtext");
         modelBuilder.Entity<Posts>().Property(a => a.Content).HasColumnType("longtext");
         modelBuilder.Entity<Posts>().Property(a => a.MarkDown).HasColumnType("longtext");
-        modelBuilder.Entity<Posts>().HasIndex(a => new { a.Text, a.Title }).IsFullText(fullText: true, parser: "ngram");
-        modelBuilder.Entity<Posts>().HasIndex(a => new { a.Id, a.Status });
-        modelBuilder.Entity<Posts>().HasIndex(a => a.CustomLink);
+        modelBuilder.Entity<Posts>().HasIndex(a => new {a.Text, a.Title}).IsFullText(fullText: true, parser: "ngram");
+        modelBuilder.Entity<Posts>().HasIndex(a => new {a.Id, a.Status});
+        modelBuilder.Entity<Posts>().HasIndex(a => a.CustomLink).IsUnique();
         modelBuilder.Entity<Posts>().HasIndex(a => a.UpdateTime);
         modelBuilder.Entity<DicDatas>().Property(a => a.Pid).HasDefaultValue(0);
         modelBuilder.Entity<FriendlyLinks>().Property(a => a.AuditStatus).HasDefaultValue(AuditStatusEnum.unaudit);
         modelBuilder.Entity<Notices>().Property(a => a.IsTop).HasDefaultValue(false);
-
         modelBuilder.Entity<WikiDoc>().Property(a => a.WikiContent).HasColumnType("longtext");
     }
 
@@ -95,16 +94,16 @@ public class PandaContext : DbContext
     {
         foreach (var entry in ChangeTracker.Entries().Where(a => a.State == EntityState.Added))
         {
-            if (!entry.CurrentValues.TryGetValue<DateTime>("UpdateTime", out DateTime time)) continue;
+            if (!entry.CurrentValues.TryGetValue<DateTimeOffset>("UpdateTime", out var time)) continue;
             if (time == default)
             {
-                entry.CurrentValues["UpdateTime"] = DateTime.Now;
+                entry.CurrentValues["UpdateTime"] = DateTimeOffset.Now;
             }
 
-            if (!entry.CurrentValues.TryGetValue<DateTime>("AddTime", out time)) continue;
+            if (!entry.CurrentValues.TryGetValue<DateTimeOffset>("AddTime", out time)) continue;
             if (time == default)
             {
-                entry.CurrentValues["AddTime"] = DateTime.Now;
+                entry.CurrentValues["AddTime"] = DateTimeOffset.Now;
             }
         }
     }

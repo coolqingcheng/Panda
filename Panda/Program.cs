@@ -12,16 +12,18 @@ var app = builder.Build();
 
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+
+app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
-    app.UseExceptionHandler("/error.html");
-}
-else
-{
-    app.UseForwardedHeaders(new ForwardedHeadersOptions
-    {
-        ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-    });
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
+
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseDeveloperExceptionPage();
+//}
+//else
+//{
     app.UseExceptionHandler(builder =>
     {
         builder.Run(async context =>
@@ -38,7 +40,8 @@ else
             }
         });
     });
-}
+//}
+
 
 app.UseStaticFiles();
 app.UseRouting();

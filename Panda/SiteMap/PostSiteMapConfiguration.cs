@@ -19,9 +19,9 @@ public class PostSiteMapConfiguration : SitemapIndexConfiguration<Posts>
 
     public override SitemapNode CreateNode(Posts source)
     {
-        var node = new SitemapNode($"/post/{source.Id}.html")
+        var node = new SitemapNode($"/post/{source.CustomLink}.html")
         {
-            LastModificationDate = source.AddTime.ToLocalTime()
+            LastModificationDate = source.AddTime.LocalDateTime
         };
 
         return node;

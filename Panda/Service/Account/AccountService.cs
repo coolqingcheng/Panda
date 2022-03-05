@@ -1,10 +1,13 @@
 using System.Globalization;
 using System.Security.Claims;
+using Mapster;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Panda.Entity.DataModels;
+using Panda.Entity.Requests;
+using Panda.Entity.Responses;
 using Panda.Repository.Account;
 using Panda.Tools.Auth;
 using Panda.Tools.Exception;
@@ -36,7 +39,7 @@ public class AccountService : IAccountService
             {
                 UserName = "管理员",
                 Passwd = IdentitySecurity.HashPassword("admin"),
-                AddTime = DateTime.Now,
+                AddTime = DateTimeOffset.Now,
                 Email = "qingchengcode@qq.com"
             });
         }
@@ -53,7 +56,13 @@ public class AccountService : IAccountService
             return result;
         }
 
-        if (account.LockedTime > DateTime.Now)
+        if (account.IsDisable == false)
+        {
+            result.Message = "账户已经被禁用";
+            return result;
+        }
+
+        if (account.LockedTime > DateTimeOffset.Now)
         {
             result.Message = "用户已经锁定";
             return result;
@@ -90,6 +99,7 @@ public class AccountService : IAccountService
         {
             throw new UserException("旧密码错误！");
         }
+
         account.Passwd = IdentitySecurity.HashPassword(newPwd);
         await _accountRepository.SaveAsync();
         await SignOutAsync();
@@ -102,10 +112,38 @@ public class AccountService : IAccountService
 
     public async Task InitAdminPassword()
     {
-        var account =  await _accountRepository.Where(a => a.Email == "qingchengcode@qq.com").FirstOrDefaultAsync();
-        if (account!=null)
+        var account = await _accountRepository.Where(a => a.Email == "qingchengcode@qq.com").FirstOrDefaultAsync();
+        if (account != null)
         {
             account.Passwd = IdentitySecurity.HashPassword("123456.");
+            await _accountRepository.SaveAsync();
+        }
+    }
+
+    public async Task<PageDto<AccountResp>> GetAccountList(AccountReq req)
+    {
+        var query = _accountRepository.Queryable();
+        var list = await query.Page(req).OrderByDescending(a => a.LastLoginTime)
+            .ProjectToType<AccountResp>()
+            .ToListAsync();
+        return new PageDto<AccountResp>()
+        {
+            Total = await query.CountAsync(),
+            Data = list
+        };
+    }
+
+    public async Task Disable(Guid accountId, bool status)
+    {
+        var account = await _accountRepository.Where(a => a.Id == accountId).FirstOrDefaultAsync();
+        if (account != null)
+        {
+            account.IsDisable = status;
+            if (status == false)
+            {
+                account.LockedTime = DateTimeOffset.Now.AddSeconds(-1);
+            }
+
             await _accountRepository.SaveAsync();
         }
     }

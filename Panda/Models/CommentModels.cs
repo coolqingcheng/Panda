@@ -40,7 +40,7 @@ public class CommentItem
 
     public string Content { get; set; }
 
-    public DateTime AddTime { get; set; }
+    public DateTimeOffset AddTime { get; set; }
 
     public int Index { get; set; }
 

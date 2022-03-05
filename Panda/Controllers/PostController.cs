@@ -14,10 +14,10 @@ public class PostController : Controller
     }
 
     // GET
-    [HttpGet("/post/{id:int}.html")]
-    public async Task<IActionResult> Index(int id)
+    [HttpGet("/post/{link}.html")]
+    public async Task<IActionResult> Index(string link)
     {
-        var res =  await _postService.GetPost(id);
+        var res =  await _postService.GetPostByLink(link);
         return View(res);
     }
 

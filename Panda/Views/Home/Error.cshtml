@@ -1,0 +1,21 @@
+﻿@model ErrorViewModel
+@inject IHttpContextAccessor http
+@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Error";
+    Layout = null;
+    var ErrorMsg = http?.HttpContext?.Items["ErrorMsg"] ?? "服务器繁忙";
+}
+
+<div style="display:flex;justify-content:center;flex-direction:column;align-items:center">
+    <h1>@ErrorMsg</h1>
+    <a href="/">返回首页</a>
+
+    @if (Model?.ShowRequestId ?? false)
+    {
+        <p>
+            <strong>Request ID:</strong> <code>@Model?.RequestId</code>
+        </p>
+    }
+
+</div>
