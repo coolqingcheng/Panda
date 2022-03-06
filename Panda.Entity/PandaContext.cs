@@ -55,8 +55,8 @@ public class PandaContext : DbContext
         modelBuilder.Entity<Posts>().Property(a => a.Text).HasColumnType("longtext");
         modelBuilder.Entity<Posts>().Property(a => a.Content).HasColumnType("longtext");
         modelBuilder.Entity<Posts>().Property(a => a.MarkDown).HasColumnType("longtext");
-        modelBuilder.Entity<Posts>().HasIndex(a => new {a.Text, a.Title}).IsFullText(fullText: true, parser: "ngram");
-        modelBuilder.Entity<Posts>().HasIndex(a => new {a.Id, a.Status});
+        modelBuilder.Entity<Posts>().HasIndex(a => new { a.Text, a.Title }).IsFullText(fullText: true, parser: "ngram");
+        modelBuilder.Entity<Posts>().HasIndex(a => new { a.Id, a.Status });
         modelBuilder.Entity<Posts>().HasIndex(a => a.CustomLink).IsUnique();
         modelBuilder.Entity<Posts>().HasIndex(a => a.UpdateTime);
         modelBuilder.Entity<DicDatas>().Property(a => a.Pid).HasDefaultValue(0);
@@ -92,18 +92,24 @@ public class PandaContext : DbContext
 
     private void SaveChangeModifyAddTime()
     {
-        foreach (var entry in ChangeTracker.Entries().Where(a => a.State == EntityState.Added))
+        foreach (var entry in ChangeTracker.Entries())
         {
-            if (!entry.CurrentValues.TryGetValue<DateTimeOffset>("UpdateTime", out var time)) continue;
-            if (time == default)
+            if (entry.State == EntityState.Modified)
             {
-                entry.CurrentValues["UpdateTime"] = DateTimeOffset.Now;
+                if (!entry.CurrentValues.TryGetValue<DateTimeOffset>("UpdateTime", out var time)) continue;
+                if (time == default)
+                {
+                    entry.CurrentValues["UpdateTime"] = DateTimeOffset.Now;
+                }
             }
 
-            if (!entry.CurrentValues.TryGetValue<DateTimeOffset>("AddTime", out time)) continue;
-            if (time == default)
+            if (entry.State == EntityState.Added)
             {
-                entry.CurrentValues["AddTime"] = DateTimeOffset.Now;
+                if (!entry.CurrentValues.TryGetValue<DateTimeOffset>("AddTime", out var time)) continue;
+                if (time == default)
+                {
+                    entry.CurrentValues["AddTime"] = DateTimeOffset.Now;
+                }
             }
         }
     }

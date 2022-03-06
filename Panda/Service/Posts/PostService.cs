@@ -132,7 +132,8 @@ public class PostService : IPostService
             post.Content = request.Content.LazyHandler(request.Title)!;
             post.Text = text;
             post.Summary = text.GetSummary(80);
-            post.UpdateTime = DateTime.Now;
+            post.UpdateTime = DateTimeOffset.Now;
+            ;
             post.Cover = request.Cover;
             post.Account = account;
             post.MarkDown = request.MarkDown;
@@ -161,8 +162,8 @@ public class PostService : IPostService
             {
                 Title = request.Title,
                 Content = request.Content.LazyHandler(request.Title)!,
-                AddTime = DateTime.Now,
-                UpdateTime = DateTime.Now,
+                AddTime = DateTimeOffset.Now,
+                UpdateTime = DateTimeOffset.Now,
                 Text = text,
                 Summary = text.GetSummary(80),
                 Cover = request.Cover,
@@ -218,7 +219,7 @@ public class PostService : IPostService
                 CustomLink = a.Posts.CustomLink!,
                 Categories =
                     a.Posts.ArticleCategoryRelations.Select(b => new PostCategories()
-                    { Id = b.Categories.Id, CateName = b.Categories.CategoryName })
+                            { Id = b.Categories.Id, CateName = b.Categories.CategoryName })
                         .ToList()
             }).OrderByDescending(a => a.AddTime).ToListAsync();
 

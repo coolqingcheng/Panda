@@ -53,6 +53,7 @@ namespace Panda
             {
                 options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
                 options.JsonSerializerOptions.Converters.Add(new DateTimeNullConverter());
+                options.JsonSerializerOptions.Converters.Add(new DateTimeOffsetConverter());
             }).ConfigureApiBehaviorOptions(options =>
             {
                 options.InvalidModelStateResponseFactory = context =>
