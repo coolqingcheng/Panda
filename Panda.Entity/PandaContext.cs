@@ -5,7 +5,7 @@ using Panda.Tools.Auth.Models;
 
 namespace Panda.Entity;
 
-public class PandaContext : PandaAccountContext<Accounts>
+public class PandaContext : AppContext<Accounts>
 {
     public DbSet<Posts> Posts { get; set; }
 
@@ -16,8 +16,6 @@ public class PandaContext : PandaAccountContext<Accounts>
     public DbSet<AuditLogs> AuditLogs { get; set; }
 
     public DbSet<Pages> Pages { get; set; }
-
-    public DbSet<DicDatas> DicDatas { get; set; }
 
     public DbSet<FriendlyLinks> FriendlyLinks { get; set; }
 
