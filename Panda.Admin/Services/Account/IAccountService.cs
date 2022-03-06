@@ -17,6 +17,8 @@ public interface IAccountService<TU> where TU : Accounts
 
     Task InitAdminPassword();
 
+    Task InitAccount();
+
 
     Task Disable(Guid accountId, bool status);
 

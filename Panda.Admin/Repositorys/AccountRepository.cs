@@ -2,11 +2,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Panda.Tools.Auth.Models;
 using Panda.Tools.Auth.Repositorys;
+using Panda.Tools.Exception;
 using Panda.Tools.Extensions;
+using Panda.Tools.Security;
 
 namespace Panda.Admin.Repositorys;
 
-public class AccountRepository<T> : BaseRepository where T : Accounts
+public class AccountRepository<T> : BaseRepository where T : Accounts, new()
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -16,6 +18,25 @@ public class AccountRepository<T> : BaseRepository where T : Accounts
     {
         _context = context;
         _httpContextAccessor = httpContextAccessor;
+    }
+
+    public async Task InitAccountAsync()
+    {
+        var any = await _context.Set<T>().AnyAsync();
+        if (any == false)
+        {
+            await _context.Set<T>().AddAsync(new T()
+            {
+                UserName = "管理员",
+                Passwd = IdentitySecurity.HashPassword("admin"),
+                AddTime = DateTimeOffset.Now,
+                Email = "admin"
+            });
+        }
+        else
+        {
+            throw new UserException("系统已经初始化，重复操作失败");
+        }
     }
 
     public async Task LoginFailAsync(T account)

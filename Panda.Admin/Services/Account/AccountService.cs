@@ -29,21 +29,6 @@ public class AccountService<TU> : IAccountService<TU> where TU : Accounts, new()
         _accountRepository = accountRepository;
         _httpContextAccessor = httpContextAccessor;
     }
-    //
-    // public async Task InitAsync()
-    // {
-    //     var any = await _accountRepository.AnyAsync();
-    //     if (any == false)
-    //     {
-    //         await _accountRepository.AddAsync(new Accounts()
-    //         {
-    //             UserName = "管理员",
-    //             Passwd = IdentitySecurity.HashPassword("admin"),
-    //             AddTime = DateTimeOffset.Now,
-    //             Email = "qingchengcode@qq.com"
-    //         });
-    //     }
-    // }
 
     public async Task<AuthResult> LoginAsync(string email, string password)
     {
@@ -118,6 +103,11 @@ public class AccountService<TU> : IAccountService<TU> where TU : Accounts, new()
             account.Passwd = IdentitySecurity.HashPassword("123456.");
             await _accountRepository.SaveAsync();
         }
+    }
+
+    public async Task InitAccount()
+    {
+        await _accountRepository.InitAccountAsync();
     }
 
     public async Task<PageDto<AccountResp>> GetAccountList(AccountReq req)

@@ -39,6 +39,7 @@ public class AccountController : AdminController
     [HttpGet("/initaccount")]
     public async Task<IActionResult> Test()
     {
+        await _accountService.InitAccount();
         return Content("初始化账号成功");
     }
 
