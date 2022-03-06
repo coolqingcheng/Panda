@@ -28,10 +28,12 @@ public class AccountRepository<T> : BaseRepository where T : Accounts, new()
             await _context.Set<T>().AddAsync(new T()
             {
                 UserName = "管理员",
+                NickName = "管理员",
                 Passwd = IdentitySecurity.HashPassword("admin"),
                 AddTime = DateTimeOffset.Now,
                 Email = "admin"
             });
+            await _context.SaveChangesAsync();
         }
         else
         {

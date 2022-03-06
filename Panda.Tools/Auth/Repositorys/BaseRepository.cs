@@ -23,8 +23,21 @@ public class BaseRepository
         await _context.SaveChangesAsync();
     }
 
-    public IQueryable<T> Queryable<T>() where T : class,new()
+    public IQueryable<T> Queryable<T>() where T : class, new()
     {
         return _context.Set<T>().AsQueryable();
     }
+
+    public async Task DeleteWhereAsync<T>(Expression<Func<T, bool>> expression) where T : class
+    {
+        var list = await _context.Set<T>().Where(expression).ToListAsync();
+        _context.RemoveRange(list);
+        await _context.SaveChangesAsync();
+    }
+
+    /// <summary>
+    /// 获取DbContext
+    /// </summary>
+    /// <returns></returns>
+    public DbContext GetDbContext => _context;
 }

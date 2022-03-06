@@ -1,7 +1,7 @@
-﻿using Panda.Entity.Requests;
+﻿using Panda.Admin.Models.Request;
 using Panda.Entity.Responses;
 
-namespace Panda.Services.DicData;
+namespace Panda.Admin.Services.DicData;
 
 public interface IDicDataService
 {

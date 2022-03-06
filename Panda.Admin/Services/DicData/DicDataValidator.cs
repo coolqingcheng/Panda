@@ -1,4 +1,4 @@
-using Panda.Entity.Requests;
+using Panda.Admin.Models.Request;
 using Panda.Tools.Exception;
 
 namespace Panda.Services.DicData;

@@ -1,6 +1,6 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Panda.Entity.Requests;
+using Panda.Admin.Models.Request;
+using Panda.Admin.Services.DicData;
 using Panda.Services.DicData;
 
 namespace Panda.Admin.Controllers;

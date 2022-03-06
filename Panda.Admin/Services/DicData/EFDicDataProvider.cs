@@ -1,7 +1,7 @@
-﻿using Panda.Entity.Requests;
+﻿using Panda.Admin.Services.DicData;
 using Panda.Tools.Web;
 
-namespace Panda.Services.DicData;
+namespace Panda.Admin.Services.DicData;
 
 public class EFDicDataProvider : IDicDataProvider
 {

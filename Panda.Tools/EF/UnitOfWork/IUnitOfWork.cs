@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace Panda.Entity.UnitOfWork;
+namespace Panda.Tools.EF.UnitOfWork;
 
 public interface IUnitOfWork
 {
@@ -12,13 +12,13 @@ public interface IUnitOfWork
 
 public class EFUnitOfWork : IUnitOfWork
 {
-    private readonly PandaContext _context;
+    private readonly DbContext _context;
 
     private IDbContextTransaction? _transaction = null;
 
     private int _index = 0;
 
-    public EFUnitOfWork(PandaContext context)
+    public EFUnitOfWork(DbContext context)
     {
         _context = context;
     }

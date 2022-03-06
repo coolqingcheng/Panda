@@ -1,14 +1,14 @@
 ﻿using EasyCaching.Core;
 using Microsoft.EntityFrameworkCore;
+using Panda.Admin.Models.Request;
+using Panda.Admin.Repositorys.DicData;
 using Panda.Entity;
-using Panda.Entity.DataModels;
-using Panda.Entity.Requests;
 using Panda.Entity.Responses;
-using Panda.Entity.UnitOfWork;
-using Panda.Repository.DicData;
+using Panda.Tools.Auth.Models;
+using Panda.Tools.EF.UnitOfWork;
 using Panda.Tools.Exception;
 
-namespace Panda.Services.DicData;
+namespace Panda.Admin.Services.DicData;
 
 public class DicDataService : IDicDataService
 {
@@ -28,7 +28,8 @@ public class DicDataService : IDicDataService
     public async Task AddOrUpdate(DicDataRequest request)
     {
         await _unitOfWork.BeginTransactionAsync();
-        var groupInfo = await _dataRepository.Where(a => a.DicKey == request.GroupInfo.Name && a.Pid == 0)
+        var groupInfo = await _dataRepository.Queryable<DicDatas>()
+            .Where(a => a.DicKey == request.GroupInfo.Name && a.Pid == 0)
             .FirstOrDefaultAsync();
         if (groupInfo == null)
         {
@@ -38,16 +39,16 @@ public class DicDataService : IDicDataService
                 DicValue = "-",
                 Description = request.GroupInfo.Description
             };
-            await _dataRepository.AddAsync(groupInfo);
+            await _dataRepository.GetDbContext.AddAsync(groupInfo);
         }
         else
         {
-            await _dataRepository.DeleteWhereAsync(a => a.Pid == groupInfo.Id);
+            await _dataRepository.DeleteWhereAsync<DicDatas>(a => a.Pid == groupInfo.Id);
         }
 
         foreach (var item in request.ChildInfos)
         {
-            await _dataRepository.AddAsync(new DicDatas()
+            await _dataRepository.GetDbContext.AddAsync(new DicDatas()
             {
                 DicKey = item.Key,
                 DicValue = item.Value,
@@ -63,7 +64,7 @@ public class DicDataService : IDicDataService
 
     public async Task<IEnumerable<DicDataResponse>> GetDicDataList()
     {
-        var list = (await _dataRepository.GetAll()).ToList();
+        var list = (await _dataRepository.Queryable<DicDatas>().ToListAsync()).ToList();
         return list.Where(a => a.Pid == 0).Select(a => new DicDataResponse()
         {
             GroupInfo = new DicDataGroupInfo()
@@ -82,9 +83,10 @@ public class DicDataService : IDicDataService
 
     public async Task Delete(string groupName)
     {
-        var groupInfo = await _dataRepository.Where(a => a.DicKey == groupName && a.Pid == 0).FirstOrDefaultAsync();
-        if (groupInfo != null) await _dataRepository.DeleteWhereAsync(a => a.Pid == groupInfo.Id);
-        await _dataRepository.DeleteWhereAsync(a => a.DicKey == groupName && a.Pid == 0);
+        var groupInfo = await _dataRepository.Queryable<DicDatas>().Where(a => a.DicKey == groupName && a.Pid == 0)
+            .FirstOrDefaultAsync();
+        if (groupInfo != null) await _dataRepository.DeleteWhereAsync<DicDatas>(a => a.Pid == groupInfo.Id);
+        await _dataRepository.DeleteWhereAsync<DicDatas>(a => a.DicKey == groupName && a.Pid == 0);
     }
 
     public async Task<DicDataChildInfo?> GetItemByCache(string groupName, string key)

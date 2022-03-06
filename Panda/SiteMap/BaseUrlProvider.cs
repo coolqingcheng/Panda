@@ -1,3 +1,4 @@
+using Panda.Admin.Services.DicData;
 using Panda.Services.DicData;
 using SimpleMvcSitemap.Routing;
 

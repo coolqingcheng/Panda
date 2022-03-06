@@ -2,12 +2,15 @@ using System.Net;
 using Microsoft.AspNetCore.HttpOverrides;
 using Panda;
 using global::Panda.Tools.Extensions;
+using Panda.Admin;
+using Panda.Entity;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddPanda();
 
+builder.AddPanda();
+builder.AddAdmin<PandaContext>();
 var app = builder.Build();
 
 
@@ -24,22 +27,22 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 //}
 //else
 //{
-    app.UseExceptionHandler(builder =>
+app.UseExceptionHandler(builder =>
+{
+    builder.Run(async context =>
     {
-        builder.Run(async context =>
+        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+        if (context.Request.Headers["X-Requested-With"] == "XMLHttpRequest" ||
+            context.Request.Query["X-Requested-With"] == "XMLHttpRequest")
         {
-            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-            if (context.Request.Headers["X-Requested-With"] == "XMLHttpRequest" ||
-                context.Request.Query["X-Requested-With"] == "XMLHttpRequest")
-            {
-                await context.Response.WriteAsJsonAsync(new { message = "服务器繁忙" });
-            }
-            else
-            {
-                context.Response.Redirect("/error.html");
-            }
-        });
+            await context.Response.WriteAsJsonAsync(new { message = "服务器繁忙" });
+        }
+        else
+        {
+            context.Response.Redirect("/error.html");
+        }
     });
+});
 //}
 
 

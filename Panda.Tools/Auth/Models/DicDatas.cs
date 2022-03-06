@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Panda.Admin.Entities.DataModels;
 
 
-namespace Panda.Entity.DataModels;
+namespace Panda.Tools.Auth.Models;
 
 public class DicDatas : PandaBaseTable
 {
