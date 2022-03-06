@@ -1,14 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Panda.Admin.Repositorys;
 using Panda.Entity.DataModels;
 using Panda.Entity.Models;
 using Panda.Entity.Requests;
 using Panda.Entity.Responses;
 using Panda.Entity.UnitOfWork;
-using Panda.Repository.Account;
 using Panda.Repository.Post;
 using Panda.Repository.ArticleCategoryRelation;
 using Panda.Repository.Category;
 using Panda.Repository.Tags;
+using Panda.Tools.Auth.Models;
 using Panda.Tools.Exception;
 using Panda.Tools.Extensions;
 using Panda.Tools.Web.Html;
@@ -30,12 +31,12 @@ public class PostService : IPostService
 
     private readonly PostTagsRepository _postTagsRepository;
 
-    private AccountRepository _accountRepository;
+    private AccountRepository<Accounts> _accountRepository;
 
     public PostService(PostRepository postRepository, CategoryRepository categoryRepository,
         IUnitOfWork unitOfWork, PostCategoryRelationRepository postCategoryRelationRepository,
         TagRelationRepository tagRelationRepository, PostTagsRepository postTagsRepository,
-        AccountRepository accountRepository)
+        AccountRepository<Accounts> accountRepository)
     {
         _postRepository = postRepository;
         _categoryRepository = categoryRepository;
@@ -133,10 +134,14 @@ public class PostService : IPostService
             post.Text = text;
             post.Summary = text.GetSummary(80);
             post.UpdateTime = DateTimeOffset.Now;
-            ;
             post.Cover = request.Cover;
             post.Account = account;
             post.MarkDown = request.MarkDown;
+            if (string.IsNullOrWhiteSpace(post.CustomLink))
+            {
+                post.CustomLink = Guid.NewGuid().ToString("N");
+            }
+
             await _postRepository.SaveAsync();
             var beforeCategories = await _postCategoryRelationRepository.Where(a => a.Posts == post)
                 .Select(a => a.Categories.Id).ToListAsync();

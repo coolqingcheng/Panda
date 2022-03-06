@@ -1,15 +1,13 @@
 ﻿using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
+using Panda.Admin.Services.Account;
 using Panda.Tools.Exception;
-using System;
-using System.Runtime.InteropServices;
-using Microsoft.EntityFrameworkCore;
 using Panda.Entity;
 using Panda.Entity.DataModels;
 using Panda.Models;
-using Panda.Services.Account;
 using Panda.Services.DicData;
 using Panda.SiteMap;
+using Panda.Tools.Auth.Models;
 using Panda.Tools.FileStorage;
 using Panda.Tools.Models;
 using Panda.Tools.Security;
@@ -24,14 +22,14 @@ public class CommonController : Controller
     private readonly IFileStorage _fileStorage;
     private readonly IWebHostEnvironment _webHostEnvironment;
 
-    private readonly IAccountService _accountService;
+    private readonly IAccountService<Accounts> _accountService;
 
     private readonly PandaContext _context;
 
     private readonly IDicDataService _dicDataService;
 
     public CommonController(IFileStorage fileStorage, IWebHostEnvironment webHostEnvironment,
-        IAccountService accountService, PandaContext context, IDicDataService dicDataService)
+        IAccountService<Accounts> accountService, PandaContext context, IDicDataService dicDataService)
     {
         _fileStorage = fileStorage;
         _webHostEnvironment = webHostEnvironment;

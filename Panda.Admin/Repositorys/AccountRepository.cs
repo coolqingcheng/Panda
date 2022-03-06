@@ -1,29 +1,32 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Panda.Entity;
-using Panda.Entity.DataModels;
-using Panda.Entity.UnitOfWork;
+using Panda.Tools.Auth.Models;
+using Panda.Tools.Auth.Repositorys;
 using Panda.Tools.Extensions;
 
-namespace Panda.Repository.Account;
+namespace Panda.Admin.Repositorys;
 
-public class AccountRepository : PandaRepository<Accounts>
+public class AccountRepository<T> : BaseRepository where T : Accounts
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public AccountRepository(PandaContext context, IHttpContextAccessor httpContextAccessor) : base(context)
+    private new readonly DbContext _context;
+
+    public AccountRepository(DbContext context, IHttpContextAccessor httpContextAccessor) : base(context)
     {
+        _context = context;
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task LoginFailAsync(Accounts account)
+    public async Task LoginFailAsync(T account)
     {
         account.LoginFailCount += 1;
         if (account.LoginFailCount >= 5 && IsLocked(account) == false)
         {
             //大于5次锁定账户
             account.LockedTime = DateTimeOffset.Now.AddMinutes(15);
-            
         }
+
         await _context.SaveChangesAsync();
     }
 
@@ -41,10 +44,10 @@ public class AccountRepository : PandaRepository<Accounts>
         await _context.SaveChangesAsync();
     }
 
-    public async Task<Accounts> GetCurrentAccountsAsync()
+    public async Task<T> GetCurrentAccountsAsync()
     {
         var accountId = _httpContextAccessor.HttpContext?.CurrentAccountId();
-        var account = await Where(a => a.Id == accountId).FirstOrDefaultAsync();
+        var account = await _context.Set<T>().Where(a => a.Id == accountId).FirstOrDefaultAsync();
 
         account.IsNullThrow("登录身份验证失败，请重新登录");
         return account!;

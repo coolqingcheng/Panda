@@ -1,3 +1,4 @@
+using Panda.Admin.Entities.DataModels;
 using Panda.Entity.Enums;
 
 namespace Panda.Entity.DataModels;

@@ -1,8 +1,9 @@
 ﻿using Mapster;
 using Microsoft.EntityFrameworkCore;
+using Panda.Admin.Repositorys;
 using Panda.Entity.Requests;
-using Panda.Repository.Account;
 using Panda.Repository.Roles;
+using Panda.Tools.Auth.Models;
 
 namespace Panda.Service.Roles;
 
@@ -20,10 +21,10 @@ public class RoleService : IRoleService
 
     private readonly AccountRoleRepository _accountRoleRepository;
 
-    private readonly AccountRepository _accountRepository;
+    private readonly AccountRepository<Accounts> _accountRepository;
 
     public RoleService(RoleRepository roleRepository, AccountRoleRepository accountRoleRepository,
-        AccountRepository accountRepository)
+        AccountRepository<Accounts> accountRepository)
     {
         _roleRepository = roleRepository;
         _accountRoleRepository = accountRoleRepository;
@@ -50,7 +51,7 @@ public class RoleService : IRoleService
 
     public async Task AddAccountRoleRelation(Guid accountId, Guid roleId)
     {
-        var account = await _accountRepository.Where(a => a.Id == accountId).FirstOrDefaultAsync();
+        var account = await _accountRepository.Where<Accounts>(a => a.Id == accountId).FirstOrDefaultAsync();
         var role = await _roleRepository.Where(a => a.Id == roleId).FirstOrDefaultAsync();
         var accountRole = await _accountRoleRepository.Where(a => a.Account.Id == accountId && a.Role.Id == roleId)
             .FirstOrDefaultAsync();

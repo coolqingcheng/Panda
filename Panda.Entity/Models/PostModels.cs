@@ -2,6 +2,7 @@ using Panda.Entity.DataModels;
 using Panda.Entity.Requests;
 using Panda.Tools.Models;
 using System.ComponentModel;
+using Panda.Tools.Auth.Models;
 using TencentCloud.Ssl.V20191205.Models;
 
 namespace Panda.Entity.Models;

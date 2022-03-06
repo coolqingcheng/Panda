@@ -1,53 +1,53 @@
 using System.Globalization;
 using System.Security.Claims;
-using Mapster;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Panda.Entity.DataModels;
-using Panda.Entity.Requests;
+using Panda.Admin.Repositorys;
 using Panda.Entity.Responses;
-using Panda.Repository.Account;
 using Panda.Tools.Auth;
 using Panda.Tools.Exception;
+using Panda.Tools.Auth.Models;
+using Panda.Tools.Auth.Request;
+using Panda.Tools.Auth.Response;
 using Panda.Tools.Extensions;
 using Panda.Tools.Security;
 
-namespace Panda.Services.Account;
+namespace Panda.Admin.Services.Account;
 
-public class AccountService : IAccountService
+public class AccountService<TU> : IAccountService<TU> where TU : Accounts, new()
 {
-    private readonly AccountRepository _accountRepository;
+    private readonly AccountRepository<TU> _accountRepository;
 
 
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public AccountService(AccountRepository accountRepository,
+    public AccountService(AccountRepository<TU> accountRepository,
         IHttpContextAccessor httpContextAccessor)
     {
         _accountRepository = accountRepository;
         _httpContextAccessor = httpContextAccessor;
     }
-
-    public async Task InitAsync()
-    {
-        var any = await _accountRepository.AnyAsync();
-        if (any == false)
-        {
-            await _accountRepository.AddAsync(new Accounts()
-            {
-                UserName = "管理员",
-                Passwd = IdentitySecurity.HashPassword("admin"),
-                AddTime = DateTimeOffset.Now,
-                Email = "qingchengcode@qq.com"
-            });
-        }
-    }
+    //
+    // public async Task InitAsync()
+    // {
+    //     var any = await _accountRepository.AnyAsync();
+    //     if (any == false)
+    //     {
+    //         await _accountRepository.AddAsync(new Accounts()
+    //         {
+    //             UserName = "管理员",
+    //             Passwd = IdentitySecurity.HashPassword("admin"),
+    //             AddTime = DateTimeOffset.Now,
+    //             Email = "qingchengcode@qq.com"
+    //         });
+    //     }
+    // }
 
     public async Task<AuthResult> LoginAsync(string email, string password)
     {
-        var account = await _accountRepository.Where(a => a.Email == email)
+        var account = await _accountRepository.Where<TU>(a => a.Email == email)
             .FirstOrDefaultAsync();
         var result = new AuthResult();
         if (account == null)
@@ -105,14 +105,14 @@ public class AccountService : IAccountService
         await SignOutAsync();
     }
 
-    public async Task<Accounts?> GetCurrentAccount()
+    public async Task<TU?> GetCurrentAccount()
     {
         return await _accountRepository.GetCurrentAccountsAsync();
     }
 
     public async Task InitAdminPassword()
     {
-        var account = await _accountRepository.Where(a => a.Email == "qingchengcode@qq.com").FirstOrDefaultAsync();
+        var account = await _accountRepository.Where<TU>(a => a.Email == "qingchengcode@qq.com").FirstOrDefaultAsync();
         if (account != null)
         {
             account.Passwd = IdentitySecurity.HashPassword("123456.");
@@ -122,7 +122,7 @@ public class AccountService : IAccountService
 
     public async Task<PageDto<AccountResp>> GetAccountList(AccountReq req)
     {
-        var query = _accountRepository.Queryable();
+        var query = _accountRepository.Queryable<TU>();
         var list = await query.Page(req).OrderByDescending(a => a.LastLoginTime)
             .ProjectToType<AccountResp>()
             .ToListAsync();
@@ -135,7 +135,7 @@ public class AccountService : IAccountService
 
     public async Task Disable(Guid accountId, bool status)
     {
-        var account = await _accountRepository.Where(a => a.Id == accountId).FirstOrDefaultAsync();
+        var account = await _accountRepository.Where<TU>(a => a.Id == accountId).FirstOrDefaultAsync();
         if (account != null)
         {
             account.IsDisable = status;

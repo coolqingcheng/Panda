@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+
 namespace Panda.Entity.DataModels;
 
 public class DicDatas : PandaBaseTable

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Panda.Tools.Auth.Models;
 using TencentCloud.Cdb.V20170320.Models;
 
 namespace Panda.Entity.DataModels;

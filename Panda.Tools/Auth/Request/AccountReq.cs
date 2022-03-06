@@ -1,6 +1,6 @@
 ﻿using Panda.Tools.Models;
 
-namespace Panda.Entity.Requests;
+namespace Panda.Tools.Auth.Request;
 
 public class AccountReq : BasePageRequest
 {

@@ -12,6 +12,7 @@ using System.Net;
 using System.Net.Mime;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using Panda.Admin;
 using Panda.Repository.Post;
 using Panda.Tools.NLog;
 
@@ -25,6 +26,7 @@ namespace Panda
             var services = app.Services;
             services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
             services.AddHttpClient();
+            services.AddAdmin();
             services.AddDbContextPool<PandaContext>(
                 opt =>
                 {
@@ -43,6 +45,7 @@ namespace Panda
                     opt.CacheNulls = true;
                 });
             });
+            services.AddScoped<DbContext>(a => a.GetService<PandaContext>()!);
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
             services.AddControllersWithViews(opt =>
             {

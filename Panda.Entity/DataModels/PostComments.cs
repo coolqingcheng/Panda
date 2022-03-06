@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Panda.Tools.Auth.Models;
 
 namespace Panda.Entity.DataModels;
 

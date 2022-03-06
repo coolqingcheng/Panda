@@ -1,5 +1,6 @@
 ﻿using Panda.Entity;
 using Panda.Entity.DataModels;
+using Panda.Tools.Auth.Models;
 
 namespace Panda.Repository.Roles;
 

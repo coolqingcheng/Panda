@@ -1,21 +1,19 @@
-using System.Security.Claims;
-using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Panda.Services.Account;
 using Panda.Tools.Exception;
 using Panda.Admin.Models;
+using Panda.Admin.Services.Account;
+using Panda.Tools.Auth.Models;
 
 namespace Panda.Admin.Controllers;
 
 public class AccountController : AdminController
 {
-    private readonly IAccountService _accountService;
+    private readonly IAccountService<Accounts> _accountService;
 
 
-    public AccountController(IAccountService accountService)
+    public AccountController(IAccountService<Accounts> accountService)
     {
         _accountService = accountService;
     }
@@ -41,8 +39,6 @@ public class AccountController : AdminController
     [HttpGet("/initaccount")]
     public async Task<IActionResult> Test()
     {
-
-        await _accountService.InitAsync();
         return Content("初始化账号成功");
     }
 

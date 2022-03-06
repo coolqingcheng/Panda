@@ -18,7 +18,7 @@
 
     <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App" />
-        <PackageReference Include="HtmlSanitizer" Version="7.1.475" />
+        <PackageReference Include="HtmlSanitizer" Version="7.1.488" />
         <PackageReference Include="MailKit" Version="3.1.1" />
         <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.2" />
@@ -40,8 +40,8 @@
         <PackageReference Include="SixLabors.ImageSharp" Version="2.0.0" />
         <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta13" />
         <PackageReference Include="SixLabors.ImageSharp.Web" Version="1.0.5" />
-        <PackageReference Include="Tencent.QCloud.Cos.Sdk" Version="5.4.25" />
-        <PackageReference Include="TencentCloudSDK" Version="3.0.462" />
+        <PackageReference Include="Tencent.QCloud.Cos.Sdk" Version="5.4.28" />
+        <PackageReference Include="TencentCloudSDK" Version="3.0.473" />
         <PackageReference Include="UAParser" Version="3.1.47" />
     </ItemGroup>
 

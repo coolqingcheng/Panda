@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Panda.Entity.DataModels;
+using Panda.Tools.Auth;
+using Panda.Tools.Auth.Models;
 
 namespace Panda.Entity;
 
-public class PandaContext : DbContext
+public class PandaContext : PandaAccountContext<Accounts>
 {
-    public DbSet<Accounts> Accounts { get; set; }
-
     public DbSet<Posts> Posts { get; set; }
 
     public DbSet<Categorys> Categories { get; set; }
@@ -14,7 +14,6 @@ public class PandaContext : DbContext
     public DbSet<PostsCategoryRelations> ArticleCategoryRelations { get; set; }
 
     public DbSet<AuditLogs> AuditLogs { get; set; }
-
 
     public DbSet<Pages> Pages { get; set; }
 

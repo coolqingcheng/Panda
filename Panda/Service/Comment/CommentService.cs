@@ -1,10 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using Panda.Admin.Repositorys;
 using Panda.Entity.DataModels;
 using Panda.Entity.Responses;
 using Panda.Entity.UnitOfWork;
 using Panda.Models;
-using Panda.Repository.Account;
 using Panda.Repository.Post;
+using Panda.Tools.Auth.Models;
 using Panda.Tools.Exception;
 using Panda.Tools.Extensions;
 using UAParser;
@@ -21,10 +22,10 @@ public class CommentService : ICommentService
 
     private readonly IUnitOfWork _unitOfWork;
 
-    private readonly AccountRepository _accountRepository;
+    private readonly AccountRepository<Accounts> _accountRepository;
 
     public CommentService(PostRepository postRepository, PostCommentRepository commentRepository,
-        IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork, AccountRepository accountRepository)
+        IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork, AccountRepository<Accounts> accountRepository)
     {
         _postRepository = postRepository;
         _commentRepository = commentRepository;
@@ -42,7 +43,8 @@ public class CommentService : ICommentService
             throw new UserException("当前评论未开启");
         }
 
-        var account = await _accountRepository.Where(a => a.Email == "qingchengcode@qq.com").FirstOrDefaultAsync();
+        var account = await _accountRepository.Where<Accounts>(a => a.Email == "qingchengcode@qq.com")
+            .FirstOrDefaultAsync();
 
         var userAgent = _httpContextAccessor.HttpContext!.Request.Headers.UserAgent.ToString();
 

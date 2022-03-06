@@ -1,17 +1,18 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 
-namespace Panda.Entity.DataModels;
+namespace Panda.Admin.Entities.DataModels;
 
 public class PandaBaseTable : BaseTable
 {
-
+   
 }
 
 public class KeyGuidTable : PandaBaseTable
 {
-    [Key]
-    public new Guid Id { get; set; }
+    [Key] public new Guid Id { get; set; }
 }
 
 public class BaseTable

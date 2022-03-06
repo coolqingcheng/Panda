@@ -1,14 +1,18 @@
-﻿using System.Linq.Expressions;
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using Panda.Entity;
-using Panda.Entity.DataModels;
+using Panda.Tools.Auth.Repositorys;
 using Panda.Tools.Exception;
 
-namespace Panda.Repository;
+namespace Panda.Entity.Repositorys;
 
-public class PandaRepository<T> where T : PandaBaseTable
+public class PandaRepository<T> : BaseRepository where T : PandaBaseTable
 {
-    protected readonly PandaContext _context;
+    protected new readonly PandaContext _context;
+
+    protected PandaRepository(PandaContext context) : base(context)
+    {
+        _context = context;
+    }
 
     public async Task<IEnumerable<T>> GetAll()
     {
@@ -20,21 +24,13 @@ public class PandaRepository<T> where T : PandaBaseTable
         return _context.Set<T>().Where(expression);
     }
 
+
     public async Task RemoveAsync(T item)
     {
         _context.Set<T>().Remove(item);
         await _context.SaveChangesAsync();
     }
 
-    public IQueryable<T> Queryable()
-    {
-        return _context.Set<T>().AsQueryable();
-    }
-
-    protected PandaRepository(PandaContext context)
-    {
-        _context = context;
-    }
 
     public async Task AddAsync(T entity)
     {
@@ -66,5 +62,10 @@ public class PandaRepository<T> where T : PandaBaseTable
         {
             throw new UserException(message);
         }
+    }
+
+    public new IQueryable<T> Queryable()
+    {
+        return _context.Set<T>().AsQueryable();
     }
 }

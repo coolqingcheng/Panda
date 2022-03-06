@@ -2,6 +2,8 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using Panda.Admin.Entities.DataModels;
+using Panda.Tools.Auth.Models;
 
 namespace Panda.Entity.DataModels;
 
