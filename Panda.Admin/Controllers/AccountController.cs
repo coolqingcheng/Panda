@@ -18,6 +18,11 @@ public class AccountController : AdminController
         _accountService = accountService;
     }
 
+    /// <summary>
+    /// 登录
+    /// </summary>
+    /// <param name="request"></param>
+    /// <exception cref="UserException"></exception>
     [AllowAnonymous]
     [HttpPost]
     public async Task Login(AccountLoginRequest request)
