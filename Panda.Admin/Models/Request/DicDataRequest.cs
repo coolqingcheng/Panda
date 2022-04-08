@@ -64,7 +64,7 @@ public class DicDataChildInfo
     [Required] public string Description { get; set; }
 
     /// <summary>
-    /// 是否保密
+    ///     是否保密
     /// </summary>
     public bool IsSecrecy { get; set; }
 }

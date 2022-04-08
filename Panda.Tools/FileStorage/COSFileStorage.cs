@@ -1,9 +1,6 @@
 ﻿using System.Diagnostics;
 using COSXML;
 using COSXML.Auth;
-using COSXML.Model.Object;
-using COSXML.Model.Bucket;
-using COSXML.CosException;
 using COSXML.Transfer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +10,7 @@ using Panda.Tools.Web;
 namespace Panda.Tools.FileStorage;
 
 /// <summary>
-/// 腾讯云COS存储
+///     腾讯云COS存储
 /// </summary>
 public class CosFileStorage : IFileStorage
 {
@@ -60,10 +57,7 @@ public class CosFileStorage : IFileStorage
 
 
         var localPath = Path.Combine(_webHostEnvironment.ContentRootPath, "Content", "Upload", yyyyMMdd);
-        if (Directory.Exists(localPath) == false)
-        {
-            Directory.CreateDirectory(localPath);
-        }
+        if (Directory.Exists(localPath) == false) Directory.CreateDirectory(localPath);
 
         var srcPath = Path.Combine(localPath, name); //本地文件绝对路径
         await File.WriteAllBytesAsync(srcPath, bytes);
@@ -89,7 +83,7 @@ public class CosFileStorage : IFileStorage
             .GetDefaultGroupName(
                 "host");
 
-        return new UploadFileResult()
+        return new UploadFileResult
         {
             Success = true,
             Url = host + cosPath

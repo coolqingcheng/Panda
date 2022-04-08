@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Panda.Services.Posts;
-using Panda.SiteMap;
 
 namespace Panda.Controllers;
 
@@ -17,7 +16,7 @@ public class PostController : Controller
     [HttpGet("/post/{link}.html")]
     public async Task<IActionResult> Index(string link)
     {
-        var res =  await _postService.GetPostByLink(link);
+        var res = await _postService.GetPostByLink(link);
         return View(res);
     }
 

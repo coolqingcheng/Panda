@@ -1,4 +1,3 @@
-using System.Globalization;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -7,10 +6,10 @@ using Microsoft.EntityFrameworkCore;
 using Panda.Admin.Repositorys;
 using Panda.Entity.Responses;
 using Panda.Tools.Auth;
-using Panda.Tools.Exception;
 using Panda.Tools.Auth.Models;
 using Panda.Tools.Auth.Request;
 using Panda.Tools.Auth.Response;
+using Panda.Tools.Exception;
 using Panda.Tools.Extensions;
 using Panda.Tools.Security;
 
@@ -80,10 +79,7 @@ public class AccountService<TU> : IAccountService<TU> where TU : Accounts, new()
     {
         var account = await GetCurrentAccount();
         account.IsNullThrow("登录信息读取失败，请重新登录！");
-        if (IdentitySecurity.VerifyHashedPassword(account!.Passwd, oldPwd) == false)
-        {
-            throw new UserException("旧密码错误！");
-        }
+        if (IdentitySecurity.VerifyHashedPassword(account!.Passwd, oldPwd) == false) throw new UserException("旧密码错误！");
 
         account.Passwd = IdentitySecurity.HashPassword(newPwd);
         await _accountRepository.SaveAsync();
@@ -116,7 +112,7 @@ public class AccountService<TU> : IAccountService<TU> where TU : Accounts, new()
         var list = await query.Page(req).OrderByDescending(a => a.LastLoginTime)
             .ProjectToType<AccountResp>()
             .ToListAsync();
-        return new PageDto<AccountResp>()
+        return new PageDto<AccountResp>
         {
             Total = await query.CountAsync(),
             Data = list
@@ -129,10 +125,7 @@ public class AccountService<TU> : IAccountService<TU> where TU : Accounts, new()
         if (account != null)
         {
             account.IsDisable = status;
-            if (status == false)
-            {
-                account.LockedTime = DateTimeOffset.Now.AddSeconds(-1);
-            }
+            if (status == false) account.LockedTime = DateTimeOffset.Now.AddSeconds(-1);
 
             await _accountRepository.SaveAsync();
         }

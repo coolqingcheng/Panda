@@ -1,7 +1,6 @@
 using Panda.Entity.Models;
 using Panda.Entity.Requests;
 using Panda.Entity.Responses;
-using PostRequest = Panda.Entity.Models.PostRequest;
 
 namespace Panda.Services.Posts;
 
@@ -10,15 +9,15 @@ public interface IPostService
     Task<PageDto<PostItem>> GetPostList(PostRequest request);
 
     Task<List<PostItem>> GetLatestPosts(int top);
-    
-    
+
+
     Task<PageDto<PostItem>> GetArticleListByCategoryId(PostCategoryRequest request);
-    
+
     Task<PostDetailItem> AdminGetPost(int id);
     Task<PostDetailItem> GetPost(int id);
 
     /// <summary>
-    /// 自定义链接获取文章
+    ///     自定义链接获取文章
     /// </summary>
     /// <param name="link"></param>
     /// <returns></returns>
@@ -39,7 +38,7 @@ public interface IPostService
 
 
     /// <summary>
-    /// 获取上一条下一条
+    ///     获取上一条下一条
     /// </summary>
     /// <param name="PostId"></param>
     /// <returns></returns>

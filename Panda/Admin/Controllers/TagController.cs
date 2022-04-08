@@ -7,7 +7,6 @@ namespace Panda.Admin.Controllers;
 
 public class TagController : AdminController
 {
-
     private readonly IPostTagService _tagService;
 
     public TagController(IPostTagService tagService)
@@ -16,10 +15,11 @@ public class TagController : AdminController
     }
 
     [HttpGet]
-    public async Task<PageDto<TagResponse>> GetList([FromQuery]TagRequest request)
+    public async Task<PageDto<TagResponse>> GetList([FromQuery] TagRequest request)
     {
         return await _tagService.GetList(request);
     }
+
     [HttpGet]
     public async Task<List<TagResponse>> SearchTag(string key)
     {

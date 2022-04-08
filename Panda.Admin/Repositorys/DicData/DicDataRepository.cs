@@ -18,11 +18,9 @@ public class DicDataRepository : BaseRepository
 
     public async Task<List<DicDatas>> WhereItemsByGroupName(string groupName)
     {
-        var groupItem = await _context.Set<DicDatas>().Where(a => a.DicKey == groupName && a.Pid == 0).FirstOrDefaultAsync();
-        if (groupItem == null)
-        {
-            return new List<DicDatas>();
-        }
+        var groupItem = await _context.Set<DicDatas>().Where(a => a.DicKey == groupName && a.Pid == 0)
+            .FirstOrDefaultAsync();
+        if (groupItem == null) return new List<DicDatas>();
 
         return await _context.Set<DicDatas>().Where(a => a.Pid == groupItem.Id).ToListAsync();
     }

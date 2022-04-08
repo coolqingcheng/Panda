@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Panda.Entity.DataModels;
 using Panda.Entity.Requests;
 using Panda.Entity.Responses;
 using Panda.Services.FriendlyLink;

@@ -1,6 +1,4 @@
-﻿using System.Text;
-using System.Text.Json;
-using System.Text.Unicode;
+﻿using System.Text.Json;
 
 namespace Panda;
 
@@ -11,15 +9,14 @@ public static class StringExtension
         var json = JsonSerializer.Serialize(obj);
         return json;
     }
-    
-    
+
 
     public static T? JsonToObj<T>(this string json)
     {
         var res = JsonSerializer.Deserialize<T>(json);
         return res;
     }
-    
+
     public static T? JsonToObj<T>(this byte[] json)
     {
         var res = JsonSerializer.Deserialize<T>(json);

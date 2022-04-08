@@ -1,5 +1,4 @@
 ﻿@using Panda.Entity.Responses
-@using Panda.Entity.Models
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -11,7 +10,7 @@
 @inject ICategoryService CategoryService
 <div class="row">
     <div class="col-12">
-         <h1>搜索内容：@ViewData["keyword"]</h1>
+        <h1>搜索内容：@ViewData["keyword"]</h1>
     </div>
     <div class="col-12">
         <p>搜索内容最多展示前20条</p>

@@ -10,7 +10,6 @@ using Panda.Admin.Repositorys;
 using Panda.Admin.Repositorys.DicData;
 using Panda.Admin.Services.Account;
 using Panda.Admin.Services.DicData;
-using Panda.Services.DicData;
 using Panda.Tools.CSRF;
 using Panda.Tools.EF.UnitOfWork;
 using Panda.Tools.Filter;
@@ -52,10 +51,10 @@ public static class PandaAdminExtensions
             options.InvalidModelStateResponseFactory = context =>
             {
                 var errors = context.ModelState.Values.SelectMany(a => a.Errors)
-                    .Select(a => new { a.ErrorMessage });
-                string errMsg = string.Join("|", errors);
-                var result = new JsonResult(new { Message = errMsg });
-                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    .Select(a => new {a.ErrorMessage});
+                var errMsg = string.Join("|", errors);
+                var result = new JsonResult(new {Message = errMsg});
+                context.HttpContext.Response.StatusCode = (int) HttpStatusCode.BadRequest;
                 return result;
             };
         });

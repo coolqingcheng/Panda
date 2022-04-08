@@ -24,7 +24,7 @@ public class TagRelationRepository : PandaRepository<TagsRelation>
 
     public async Task AddRelationAsync(Posts post, PostTags tag)
     {
-        await _context.TagsRelations.AddAsync(new TagsRelation()
+        await _context.TagsRelations.AddAsync(new TagsRelation
         {
             Posts = post,
             Tags = tag

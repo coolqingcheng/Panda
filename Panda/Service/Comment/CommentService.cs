@@ -14,15 +14,14 @@ namespace Panda.Service.Comment;
 
 public class CommentService : ICommentService
 {
-    private readonly PostRepository _postRepository;
+    private readonly AccountRepository<Accounts> _accountRepository;
 
     private readonly PostCommentRepository _commentRepository;
 
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly PostRepository _postRepository;
 
     private readonly IUnitOfWork _unitOfWork;
-
-    private readonly AccountRepository<Accounts> _accountRepository;
 
     public CommentService(PostRepository postRepository, PostCommentRepository commentRepository,
         IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork, AccountRepository<Accounts> accountRepository)
@@ -38,10 +37,7 @@ public class CommentService : ICommentService
     {
         await _unitOfWork.BeginTransactionAsync();
         var post = await _postRepository.FindById(request.PostId);
-        if (post.AllowComment == false)
-        {
-            throw new UserException("当前评论未开启");
-        }
+        if (post.AllowComment == false) throw new UserException("当前评论未开启");
 
         var account = await _accountRepository.Where<Accounts>(a => a.Email == "qingchengcode@qq.com")
             .FirstOrDefaultAsync();
@@ -50,7 +46,7 @@ public class CommentService : ICommentService
 
         var comment = await _commentRepository.Where(a => a.Id == request.CommentId).FirstOrDefaultAsync();
 
-        post.Comments.Add(new PostComments()
+        post.Comments.Add(new PostComments
         {
             Account = account!,
             Content = request.Message,
@@ -64,7 +60,7 @@ public class CommentService : ICommentService
     public async Task<PageDto<CommentItem>> GetComments(GetCommentRequest request)
     {
         var query = _commentRepository.Where(a => a.Post.Id == request.PostId && a.Pid == 0);
-        var commentList = await query.Page(request).Select(a => new CommentItem()
+        var commentList = await query.Page(request).Select(a => new CommentItem
         {
             Id = a.Id,
             Content = a.Content,
@@ -72,7 +68,7 @@ public class CommentService : ICommentService
             NickName = a.Account.UserName,
             ReplyId = a.ReplyId,
             UserAgent = a.UserAgent,
-            Children = _commentRepository.Where(b => b.Pid == a.Id).Take(20).Select(b => new CommentItem()
+            Children = _commentRepository.Where(b => b.Pid == a.Id).Take(20).Select(b => new CommentItem
             {
                 Id = b.Id, Content = b.Content, NickName = b.Account.NickName,
                 ReplyId = b.ReplyId, UserAgent = b.UserAgent
@@ -81,13 +77,10 @@ public class CommentService : ICommentService
         foreach (var item in commentList)
         {
             ParseUserAgent(item);
-            foreach (var itemChild in item.Children)
-            {
-                ParseUserAgent(itemChild);
-            }
+            foreach (var itemChild in item.Children) ParseUserAgent(itemChild);
         }
 
-        return new PageDto<CommentItem>()
+        return new PageDto<CommentItem>
         {
             Data = commentList,
             Total = await query.CountAsync()

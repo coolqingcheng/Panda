@@ -3,7 +3,7 @@ namespace Panda.Tools.Web;
 public class MimeUtils
 {
     /// <summary>
-    /// 获取Mime的后缀名
+    ///     获取Mime的后缀名
     /// </summary>
     /// <param name="mimeName"></param>
     /// <returns></returns>

@@ -23,9 +23,9 @@ public class CategoryController : Controller
     // GET
     [HttpGet("/category/{id:int}")]
     [HttpGet("/category/{id:int}-{index:int}")]
-    public async Task<IActionResult> Index(int id,int index = 1)
+    public async Task<IActionResult> Index(int id, int index = 1)
     {
-        var list = await _postService.GetPostList(new PostRequest()
+        var list = await _postService.GetPostList(new PostRequest
         {
             CategoryId = id,
             Index = index,

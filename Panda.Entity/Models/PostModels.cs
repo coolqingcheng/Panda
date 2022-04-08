@@ -1,9 +1,7 @@
-using Panda.Entity.DataModels;
-using Panda.Entity.Requests;
-using Panda.Tools.Models;
 using System.ComponentModel;
+using Panda.Entity.DataModels;
 using Panda.Tools.Auth.Models;
-using TencentCloud.Ssl.V20191205.Models;
+using Panda.Tools.Models;
 
 namespace Panda.Entity.Models;
 
@@ -12,27 +10,27 @@ public class PostItem
     public int Id { get; set; }
 
     /// <summary>
-    /// 自定义链接
+    ///     自定义链接
     /// </summary>
     public string CustomLink { get; set; }
 
     /// <summary>
-    /// 标题
+    ///     标题
     /// </summary>
     public string Title { get; set; }
 
     /// <summary>
-    /// 摘要
+    ///     摘要
     /// </summary>
     public string Summary { get; set; }
 
     /// <summary>
-    /// 添加时间
+    ///     添加时间
     /// </summary>
     public DateTimeOffset AddTime { get; set; }
 
     /// <summary>
-    /// 添加人
+    ///     添加人
     /// </summary>
     public Accounts? Account { get; set; }
 
@@ -41,12 +39,12 @@ public class PostItem
     public string MarkDown { get; set; }
 
     /// <summary>
-    /// 封面图
+    ///     封面图
     /// </summary>
     public string? Cover { get; set; }
 
     /// <summary>
-    /// 分类
+    ///     分类
     /// </summary>
     public List<PostCategories> Categories { get; set; }
 }
@@ -54,7 +52,7 @@ public class PostItem
 public class PostDetailItem : PostItem
 {
     /// <summary>
-    /// html内容
+    ///     html内容
     /// </summary>
     public string Content { get; set; }
 
@@ -81,12 +79,12 @@ public class PostNextItem
 public enum PostNextType
 {
     /// <summary>
-    /// 下一条
+    ///     下一条
     /// </summary>
     [Description("下一条")] Next = 1,
 
     /// <summary>
-    /// 上一条
+    ///     上一条
     /// </summary>
     [Description("上一条")] Pre = 0
 }

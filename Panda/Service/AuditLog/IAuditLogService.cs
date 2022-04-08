@@ -1,5 +1,4 @@
-﻿using Panda.Entity;
-using Panda.Entity.Requests;
+﻿using Panda.Entity.Requests;
 
 namespace Panda.Services.AuditLog;
 

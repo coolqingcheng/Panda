@@ -7,6 +7,10 @@ namespace Panda.Entity;
 
 public class PandaContext : AppContext<Accounts>
 {
+    public PandaContext(DbContextOptions<PandaContext> options) : base(options)
+    {
+    }
+
     public DbSet<Posts> Posts { get; set; }
 
     public DbSet<Categorys> Categories { get; set; }
@@ -28,6 +32,25 @@ public class PandaContext : AppContext<Accounts>
 
     public DbSet<Notices> Notices { get; set; }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<Accounts>().HasIndex(a => a.Email).IsUnique();
+
+        modelBuilder.Entity<Posts>().Property(a => a.Summary).HasMaxLength(250);
+        modelBuilder.Entity<Posts>().Property(a => a.Text).HasColumnType("longtext");
+        modelBuilder.Entity<Posts>().Property(a => a.Content).HasColumnType("longtext");
+        modelBuilder.Entity<Posts>().Property(a => a.MarkDown).HasColumnType("longtext");
+        modelBuilder.Entity<Posts>().HasIndex(a => new {a.Text, a.Title}).IsFullText(true, "ngram");
+        modelBuilder.Entity<Posts>().HasIndex(a => new {a.Id, a.Status});
+        modelBuilder.Entity<Posts>().HasIndex(a => a.CustomLink).IsUnique();
+        modelBuilder.Entity<Posts>().HasIndex(a => a.UpdateTime);
+        modelBuilder.Entity<DicDatas>().Property(a => a.Pid).HasDefaultValue(0);
+        modelBuilder.Entity<FriendlyLinks>().Property(a => a.AuditStatus).HasDefaultValue(AuditStatusEnum.unaudit);
+        modelBuilder.Entity<Notices>().Property(a => a.IsTop).HasDefaultValue(false);
+        modelBuilder.Entity<WikiDoc>().Property(a => a.WikiContent).HasColumnType("longtext");
+    }
+
 
     #region Wiki
 
@@ -38,29 +61,4 @@ public class PandaContext : AppContext<Accounts>
     public DbSet<WikiGroup> WikiGroups { get; set; }
 
     #endregion
-
-    public PandaContext(DbContextOptions<PandaContext> options) : base(options)
-    {
-    }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<Accounts>().HasIndex(a => a.Email).IsUnique();
-
-        modelBuilder.Entity<Posts>().Property(a => a.Summary).HasMaxLength(250);
-        modelBuilder.Entity<Posts>().Property(a => a.Text).HasColumnType("longtext");
-        modelBuilder.Entity<Posts>().Property(a => a.Content).HasColumnType("longtext");
-        modelBuilder.Entity<Posts>().Property(a => a.MarkDown).HasColumnType("longtext");
-        modelBuilder.Entity<Posts>().HasIndex(a => new { a.Text, a.Title }).IsFullText(fullText: true, parser: "ngram");
-        modelBuilder.Entity<Posts>().HasIndex(a => new { a.Id, a.Status });
-        modelBuilder.Entity<Posts>().HasIndex(a => a.CustomLink).IsUnique();
-        modelBuilder.Entity<Posts>().HasIndex(a => a.UpdateTime);
-        modelBuilder.Entity<DicDatas>().Property(a => a.Pid).HasDefaultValue(0);
-        modelBuilder.Entity<FriendlyLinks>().Property(a => a.AuditStatus).HasDefaultValue(AuditStatusEnum.unaudit);
-        modelBuilder.Entity<Notices>().Property(a => a.IsTop).HasDefaultValue(false);
-        modelBuilder.Entity<WikiDoc>().Property(a => a.WikiContent).HasColumnType("longtext");
-    }
-
-   
 }

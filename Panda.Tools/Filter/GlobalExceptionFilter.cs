@@ -14,9 +14,9 @@ public class GlobalExceptionFilter : IExceptionFilter
         {
             if (context.HttpContext.Request.IsAjax())
             {
-                context.Result = new JsonResult(new { Message = exception.Message });
+                context.Result = new JsonResult(new {exception.Message});
                 context.ExceptionHandled = true;
-                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                context.HttpContext.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
             }
             else
             {

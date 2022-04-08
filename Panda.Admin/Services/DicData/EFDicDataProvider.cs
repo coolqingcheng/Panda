@@ -1,18 +1,17 @@
-﻿using Panda.Admin.Services.DicData;
-using Panda.Tools.Web;
+﻿using Panda.Tools.Web;
 
 namespace Panda.Admin.Services.DicData;
 
 public class EFDicDataProvider : IDicDataProvider
 {
+    private readonly IDicDataService _dicDataService;
+
     public EFDicDataProvider(IDicDataService dicDataService)
     {
         _dicDataService = dicDataService;
     }
 
     private string DefaultGroupName { get; set; }
-
-    private readonly IDicDataService _dicDataService;
 
     public void SetDefaultGroupName(string groupName)
     {
@@ -25,9 +24,9 @@ public class EFDicDataProvider : IDicDataProvider
         return item?.Value;
     }
 
-    public async Task<string?> Get(string @group, string key)
+    public async Task<string?> Get(string group, string key)
     {
-        var item = await _dicDataService.GetItemByCache(@group, key);
+        var item = await _dicDataService.GetItemByCache(group, key);
         return item?.Value;
     }
 }

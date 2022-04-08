@@ -21,11 +21,9 @@ public class DicDataRequest
 
 public class DicUpdateRequest
 {
-    [Required]
-    public string GroupKey { get; set; }
+    [Required] public string GroupKey { get; set; }
 
-    [Required]
-    public Dictionary<string, string> List { get; set; }
+    [Required] public Dictionary<string, string> List { get; set; }
 }
 
 public class DicDataGroupInfo
@@ -51,7 +49,7 @@ public class DicDataChildInfo
     {
     }
 
-    public DicDataChildInfo(string key, string description, bool isSecrecy = false,bool isRequired = true)
+    public DicDataChildInfo(string key, string description, bool isSecrecy = false, bool isRequired = true)
     {
         Key = key;
         Description = description;
@@ -66,7 +64,7 @@ public class DicDataChildInfo
     [Required] public string Description { get; set; }
 
     /// <summary>
-    /// 是否保密
+    ///     是否保密
     /// </summary>
     public bool IsSecrecy { get; set; }
 }

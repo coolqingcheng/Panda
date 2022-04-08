@@ -17,11 +17,10 @@ public interface IRoleService
 
 public class RoleService : IRoleService
 {
-    private readonly RoleRepository _roleRepository;
+    private readonly AccountRepository<Accounts> _accountRepository;
 
     private readonly AccountRoleRepository _accountRoleRepository;
-
-    private readonly AccountRepository<Accounts> _accountRepository;
+    private readonly RoleRepository _roleRepository;
 
     public RoleService(RoleRepository roleRepository, AccountRoleRepository accountRoleRepository,
         AccountRepository<Accounts> accountRepository)
@@ -56,8 +55,6 @@ public class RoleService : IRoleService
         var accountRole = await _accountRoleRepository.Where(a => a.Account.Id == accountId && a.Role.Id == roleId)
             .FirstOrDefaultAsync();
         if (accountRole != null && account != null && role != null)
-        {
             await _accountRoleRepository.AddRoleRelation(account, role);
-        }
     }
 }

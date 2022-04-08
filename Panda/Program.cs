@@ -1,10 +1,8 @@
 using System.Net;
 using Microsoft.AspNetCore.HttpOverrides;
 using Panda;
-using global::Panda.Tools.Extensions;
 using Panda.Admin;
 using Panda.Entity;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,16 +29,12 @@ app.UseExceptionHandler(builder =>
 {
     builder.Run(async context =>
     {
-        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+        context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
         if (context.Request.Headers["X-Requested-With"] == "XMLHttpRequest" ||
             context.Request.Query["X-Requested-With"] == "XMLHttpRequest")
-        {
-            await context.Response.WriteAsJsonAsync(new { message = "服务器繁忙" });
-        }
+            await context.Response.WriteAsJsonAsync(new {message = "服务器繁忙"});
         else
-        {
             context.Response.Redirect("/error.html");
-        }
     });
 });
 //}
@@ -51,7 +45,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    "default",
+    "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Panda.Entity;
 using Panda.Entity.DataModels;
-using Panda.Repository;
 
 namespace Panda.Repository.ArticleCategoryRelation;
 
@@ -13,7 +12,7 @@ public class PostCategoryRelationRepository : PandaRepository<PostsCategoryRelat
 
     public async Task AddRelationAsync(Posts post, Categorys category)
     {
-        await _context.ArticleCategoryRelations.AddAsync(new PostsCategoryRelations()
+        await _context.ArticleCategoryRelations.AddAsync(new PostsCategoryRelations
         {
             Posts = post,
             Categories = category
@@ -26,10 +25,7 @@ public class PostCategoryRelationRepository : PandaRepository<PostsCategoryRelat
     {
         var res = await _context.Posts.Where(a => a.Id == 100).ToListAsync();
         var list = await Where(a => a.Posts == post).Include(a => a.Categories).ToListAsync();
-        foreach (var category in list)
-        {
-            category.Categories.Count -= 1;
-        }
+        foreach (var category in list) category.Categories.Count -= 1;
 
         await DeleteWhereAsync(a => a.Posts == post);
 
@@ -45,13 +41,11 @@ public class PostCategoryRelationRepository : PandaRepository<PostsCategoryRelat
         await _context.SaveChangesAsync();
         var addCateList = _context.Categories.Where(a => addList.Contains(a.Id)).ToList();
         foreach (var category in addCateList)
-        {
-            await _context.ArticleCategoryRelations.AddAsync(new PostsCategoryRelations()
+            await _context.ArticleCategoryRelations.AddAsync(new PostsCategoryRelations
             {
                 Posts = post,
                 Categories = category
             });
-        }
 
         await _context.SaveChangesAsync();
     }

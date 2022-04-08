@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Panda.Entity.DataModels;
+﻿using Panda.Entity.DataModels;
 using Panda.Entity.Requests;
 using Panda.Repository.AuditLog;
 
@@ -21,7 +20,7 @@ public class AuditLogService : IAuditLogService
         {
             using var scope = _serviceProvider.CreateScope();
             var auditLogRepository = scope.ServiceProvider.GetService<AuditLogRepository>();
-            var item = new AuditLogs()
+            var item = new AuditLogs
             {
                 Message = request.Message
             };

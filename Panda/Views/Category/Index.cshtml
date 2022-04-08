@@ -41,7 +41,7 @@
         <div>
             @{
                 var pageCount = res.Total.GetPageSum(10);
-                int index = Convert.ToInt32(ViewData["index"]);
+                var index = Convert.ToInt32(ViewData["index"]);
                 @if (pageCount > 1)
                 {
                     <ul class="page">

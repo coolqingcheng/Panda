@@ -1,37 +1,35 @@
 using System.ComponentModel.DataAnnotations;
-using Panda.Admin.Entities.DataModels;
 
 namespace Panda.Entity.DataModels;
 
-public class Categorys:PandaBaseTable
+public class Categorys : PandaBaseTable
 {
-
     /// <summary>
-    ///  名称
+    ///     名称
     /// </summary>
     [StringLength(20)]
     public string CategoryName { get; set; }
 
     /// <summary>
-    /// 说明
+    ///     说明
     /// </summary>
     public string? CategoryDesc { get; set; }
 
     /// <summary>
-    /// 是否显示
+    ///     是否显示
     /// </summary>
     public bool IsShow { get; set; }
 
     /// <summary>
-    /// 上级Id
+    ///     上级Id
     /// </summary>
     public int Pid { get; set; }
 
     /// <summary>
-    /// 关联总数
+    ///     关联总数
     /// </summary>
     public int Count { get; set; }
 
-    
+
     public List<PostsCategoryRelations> ArticleCategoryRelations { get; set; }
 }

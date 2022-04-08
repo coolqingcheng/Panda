@@ -5,7 +5,7 @@ namespace Panda.Tools.Web.Html;
 public static class HtmlHelper
 {
     /// <summary>
-    /// 处理Html的图片为懒加载格式
+    ///     处理Html的图片为懒加载格式
     /// </summary>
     /// <param name="htmlText"></param>
     /// <param name="title"></param>
@@ -17,12 +17,9 @@ public static class HtmlHelper
         var imgs = doc.QuerySelectorAll("img");
         foreach (var img in imgs)
         {
-            if (img.ClassList.Any(a => a == "lazy") == false)
-            {
-                img.ClassList.Add("lazy");
-            }
+            if (img.ClassList.Any(a => a == "lazy") == false) img.ClassList.Add("lazy");
             var src = img.GetAttribute("src");
-            if (string.IsNullOrWhiteSpace(src) != false) continue;
+            if (string.IsNullOrWhiteSpace(src)) continue;
             img.RemoveAttribute("src");
             img.SetAttribute("data-original", src);
             img.SetAttribute("alt", title);
@@ -32,7 +29,7 @@ public static class HtmlHelper
     }
 
     /// <summary>
-    /// 把html中的懒加载的图片attribute还原
+    ///     把html中的懒加载的图片attribute还原
     /// </summary>
     /// <param name="htmlText"></param>
     /// <returns></returns>
@@ -44,7 +41,7 @@ public static class HtmlHelper
         foreach (var img in imgs)
         {
             var original = img.GetAttribute("data-original");
-            if (string.IsNullOrWhiteSpace(original) != false) continue;
+            if (string.IsNullOrWhiteSpace(original)) continue;
             img.RemoveAttribute("data-original");
             img.SetAttribute("src", original);
         }

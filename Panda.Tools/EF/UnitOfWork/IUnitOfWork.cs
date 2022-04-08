@@ -14,9 +14,9 @@ public class EFUnitOfWork : IUnitOfWork
 {
     private readonly DbContext _context;
 
-    private IDbContextTransaction? _transaction = null;
+    private int _index;
 
-    private int _index = 0;
+    private IDbContextTransaction? _transaction;
 
     public EFUnitOfWork(DbContext context)
     {

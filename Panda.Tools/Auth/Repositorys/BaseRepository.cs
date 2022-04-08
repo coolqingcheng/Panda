@@ -13,6 +13,12 @@ public class BaseRepository
         _context = context;
     }
 
+    /// <summary>
+    ///     获取DbContext
+    /// </summary>
+    /// <returns></returns>
+    public DbContext GetDbContext => _context;
+
     public IQueryable<T> Where<T>(Expression<Func<T, bool>> expression) where T : PandaBaseTable
     {
         return _context.Set<T>().Where(expression);
@@ -34,10 +40,4 @@ public class BaseRepository
         _context.RemoveRange(list);
         await _context.SaveChangesAsync();
     }
-
-    /// <summary>
-    /// 获取DbContext
-    /// </summary>
-    /// <returns></returns>
-    public DbContext GetDbContext => _context;
 }

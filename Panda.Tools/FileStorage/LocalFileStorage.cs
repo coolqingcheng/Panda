@@ -15,12 +15,9 @@ public class LocalFileStorage : IFileStorage
     {
         var yyyyMMdd = DateTime.Now.ToString("yyyyMMdd");
         var localPath = Path.Combine(_webHostEnvironment.ContentRootPath, "Content", "Upload", yyyyMMdd);
-        if (Directory.Exists(localPath) == false)
-        {
-            Directory.CreateDirectory(localPath);
-        }
-        await File.WriteAllBytesAsync(Path.Combine(localPath, name),bytes);
-        return new UploadFileResult()
+        if (Directory.Exists(localPath) == false) Directory.CreateDirectory(localPath);
+        await File.WriteAllBytesAsync(Path.Combine(localPath, name), bytes);
+        return new UploadFileResult
         {
             Size = bytes.Length,
             Url = $"/img/{yyyyMMdd}/{name}",

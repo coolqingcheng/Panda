@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Panda.Tools.Exception;
 using Panda.Admin.Models;
 using Panda.Admin.Services.Account;
 using Panda.Tools.Auth.Models;
+using Panda.Tools.Exception;
 
 namespace Panda.Admin.Controllers;
 
@@ -19,7 +19,7 @@ public class AccountController : AdminController
     }
 
     /// <summary>
-    /// 登录
+    ///     登录
     /// </summary>
     /// <param name="request"></param>
     /// <exception cref="UserException"></exception>
@@ -28,10 +28,7 @@ public class AccountController : AdminController
     public async Task Login(AccountLoginRequest request)
     {
         var res = await _accountService.LoginAsync(request.UserName, request.Password);
-        if (res.IsSuccess == false)
-        {
-            throw new UserException(res.Message);
-        }
+        if (res.IsSuccess == false) throw new UserException(res.Message);
     }
 
     [HttpGet]
@@ -53,7 +50,7 @@ public class AccountController : AdminController
     [HttpGet]
     public bool IsLogin()
     {
-        var res = HttpContext.User.Identity is { IsAuthenticated: true };
+        var res = HttpContext.User.Identity is {IsAuthenticated: true};
         return res;
     }
 

@@ -11,7 +11,7 @@ public interface IAccountService<TU> where TU : Accounts
     // Task InitAsync();
 
     /// <summary>
-    /// 登录
+    ///     登录
     /// </summary>
     /// <param name="email"></param>
     /// <param name="password"></param>
@@ -19,7 +19,7 @@ public interface IAccountService<TU> where TU : Accounts
     Task<AuthResult> LoginAsync(string email, string password);
 
     /// <summary>
-    /// 修改密码
+    ///     修改密码
     /// </summary>
     /// <param name="oldPwd"></param>
     /// <param name="newPwd"></param>
@@ -28,20 +28,20 @@ public interface IAccountService<TU> where TU : Accounts
 
 
     /// <summary>
-    /// 初始化管理员密码
+    ///     初始化管理员密码
     /// </summary>
     /// <returns></returns>
     Task InitAdminPassword();
 
     /// <summary>
-    /// 初始化一个后台账号
+    ///     初始化一个后台账号
     /// </summary>
     /// <returns></returns>
     Task InitAccount();
 
 
     /// <summary>
-    /// 禁用账号
+    ///     禁用账号
     /// </summary>
     /// <param name="accountId"></param>
     /// <param name="status"></param>
@@ -50,13 +50,13 @@ public interface IAccountService<TU> where TU : Accounts
 
 
     /// <summary>
-    /// 获取当前用户
+    ///     获取当前用户
     /// </summary>
     /// <returns></returns>
     Task<TU?> GetCurrentAccount();
 
     /// <summary>
-    /// 获取用户列表
+    ///     获取用户列表
     /// </summary>
     /// <param name="req"></param>
     /// <returns></returns>

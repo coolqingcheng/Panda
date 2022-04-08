@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Panda.Tools;
@@ -9,7 +6,7 @@ namespace Panda.Tools;
 public static class AutoInject
 {
     /// <summary>
-    /// 自动注入程序集所有的接口
+    ///     自动注入程序集所有的接口
     /// </summary>
     /// <param name="serviceCollection"></param>
     /// <param name="action"></param>
@@ -23,7 +20,6 @@ public static class AutoInject
             var types = Assembly.GetCallingAssembly().GetTypes().Where(a => a.IsClass && a.IsPublic)
                 .Where(a => a.Name.EndsWith(item.EndWdith));
             foreach (var type in types)
-            {
                 if (item.InjectSelf == false)
                 {
                     if (type.Name.EndsWith(item.EndWdith) && type.GetInterfaces().Length > 0 &&
@@ -35,12 +31,8 @@ public static class AutoInject
                 }
                 else
                 {
-                    if (type.IsGenericType == false && type.IsInterface == false)
-                    {
-                        Inject(serviceCollection, type, type);
-                    }
+                    if (type.IsGenericType == false && type.IsInterface == false) Inject(serviceCollection, type, type);
                 }
-            }
         }
     }
 
@@ -51,24 +43,20 @@ public static class AutoInject
         Console.WriteLine($"正在注入:{impInterface.FullName}->{type.FullName}");
 #endif
         if (att != null)
-        {
             switch (att)
             {
-                case { InjectType: AutoInjectType.Scope }:
+                case {InjectType: AutoInjectType.Scope}:
                     serviceCollection.AddScoped(impInterface, type);
                     break;
-                case { InjectType: AutoInjectType.Single }:
+                case {InjectType: AutoInjectType.Single}:
                     serviceCollection.AddSingleton(impInterface, type);
                     break;
-                case { InjectType: AutoInjectType.Transient }:
+                case {InjectType: AutoInjectType.Transient}:
                     serviceCollection.AddTransient(impInterface, type);
                     break;
             }
-        }
         else
-        {
             serviceCollection.AddScoped(impInterface, type);
-        }
     }
 }
 
@@ -80,12 +68,12 @@ public class AutoInjectOption
 public class AutoInjectOptionItem
 {
     /// <summary>
-    /// 结尾
+    ///     结尾
     /// </summary>
     public string EndWdith { get; set; }
 
     /// <summary>
-    /// 是否是直接注入自己，不注入接口
+    ///     是否是直接注入自己，不注入接口
     /// </summary>
     public bool InjectSelf { get; set; } = false;
 }

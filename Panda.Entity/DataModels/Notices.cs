@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Panda.Entity.DataModels
+namespace Panda.Entity.DataModels;
+
+public class Notices : PandaBaseTable
 {
-    public class Notices : PandaBaseTable
-    {
-        [Required]
-        public string Title { get; set; }
+    [Required] public string Title { get; set; }
 
-        [Required]
-        public string Content { get; set; }
+    [Required] public string Content { get; set; }
 
-        /// <summary>
-        /// 置顶
-        /// </summary>
-        public bool IsTop { get; set; }
-    }
+    /// <summary>
+    ///     置顶
+    /// </summary>
+    public bool IsTop { get; set; }
 }

@@ -6,9 +6,8 @@ namespace Panda.Controllers;
 
 public class TagController : Controller
 {
-    private readonly IPostTagService _postTagService;
-
     private readonly IPostService _postService;
+    private readonly IPostTagService _postTagService;
 
     public TagController(IPostTagService postTagService, IPostService postService)
     {

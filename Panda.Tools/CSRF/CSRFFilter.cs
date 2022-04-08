@@ -19,7 +19,7 @@ public class CSRFFilter : IActionFilter
             var tokens = antiforgery?.GetAndStoreTokens(context.HttpContext);
             if (tokens?.RequestToken != null)
                 context.HttpContext.Response.Cookies.Append("CSRF-TOKEN", tokens.RequestToken,
-                    new CookieOptions { HttpOnly = false });
+                    new CookieOptions {HttpOnly = false});
         }
     }
 }

@@ -5,17 +5,16 @@ namespace Panda.Tools.Auth;
 
 public abstract class AppContext<TU> : DbContext where TU : Accounts
 {
-    public DbSet<TU> Accounts { get; set; }
-    
-    public DbSet<DicDatas> DicDatas { get; set; }
-
     public AppContext(DbContextOptions option) : base(option)
     {
-        
     }
-    
-    
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+
+    public DbSet<TU> Accounts { get; set; }
+
+    public DbSet<DicDatas> DicDatas { get; set; }
+
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
     {
         SaveChangeModifyAddTime();
         return base.SaveChangesAsync(cancellationToken);
@@ -34,7 +33,7 @@ public abstract class AppContext<TU> : DbContext where TU : Accounts
     }
 
     public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
-        CancellationToken cancellationToken = new CancellationToken())
+        CancellationToken cancellationToken = new())
     {
         SaveChangeModifyAddTime();
         return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
@@ -47,19 +46,13 @@ public abstract class AppContext<TU> : DbContext where TU : Accounts
             if (entry.State == EntityState.Modified)
             {
                 if (!entry.CurrentValues.TryGetValue<DateTimeOffset>("UpdateTime", out var time)) continue;
-                if (time == default)
-                {
-                    entry.CurrentValues["UpdateTime"] = DateTimeOffset.Now;
-                }
+                if (time == default) entry.CurrentValues["UpdateTime"] = DateTimeOffset.Now;
             }
 
             if (entry.State == EntityState.Added)
             {
                 if (!entry.CurrentValues.TryGetValue<DateTimeOffset>("AddTime", out var time)) continue;
-                if (time == default)
-                {
-                    entry.CurrentValues["AddTime"] = DateTimeOffset.Now;
-                }
+                if (time == default) entry.CurrentValues["AddTime"] = DateTimeOffset.Now;
             }
         }
     }

@@ -6,7 +6,7 @@ public class RePrintFactory
 {
     public static async Task<RePrintPostModel> RePrint(string url)
     {
-        var matchRes =  Regex.Match(url, @"(?<=\/\/).*?(?=\/)");
+        var matchRes = Regex.Match(url, @"(?<=\/\/).*?(?=\/)");
         IRePrint? rePrint = null;
         switch (matchRes.Value)
         {
@@ -19,7 +19,8 @@ public class RePrintFactory
                 rePrint = new CNBlogRePrint();
                 break;
         }
-        var res =  await rePrint?.RePrint(url)!;
+
+        var res = await rePrint?.RePrint(url)!;
         return res;
     }
 }

@@ -1,7 +1,6 @@
 ﻿using EasyCaching.Core;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Distributed;
 using Panda.Entity;
 using Panda.Entity.DataModels;
 using Panda.Entity.Requests;
@@ -38,10 +37,7 @@ public class CategoryService : ICategoryService
         if (request.Id > 0)
         {
             var item = await _categoryRepository.Where(a => a.Id == request.Id).FirstOrDefaultAsync();
-            if (item == null)
-            {
-                throw new UserException("更新的分类不存");
-            }
+            if (item == null) throw new UserException("更新的分类不存");
 
             request.Adapt(item);
             await _categoryRepository.SaveAsync();
@@ -49,10 +45,7 @@ public class CategoryService : ICategoryService
         else
         {
             var any = await _categoryRepository.Where(a => a.CategoryName == request.CategoryName).AnyAsync();
-            if (any)
-            {
-                throw new UserException("新增分类已经存在");
-            }
+            if (any) throw new UserException("新增分类已经存在");
 
             var entity = request.Adapt<Categorys>();
             await _categoryRepository.AddAsync(entity);
@@ -66,15 +59,9 @@ public class CategoryService : ICategoryService
             a.Id,
             a.ArticleCategoryRelations.Count
         }).FirstOrDefaultAsync();
-        if (res == null)
-        {
-            throw new UserException("分类不存在");
-        }
+        if (res == null) throw new UserException("分类不存在");
 
-        if (res.Count > 0)
-        {
-            throw new UserException("分类不为空，无法删除");
-        }
+        if (res.Count > 0) throw new UserException("分类不为空，无法删除");
 
         await _categoryRepository.DeleteWhereAsync(a => a.Id == id);
     }
@@ -82,10 +69,7 @@ public class CategoryService : ICategoryService
     public async Task<List<CategoryItem>> GetCategoriesByCache(CategoryPageRequest request, TimeSpan timeSpan)
     {
         var cache = await _easyCachingProvider.GetAsync<List<CategoryItem>>(CacheKeys.Categories);
-        if (cache.HasValue)
-        {
-            return cache.Value;
-        }
+        if (cache.HasValue) return cache.Value;
 
         var res = (await GetCategories(request)).Where(a => a.Count > 0 && a.IsShow).ToList();
         await _easyCachingProvider.SetAsync(CacheKeys.Categories, res, timeSpan);

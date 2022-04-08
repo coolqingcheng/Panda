@@ -1,64 +1,49 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
 
-namespace Panda.Tools.Extensions
+namespace Panda.Tools.Extensions;
+
+public static class HttpContextExtensions
 {
-    public static class HttpContextExtensions
+    /// <summary>
+    ///     获取当前登录人Id
+    /// </summary>
+    /// <param name="http"></param>
+    /// <returns></returns>
+    public static Guid? CurrentAccountId(this HttpContext http)
     {
-        /// <summary>
-        /// 获取当前登录人Id
-        /// </summary>
-        /// <param name="http"></param>
-        /// <returns></returns>
-        public static Guid? CurrentAccountId(this HttpContext http)
-        {
-            var identity = http.User;
-            var id = identity.Claims.Where(a => a.Type == "Id")
-                .Select(a => a.Value).FirstOrDefault();
-            return id != null ? Guid.Parse(id) : Guid.Empty;
-        }
+        var identity = http.User;
+        var id = identity.Claims.Where(a => a.Type == "Id")
+            .Select(a => a.Value).FirstOrDefault();
+        return id != null ? Guid.Parse(id) : Guid.Empty;
+    }
 
-        /// <summary>
-        /// 获取客户端的真实IP地址
-        /// </summary>
-        /// <param name="httpContextAccessor"></param>
-        /// <returns></returns>
-        public static string GetClientIP(this IHttpContextAccessor httpContextAccessor)
-        {
-            var request = httpContextAccessor.HttpContext!.Request;
-            if (request.Headers.ContainsKey("X-Real-IP"))
-            {
-                return request.Headers["X-Real-IP"].ToString();
-            }
+    /// <summary>
+    ///     获取客户端的真实IP地址
+    /// </summary>
+    /// <param name="httpContextAccessor"></param>
+    /// <returns></returns>
+    public static string GetClientIP(this IHttpContextAccessor httpContextAccessor)
+    {
+        var request = httpContextAccessor.HttpContext!.Request;
+        if (request.Headers.ContainsKey("X-Real-IP")) return request.Headers["X-Real-IP"].ToString();
 
-            if (request.Headers.ContainsKey("X-Forwarded-For"))
-            {
-                return request.Headers["X-Forwarded-For"].ToString();
-            }
+        if (request.Headers.ContainsKey("X-Forwarded-For")) return request.Headers["X-Forwarded-For"].ToString();
 
-            return "";
-        }
-        /// <summary>
-        /// 是否是Ajax请求
-        /// </summary>
-        /// <param name="req"></param>
-        /// <returns></returns>
-        public static bool IsAjax(this HttpRequest req)
-        {
-            bool result = false;
+        return "";
+    }
 
-            var xreq = req.Headers.ContainsKey("x-requested-with");
-            if (xreq)
-            {
-                result = req.Headers["x-requested-with"] == "XMLHttpRequest";
-            }
+    /// <summary>
+    ///     是否是Ajax请求
+    /// </summary>
+    /// <param name="req"></param>
+    /// <returns></returns>
+    public static bool IsAjax(this HttpRequest req)
+    {
+        var result = false;
 
-            return result;
-        }
+        var xreq = req.Headers.ContainsKey("x-requested-with");
+        if (xreq) result = req.Headers["x-requested-with"] == "XMLHttpRequest";
+
+        return result;
     }
 }

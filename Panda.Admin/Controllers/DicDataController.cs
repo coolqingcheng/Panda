@@ -24,7 +24,7 @@ public class DicDataController : AdminController
     [HttpGet]
     public async Task<Dictionary<string, string?>> Get(string groupName)
     {
-        var list =  await _dicDataService.GetItemByGroupName(groupName);
+        var list = await _dicDataService.GetItemByGroupName(groupName);
 
         return list.ToDictionary(info => info.Key, info => info.Value);
     }

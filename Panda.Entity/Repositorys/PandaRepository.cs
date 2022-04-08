@@ -58,13 +58,10 @@ public class PandaRepository<T> : BaseRepository where T : PandaBaseTable
     public async Task CheckExist(Expression<Func<T, bool>> expression, string message)
     {
         var exist = await Where(expression).AnyAsync();
-        if (exist == false)
-        {
-            throw new UserException(message);
-        }
+        if (exist == false) throw new UserException(message);
     }
 
-    public new IQueryable<T> Queryable()
+    public IQueryable<T> Queryable()
     {
         return _context.Set<T>().AsQueryable();
     }

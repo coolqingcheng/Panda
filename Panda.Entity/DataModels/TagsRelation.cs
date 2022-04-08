@@ -1,8 +1,6 @@
-using Microsoft.EntityFrameworkCore;
-
 namespace Panda.Entity.DataModels;
 
-public class TagsRelation:PandaBaseTable
+public class TagsRelation : PandaBaseTable
 {
     public Posts Posts { get; set; }
 

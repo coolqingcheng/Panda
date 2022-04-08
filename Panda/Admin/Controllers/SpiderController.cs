@@ -26,26 +26,20 @@ public class SpiderController : AdminController
     }
 
     /// <summary>
-    /// 转载cnBlogs.com的文章
+    ///     转载cnBlogs.com的文章
     /// </summary>
     /// <param name="url"></param>
     /// <returns></returns>
-    [HttpGet()]
+    [HttpGet]
     public async Task<SpiderResult> GetCnBlog([Required] string url)
     {
-        if (!url.StartsWith("https://www.cnblogs.com"))
-        {
-            throw new UserException("当前接口不支持非https:www.cnblogs.com的链接");
-        }
+        if (!url.StartsWith("https://www.cnblogs.com")) throw new UserException("当前接口不支持非https:www.cnblogs.com的链接");
 
         using var http = _clientFactory.CreateClient();
         var result = await http.GetStringAsync(url);
         var parser = new HtmlParser().ParseDocument(result);
         var body = parser.QuerySelector("#cnblogs_post_body");
-        if (body == null)
-        {
-            throw new UserException("页面解析错误！");
-        }
+        if (body == null) throw new UserException("页面解析错误！");
 
         var hElement = body.QuerySelectorAll("h1,h1,h3,h4,h5,h6,h7,a,p,img");
 
@@ -58,11 +52,9 @@ public class SpiderController : AdminController
             if (element.TagName.ToLower() == "a")
             {
                 var href = element.GetAttribute("href");
-                if (string.IsNullOrWhiteSpace(href) != false) continue;
+                if (string.IsNullOrWhiteSpace(href)) continue;
                 if (href.StartsWith("/") == false)
-                {
                     element.SetAttribute("href", $"/toUrl?url={HttpUtility.UrlEncode(href)}");
-                }
             }
 
             if (element.TagName.ToLower() == "img")
@@ -79,10 +71,7 @@ public class SpiderController : AdminController
                     var ext = MimeUtils.GetMimeExtName(response.Content.Headers.ContentType?.MediaType);
                     var uploadResult =
                         await _fileStorage.SaveAsync(bytes, $"{Md5Helper.ComputeHash(bytes)[..10]}.{ext}");
-                    if (uploadResult.Success)
-                    {
-                        element.SetAttribute("src", uploadResult.Url);
-                    }
+                    if (uploadResult.Success) element.SetAttribute("src", uploadResult.Url);
                 }
                 catch (Exception e)
                 {
@@ -91,7 +80,7 @@ public class SpiderController : AdminController
             }
         }
 
-        return new SpiderResult()
+        return new SpiderResult
         {
             Html = body.InnerHtml
         };

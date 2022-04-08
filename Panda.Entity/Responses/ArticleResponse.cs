@@ -4,7 +4,6 @@ namespace Panda.Entity.Responses;
 
 public class ArticleResponse
 {
-    
 }
 
 public class AdminPostItemResponse
@@ -16,7 +15,7 @@ public class AdminPostItemResponse
     public string Summary { get; set; }
 
     public DateTimeOffset AddTime { get; set; }
-    
+
     public DateTimeOffset UpdateTime { get; set; }
 
     public string AccountName { get; set; }

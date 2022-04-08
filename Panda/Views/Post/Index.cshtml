@@ -1,3 +1,4 @@
+@using Panda.Services.Posts
 @model Panda.Entity.Models.PostDetailItem
 @{
     ViewData["Title"] = Model?.Title;
@@ -10,7 +11,6 @@
         return;
     }
 }
-@using Panda.Services.Posts;
 @inject IPostService postService;
 
 
@@ -62,7 +62,7 @@
             <div class="card">
                 <h2 class="comment-header">评论</h2>
                 <div id="app">
-                   
+
                 </div>
             </div>
         </div>
@@ -89,12 +89,13 @@
 {
     <script src="~/js/highlight.js"></script>
     <script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', (event) => {
-      document.querySelectorAll('pre code').forEach((el) => {
-        hljs.highlightElement(el);
-      });
-    });
-</script>
+        document.addEventListener('DOMContentLoaded',
+            (event) => {
+                document.querySelectorAll('pre code').forEach((el) => {
+                    hljs.highlightElement(el);
+                });
+            });
+    </script>
     <environment include="Development">
         <script src="~/js/vue.min.js"></script>
         <script src="~/js/comments.js" asp-append-version="true"></script>

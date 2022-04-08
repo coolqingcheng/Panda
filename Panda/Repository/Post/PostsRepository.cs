@@ -1,14 +1,11 @@
-using System.Drawing;
 using Microsoft.EntityFrameworkCore;
 using Panda.Entity;
 using Panda.Entity.DataModels;
 using Panda.Entity.Models;
 using Panda.Entity.Requests;
 using Panda.Entity.Responses;
-using Panda.SiteMap;
 using Panda.Tools.Exception;
 using Panda.Tools.Extensions;
-using SimpleMvcSitemap;
 
 namespace Panda.Repository.Post;
 
@@ -20,13 +17,13 @@ public class PostRepository : PandaRepository<Posts>
 
     public async Task<List<PostItem>> GetLatestPosts(int top)
     {
-        var res = await _context.Posts.OrderByDescending(a => a.AddTime).Take(top).Select(a => new PostItem()
+        var res = await _context.Posts.OrderByDescending(a => a.AddTime).Take(top).Select(a => new PostItem
         {
             Id = a.Id,
             Title = a.Title,
             Summary = a.Summary,
             AddTime = a.AddTime,
-            Categories = a.ArticleCategoryRelations.Select(b => new PostCategories()
+            Categories = a.ArticleCategoryRelations.Select(b => new PostCategories
             {
                 Id = b.Categories.Id,
                 CateName = b.Categories.CategoryName
@@ -46,7 +43,7 @@ public class PostRepository : PandaRepository<Posts>
 
 
         var res = await query.Include(a => a.Account).OrderByDescending(a => a.UpdateTime).Page(request).Select(a =>
-            new PostItem()
+            new PostItem
             {
                 Id = a.Id,
                 Title = a.Title,
@@ -55,13 +52,13 @@ public class PostRepository : PandaRepository<Posts>
                 Account = a.Account,
                 Cover = a.Cover,
                 CustomLink = a.CustomLink!,
-                Categories = a.ArticleCategoryRelations.Select(b => new PostCategories()
+                Categories = a.ArticleCategoryRelations.Select(b => new PostCategories
                 {
                     Id = b.Categories.Id,
                     CateName = b.Categories.CategoryName
                 }).ToList()
             }).ToListAsync();
-        return new PageDto<PostItem>()
+        return new PageDto<PostItem>
         {
             Total = await query.CountAsync(),
             Data = res
@@ -75,7 +72,7 @@ public class PostRepository : PandaRepository<Posts>
         var list = await query.Page(request).Include(a => a.ArticleCategoryRelations)
             .OrderByDescending(a => a.AddTime)
             .ThenByDescending(a => a.UpdateTime).Select(a =>
-                new AdminPostItemResponse()
+                new AdminPostItemResponse
                 {
                     Title = a.Title,
                     Id = a.Id,
@@ -83,13 +80,13 @@ public class PostRepository : PandaRepository<Posts>
                     Status = a.Status,
                     AddTime = a.AddTime,
                     CustomLink = a.CustomLink!,
-                    CategoryItems = a.ArticleCategoryRelations.Select(b => new AdminCategoryItem()
+                    CategoryItems = a.ArticleCategoryRelations.Select(b => new AdminCategoryItem
                     {
                         Id = b.Categories.Id,
                         CateName = b.Categories.CategoryName
                     }).ToList()
                 }).ToListAsync();
-        return new PageDto<AdminPostItemResponse>()
+        return new PageDto<AdminPostItemResponse>
         {
             Data = list,
             Total = await query.CountAsync()
@@ -97,7 +94,7 @@ public class PostRepository : PandaRepository<Posts>
     }
 
     /// <summary>
-    /// 全文搜索内容
+    ///     全文搜索内容
     /// </summary>
     /// <param name="keyword"></param>
     /// <returns></returns>
@@ -109,7 +106,7 @@ public class PostRepository : PandaRepository<Posts>
             await query.Include(a => a.ArticleCategoryRelations).Include(a => a.Account)
                 .OrderByDescending(a => a.UpdateTime)
                 .ThenByDescending(a => a.AddTime).Select(a =>
-                    new AdminPostItemResponse()
+                    new AdminPostItemResponse
                     {
                         Title = a.Title,
                         Id = a.Id,
@@ -118,13 +115,13 @@ public class PostRepository : PandaRepository<Posts>
                         Summary = a.Summary,
                         AccountName = a.Account.UserName,
                         CustomLink = a.CustomLink!,
-                        CategoryItems = a.ArticleCategoryRelations.Select(b => new AdminCategoryItem()
+                        CategoryItems = a.ArticleCategoryRelations.Select(b => new AdminCategoryItem
                         {
                             Id = b.Categories.Id,
                             CateName = b.Categories.CategoryName
                         }).ToList()
                     }).ToListAsync();
-        return new PageDto<AdminPostItemResponse>()
+        return new PageDto<AdminPostItemResponse>
         {
             Total = 0,
             Data = res
@@ -133,7 +130,7 @@ public class PostRepository : PandaRepository<Posts>
 
     public async Task CheckPostIdExist(int id)
     {
-        if ((await _context.Posts.AnyAsync(a => a.Id == id)) == false)
+        if (await _context.Posts.AnyAsync(a => a.Id == id) == false)
         {
         }
     }
@@ -141,10 +138,7 @@ public class PostRepository : PandaRepository<Posts>
     public async Task<Posts> FindById(int Id)
     {
         var post = await _context.Posts.FirstOrDefaultAsync(a => a.Id == Id);
-        if (post == null)
-        {
-            throw new UserException("没有找到对应Post的ID");
-        }
+        if (post == null) throw new UserException("没有找到对应Post的ID");
 
         return post;
     }

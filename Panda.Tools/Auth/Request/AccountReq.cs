@@ -4,5 +4,4 @@ namespace Panda.Tools.Auth.Request;
 
 public class AccountReq : BasePageRequest
 {
-    
 }

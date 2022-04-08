@@ -4,12 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace Panda.Admin.Controllers;
 
 /// <summary>
-/// 后台api
+///     后台api
 /// </summary>
 [Route("/admin/[controller]/[action]")]
 [Authorize]
 [ApiController]
-public class AdminController:Controller
+public class AdminController : Controller
 {
-    
 }

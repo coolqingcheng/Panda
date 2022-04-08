@@ -12,7 +12,7 @@ public interface IDicDataService
     Task Delete(string groupName);
 
     /// <summary>
-    /// 获取配置项目，可能是缓存中获取
+    ///     获取配置项目，可能是缓存中获取
     /// </summary>
     /// <param name="groupName"></param>
     /// <param name="key"></param>

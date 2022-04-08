@@ -12,16 +12,13 @@ public interface ICategoryService
     Task Delete(int id);
 
     /// <summary>
-    /// 获取分类从缓存
+    ///     获取分类从缓存
     /// </summary>
     /// <param name="request"></param>
     /// <param name="timeSpan"></param>
     /// <returns></returns>
-    Task<List<CategoryItem>> GetCategoriesByCache(CategoryPageRequest request,TimeSpan timeSpan);
+    Task<List<CategoryItem>> GetCategoriesByCache(CategoryPageRequest request, TimeSpan timeSpan);
 
 
     Task<CategoryItem> GetCategoryById(int id);
-
-
-
 }

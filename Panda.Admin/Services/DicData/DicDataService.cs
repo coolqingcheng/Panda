@@ -12,11 +12,10 @@ namespace Panda.Admin.Services.DicData;
 
 public class DicDataService : IDicDataService
 {
+    private readonly IEasyCachingProvider _caching;
     private readonly DicDataRepository _dataRepository;
 
     private readonly IUnitOfWork _unitOfWork;
-
-    private readonly IEasyCachingProvider _caching;
 
     public DicDataService(DicDataRepository dataRepository, IUnitOfWork unitOfWork, IEasyCachingProvider caching)
     {
@@ -33,7 +32,7 @@ public class DicDataService : IDicDataService
             .FirstOrDefaultAsync();
         if (groupInfo == null)
         {
-            groupInfo = new DicDatas()
+            groupInfo = new DicDatas
             {
                 DicKey = request.GroupInfo.Name,
                 DicValue = "-",
@@ -47,15 +46,13 @@ public class DicDataService : IDicDataService
         }
 
         foreach (var item in request.ChildInfos)
-        {
-            await _dataRepository.GetDbContext.AddAsync(new DicDatas()
+            await _dataRepository.GetDbContext.AddAsync(new DicDatas
             {
                 DicKey = item.Key,
                 DicValue = item.Value,
                 Description = item.Description,
                 Pid = groupInfo.Id
             });
-        }
 
         await _caching.RemoveByPrefixAsync(CacheKeys.DicDataGroupNameKey);
 
@@ -65,14 +62,14 @@ public class DicDataService : IDicDataService
     public async Task<IEnumerable<DicDataResponse>> GetDicDataList()
     {
         var list = (await _dataRepository.Queryable<DicDatas>().ToListAsync()).ToList();
-        return list.Where(a => a.Pid == 0).Select(a => new DicDataResponse()
+        return list.Where(a => a.Pid == 0).Select(a => new DicDataResponse
         {
-            GroupInfo = new DicDataGroupInfo()
+            GroupInfo = new DicDataGroupInfo
             {
                 Name = a.DicKey,
                 Description = a.Description
             },
-            ChildInfo = list.Where(b => b.Pid == a.Id).Select(b => new DicDataChildInfo()
+            ChildInfo = list.Where(b => b.Pid == a.Id).Select(b => new DicDataChildInfo
             {
                 Key = b.DicKey,
                 Value = b.DicValue,
@@ -95,7 +92,7 @@ public class DicDataService : IDicDataService
             async () =>
             {
                 var list = await _dataRepository.WhereItemsByGroupName(groupName);
-                var item = list.Select(a => new DicDataChildInfo()
+                var item = list.Select(a => new DicDataChildInfo
                 {
                     Key = a.DicKey,
                     Value = a.DicValue,
@@ -103,10 +100,7 @@ public class DicDataService : IDicDataService
                 }).ToList();
                 return item;
             }, TimeSpan.FromDays(1));
-        if (result.HasValue)
-        {
-            return result.Value.FirstOrDefault(a => a.Key == key);
-        }
+        if (result.HasValue) return result.Value.FirstOrDefault(a => a.Key == key);
 
         return null;
     }

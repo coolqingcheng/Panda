@@ -6,17 +6,14 @@ using Panda.Entity.DataModels;
 using Panda.Entity.Requests;
 using Panda.Entity.Responses;
 using Panda.Repository.FriendlyLink;
-using Panda.Tools.Exception;
 using Panda.Tools.Extensions;
 
 namespace Panda.Services.FriendlyLink;
 
 public class FriendlyLinkService : IFriendlyLinkService
 {
-    private readonly FriendLinkRepository _friendLinkRepository;
-
-
     private readonly IEasyCachingProvider _easyCachingProvider;
+    private readonly FriendLinkRepository _friendLinkRepository;
 
     public FriendlyLinkService(FriendLinkRepository friendLinkRepository, IEasyCachingProvider easyCachingProvider)
     {
@@ -31,7 +28,7 @@ public class FriendlyLinkService : IFriendlyLinkService
         var list = await query.Page(request).OrderByDescending(a => a.Weight).ProjectToType<FriendlyLinkResponse>()
             .ToListAsync();
 
-        return new PageDto<FriendlyLinkResponse>()
+        return new PageDto<FriendlyLinkResponse>
         {
             Total = await query.CountAsync(),
             Data = list
@@ -76,7 +73,7 @@ public class FriendlyLinkService : IFriendlyLinkService
         var list = await query.Page(request).OrderByDescending(a => a.Weight).ProjectToType<FriendlyLinkResponse>()
             .ToListAsync();
 
-        return new PageDto<FriendlyLinkResponse>()
+        return new PageDto<FriendlyLinkResponse>
         {
             Total = await query.CountAsync(),
             Data = list
@@ -89,7 +86,7 @@ public class FriendlyLinkService : IFriendlyLinkService
         var item = await _friendLinkRepository.Where(a => a.Id == request.Id).FirstOrDefaultAsync();
         if (item == null)
         {
-            item = new FriendlyLinks()
+            item = new FriendlyLinks
             {
                 SiteName = request.siteName,
                 SiteUrl = request.siteUrl,
@@ -101,10 +98,7 @@ public class FriendlyLinkService : IFriendlyLinkService
         {
             item.SiteUrl = request.siteUrl;
             item.SiteName = request.siteName;
-            if (request.AuditStatus != null)
-            {
-                item.AuditStatus = (AuditStatusEnum)request.AuditStatus;
-            }
+            if (request.AuditStatus != null) item.AuditStatus = (AuditStatusEnum) request.AuditStatus;
 
             await _friendLinkRepository.SaveAsync();
         }

@@ -4,7 +4,7 @@ using Panda.Entity.DataModels;
 
 namespace Panda.Repository.Tags;
 
-public class PostTagsRepository:PandaRepository<PostTags>
+public class PostTagsRepository : PandaRepository<PostTags>
 {
     public PostTagsRepository(PandaContext context) : base(context)
     {
@@ -12,14 +12,14 @@ public class PostTagsRepository:PandaRepository<PostTags>
 
     public async Task<PostTags> GetWithCreate(string tagName)
     {
-       var tagItem = await  Where(a => a.TagName == tagName).FirstOrDefaultAsync();
-       if (tagItem != null) return tagItem;
-       tagItem = new PostTags()
-       {
-           TagName = tagName
-       };
-       await AddAsync(tagItem);
+        var tagItem = await Where(a => a.TagName == tagName).FirstOrDefaultAsync();
+        if (tagItem != null) return tagItem;
+        tagItem = new PostTags
+        {
+            TagName = tagName
+        };
+        await AddAsync(tagItem);
 
-       return tagItem;
+        return tagItem;
     }
 }

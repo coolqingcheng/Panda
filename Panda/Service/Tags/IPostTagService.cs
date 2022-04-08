@@ -26,10 +26,8 @@ public interface IPostTagService
 
 public class PostTagService : IPostTagService
 {
-    private readonly PostTagsRepository _tagsRepository;
-
-
     private readonly TagRelationRepository _relationRepository;
+    private readonly PostTagsRepository _tagsRepository;
 
     public PostTagService(PostTagsRepository tagsRepository, TagRelationRepository relationRepository)
     {
@@ -40,7 +38,7 @@ public class PostTagService : IPostTagService
     public async Task<List<TagResponse>> SearchTag(string searchValue)
     {
         var list = await _tagsRepository.Where(a => a.TagName.Contains(searchValue))
-            .OrderByDescending(a => a.PostCount).Take(10).Select(a => new TagResponse()
+            .OrderByDescending(a => a.PostCount).Take(10).Select(a => new TagResponse
             {
                 TagName = a.TagName,
                 Id = a.Id
@@ -51,11 +49,11 @@ public class PostTagService : IPostTagService
     public async Task<PageDto<TagResponse>> GetList(TagRequest request)
     {
         var query = _tagsRepository.Queryable();
-        var list = await query.Page(request).Select(a => new TagResponse()
+        var list = await query.Page(request).Select(a => new TagResponse
         {
             TagName = a.TagName, Count = a.PostCount, Id = a.Id
         }).ToListAsync();
-        return new PageDto<TagResponse>()
+        return new PageDto<TagResponse>
         {
             Total = await query.CountAsync(),
             Data = list
@@ -64,7 +62,7 @@ public class PostTagService : IPostTagService
 
     public async Task AddRelation(Entity.DataModels.Posts post, PostTags tag)
     {
-        await _relationRepository.AddAsync(new TagsRelation()
+        await _relationRepository.AddAsync(new TagsRelation
         {
             Tags = tag, Posts = post
         });
@@ -94,12 +92,10 @@ public class PostTagService : IPostTagService
         {
             var any = await _tagsRepository.Where(a => a.TagName == request.TagName).AnyAsync();
             if (any == false)
-            {
-                await _tagsRepository.AddAsync(new PostTags()
+                await _tagsRepository.AddAsync(new PostTags
                 {
                     TagName = request.TagName
                 });
-            }
         }
     }
 }

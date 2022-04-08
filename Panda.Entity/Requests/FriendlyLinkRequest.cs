@@ -13,7 +13,7 @@ public class AddFriendLinkRequest
     public int Id { get; set; }
 
     /// <summary>
-    /// 站点名称
+    ///     站点名称
     /// </summary>
     [Required]
     public string siteName { get; set; }

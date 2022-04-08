@@ -10,7 +10,7 @@ public class PageDto<T> : BaseResponse
 public class BaseResponse
 {
     /// <summary>
-    /// 消息
+    ///     消息
     /// </summary>
     public string Message { get; set; }
 }

@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Panda.Entity.Requests;
 using Panda.Entity.Responses;
 using Panda.Services.Category;
-using Panda.Admin.Models;
 
 namespace Panda.Admin.Controllers;
 
@@ -18,11 +17,11 @@ public class CategoryController : AdminController
     [HttpPost]
     public async Task AddOrUpdate(CategoryAddOrUpdate input)
     {
-         await _categoryService.AddOrUpdate(input);
+        await _categoryService.AddOrUpdate(input);
     }
 
     [HttpGet]
-    public async Task<List<CategoryItem>> GetList([FromQuery]CategoryPageRequest request)
+    public async Task<List<CategoryItem>> GetList([FromQuery] CategoryPageRequest request)
     {
         return await _categoryService.GetCategories(request);
     }
@@ -30,6 +29,6 @@ public class CategoryController : AdminController
     [HttpDelete]
     public async Task Delete(int CategoryId)
     {
-         await _categoryService.Delete(CategoryId);
+        await _categoryService.Delete(CategoryId);
     }
 }

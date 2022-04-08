@@ -1,5 +1,4 @@
-﻿@using Panda.Services.DicData
-@using Panda.Admin.Services.DicData
+﻿@using Panda.Admin.Services.DicData
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @inject ICategoryService _categoryService
 @inject IDicDataService _dicDataService
@@ -24,7 +23,7 @@
     }
     <link rel="stylesheet" href="~/css/index.css" asp-append-version="true"/>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-    @await RenderSectionAsync("css", required: false)
+    @await RenderSectionAsync("css", false)
 </head>
 <body>
 <header>
@@ -76,6 +75,6 @@
 <script src="~/js/jquery.min.js"></script>
 <script src="~/js/jquery.lazyload.min.js" asp-append-version="true"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
-@await RenderSectionAsync("Scripts", required: false)
+@await RenderSectionAsync("Scripts", false)
 </body>
 </html>

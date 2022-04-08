@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using Panda.Entity.Requests;
 using Panda.Tools.Models;
 
 namespace Panda.Models;
@@ -14,16 +13,14 @@ public class CommentRequest
     [Required(ErrorMessage = "PostId不能为空")]
     public int PostId { get; set; }
 
-    [Required(ErrorMessage = "评论信息不能为空")]
-    public string Message { get; set; }
+    [Required(ErrorMessage = "评论信息不能为空")] public string Message { get; set; }
 
     public int? CommentId { get; set; }
 }
 
-public class GetCommentRequest:BasePageRequest
+public class GetCommentRequest : BasePageRequest
 {
-    [Required]
-    public int PostId { get; set; }
+    [Required] public int PostId { get; set; }
 }
 
 public class CommentItem
@@ -44,11 +41,10 @@ public class CommentItem
 
     public int Index { get; set; }
 
-    [JsonIgnore]
-    public string UserAgent { get; set; }
+    [JsonIgnore] public string UserAgent { get; set; }
 
     /// <summary>
-    /// 回复某Id
+    ///     回复某Id
     /// </summary>
     public int? ReplyId { get; set; }
 

@@ -10,9 +10,8 @@ namespace Panda.Admin.Repositorys;
 
 public class AccountRepository<T> : BaseRepository where T : Accounts, new()
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
-
     private new readonly DbContext _context;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
     public AccountRepository(DbContext context, IHttpContextAccessor httpContextAccessor) : base(context)
     {
@@ -25,7 +24,7 @@ public class AccountRepository<T> : BaseRepository where T : Accounts, new()
         var any = await _context.Set<T>().AnyAsync();
         if (any == false)
         {
-            await _context.Set<T>().AddAsync(new T()
+            await _context.Set<T>().AddAsync(new T
             {
                 UserName = "管理员",
                 NickName = "管理员",
@@ -45,10 +44,8 @@ public class AccountRepository<T> : BaseRepository where T : Accounts, new()
     {
         account.LoginFailCount += 1;
         if (account.LoginFailCount >= 5 && IsLocked(account) == false)
-        {
             //大于5次锁定账户
             account.LockedTime = DateTimeOffset.Now.AddMinutes(15);
-        }
 
         await _context.SaveChangesAsync();
     }

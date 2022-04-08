@@ -6,18 +6,18 @@ namespace Panda.Tools.Extensions;
 public static class HtmlExtension
 {
     /// <summary>
-    /// 获取html的text
+    ///     获取html的text
     /// </summary>
     /// <param name="html"></param>
     /// <returns></returns>
     public static string GetHtmlText(this string html)
     {
-        var doc =  new HtmlParser().ParseDocument(html);
+        var doc = new HtmlParser().ParseDocument(html);
         return doc.Body == null ? "" : doc.Body.TextContent;
     }
 
     /// <summary>
-    /// 获取信息摘要
+    ///     获取信息摘要
     /// </summary>
     /// <param name="text"></param>
     /// <param name="len"></param>
@@ -28,7 +28,7 @@ public static class HtmlExtension
     }
 
     /// <summary>
-    /// xss过滤
+    ///     xss过滤
     /// </summary>
     /// <param name="html"></param>
     /// <returns></returns>

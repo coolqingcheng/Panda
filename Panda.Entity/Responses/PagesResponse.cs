@@ -7,7 +7,7 @@ public class PagesResponse
     public string Title { get; set; }
 
     public string Url { get; set; }
-    
+
     public string Content { get; set; }
 }
 
@@ -18,8 +18,8 @@ public class PagesItem
     public string Title { get; set; }
 
     public string Url { get; set; }
-    
+
     public DateTime AddTime { get; set; }
-    
+
     public DateTime UpdateTime { get; set; }
 }

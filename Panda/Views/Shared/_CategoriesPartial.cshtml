@@ -7,7 +7,7 @@
     <div class="card-body">
         <ul >
             @{
-                var categories = await _categoryService.GetCategoriesByCache(new CategoryPageRequest() { Index = 1, Size = 50, IsShow = true }, TimeSpan.FromMinutes(5));
+                var categories = await _categoryService.GetCategoriesByCache(new CategoryPageRequest {Index = 1, Size = 50, IsShow = true}, TimeSpan.FromMinutes(5));
                 foreach (var categoryItem in categories)
                 {
                     <li>

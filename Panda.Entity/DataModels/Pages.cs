@@ -2,17 +2,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Panda.Entity.DataModels;
 
-public class Pages:PandaBaseTable
+public class Pages : PandaBaseTable
 {
-    
-    [Required]
-    public string Url { get; set; }
+    [Required] public string Url { get; set; }
 
-    [Required]
-    public string Title { get; set; }
+    [Required] public string Title { get; set; }
 
     /// <summary>
-    /// 内容
+    ///     内容
     /// </summary>
     [Required]
     public string Content { get; set; }

@@ -1,2 +1,2 @@
-﻿global using global::Panda.Admin.Entities.DataModels;
-global using global::Mapster;
+﻿global using Panda.Admin.Entities.DataModels;
+global using Mapster;

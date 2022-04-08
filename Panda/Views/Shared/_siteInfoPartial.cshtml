@@ -1,4 +1,3 @@
-@using Panda.Services.DicData
 @using Panda.Admin.Services.DicData
 @inject IDicDataService DicDataService
 @if (string.IsNullOrWhiteSpace(await DicDataService.GetItemByCache("wechat:wechat_official_account_desc")) == false)

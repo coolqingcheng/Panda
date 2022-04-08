@@ -4,7 +4,6 @@ using Panda.Models;
 using Panda.Service.Comment;
 using Panda.Tools.Email;
 
-
 namespace Panda.Controllers;
 
 [Route("/api/[controller]/[action]")]
@@ -13,7 +12,7 @@ public class CommentController : Controller
 {
     private readonly ICommentService _commentService;
 
-    private IEmailSender _emailSender;
+    private readonly IEmailSender _emailSender;
 
     public CommentController(ICommentService commentService, IEmailSender emailSender)
     {
@@ -22,14 +21,14 @@ public class CommentController : Controller
     }
 
     [IgnoreAntiforgeryToken]
-    [HttpPost()]
+    [HttpPost]
     public async Task Submit(CommentRequest commentRequest)
     {
         await _commentService.Submit(commentRequest);
     }
 
     [IgnoreAntiforgeryToken]
-    [HttpGet()]
+    [HttpGet]
     public string Test()
     {
         _emailSender.SendEmail("984587039@qq.com", "9845", "测试标题", "您的验证码:<span style=\"color:red\">7777</span>");

@@ -4,34 +4,31 @@ using Panda.Entity.DataModels;
 using Panda.Entity.Models;
 using Panda.Entity.Requests;
 using Panda.Entity.Responses;
-using Panda.Repository.Post;
 using Panda.Repository.ArticleCategoryRelation;
 using Panda.Repository.Category;
+using Panda.Repository.Post;
 using Panda.Repository.Tags;
 using Panda.Tools.Auth.Models;
 using Panda.Tools.EF.UnitOfWork;
 using Panda.Tools.Exception;
 using Panda.Tools.Extensions;
 using Panda.Tools.Web.Html;
-using PostRequest = Panda.Entity.Models.PostRequest;
 
 namespace Panda.Services.Posts;
 
 public class PostService : IPostService
 {
-    private readonly PostRepository _postRepository;
-
+    private readonly AccountRepository<Accounts> _accountRepository;
     private readonly CategoryRepository _categoryRepository;
 
-    private readonly IUnitOfWork _unitOfWork;
-
     private readonly PostCategoryRelationRepository _postCategoryRelationRepository;
-
-    private readonly TagRelationRepository _tagRelationRepository;
+    private readonly PostRepository _postRepository;
 
     private readonly PostTagsRepository _postTagsRepository;
 
-    private AccountRepository<Accounts> _accountRepository;
+    private readonly TagRelationRepository _tagRelationRepository;
+
+    private readonly IUnitOfWork _unitOfWork;
 
     public PostService(PostRepository postRepository, CategoryRepository categoryRepository,
         IUnitOfWork unitOfWork, PostCategoryRelationRepository postCategoryRelationRepository,
@@ -85,7 +82,7 @@ public class PostService : IPostService
                     Cover = a.Cover,
                     MarkDown = a.MarkDown,
                     CustomLink = a.CustomLink!,
-                    TagItems = a.TagsRelations.Select(b => new PostTagItem()
+                    TagItems = a.TagsRelations.Select(b => new PostTagItem
                     {
                         Id = b.Tags.Id,
                         TagName = b.Tags.TagName
@@ -93,7 +90,7 @@ public class PostService : IPostService
                 }).FirstOrDefaultAsync();
         item.IsNullThrow("找不到当前的文章Id");
         var categories = await _categoryRepository.GetCategories(item!.Id);
-        item.Categories = categories.Select(a => new PostCategories()
+        item.Categories = categories.Select(a => new PostCategories
         {
             Id = a.Id,
             CateName = a.CategoryName
@@ -124,10 +121,7 @@ public class PostService : IPostService
         {
             var post = await _postRepository.Where(a => a.Id == request.Id)
                 .Include(a => a.ArticleCategoryRelations).FirstOrDefaultAsync();
-            if (post == null)
-            {
-                throw new UserException("修改的文章不存在");
-            }
+            if (post == null) throw new UserException("修改的文章不存在");
 
             post.Title = request.Title;
             post.Content = request.Content.LazyHandler(request.Title)!;
@@ -137,10 +131,7 @@ public class PostService : IPostService
             post.Cover = request.Cover;
             post.Account = account;
             post.MarkDown = request.MarkDown;
-            if (string.IsNullOrWhiteSpace(post.CustomLink))
-            {
-                post.CustomLink = Guid.NewGuid().ToString("N");
-            }
+            if (string.IsNullOrWhiteSpace(post.CustomLink)) post.CustomLink = Guid.NewGuid().ToString("N");
 
             await _postRepository.SaveAsync();
             var beforeCategories = await _postCategoryRelationRepository.Where(a => a.Posts == post)
@@ -151,19 +142,17 @@ public class PostService : IPostService
 
             await _tagRelationRepository.PostDeleteRelationAsync(post);
             if (request.Tags != null)
-            {
                 foreach (var tag in request.Tags)
                 {
                     var tagItem = await _postTagsRepository.GetWithCreate(tag);
                     await _tagRelationRepository.AddRelationAsync(post, tagItem);
                 }
-            }
         }
         else
         {
             //添加
 
-            var post = new Entity.DataModels.Posts()
+            var post = new Entity.DataModels.Posts
             {
                 Title = request.Title,
                 Content = request.Content.LazyHandler(request.Title)!,
@@ -174,23 +163,18 @@ public class PostService : IPostService
                 Cover = request.Cover,
                 Account = account,
                 MarkDown = request.MarkDown,
-                CustomLink = Guid.NewGuid().ToString("N"),
+                CustomLink = Guid.NewGuid().ToString("N")
             };
             await _postRepository.AddAsync(post);
             var categories = await _categoryRepository.Where(a => request.Categories.Contains(a.Id)).ToListAsync();
-            foreach (var category in categories)
-            {
-                await _postCategoryRelationRepository.AddRelationAsync(post, category);
-            }
+            foreach (var category in categories) await _postCategoryRelationRepository.AddRelationAsync(post, category);
 
             if (request.Tags != null)
-            {
                 foreach (var tagName in request.Tags)
                 {
                     var tag = await _postTagsRepository.GetWithCreate(tagName);
                     await _tagRelationRepository.AddRelationAsync(post, tag);
                 }
-            }
 
             await _postRepository.SaveAsync();
         }
@@ -214,7 +198,7 @@ public class PostService : IPostService
         var query = _tagRelationRepository.Where(a => a.Tags.Id == tagId);
         var tagItem = await query
             .Include(a => a.Posts)
-            .Select(a => new PostItem()
+            .Select(a => new PostItem
             {
                 Id = a.Posts.Id,
                 Account = a.Posts.Account,
@@ -223,12 +207,12 @@ public class PostService : IPostService
                 Title = a.Posts.Title,
                 CustomLink = a.Posts.CustomLink!,
                 Categories =
-                    a.Posts.ArticleCategoryRelations.Select(b => new PostCategories()
-                            { Id = b.Categories.Id, CateName = b.Categories.CategoryName })
+                    a.Posts.ArticleCategoryRelations.Select(b => new PostCategories
+                            {Id = b.Categories.Id, CateName = b.Categories.CategoryName})
                         .ToList()
             }).OrderByDescending(a => a.AddTime).ToListAsync();
 
-        return new PageDto<PostItem>()
+        return new PageDto<PostItem>
         {
             Data = tagItem,
             Total = await query.CountAsync()
@@ -240,7 +224,7 @@ public class PostService : IPostService
         var list = new List<PostNextItem>();
         var nextPost = await _postRepository.Where(a => a.Id == PostId).OrderBy(a => a.AddTime).Skip(1).Take(1).Select(
             a =>
-                new PostNextItem()
+                new PostNextItem
                 {
                     Id = a.Id,
                     Title = a.Title,
@@ -249,22 +233,16 @@ public class PostService : IPostService
                 }).FirstOrDefaultAsync();
         var prePost = await _postRepository.Where(a => a.Id == PostId).OrderByDescending(a => a.AddTime).Skip(1).Take(1)
             .Select(
-                a => new PostNextItem()
+                a => new PostNextItem
                 {
                     Id = a.Id,
                     Title = a.Title,
                     CustomLink = a.CustomLink!,
                     Type = PostNextType.Pre
                 }).FirstOrDefaultAsync();
-        if (nextPost != null)
-        {
-            list.Add(nextPost);
-        }
+        if (nextPost != null) list.Add(nextPost);
 
-        if (prePost != null)
-        {
-            list.Add(prePost);
-        }
+        if (prePost != null) list.Add(prePost);
 
         return list;
     }
@@ -285,7 +263,7 @@ public class PostService : IPostService
                     Cover = a.Cover,
                     MarkDown = a.MarkDown,
                     CustomLink = a.CustomLink!,
-                    TagItems = a.TagsRelations.Select(b => new PostTagItem()
+                    TagItems = a.TagsRelations.Select(b => new PostTagItem
                     {
                         Id = b.Tags.Id,
                         TagName = b.Tags.TagName
@@ -293,7 +271,7 @@ public class PostService : IPostService
                 }).FirstOrDefaultAsync();
         item.IsNullThrow("找不到当前的文章Id");
         var categories = await _categoryRepository.GetCategories(item!.Id);
-        item.Categories = categories.Select(a => new PostCategories()
+        item.Categories = categories.Select(a => new PostCategories
         {
             Id = a.Id,
             CateName = a.CategoryName

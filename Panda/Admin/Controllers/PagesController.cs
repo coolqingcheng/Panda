@@ -21,7 +21,7 @@ public class PagesController : AdminController
     }
 
     [HttpGet]
-    public async Task<PageDto<PagesItem>> GetList([FromQuery]GetPagesRequest request)
+    public async Task<PageDto<PagesItem>> GetList([FromQuery] GetPagesRequest request)
     {
         return await _pageService.GetPagesList(request);
     }

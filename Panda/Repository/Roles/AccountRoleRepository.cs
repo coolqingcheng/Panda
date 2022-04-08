@@ -8,12 +8,11 @@ public class AccountRoleRepository : PandaRepository<AccountRoleRelations>
 {
     public AccountRoleRepository(PandaContext context) : base(context)
     {
-        
     }
 
     public async Task AddRoleRelation(Accounts account, Entity.DataModels.Roles roles)
     {
-        await AddAsync(new AccountRoleRelations()
+        await AddAsync(new AccountRoleRelations
         {
             Account = account,
             Role = roles

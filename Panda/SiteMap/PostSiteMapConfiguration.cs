@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Routing;
 using Panda.Entity.DataModels;
 using SimpleMvcSitemap;
 

@@ -1,13 +1,9 @@
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
 
 namespace Panda.Admin.Entities.DataModels;
 
 public class PandaBaseTable : BaseTable
 {
-   
 }
 
 public class KeyGuidTable : PandaBaseTable
@@ -21,12 +17,12 @@ public class BaseTable
 
 
     /// <summary>
-    /// 添加时间
+    ///     添加时间
     /// </summary>
     public DateTimeOffset AddTime { get; set; }
 
     /// <summary>
-    /// 修改时间
+    ///     修改时间
     /// </summary>
     public DateTimeOffset UpdateTime { get; set; }
 }
