@@ -1,19 +1,117 @@
-# Panda博客系统
+#Panda blog system
 
-基于.NET 6.0开发的博客系统
+<div align="center">
 
-# 如何使用
+One use `ASP.NET Core MVC 7.0` developed `blog` system, which is currently under development
 
-- 进入Admin目录，执行 `yarn build`
-- 进入Panda目录，执行 `dotnet publish`
-- 拷贝Panda/bin/Release/net6.0/publish 下文件 部署到您喜欢的服务器操作系统上
+ ![dotnet-version](https://img.shields.io/badge/.NET%207.0-blue)  ![Visual Studio 2022](https://img.shields.io/badge/Visual%20Studio%20-2022-blueviolet)     [![Github](https://img.shields.io/badge/%20-github-%2324292e)](https://github.com/coolqingcheng/Panda) [![Github stars](https://img.shields.io/github/stars/coolqingcheng/Panda)](https://github.com/coolqingcheng/Panda)
+</div>
 
-.NET Web项目部署教程可以参考微软官方文档，分别介绍了在Windows server、Linux、Docker等环境部署，非常简单
+English | [简体中文](README-zh_CN.md)
 
-[https://docs.microsoft.com/zh-cn/aspnet/core/host-and-deploy/?view=aspnetcore-6.0](https://docs.microsoft.com/zh-cn/aspnet/core/host-and-deploy/?view=aspnetcore-6.0)
+## ✨ 1. Characteristics
+
+1. Use `ASP MVC. Net 7.0` development
+2. The background front end is developed using `Vue 3.0`
+
+## 🌈 2. Online example
 
 
 
-本项目得到  [jetbrains](https://jb.gg/OpenSourceSupport) 的支持
+网上冲浪博客：[https://iwscl.com/](https://iwscl.com/)
+
+## 🖥 3. Use
+
+Support environment
+
+- .NET 7.0
+- Visual Studio 2022
+- MySQL
+
+### 3.1 front desk
+
+Main project directory `"/panda"`, using `ASP.NET Core MVC 7.0` development, including the website foreground. Please configure the project before running correctly. Please see the following instructions.
+
+1. Configure database connection string
+
+In the project `Panda`, add nodes to the `appsettings.json` file and configure MySQL connection strings. It is recommended to use `appsettings.Development.json` and `appsettings.Production.json` configuration:
+
+```json
+"ConnectionStrings": {
+  "MYSQL_DB": "server=localhost;user=[username];database=[databasename];port=[port];password=[password];SslMode=None"
+}
+```
+
+2. Data migration
+
+Open the package console and select the project: `panda Entity`, execute the following command:
+
+```shell
+Update-Database
+```
+
+If you delete `Panda.Entity/Migrations` directory, just execute the following command
+
+```shell
+Add-Migration InitDB
+Update-Database
+```
+3. Generate data seed
+
+After the above 2 steps are completed, run the project and visit the link `http://localhost:5151/initaccount` execute seed data generation. This method is written in the controller `AccountController` of project `Panda.Admin`：
+
+```C#
+[AllowAnonymous]
+[HttpGet("/initaccount")]
+public async Task<IActionResult> Test()
+{
+    await _accountService.InitAccount();
+    return Content("初始化账号成功");
+}
+```
+
+The default account is as follows, which is used by background management:
+
+```shell
+account: admin
+password: admin
+```
+
+4. Release
+
+```shell
+dotnet publish
+```
+
+### 3.2 background
+
+The background back-end is provided by the foreground `"/Panda"` project. This section only describes the background front-end developed by `Vue 3.0`.
+
+- Installation package
+
+```shell
+npm install
+```
+
+- Commissioning operation
+
+```shell
+npm run serve
+```
+
+- Release
+
+```shell
+npm run build
+```
+
+## 💕 4. Support the project
+
+
+## ☀️ 5. License
+
+MIT
+
+The project is support of [JetBrains](https://jb.gg/OpenSourceSupport)
 
 ![jetbrains](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)
