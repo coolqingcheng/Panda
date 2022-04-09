@@ -4,7 +4,14 @@
       <div class="q-login-header">
         <h1>Panda博客系统后台</h1>
       </div>
-      <el-form :model="loginForm" label-width="70px" :rules="rules" ref="form">
+      <el-form
+        :model="loginForm"
+        label-width="70px"
+        :rules="rules"
+        ref="form"
+        label-position="top"
+        @keydown.native.enter="loginHandler()"
+      >
         <el-form-item label="账号" prop="userName">
           <el-input placeholder="输入用户名" v-model="loginForm.userName"></el-input>
         </el-form-item>
@@ -12,10 +19,10 @@
           <el-input placeholder="输入密码" v-model="loginForm.pass" show-password></el-input>
         </el-form-item>
         <el-form-item>
-          <el-space>
-            <el-button type="primary" @click="loginHandler()">提交</el-button>
-            <el-link type="info">忘记密码？</el-link>
-          </el-space>
+          <el-button type="primary" @click="loginHandler()" class="w_100">登录</el-button>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="default" class="w_100">重置密码</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -23,12 +30,12 @@
 </template>
 
 <script lang="ts" setup>
-import {reactive, ref} from "@vue/reactivity";
-import {ElForm} from "element-plus"
-import {useRouter} from "vue-router";
-import {ElMessage} from 'element-plus/lib/components/message'
-import {onMounted} from 'vue';
-import {http} from "shared/http/HttpClient";
+import { reactive, ref } from "@vue/reactivity";
+import { ElForm } from "element-plus"
+import { useRouter } from "vue-router";
+import { ElMessage } from 'element-plus'
+import { onMounted } from 'vue';
+import { get, post } from "shared/http/HttpClient";
 
 const loginForm = reactive({
   userName: "",
@@ -58,11 +65,11 @@ const loginHandler = async () => {
   await form.value?.validate(async (valid) => {
     if (valid) {
       try {
-        await http.post("/admin/account/login", {userName: loginForm.userName, password: loginForm.pass})
+        await post("/admin/account/login", { userName: loginForm.userName, password: loginForm.pass })
         setTimeout(() => {
           loading.value = false
           router.replace('/admin/dash')
-          ElMessage({message: '登录成功！', showClose: false, type: 'success'})
+          ElMessage({ message: '登录成功！', showClose: false, type: 'success' })
         }, 100);
       } finally {
         loading.value = false
@@ -76,10 +83,13 @@ const loginHandler = async () => {
 const checkLogin = async () => {
   loading.value = true
   try {
-    var isLogin = await http.get('/admin/account/islogin')
+    let { isLogin, isInit } = await get<{ isLogin: boolean, isInit: boolean }>('/admin/account/islogin', {})
     console.log('islogin ', isLogin)
     if (isLogin) {
       router.replace('/admin/dash')
+    }
+    if (!isInit) {
+      router.replace('/initAccount')
     }
   } finally {
     loading.value = false
@@ -92,29 +102,4 @@ onMounted(() => {
 </script>
 
 <style lang="less" scoped>
-.q-login {
-  width: 100%;
-  height: 100%;
-  background: url("../../assets/login_bg.svg");
-  padding-top: 200px;
-  box-sizing: border-box;
-
-  .q-login-box {
-    width: 300px;
-    padding: 2rem;
-    border-radius: 5px;
-    background-color: white;
-    margin: 0 auto;
-    box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.1);
-
-    .q-login-header {
-      padding-bottom: 2rem;
-      h1 {
-        font-size: 18px;
-        text-align: center;
-        color: #303133;
-      }
-    }
-  }
-}
 </style>

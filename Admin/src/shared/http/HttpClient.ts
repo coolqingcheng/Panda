@@ -46,6 +46,20 @@ http.interceptors.response.use((response) => {
         })
 
     }
+    if(error.response.status==400){
+        let data = error.response?.data;
+        if(data.message){
+            ElMessage({
+                message:data.message,
+                type:'error'
+            })
+        }else{
+            ElMessage({
+                message:'服务器请求失败',
+                type:'error'
+            })
+        }
+    }
     if (error.response?.status == 401) {
         ElMessage({
             showClose: false,

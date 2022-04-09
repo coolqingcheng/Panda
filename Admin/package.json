@@ -13,7 +13,7 @@
     "axios": "^0.21.3",
     "codemirror": "^5.65.1",
     "cropperjs": "^1.5.12",
-    "element-plus": "^1.1.0-beta.8",
+    "element-plus": "^2.1.8",
     "remixicon": "^2.5.0",
     "vue": "^3.2.6",
     "vue-router": "4",

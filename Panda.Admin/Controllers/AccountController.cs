@@ -2,7 +2,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Panda.Admin.Models;
+using Panda.Admin.Models.Request;
 using Panda.Admin.Services.Account;
+using Panda.Entity.Responses;
 using Panda.Tools.Auth.Models;
 using Panda.Tools.Exception;
 
@@ -38,20 +40,28 @@ public class AccountController : AdminController
     }
 
     [AllowAnonymous]
-    [HttpGet("/initaccount")]
-    public async Task<IActionResult> Test()
+    [HttpPost("/admin/createAdminAccount")]
+    public async Task<IActionResult> CreateAdminAccount(CreateAdminAccountRequest request)
     {
-        await _accountService.InitAccount();
+        await _accountService.CreateAdminAccount(request);
         return Content("初始化账号成功");
     }
 
 
+    /// <summary>
+    /// 检查当前状态
+    /// </summary>
+    /// <returns></returns>
     [AllowAnonymous]
     [HttpGet]
-    public bool IsLogin()
+    public async Task<LoginStatusResult> IsLogin()
     {
-        var res = HttpContext.User.Identity is {IsAuthenticated: true};
-        return res;
+        var isLogin = HttpContext.User.Identity is {IsAuthenticated: true};
+        return new LoginStatusResult()
+        {
+            IsLogin = isLogin,
+            IsInit = await _accountService.CheckAdminAccountExistAsync()
+        };
     }
 
     [HttpPost]

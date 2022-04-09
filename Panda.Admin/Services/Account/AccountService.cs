@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Panda.Admin.Models.Request;
 using Panda.Admin.Repositorys;
 using Panda.Entity.Responses;
 using Panda.Tools.Auth;
@@ -18,8 +19,7 @@ namespace Panda.Admin.Services.Account;
 public class AccountService<TU> : IAccountService<TU> where TU : Accounts, new()
 {
     private readonly AccountRepository<TU> _accountRepository;
-
-
+    
     private readonly IHttpContextAccessor _httpContextAccessor;
 
     public AccountService(AccountRepository<TU> accountRepository,
@@ -101,9 +101,9 @@ public class AccountService<TU> : IAccountService<TU> where TU : Accounts, new()
         }
     }
 
-    public async Task InitAccount()
+    public async Task CreateAdminAccount(CreateAdminAccountRequest request)
     {
-        await _accountRepository.InitAccountAsync();
+        await _accountRepository.InitAccountAsync(request);
     }
 
     public async Task<PageDto<AccountResp>> GetAccountList(AccountReq req)
@@ -117,6 +117,11 @@ public class AccountService<TU> : IAccountService<TU> where TU : Accounts, new()
             Total = await query.CountAsync(),
             Data = list
         };
+    }
+
+    public  Task<bool> CheckAdminAccountExistAsync()
+    {
+        return  _accountRepository.CheckAdminAccountExistAsync();
     }
 
     public async Task Disable(Guid accountId, bool status)

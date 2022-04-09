@@ -1,3 +1,4 @@
+using Panda.Admin.Models.Request;
 using Panda.Entity.Responses;
 using Panda.Tools.Auth;
 using Panda.Tools.Auth.Models;
@@ -37,7 +38,7 @@ public interface IAccountService<TU> where TU : Accounts
     ///     初始化一个后台账号
     /// </summary>
     /// <returns></returns>
-    Task InitAccount();
+    Task CreateAdminAccount(CreateAdminAccountRequest request);
 
 
     /// <summary>
@@ -61,4 +62,10 @@ public interface IAccountService<TU> where TU : Accounts
     /// <param name="req"></param>
     /// <returns></returns>
     Task<PageDto<AccountResp>> GetAccountList(AccountReq req);
+
+    /// <summary>
+    /// 检查当前用户表是否已经初始化
+    /// </summary>
+    /// <returns></returns>
+    Task<bool> CheckAdminAccountExistAsync();
 }

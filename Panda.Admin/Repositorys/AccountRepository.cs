@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Panda.Admin.Models.Request;
 using Panda.Tools.Auth.Models;
 using Panda.Tools.Auth.Repositorys;
 using Panda.Tools.Exception;
@@ -19,18 +20,18 @@ public class AccountRepository<T> : BaseRepository where T : Accounts, new()
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task InitAccountAsync()
+    public async Task InitAccountAsync(CreateAdminAccountRequest request)
     {
         var any = await _context.Set<T>().AnyAsync();
         if (any == false)
         {
             await _context.Set<T>().AddAsync(new T
             {
-                UserName = "管理员",
+                UserName = request.UserName,
                 NickName = "管理员",
-                Passwd = IdentitySecurity.HashPassword("admin"),
+                Passwd = IdentitySecurity.HashPassword(request.Pwd),
                 AddTime = DateTimeOffset.Now,
-                Email = "admin"
+                Email = request.Email
             });
             await _context.SaveChangesAsync();
         }
@@ -68,8 +69,12 @@ public class AccountRepository<T> : BaseRepository where T : Accounts, new()
     {
         var accountId = _httpContextAccessor.HttpContext?.CurrentAccountId();
         var account = await _context.Set<T>().Where(a => a.Id == accountId).FirstOrDefaultAsync();
-
         account.IsNullThrow("登录身份验证失败，请重新登录");
         return account!;
+    }
+
+    public Task<bool> CheckAdminAccountExistAsync()
+    {
+        return _context.Set<T>().AnyAsync();
     }
 }
