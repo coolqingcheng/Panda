@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Panda.Admin.Attributes;
 using Panda.Admin.Models;
 using Panda.Admin.Models.Request;
 using Panda.Admin.Services.Account;
@@ -10,6 +11,7 @@ using Panda.Tools.Exception;
 
 namespace Panda.Admin.Controllers;
 
+[Permission("用户管理")]
 public class AccountController : AdminController
 {
     private readonly IAccountService<Accounts> _accountService;
@@ -27,6 +29,7 @@ public class AccountController : AdminController
     /// <exception cref="UserException"></exception>
     [AllowAnonymous]
     [HttpPost]
+    [Permission("登录")]
     public async Task Login(AccountLoginRequest request)
     {
         var res = await _accountService.LoginAsync(request.UserName, request.Password);
@@ -56,7 +59,7 @@ public class AccountController : AdminController
     [HttpGet]
     public async Task<LoginStatusResult> IsLogin()
     {
-        var isLogin = HttpContext.User.Identity is {IsAuthenticated: true};
+        var isLogin = HttpContext.User.Identity is { IsAuthenticated: true };
         return new LoginStatusResult()
         {
             IsLogin = isLogin,
@@ -65,6 +68,7 @@ public class AccountController : AdminController
     }
 
     [HttpPost]
+    [Permission("修改密码")]
     public async Task ChangePwd(ChangePwdRequest request)
     {
         await _accountService.ChangePwdAsync(request.OldPwd, request.NewPwd);
