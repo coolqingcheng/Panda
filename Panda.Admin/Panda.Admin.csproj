@@ -22,7 +22,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="DataModels" />
 		<Folder Include="Entities" />
 	</ItemGroup>
 

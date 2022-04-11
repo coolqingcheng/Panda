@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace Panda.Tools.Extensions;
 
@@ -30,6 +31,22 @@ public static class HttpContextExtensions
         if (request.Headers.ContainsKey("X-Forwarded-For")) return request.Headers["X-Forwarded-For"].ToString();
 
         return "";
+    }
+    
+    /// <summary>
+    /// 获取当前请求完整的Url地址
+    /// </summary>
+    /// <returns></returns>
+    public static string GetCompleteUrl( this IHttpContextAccessor httpContextAccessor)
+    { 
+        return new StringBuilder()
+            .Append(httpContextAccessor.HttpContext.Request.Scheme)
+            .Append("://")
+            .Append(httpContextAccessor.HttpContext.Request.Host)
+            .Append(httpContextAccessor.HttpContext.Request.PathBase)
+            .Append(httpContextAccessor.HttpContext.Request.Path)
+            .Append(httpContextAccessor.HttpContext.Request.QueryString)
+            .ToString();
     }
 
     /// <summary>
