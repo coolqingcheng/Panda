@@ -56,28 +56,8 @@ If you delete `Panda.Entity/Migrations` directory, just execute the following co
 Add-Migration InitDB
 Update-Database
 ```
-3. Generate data seed
 
-After the above 2 steps are completed, run the project and visit the link `http://localhost:5151/initaccount` execute seed data generation. This method is written in the controller `AccountController` of project `Panda.Admin`：
-
-```C#
-[AllowAnonymous]
-[HttpGet("/initaccount")]
-public async Task<IActionResult> Test()
-{
-    await _accountService.InitAccount();
-    return Content("初始化账号成功");
-}
-```
-
-The default account is as follows, which is used by background management:
-
-```shell
-account: admin
-password: admin
-```
-
-4. Release
+3. Release
 
 ```shell
 dotnet publish
