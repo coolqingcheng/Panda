@@ -55,29 +55,7 @@ Update-Database
 Add-Migration InitDB
 Update-Database
 ```
-
-3. 生成数据种子
-
-以上2个步骤完成后，运行项目，访问链接`http://localhost:5151/initaccount`执行种子数据生成，此方法写在工程`Panda.Admin`的`AccountController`中
-
-```C#
-[AllowAnonymous]
-[HttpGet("/initaccount")]
-public async Task<IActionResult> Test()
-{
-    await _accountService.InitAccount();
-    return Content("初始化账号成功");
-}
-```
-
-默认账号如下，后台管理使用：
-
-```shell
-account: admin
-password: admin
-```
-
-4. 发布
+3. 发布
 
 ```shell
 dotnet publish
