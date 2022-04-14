@@ -1,7 +1,5 @@
 ﻿using System.Collections.Concurrent;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
-using Panda.Admin.DataModels;
+using System.Linq;
 
 namespace Panda.Admin.Monitoring;
 
@@ -40,46 +38,6 @@ public class MonitoringService : IMonitoringService
             {
                 yield return model;
             }
-        }
-    }
-}
-
-public class MonitoringBackgroundService : BackgroundService
-{
-    private readonly IMonitoringService _monitoringService;
-
-    private readonly DbContext _context;
-
-    public MonitoringBackgroundService(IMonitoringService monitoringService, DbContext context)
-    {
-        _monitoringService = monitoringService;
-        _context = context;
-    }
-
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-    {
-        while (!stoppingToken.IsCancellationRequested)
-        {
-            var list = _monitoringService.Take(10);
-            foreach (var model in list)
-            {
-                var item = await _context.Set<Monitorings>().FirstOrDefaultAsync(a => a.Url == model.Url);
-                if (item != null)
-                {
-                }
-                else
-                {
-                    await _context.Set<Monitorings>().AddAsync(new Monitorings()
-                    {
-                        Url = model.Url,
-                        MonitoringDetails = new List<MonitoringDetail>()
-                        {
-                        }
-                    });
-                }
-            }
-
-            await _context.SaveChangesAsync();
         }
     }
 }

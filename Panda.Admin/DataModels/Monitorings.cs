@@ -12,7 +12,7 @@ public class Monitorings : BaseTable
     /// <summary>
     /// 详情
     /// </summary>
-    public ICollection<MonitoringDetail> MonitoringDetails { get; set; }
+    public ICollection<MonitoringDetail> MonitoringDetails { get; set; } = new List<MonitoringDetail>();
 }
 
 public class MonitoringDetail : BaseTable
