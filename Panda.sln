@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Migrations", "Panda.M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Admin", "Panda.Admin\Panda.Admin.csproj", "{877B1BBC-CE30-4D88-9EF1-9C347635D83B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.App", "Panda.App\Panda.App.csproj", "{739F25F9-9BFA-4378-A7B8-7725D18752CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{877B1BBC-CE30-4D88-9EF1-9C347635D83B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{877B1BBC-CE30-4D88-9EF1-9C347635D83B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{877B1BBC-CE30-4D88-9EF1-9C347635D83B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{739F25F9-9BFA-4378-A7B8-7725D18752CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{739F25F9-9BFA-4378-A7B8-7725D18752CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{739F25F9-9BFA-4378-A7B8-7725D18752CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{739F25F9-9BFA-4378-A7B8-7725D18752CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
