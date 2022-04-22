@@ -7,9 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <None Update="Site.Development.ini">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
       <None Update="Site.ini">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
