@@ -40,7 +40,7 @@ public static class HttpContextExtensions
     public static string GetCompleteUrl( this IHttpContextAccessor httpContextAccessor)
     { 
         return new StringBuilder()
-            .Append(httpContextAccessor.HttpContext.Request.Scheme)
+            .Append(httpContextAccessor.HttpContext?.Request.Scheme)
             .Append("://")
             .Append(httpContextAccessor.HttpContext.Request.Host)
             .Append(httpContextAccessor.HttpContext.Request.PathBase)

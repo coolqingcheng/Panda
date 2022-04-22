@@ -1,0 +1,106 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+a {
+  color: #1b6ec2;
+  text-decoration: none;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.footer {
+  p {
+    height: 1.2rem;
+  }
+}
+
+.post-list-item {
+  display: flex;
+  flex-direction: row;
+  transition: .3s all linear;
+
+  &:hover {
+    transition: .3s all linear;
+
+  }
+
+  .img-box {
+    img {
+      width: 200px;
+      height: 200px;
+      max-width: 200px;
+    }
+  }
+
+  .item {
+    display: flex;
+    flex-direction: column;
+
+    .top {
+      flex: 1;
+      padding: 0.4rem;
+
+      .title {
+        font-size: 1.4rem;
+        white-space: nowrap;
+        padding-bottom: 0.8rem;
+        padding-top: 0.4rem;
+        transform: translateX(0);
+        transition: .5s all linear;
+
+        a {
+          text-decoration: none;
+        }
+
+        &:hover {
+          a {
+            text-decoration: underline;
+          }
+
+          transform: translateX(1.5rem);
+          transition: .3s all linear;
+        }
+      }
+    }
+  }
+}
+
+.crumbs {
+  display: flex;
+  flex-direction: row;
+  font-size: 1rem;
+
+  a {
+    margin-left: 0.8rem;
+    margin-right: 0.8rem;
+
+    &:first-child {
+      margin-left: 0 !important;
+    }
+  }
+
+  span {
+    font-size: 1rem;
+  }
+
+
+}
+
+.line {
+  background: #ccc;
+  height: 1.2px !important;
+}

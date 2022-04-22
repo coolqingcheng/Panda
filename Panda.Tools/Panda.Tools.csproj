@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -20,16 +20,15 @@
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 		<PackageReference Include="HtmlSanitizer" Version="7.1.488" />
 		<PackageReference Include="MailKit" Version="3.2.0" />
-		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="7.0.0-preview.2.22152.2" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0-preview.2.22153.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="7.0.0-preview.2.22153.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="7.0.0-preview.2.22153.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0-preview.2.22153.1">
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="6.0.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="6.0.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.4">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.0-preview.2.22153.1" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0-preview.2.22152.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.4" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
 		<PackageReference Include="Mime" Version="3.3.0" />
 		<PackageReference Include="MimeKit" Version="3.2.0" />
 		<PackageReference Include="MySqlBackup.NET" Version="2.3.6.1" />
@@ -37,11 +36,12 @@
 		<PackageReference Include="NLog.Web.AspNetCore" Version="5.0.0-rc2" />
 		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.1" />
 		<PackageReference Include="SimpleMvcSitemap.Core" Version="4.2.0" />
-		<PackageReference Include="SixLabors.ImageSharp" Version="2.1.0" />
+		<PackageReference Include="SixLabors.ImageSharp" Version="2.1.1" />
 		<PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta14" />
 		<PackageReference Include="SixLabors.ImageSharp.Web" Version="1.0.5" />
-		<PackageReference Include="Tencent.QCloud.Cos.Sdk" Version="5.4.28" />
-		<PackageReference Include="TencentCloudSDK" Version="3.0.495" />
+		<PackageReference Include="System.Runtime" Version="4.3.1" />
+		<PackageReference Include="Tencent.QCloud.Cos.Sdk" Version="5.4.29" />
+		<PackageReference Include="TencentCloudSDK" Version="3.0.505" />
 		<PackageReference Include="UAParser" Version="3.1.47" />
 	</ItemGroup>
 

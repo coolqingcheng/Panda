@@ -1,10 +1,101 @@
 ﻿@page
+@using System.Globalization
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Panda Blog System</h1>
-    <p>一个使用.NET 7构建的博客系统</p>
+<div class="row">
+    <div class="col-12">
+        <div class="text-center">
+            <h1 class="display-4">Panda Blog System</h1>
+            <p>一个使用.NET 7构建的博客系统</p>
+        </div>
+    </div>
+</div>
+<div class="row mt-2 g-2">
+    <div class="col-12 col-md-12 col-lg-9">
+        <div class="card">
+            @for (int i = 0; i < 10; i++)
+            {
+                <div class="post-list-item">
+                    <div class="img-box">
+                        <img src="qr.png"/>
+                    </div>
+                    <div class="item">
+                        <div class="top">
+                            <div class="title">
+                                <a href="/post/1.html" class="text-black">将内置于Tomcat服务器中的应用程序与内置于Windows服务器中的应用程</a>
+                            </div>
+                            <div class="summary text-secondary">将内置于Tomcat服务器中的应用程序与内置于Windows服务器中的应用程</div>
+                        </div>
+                        <div class="info-bar text-muted">
+                            <p>
+                                <i class="ri-time-line m-r-1"></i><span>@DateTime.Now.ToString(CultureInfo.CurrentCulture)</span>
+                                <i class="ri-user-line m-l-2 m-r-1"></i><span>管理员</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <nav aria-label="Page navigation mt-2">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">1</a>
+                </li>
+                <li class="page-item active">
+                    <a class="page-link" href="#">2</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">3</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-12 col-md-12 col-lg-3">
+        <div class="card mb-2">
+            <div class="card-header">
+                微信公众号
+            </div>
+            <div class="card-body">
+                <img src="qr.png" alt="微信公众号" style="max-width: 90%;
+margin: 0 auto"/>
+            </div>
+        </div>
+        <div class="card mb-2">
+            <div class="card-header">
+                站内搜索
+            </div>
+            <div class="card-body">
+                <form class="row g-1">
+                    <div class="col-auto">
+                        <input class="form-control"/>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-outline-success">搜索</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        @await Html.PartialAsync("_CategoryPartial")
+        <div class="card">
+            <div class="card-header">
+                最近更新
+            </div>
+            <div class="card-body">
+
+            </div>
+        </div>
+    </div>
 </div>

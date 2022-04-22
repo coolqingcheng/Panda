@@ -1,5 +1,7 @@
 var builder = WebApplication.CreateBuilder(args);
 
+
+// builder.Configuration.AddIniFile("site.ini", false, true);
 builder.Services.AddControllers();
 // Add services to the container.
 builder.Services.AddRazorPages();

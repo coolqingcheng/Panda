@@ -1,18 +1,20 @@
 ﻿<!DOCTYPE html>
+@inject IConfiguration Configuration;
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - Panda.App</title>
+    <title>@ViewData["Title"] - @Configuration.GetSection("site:Name").Value</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/Panda.App.styles.css" asp-append-version="true"/>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-black border-bottom box-shadow mb-3">
         <div class="container">
-            <a class="navbar-brand" asp-area="" asp-page="/Index">Panda.App</a>
+            <a class="navbar-brand" asp-area="" asp-page="/Index">@Configuration.GetSection("site:Name").Value</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -20,10 +22,16 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+
+                        <a class="nav-link text-light" href="/"><i class="ri-home-smile-line"></i>首页</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                        <a class="nav-link text-light" href="/Contact.html">
+                            <i class="ri-contacts-line"></i>与我联系
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-area="" asp-page="/Privacy"><i class="ri-rss-line"></i>RSS订阅</a>
                     </li>
                 </ul>
             </div>
@@ -37,8 +45,9 @@
 </div>
 
 <footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2022 - Panda.App - <a asp-area="" asp-page="/Privacy">Privacy</a>
+    <div class="container ">
+        <p>本站基于.NET 7.0开发</p>
+        <p> &copy; 2022 - @Configuration.GetSection("site:Name").Value - <a asp-area="" asp-page="/Contact.html">与我联系</a></p>
     </div>
 </footer>
 
