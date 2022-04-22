@@ -2,7 +2,7 @@
 
 <div align="center">
 
-一个使用`ASP.NET Core MVC 7.0`开发的`博客`系统，目前正在开发中...
+一个使用`ASP.NET Core MVC 6.0`开发的`博客`系统，目前正在开发中...
 
  ![dotnet-version](https://img.shields.io/badge/.NET%207.0-blue)  ![Visual Studio 2022](https://img.shields.io/badge/Visual%20Studio%20-2022-blueviolet)     [![Github](https://img.shields.io/badge/%20-github-%2324292e)](https://github.com/coolqingcheng/Panda) [![Github stars](https://img.shields.io/github/stars/coolqingcheng/Panda)](https://github.com/coolqingcheng/Panda)
 
