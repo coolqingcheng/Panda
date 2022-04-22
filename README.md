@@ -11,7 +11,7 @@ English | [简体中文](README-zh_CN.md)
 
 ## ✨ 1. Characteristics
 
-1. Use `ASP MVC. Net 7.0` development
+1. Use `ASP MVC. Net 6.0` development
 2. The background front end is developed using `Vue 3.0`
 
 ## 🌈 2. Online example
