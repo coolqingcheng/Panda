@@ -14,7 +14,7 @@ public static class PandaExtension
         services.AddDbContextPool<PandaContext>(
             opt =>
             {
-                var db = app.Configuration.GetConnectionString("MYSQL_DB");
+                var db = app.Configuration.GetConnectionString("MYSQL");
                 opt.UseMySql(db, ServerVersion.AutoDetect(db))
                     .EnableSensitiveDataLogging()
                     .EnableDetailedErrors();
