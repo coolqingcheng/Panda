@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.EntityFrameworkCore;
 using Panda;
 using Panda.Admin;
@@ -61,16 +62,22 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
+// app.UseStatusCodePagesWithRedirects("/{0}.html");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
 
 app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapRazorPages();
+
 app.MapControllerRoute(
     "default",
     "{controller=Home}/{action=Index}/{id?}");
+
+app.UseStatusCodePagesWithReExecute("/{0}.html");
+app.MapRazorPages();
 
 app.Run();
