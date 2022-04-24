@@ -34,6 +34,7 @@ public class IndexModel : PageModel
 
     public async Task OnGet(int index = 1)
     {
+        if (index < 1) index = 0;
         var query = _dbContext.Set<Posts>().Where(a => a.Status == PostStatus.Publish);
 
         Count = await query.CountAsync();

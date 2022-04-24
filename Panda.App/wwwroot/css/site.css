@@ -94,10 +94,20 @@ body {
 .post-title {
   font-size: 1.5rem; }
 
+.post-body img {
+  max-width: 100%; }
+
 .toolbar {
   font-size: 1rem;
   min-height: 2rem;
-  word-break: break-all; }
+  word-break: break-all;
+  display: flex;
+  flex-direction: row;
+  align-items: center; }
+  .toolbar i {
+    margin-right: 5px;
+    margin-left: 8px;
+    font-size: 1.1rem; }
 
 .post-newest {
   display: flex;

@@ -2,7 +2,7 @@
 @using System.Globalization
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page" + Model.CurrIndex;
+    ViewData["Title"] = "主页";
 }
 
 <div class="row">
@@ -36,11 +36,11 @@
                                         @Html.Raw(item.Summay)
                                     </div>
                                 </div>
-                                <div class="info-bar text-muted">
-                                    <p>
-                                        <i class="ri-time-line m-r-1"></i><span>@item.UpdateTime.ToLocalTime().ToString("yyyy-MM-dd")</span>
-                                        <i class="ri-user-line m-l-2 m-r-1"></i><span>@item.Author</span>
-                                    </p>
+                                <div class="toolbar text-muted">
+
+                                    <i class="ri-time-line m-r-1"></i><span>@item.UpdateTime.ToLocalTime().ToString("yyyy-MM-dd")</span>
+                                    <i class="ri-user-line m-l-2 m-r-1"></i><span>@item.Author</span>
+
                                 </div>
                             </div>
                         </div>
@@ -49,35 +49,35 @@
 
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-3">
             <div class="col">
                 @{
                     var list = Model.Count.GenPageIndexList(10, Model.CurrIndex, 5);
                     var pageCount = Model.Count.GetPageSum(10);
                 }
-                @if (list.Length == 1)
+                @if (list.Length != 1)
                 {
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-center">
                             @if (Model.CurrIndex > 1)
                             {
                                 <li class="page-item">
-                                    <a class="page-link">上一页</a>
+                                    <a class="page-link" href="/@(Model.CurrIndex - 1)">上一页</a>
                                 </li>
                             }
                             @if (list.Length > 1)
                             {
                                 @foreach (var i in list)
                                 {
-                                    <li class="page-item">
-                                        <a class="page-link" href="/@i">@i</a>
+                                    <li class="page-item @(i == Model.CurrIndex ? "active" : "")">
+                                        <a class="page-link " href="/@i">@i</a>
                                     </li>
                                 }
                             }
                             @if (Model.CurrIndex < pageCount)
                             {
                                 <li class="page-item">
-                                    <a class="page-link" href="#">下一页</a>
+                                    <a class="page-link" href="/@(Model.CurrIndex + 1)">下一页</a>
                                 </li>
                             }
                         </ul>
