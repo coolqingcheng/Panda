@@ -38,7 +38,7 @@
 		<PackageReference Include="SimpleMvcSitemap.Core" Version="4.2.0" />
 		<PackageReference Include="SixLabors.ImageSharp" Version="2.1.1" />
 		<PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta14" />
-		<PackageReference Include="SixLabors.ImageSharp.Web" Version="1.0.5" />
+		<PackageReference Include="SixLabors.ImageSharp.Web" Version="2.0.0" />
 		<PackageReference Include="System.Runtime" Version="4.3.1" />
 		<PackageReference Include="Tencent.QCloud.Cos.Sdk" Version="5.4.29" />
 		<PackageReference Include="TencentCloudSDK" Version="3.0.505" />

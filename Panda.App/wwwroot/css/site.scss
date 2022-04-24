@@ -232,3 +232,15 @@ body {
     }
   }
 }
+
+.navbar-nav {
+  .nav-link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    i {
+      margin-right: 4px;
+    }
+  }
+}

@@ -157,4 +157,11 @@ body {
       .tag-list .tag-item a:hover {
         text-decoration: underline; }
 
+.navbar-nav .nav-link {
+  display: flex;
+  flex-direction: row;
+  align-items: center; }
+  .navbar-nav .nav-link i {
+    margin-right: 4px; }
+
 /*# sourceMappingURL=site.css.map */

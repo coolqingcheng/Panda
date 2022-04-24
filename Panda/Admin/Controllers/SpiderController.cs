@@ -57,26 +57,24 @@ public class SpiderController : AdminController
                     element.SetAttribute("href", $"/toUrl?url={HttpUtility.UrlEncode(href)}");
             }
 
-            if (element.TagName.ToLower() == "img")
+            if (element.TagName.ToLower() != "img") continue;
+            element.RemoveAttribute("alt");
+            element.RemoveAttribute("loading");
+            Console.WriteLine("抓图片:" + element.GetAttribute("src"));
+            try
             {
-                element.RemoveAttribute("alt");
-                element.RemoveAttribute("loading");
-                Console.WriteLine("抓图片:" + element.GetAttribute("src"));
-                try
-                {
-                    var imgUrl = element.GetAttribute("src");
-                    var response = await http.GetAsync(imgUrl);
-                    if (!response.IsSuccessStatusCode) continue;
-                    var bytes = await response.Content.ReadAsByteArrayAsync();
-                    var ext = MimeUtils.GetMimeExtName(response.Content.Headers.ContentType?.MediaType);
-                    var uploadResult =
-                        await _fileStorage.SaveAsync(bytes, $"{Md5Helper.ComputeHash(bytes)[..10]}.{ext}");
-                    if (uploadResult.Success) element.SetAttribute("src", uploadResult.Url);
-                }
-                catch (Exception e)
-                {
-                    element.RemoveFromParent();
-                }
+                var imgUrl = element.GetAttribute("src");
+                var response = await http.GetAsync(imgUrl);
+                if (!response.IsSuccessStatusCode) continue;
+                var bytes = await response.Content.ReadAsByteArrayAsync();
+                var ext = MimeUtils.GetMimeExtName(response.Content.Headers.ContentType?.MediaType);
+                var uploadResult =
+                    await _fileStorage.SaveAsync(bytes, $"{Md5Helper.ComputeHash(bytes)[..10]}.{ext}");
+                if (uploadResult.Success) element.SetAttribute("src", uploadResult.Url);
+            }
+            catch (Exception e)
+            {
+                element.RemoveFromParent();
             }
         }
 

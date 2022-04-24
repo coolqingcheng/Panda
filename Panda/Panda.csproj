@@ -24,7 +24,7 @@
 	<ItemGroup>
 		<PackageReference Include="EasyCaching.Core" Version="1.5.1" />
 		<PackageReference Include="EasyCaching.InMemory" Version="1.5.1" />
-		<PackageReference Include="Mapster" Version="7.4.0-pre02" />
+		<PackageReference Include="Mapster" Version="7.3.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.4" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.4">
 			<PrivateAssets>all</PrivateAssets>

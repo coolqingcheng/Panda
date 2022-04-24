@@ -28,8 +28,17 @@ public class Category : PageModel
 
     public async Task<IActionResult> OnGet(int id, int index = 1)
     {
+        Index = index;
+        var category = await _dbContext.Set<Categorys>().Where(a => a.Id == id).FirstOrDefaultAsync();
+        if (category == null)
+        {
+            return NotFound();
+        }
+
+        CateName = category.CategoryName;
+
         var query = _dbContext.Set<Posts>()
-            .Where(a => a.ArticleCategoryRelations.Any(b => b.Categories.Id == id));
+            .Where(a => a.ArticleCategoryRelations.Any(b => b.Categories == category));
         ListItems = await query.OrderByDescending(a => a.AddTime).Page(index, 10).Select(a => new PostListItem()
         {
             Link = a.CustomLink,
@@ -39,10 +48,6 @@ public class Category : PageModel
             Summay = a.Summary,
             UpdateTime = a.UpdateTime
         }).ToListAsync();
-        if (ListItems.Count == 0)
-        {
-            return NotFound();
-        }
 
         Count = await query.CountAsync();
         return Page();

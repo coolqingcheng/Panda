@@ -5,7 +5,7 @@
 
 <div class="row">
     <div class="col">
-        <h1>标签: @Model.CateName</h1>
+        <h1>分类: @Model.CateName</h1>
     </div>
 </div>
 <div class="row">
@@ -24,7 +24,7 @@
     <div class="col">
         @await Html.PartialAsync("_PaginationPartial", new PaginationModel()
         {
-            CurrIndex = 1, Count = Model.Count,
+            CurrIndex = Model.Index, Count = Model.Count,
             Url = "/category/" + Model.Index + "_{0}"
         })
     </div>
