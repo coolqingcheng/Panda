@@ -7,7 +7,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <None Update="Site.ini">
+      <None Update="Site.Production.ini">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Site.Development.ini">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>
@@ -15,12 +18,18 @@
     <ItemGroup>
       <PackageReference Include="EasyCaching.InMemory" Version="1.5.1" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="6.0.4" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.4" />
       <PackageReference Include="System.Runtime" Version="4.3.1" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Panda.Admin\Panda.Admin.csproj" />
       <ProjectReference Include="..\Panda.Entity\Panda.Entity.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Pages\FriendLink" />
+      <Folder Include="wwwroot\RemixIcon" />
     </ItemGroup>
 
 </Project>

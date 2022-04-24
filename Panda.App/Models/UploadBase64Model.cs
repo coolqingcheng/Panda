@@ -1,6 +1,6 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Panda.Models;
+namespace Panda.App.Models;
 
 public class UploadBase64Model
 {

@@ -8,9 +8,17 @@ html {
   }
 }
 
+body {
+  background: #eaedf7 !important;
+}
+
 a {
   color: #1b6ec2;
   text-decoration: none;
+}
+
+.color-a-1 {
+  color: #666;
 }
 
 html {
@@ -33,15 +41,29 @@ body {
   flex-direction: row;
   transition: .3s all linear;
 
+  padding: 0.5rem;
+  box-sizing: border-box;
+
   &:hover {
     transition: .3s all linear;
 
   }
 
   .img-box {
+    width: 200px;
+    height: 200px;
+    //background: #868e96;
+    border-radius: 5px;
+    padding: 10px;
+    box-sizing: border-box;
+    @media (max-width: 765px) {
+      display: none;
+    }
+
     img {
-      width: 200px;
-      height: 200px;
+      width: 180px;
+      height: 180px;
+      border-radius: 5px;
       max-width: 200px;
     }
   }
@@ -52,7 +74,8 @@ body {
 
     .top {
       flex: 1;
-      padding: 0.4rem;
+      box-sizing: border-box;
+      padding-left: 0.6rem;
 
       .title {
         font-size: 1.4rem;
@@ -75,6 +98,11 @@ body {
           transition: .3s all linear;
         }
       }
+    }
+
+    .info-bar {
+      padding-left: 0.6rem;
+      box-sizing: border-box;
     }
   }
 }
@@ -103,4 +131,92 @@ body {
 .line {
   background: #ccc;
   height: 1.2px !important;
+}
+
+.post {
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+.post-title {
+  font-size: 1.5rem;
+}
+
+.post-body {
+}
+
+.toolbar {
+  font-size: 1rem;
+  min-height: 2rem;
+  word-break: break-all;
+}
+
+.post-newest {
+  display: flex;
+  flex-direction: column;
+
+  .post-newest-item {
+    a {
+      font-size: 14px;
+      line-height: 30px;
+
+      &:hover {
+
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.cate-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 0;
+  justify-content: space-between;
+
+  .cate-item {
+    display: inline-block;
+    width: 45%;
+    text-align: center;
+    margin-bottom: .5rem;
+    background: #eee;
+    height: 2rem;
+    line-height: 2rem;
+    font-size: 14px;
+
+    &:hover {
+      background: #1b6ec2;
+      text-decoration: underline;
+      transition: 0.3s all linear;
+
+      a {
+        color: white !important;
+      }
+    }
+  }
+}
+
+.tag-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+
+  .tag-item {
+    display: inline-block;
+    padding: 5px 8px;
+    text-align: center;
+    margin-right: 0.3rem;
+    background: #dceeff;
+
+    a {
+      color: #337ab7;
+      font-size: 14px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }

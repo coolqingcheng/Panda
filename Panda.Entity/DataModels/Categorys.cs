@@ -31,5 +31,5 @@ public class Categorys : PandaBaseTable
     public int Count { get; set; }
 
 
-    public List<PostsCategoryRelations> ArticleCategoryRelations { get; set; }
+    public virtual List<PostsCategoryRelations> ArticleCategoryRelations { get; set; }
 }

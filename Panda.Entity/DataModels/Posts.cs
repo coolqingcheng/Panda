@@ -6,7 +6,7 @@ namespace Panda.Entity.DataModels;
 
 public class Posts : PandaBaseTable
 {
-    [StringLength(100)] public string? CustomLink { get; set; }
+    [StringLength(100)] public string CustomLink { get; set; }
 
     /// <summary>
     ///     标题
@@ -32,7 +32,7 @@ public class Posts : PandaBaseTable
     /// <summary>
     ///     用户Id
     /// </summary>
-    public Accounts Account { get; set; }
+    public virtual Accounts Account { get; set; }
 
 
     /// <summary>

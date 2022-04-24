@@ -2,7 +2,9 @@ using System.Net;
 using Microsoft.EntityFrameworkCore;
 using Panda;
 using Panda.Admin;
+using Panda.App.Configs;
 using Panda.Entity;
+using Panda.Entity.Options;
 using Panda.Tools;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,11 +24,15 @@ services.AddDbContextPool<PandaContext>(
     opt =>
     {
         var db = builder.Configuration.GetConnectionString("MYSQL");
-        opt.UseMySql(db, ServerVersion.AutoDetect(db))
+        opt.UseLazyLoadingProxies()
+            .UseMySql(db, ServerVersion.AutoDetect(db))
             .EnableSensitiveDataLogging()
             .EnableDetailedErrors();
     }
 );
+
+services.AddConfig(builder.Configuration);
+
 services.AddEasyCaching(options =>
 {
     //use memory cache that named default

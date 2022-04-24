@@ -1,0 +1,15 @@
+﻿@using Panda.App.Services.Post
+@inject IPostService PostService;
+@{
+    var list = await PostService.GetNewest(6);
+}
+<div class="post-newest">
+    @foreach (var item in list)
+    {
+        <ul class="post-newest-item">
+            <li>
+                <a href="/post/@(item.Link).html" target="_blank" title="@item.Title" class="color-a-1 rounded">@item.Title</a>
+            </li>
+        </ul>
+    }
+</div>

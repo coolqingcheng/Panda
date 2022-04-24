@@ -13,12 +13,12 @@ public class FriendlyLinks : PandaBaseTable
 
     public AuditStatusEnum AuditStatus { get; set; }
 
-    public List<FriendlyLinkRecord> Records { get; set; }
+    public virtual List<FriendlyLinkRecord> Records { get; set; }
 }
 
 public class FriendlyLinkRecord : PandaBaseTable
 {
-    public FriendlyLinks Links { get; set; }
+    public virtual FriendlyLinks Links { get; set; }
 
     [Required] public string IP { get; set; }
 

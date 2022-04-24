@@ -43,10 +43,10 @@ public class WikiDoc : PandaBaseTable
     ///     分组名称
     /// </summary>
     [StringLength(20)]
-    public WikiGroup WikiGroup { get; set; }
+    public virtual WikiGroup WikiGroup { get; set; }
 
     /// <summary>
     ///     所属文档
     /// </summary>
-    public Wiki Wiki { get; set; }
+    public virtual Wiki Wiki { get; set; }
 }

@@ -1,8 +1,8 @@
-﻿@page
+﻿@page "/{index?}"
 @using System.Globalization
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Home page" + Model.CurrIndex;
 }
 
 <div class="row">
@@ -15,53 +15,76 @@
 </div>
 <div class="row mt-2 g-2">
     <div class="col-12 col-md-12 col-lg-9">
-        <div class="card">
-            @for (int i = 0; i < 10; i++)
-            {
-                <div class="post-list-item">
-                    <div class="img-box">
-                        <img src="qr.png"/>
-                    </div>
-                    <div class="item">
-                        <div class="top">
-                            <div class="title">
-                                <a href="/post/1.html" class="text-black">将内置于Tomcat服务器中的应用程序与内置于Windows服务器中的应用程</a>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    @foreach (var item in Model.ListItems)
+                    {
+                        <div class="post-list-item">
+                            @if (item.Cover != null)
+                            {
+                                <div class="img-box">
+                                    <img src="@item.Cover" alt="@item.Title"/>
+                                </div>
+                            }
+                            <div class="item">
+                                <div class="top">
+                                    <div class="title">
+                                        <a href="/post/@(item.Link).html" class="text-black">@item.Title</a>
+                                    </div>
+                                    <div class="summary text-secondary">
+                                        @Html.Raw(item.Summay)
+                                    </div>
+                                </div>
+                                <div class="info-bar text-muted">
+                                    <p>
+                                        <i class="ri-time-line m-r-1"></i><span>@item.UpdateTime.ToLocalTime().ToString("yyyy-MM-dd")</span>
+                                        <i class="ri-user-line m-l-2 m-r-1"></i><span>@item.Author</span>
+                                    </p>
+                                </div>
                             </div>
-                            <div class="summary text-secondary">将内置于Tomcat服务器中的应用程序与内置于Windows服务器中的应用程</div>
                         </div>
-                        <div class="info-bar text-muted">
-                            <p>
-                                <i class="ri-time-line m-r-1"></i><span>@DateTime.Now.ToString(CultureInfo.CurrentCulture)</span>
-                                <i class="ri-user-line m-l-2 m-r-1"></i><span>管理员</span>
-                            </p>
-                        </div>
-                    </div>
+                    }
                 </div>
-            }
+
+            </div>
         </div>
-        <nav aria-label="Page navigation mt-2">
-            <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">1</a>
-                </li>
-                <li class="page-item active">
-                    <a class="page-link" href="#">2</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">3</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+        <div class="row">
+            <div class="col">
+                @{
+                    var list = Model.Count.GenPageIndexList(10, Model.CurrIndex, 5);
+                    var pageCount = Model.Count.GetPageSum(10);
+                }
+                @if (list.Length == 1)
+                {
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            @if (Model.CurrIndex > 1)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link">上一页</a>
+                                </li>
+                            }
+                            @if (list.Length > 1)
+                            {
+                                @foreach (var i in list)
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link" href="/@i">@i</a>
+                                    </li>
+                                }
+                            }
+                            @if (Model.CurrIndex < pageCount)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="#">下一页</a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                }
+            </div>
+        </div>
     </div>
     <div class="col-12 col-md-12 col-lg-3">
         <div class="card mb-2">
@@ -88,14 +111,23 @@ margin: 0 auto"/>
                 </form>
             </div>
         </div>
+        <div class="card mb-2">
+            <div class="card-header">
+                标签
+            </div>
+            <div class="card-body">
+                @await Html.PartialAsync("Shared/_TagsPartial")
+            </div>
+        </div>
         @await Html.PartialAsync("_CategoryPartial")
-        <div class="card">
+        <div class="card mb-2">
             <div class="card-header">
                 最近更新
             </div>
             <div class="card-body">
-
+                @await Html.PartialAsync("Shared/_NewestPartial")
             </div>
         </div>
+
     </div>
 </div>

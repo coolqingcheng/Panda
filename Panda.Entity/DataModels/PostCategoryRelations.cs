@@ -2,7 +2,7 @@ namespace Panda.Entity.DataModels;
 
 public class PostsCategoryRelations : PandaBaseTable
 {
-    public Posts Posts { get; set; }
+    public virtual Posts Posts { get; set; }
 
-    public Categorys Categories { get; set; }
+    public virtual Categorys Categories { get; set; }
 }

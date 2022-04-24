@@ -2,7 +2,7 @@ namespace Panda.Entity.DataModels;
 
 public class TagsRelation : PandaBaseTable
 {
-    public Posts Posts { get; set; }
+    public virtual Posts Posts { get; set; }
 
-    public PostTags Tags { get; set; }
+    public virtual PostTags Tags { get; set; }
 }

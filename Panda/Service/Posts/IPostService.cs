@@ -17,7 +17,7 @@ public interface IPostService
     Task<PostDetailItem> GetPost(int id);
 
     /// <summary>
-    ///     вт╤╗рЕа╢╫с╩Ях║ндуб
+    ///     Х┤╙Е╝ Д╧┴И⌠╬Ф▌╔Х▌╥Е▐√Ф√┤Г╚═
     /// </summary>
     /// <param name="link"></param>
     /// <returns></returns>
@@ -38,7 +38,7 @@ public interface IPostService
 
 
     /// <summary>
-    ///     ╩Ях║иор╩лУобр╩лУ
+    ///     Х▌╥Е▐√Д╦┼Д╦─Ф²║Д╦▀Д╦─Ф²║
     /// </summary>
     /// <param name="PostId"></param>
     /// <returns></returns>
