@@ -37,7 +37,7 @@ public class IndexModel : PageModel
         if (index < 1) index = 0;
         var query = _dbContext.Set<Posts>().Where(a => a.Status == PostStatus.Publish);
 
-        Count = await query.CountAsync();
+        Count = 50; //await query.CountAsync();
 
         ListItems = await query.Include(a => a.Account).OrderByDescending(a => a.UpdateTime).Page(index, 10).Select(a =>
             new PostListItem()

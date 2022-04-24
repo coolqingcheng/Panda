@@ -1,5 +1,6 @@
 ﻿@page "/{index?}"
 @using System.Globalization
+@using Panda.App.Models
 @model IndexModel
 @{
     ViewData["Title"] = "主页";
@@ -20,30 +21,7 @@
                 <div class="card">
                     @foreach (var item in Model.ListItems)
                     {
-                        <div class="post-list-item">
-                            @if (item.Cover != null)
-                            {
-                                <div class="img-box">
-                                    <img src="@item.Cover" alt="@item.Title"/>
-                                </div>
-                            }
-                            <div class="item">
-                                <div class="top">
-                                    <div class="title">
-                                        <a href="/post/@(item.Link).html" class="text-black">@item.Title</a>
-                                    </div>
-                                    <div class="summary text-secondary">
-                                        @Html.Raw(item.Summay)
-                                    </div>
-                                </div>
-                                <div class="toolbar text-muted">
-
-                                    <i class="ri-time-line m-r-1"></i><span>@item.UpdateTime.ToLocalTime().ToString("yyyy-MM-dd")</span>
-                                    <i class="ri-user-line m-l-2 m-r-1"></i><span>@item.Author</span>
-
-                                </div>
-                            </div>
-                        </div>
+                        @(await Html.PartialAsync("Shared/_PostItemPartial", item))
                     }
                 </div>
 
@@ -51,38 +29,10 @@
         </div>
         <div class="row mt-3">
             <div class="col">
-                @{
-                    var list = Model.Count.GenPageIndexList(10, Model.CurrIndex, 5);
-                    var pageCount = Model.Count.GetPageSum(10);
-                }
-                @if (list.Length != 1)
+                @await Html.PartialAsync("Shared/_PaginationPartial", new PaginationModel()
                 {
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center">
-                            @if (Model.CurrIndex > 1)
-                            {
-                                <li class="page-item">
-                                    <a class="page-link" href="/@(Model.CurrIndex - 1)">上一页</a>
-                                </li>
-                            }
-                            @if (list.Length > 1)
-                            {
-                                @foreach (var i in list)
-                                {
-                                    <li class="page-item @(i == Model.CurrIndex ? "active" : "")">
-                                        <a class="page-link " href="/@i">@i</a>
-                                    </li>
-                                }
-                            }
-                            @if (Model.CurrIndex < pageCount)
-                            {
-                                <li class="page-item">
-                                    <a class="page-link" href="/@(Model.CurrIndex + 1)">下一页</a>
-                                </li>
-                            }
-                        </ul>
-                    </nav>
-                }
+                    CurrIndex = Model.CurrIndex, Count = Model.Count, Url = "/{0}"
+                })
             </div>
         </div>
     </div>

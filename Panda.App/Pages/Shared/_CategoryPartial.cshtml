@@ -1,19 +1,25 @@
 ﻿@using Panda.App.Services.Post
+@using Panda.App.Models
 
 @inject IPostService PostService 
 @{
     var list = await PostService.GetCategories(50);
 }
-<div class="card mb-2">
-    <div class="card-header">分类</div>
-    <div class="card-body">
-        <ul class="cate-list">
-            @foreach (var item in list)
-            {
-                <li class="cate-item">
-                    <a href="/category/@item.Id">@item.CateName</a>
-                </li>
-            }
-        </ul>
+
+<div class="row">
+    <div class="col">
+        <div class="card mb-2">
+            <div class="card-header">分类</div>
+            <div class="card-body">
+                <ul class="cate-list">
+                    @foreach (var item in list)
+                    {
+                        <li class="cate-item">
+                            <a href="/category/@(item.Id)_1">@item.CateName</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
