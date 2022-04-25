@@ -19,7 +19,7 @@ html {
   min-height: 100%; }
 
 body {
-  margin-bottom: 60px; }
+  margin-bottom: 220px; }
 
 .footer p {
   height: 1.2rem; }
@@ -55,7 +55,6 @@ body {
       padding-left: 0.6rem; }
       .post-list-item .item .top .title {
         font-size: 1.4rem;
-        white-space: nowrap;
         padding-bottom: 0.8rem;
         padding-top: 0.4rem;
         transform: translateX(0);
@@ -163,5 +162,32 @@ body {
   align-items: center; }
   .navbar-nav .nav-link i {
     margin-right: 4px; }
+
+.footer {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  background: #191b1d;
+  color: #888; }
+  .footer a {
+    color: #888; }
+    .footer a:hover {
+      color: #eee; }
+
+.friendlink {
+  display: flex;
+  flex-direction: column; }
+  .friendlink .friendlink-title {
+    color: #eee;
+    font-size: 1rem;
+    padding-left: 8px;
+    border-left: 6px solid #eee; }
+  .friendlink .friendlink-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap; }
+    .friendlink .friendlink-list .friend-link-item {
+      display: inline-block;
+      padding: .3rem 0.4rem;
+      padding-left: 0; }
 
 /*# sourceMappingURL=site.css.map */

@@ -49,10 +49,10 @@
     </main>
 </div>
 
-<footer class="border-top footer text-muted">
+<footer class="border-top footer">
     <div class="container ">
-        <p>本站基于.NET 7.0开发</p>
-        <p> &copy; 2022 - @Configuration.GetSection("site:Name").Value - <a asp-area="" asp-page="/Contact.html">与我联系</a></p>
+        @await Html.PartialAsync("_FriendLinkPartial")
+        <p class="mt-2"> &copy; 2022 - @Configuration.GetSection("site:Name").Value - <a asp-area="" asp-page="/Contact.html">与我联系</a> - 本站基于.NET 7.0开发</p>
     </div>
 </footer>
 
