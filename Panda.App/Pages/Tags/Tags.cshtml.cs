@@ -27,6 +27,7 @@ public class Tags : PageModel
     {
         if (index < 1) index = 1;
         Index = index;
+        TagName = tagName;
         var tagItem = await _dbContext.Set<PostTags>().Where(a => a.TagName == tagName).FirstOrDefaultAsync();
         if (tagItem == null)
         {
