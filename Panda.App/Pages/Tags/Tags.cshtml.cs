@@ -23,11 +23,11 @@ public class Tags : PageModel
         _dbContext = dbContext;
     }
 
-    public async Task<IActionResult> OnGet(int id, int index)
+    public async Task<IActionResult> OnGet(string tagName, int index)
     {
         if (index < 1) index = 1;
         Index = index;
-        var tagItem = await _dbContext.Set<PostTags>().Where(a => a.Id == id).FirstOrDefaultAsync();
+        var tagItem = await _dbContext.Set<PostTags>().Where(a => a.TagName == tagName).FirstOrDefaultAsync();
         if (tagItem == null)
         {
             return NotFound();
