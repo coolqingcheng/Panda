@@ -6,6 +6,7 @@ using Panda.App.Configs;
 using Panda.Entity;
 using Panda.Entity.Options;
 using Panda.Tools;
+using Panda.Tools.QueueTask;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +33,8 @@ services.AddDbContextPool<PandaContext>(
 );
 
 services.AddConfig(builder.Configuration);
+
+services.AddQueueTask();
 
 services.AddEasyCaching(options =>
 {
