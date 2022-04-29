@@ -32,6 +32,12 @@ public class PandaContext : AppContext<Accounts>
 
     public DbSet<Notices> Notices { get; set; }
 
+
+    /// <summary>
+    /// 访问统计
+    /// </summary>
+    public DbSet<AccessStatistic> AccessStatistics { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -41,8 +47,8 @@ public class PandaContext : AppContext<Accounts>
         modelBuilder.Entity<Posts>().Property(a => a.Text).HasColumnType("longtext");
         modelBuilder.Entity<Posts>().Property(a => a.Content).HasColumnType("longtext");
         modelBuilder.Entity<Posts>().Property(a => a.MarkDown).HasColumnType("longtext");
-        modelBuilder.Entity<Posts>().HasIndex(a => new {a.Text, a.Title}).IsFullText(true, "ngram");
-        modelBuilder.Entity<Posts>().HasIndex(a => new {a.Id, a.Status});
+        modelBuilder.Entity<Posts>().HasIndex(a => new { a.Text, a.Title }).IsFullText(true, "ngram");
+        modelBuilder.Entity<Posts>().HasIndex(a => new { a.Id, a.Status });
         modelBuilder.Entity<Posts>().HasIndex(a => a.CustomLink).IsUnique();
         modelBuilder.Entity<Posts>().HasIndex(a => a.UpdateTime);
         modelBuilder.Entity<DicDatas>().Property(a => a.Pid).HasDefaultValue(0);

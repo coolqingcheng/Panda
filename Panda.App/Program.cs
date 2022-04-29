@@ -2,6 +2,7 @@ using System.Net;
 using Microsoft.EntityFrameworkCore;
 using Panda;
 using Panda.Admin;
+using Panda.App;
 using Panda.App.Configs;
 using Panda.Entity;
 using Panda.Entity.Options;
@@ -15,7 +16,10 @@ var env = builder.Environment;
 builder.Configuration.AddIniFile($"Site.{env.EnvironmentName}.ini", false, true);
 builder.Services.AddControllers();
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages().AddMvcOptions(opt =>
+{
+    opt.Filters.Add<StatisticFilter>();
+});
 
 
 var services = builder.Services;

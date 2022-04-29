@@ -1,32 +1,47 @@
 ﻿using System.Collections.Concurrent;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Panda.Tools.QueueTask;
 
 public class QueueTaskManager : IDisposable
 {
-    private ConcurrentQueue<Action<IServiceProvider>> Queue { get; set; } = new();
+    private ConcurrentQueue<Func<IServiceProvider, Task>> Queue { get; set; } = new();
 
     private bool _isRun = true;
 
-    public void Run(Action<IServiceProvider> action)
+    private ILogger _logger;
+
+    public void Run(Func<IServiceProvider, Task> action)
     {
         Queue.Enqueue(action);
     }
 
 
-    public QueueTaskManager(IServiceProvider serviceProvider)
+    public QueueTaskManager(IServiceProvider serviceProvider, ILogger<QueueTaskManager> logger)
     {
+        _logger = logger;
         _ = Task.Run(async () =>
         {
             while (_isRun)
             {
                 if (Queue.TryDequeue(out var action) == false)
                 {
-                    await Task.Delay(100);
+                    await Task.Delay(1000);
+                    continue;
                 }
 
-                action?.Invoke(serviceProvider);
+                Console.WriteLine("执行统计" + DateTime.Now);
+
+                try
+                {
+                    await action?.Invoke(serviceProvider)!;
+                }
+                catch (System.Exception e)
+                {
+                    Console.WriteLine(e);
+                    _logger.LogError(e.Message,e);
+                }
             }
         });
     }
