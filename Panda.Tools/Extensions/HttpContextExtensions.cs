@@ -25,12 +25,10 @@ public static class HttpContextExtensions
     /// <returns></returns>
     public static string GetClientIP(this IHttpContextAccessor httpContextAccessor)
     {
-        var request = httpContextAccessor.HttpContext!.Request;
-        if (request.Headers.ContainsKey("X-Real-IP")) return request.Headers["X-Real-IP"].ToString();
-
-        if (request.Headers.ContainsKey("X-Forwarded-For")) return request.Headers["X-Forwarded-For"].ToString();
-
-        return "";
+       
+        var ip = httpContextAccessor.HttpContext!.Request.Headers["X-Forwarded-For"].FirstOrDefault(); // 解决 nginx、docker等 获取ip问题
+        if (string.IsNullOrEmpty(ip)) ip =httpContextAccessor.HttpContext!.Connection.RemoteIpAddress!.MapToIPv4().ToString();
+        return "/";
     }
     
     /// <summary>
