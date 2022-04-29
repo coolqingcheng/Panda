@@ -52,7 +52,7 @@ public class CommentService : ICommentService
             Content = request.Message,
             ReplyId = comment?.Id,
             UserAgent = userAgent,
-            Ip = _httpContextAccessor.GetClientIP()
+            Ip = _httpContextAccessor.HttpContext.GetClientIp()
         });
         await _unitOfWork.CommitAsync();
     }

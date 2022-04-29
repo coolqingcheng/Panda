@@ -19,17 +19,36 @@ public static class HttpContextExtensions
     }
 
     /// <summary>
-    ///     获取客户端的真实IP地址
+    /// 获取客户端的真实IP地址
     /// </summary>
-    /// <param name="httpContextAccessor"></param>
+    /// <param name="context"></param>
     /// <returns></returns>
-    public static string GetClientIP(this IHttpContextAccessor httpContextAccessor)
+    public static string GetClientIp(this HttpContext context)
     {
-       
-        var ip = httpContextAccessor.HttpContext!.Request.Headers["X-Forwarded-For"].FirstOrDefault(); // 解决 nginx、docker等 获取ip问题
-        if (string.IsNullOrEmpty(ip)) ip =httpContextAccessor.HttpContext!.Connection.RemoteIpAddress!.MapToIPv4().ToString();
-        return "/";
+        var ip = context.Request.Headers["Cdn-Src-Ip"].FirstOrDefault();
+        if (!string.IsNullOrEmpty(ip))
+            return IpReplace(ip);
+
+        ip = context.Request.Headers["X-Forwarded-For"].FirstOrDefault();
+        if (!string.IsNullOrEmpty(ip))
+            return IpReplace(ip);
+
+        ip = context.Connection.RemoteIpAddress?.ToString();
+
+        return IpReplace(ip);
     }
+
+    static string IpReplace(string inip)
+    {
+        //::ffff:
+        //::ffff:192.168.2.131 这种IP处理
+        if (inip.Contains("::ffff:"))
+        {
+            inip = inip.Replace("::ffff:", "");
+        }
+        return inip;
+    }
+
     
     /// <summary>
     /// 获取当前请求完整的Url地址

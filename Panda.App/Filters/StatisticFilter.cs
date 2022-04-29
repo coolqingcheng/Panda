@@ -32,7 +32,7 @@ public class StatisticFilter : IAsyncPageFilter
         Console.WriteLine("数据统计开始");
 
         context.HttpContext.Request.Headers.TryGetValue("user-agent", out var ua);
-        var ip = _httpContextAccessor.GetClientIP();
+        var ip = context.HttpContext.GetClientIp();
         context.HttpContext.Request.Headers.TryGetValue("referer", out var referer);
         string url = context.HttpContext.Request.GetDisplayUrl();
         _queueTaskManager.Run(async serviceProvider =>

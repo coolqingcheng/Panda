@@ -32,7 +32,7 @@ public class MonitoringMiddleware
             var model = new MonitoringModel()
             {
                 UA = context.Request.Headers.UserAgent,
-                Ip = _httpContextAccessor.GetClientIP(),
+                Ip = _httpContextAccessor.HttpContext.GetClientIp(),
                 Url = _httpContextAccessor.GetCompleteUrl(),
                 CreateTime = DateTime.Now
             };
