@@ -5,11 +5,11 @@ namespace Panda.Tools.QueueTask;
 
 public class QueueTaskManager : IDisposable
 {
-    private static ConcurrentQueue<Action<IServiceProvider>> Queue { get; set; } = new();
+    private ConcurrentQueue<Action<IServiceProvider>> Queue { get; set; } = new();
 
-    private static bool _isRun = true;
+    private bool _isRun = true;
 
-    public static void Run(Action<IServiceProvider> action)
+    public void Run(Action<IServiceProvider> action)
     {
         Queue.Enqueue(action);
     }
@@ -34,6 +34,7 @@ public class QueueTaskManager : IDisposable
     public void Dispose()
     {
         // todo 现在直接扔掉，不处理队列的数据
+        Queue.Clear();
         _isRun = false;
     }
 }
