@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Panda.Admin.Controllers;
+namespace Panda.Tools.Auth.Controllers;
 
 /// <summary>
 ///     后台api

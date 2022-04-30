@@ -38,15 +38,15 @@ public static class HttpContextExtensions
         return IpReplace(ip);
     }
 
-    static string IpReplace(string inip)
+    static string IpReplace(string ip)
     {
         //::ffff:
         //::ffff:192.168.2.131 这种IP处理
-        if (inip.Contains("::ffff:"))
+        if (ip.Contains("::ffff:"))
         {
-            inip = inip.Replace("::ffff:", "");
+            ip = ip.Replace("::ffff:", "");
         }
-        return inip;
+        return ip;
     }
 
     

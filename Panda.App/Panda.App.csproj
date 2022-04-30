@@ -25,9 +25,11 @@
     <ItemGroup>
       <ProjectReference Include="..\Panda.Admin\Panda.Admin.csproj" />
       <ProjectReference Include="..\Panda.Entity\Panda.Entity.csproj" />
+      <ProjectReference Include="..\Panda.SiteStatistic\Panda.SiteStatistic.csproj" />
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Filters" />
       <Folder Include="Pages\FriendLink" />
       <Folder Include="wwwroot\RemixIcon" />
     </ItemGroup>

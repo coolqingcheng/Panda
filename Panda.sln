@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Admin", "Panda.Admin\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.App", "Panda.App\Panda.App.csproj", "{739F25F9-9BFA-4378-A7B8-7725D18752CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.SiteStatistic", "Panda.SiteStatistic\Panda.SiteStatistic.csproj", "{36994216-BBE6-4436-8371-617369FB8FB1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{739F25F9-9BFA-4378-A7B8-7725D18752CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{739F25F9-9BFA-4378-A7B8-7725D18752CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{739F25F9-9BFA-4378-A7B8-7725D18752CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36994216-BBE6-4436-8371-617369FB8FB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36994216-BBE6-4436-8371-617369FB8FB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36994216-BBE6-4436-8371-617369FB8FB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36994216-BBE6-4436-8371-617369FB8FB1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

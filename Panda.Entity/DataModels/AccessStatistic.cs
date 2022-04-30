@@ -14,7 +14,7 @@ public class AccessStatistic : PandaBaseTable
     /// <summary>
     /// 访问地址
     /// </summary>
-    public string Url { get; set; }
+    public string? Url { get; set; }
 
     /// <summary>
     /// 访问IP

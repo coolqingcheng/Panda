@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http.Extensions;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Panda.Entity.DataModels;
 using Panda.Tools.Extensions;
 using Panda.Tools.QueueTask;
@@ -34,7 +36,7 @@ public class StatisticFilter : IAsyncPageFilter
         context.HttpContext.Request.Headers.TryGetValue("user-agent", out var ua);
         var ip = context.HttpContext.GetClientIp();
         context.HttpContext.Request.Headers.TryGetValue("referer", out var referer);
-        string url = context.HttpContext.Request.GetDisplayUrl();
+        string? url = context.HttpContext.Request.Path.Value;
         _queueTaskManager.Run(async serviceProvider =>
         {
             var parser = Parser.GetDefault().Parse(ua);
