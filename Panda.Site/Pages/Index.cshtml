@@ -1,0 +1,83 @@
+﻿@page "/{index?}"
+@using System.Globalization
+@using Panda.Site.Models
+@model IndexModel
+@{
+    ViewData["Title"] = "主页";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="text-center">
+            <h1 class="display-4">Panda Blog System</h1>
+            <p>一个使用.NET 7构建的博客系统</p>
+        </div>
+    </div>
+</div>
+<div class="row mt-2 g-2">
+    <div class="col-12 col-md-12 col-lg-9">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    @foreach (var item in Model.ListItems)
+                    {
+                        @(await Html.PartialAsync("Shared/_PostItemPartial", item))
+                    }
+                </div>
+
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                @await Html.PartialAsync("Shared/_PaginationPartial", new PaginationModel()
+                {
+                    CurrIndex = Model.CurrIndex, Count = Model.Count, Url = "/{0}"
+                })
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-12 col-lg-3">
+        <div class="card mb-2">
+            <div class="card-header">
+                微信公众号
+            </div>
+            <div class="card-body">
+                <img src="qr.png" alt="微信公众号" style="max-width: 90%;
+margin: 0 auto"/>
+            </div>
+        </div>
+        <div class="card mb-2">
+            <div class="card-header">
+                站内搜索
+            </div>
+            <div class="card-body">
+                <form class="row g-1">
+                    <div class="col-auto">
+                        <input class="form-control"/>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-outline-success">搜索</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card mb-2">
+            <div class="card-header">
+                标签
+            </div>
+            <div class="card-body">
+                @await Html.PartialAsync("Shared/_TagsPartial")
+            </div>
+        </div>
+        @await Html.PartialAsync("_CategoryPartial")
+        <div class="card mb-2">
+            <div class="card-header">
+                最近更新
+            </div>
+            <div class="card-body">
+                @await Html.PartialAsync("Shared/_NewestPartial")
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -7,7 +7,7 @@ import * as path from 'path'
 export default defineConfig({
   plugins: [vue()],
   build: {
-    outDir: '../Panda/wwwroot/admin'
+    outDir: '../Panda.Site/wwwroot/admin'
   },
   server: {
     proxy: {

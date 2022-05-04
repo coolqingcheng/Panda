@@ -1,0 +1,18 @@
+﻿@using Panda.Site.Services.Site
+@inject IFriendLinkService _FriendLinkService
+@{
+    var list = await _FriendLinkService.GetListByPassAsync(1, 20);
+}
+<div class="friendlink">
+    <div class="friendlink-title">
+        友情链接
+    </div>
+    <div class="friendlink-list mt-2">
+        @foreach (var item in list.Data)
+        {
+            <div class="friend-link-item">
+                <a href="@item.Url" target="_blank" referrerpolicy="unsafe-url">@item.ShowName</a> <span>|</span>
+            </div>
+        }
+    </div>
+</div>

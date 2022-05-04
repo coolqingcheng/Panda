@@ -1,0 +1,36 @@
+﻿@model Panda.Site.Models.PaginationModel
+
+
+
+@{
+    var list = Model.Count.GenPageIndexList(10, Model.CurrIndex, 5);
+    var pageCount = Model.Count.GetPageSum(10);
+}
+@if (list.Length != 1)
+{
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            @if (Model.CurrIndex > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@string.Format(Model.Url, Model.CurrIndex - 1)">上一页</a>
+                </li>
+            }
+            @if (list.Length > 1)
+            {
+                @foreach (var i in list)
+                {
+                    <li class="page-item @(i == Model.CurrIndex ? "active" : "")">
+                        <a class="page-link " href="@string.Format(Model.Url, i)">@i</a>
+                    </li>
+                }
+            }
+            @if (Model.CurrIndex < pageCount)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@string.Format(Model.Url, Model.CurrIndex + 1)">下一页</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}

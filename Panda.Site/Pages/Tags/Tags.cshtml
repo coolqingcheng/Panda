@@ -1,0 +1,31 @@
+﻿@page "/tag/{tagName}_{index:int}"
+
+@using Panda.Site.Models
+@model Panda.Site.Pages.Tags.Tags
+
+<div class="row">
+    <div class="col">
+        <h1>标签: @Model.TagName</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                @foreach (var item in Model.ListItems)
+                {
+                    @(await Html.PartialAsync("Shared/_PostItemPartial", item))
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        @await Html.PartialAsync("_PaginationPartial", new PaginationModel()
+        {
+            CurrIndex = Model.Index, Count = Model.Count,
+            Url = "/tag/" + Model.Index + "_{0}"
+        })
+    </div>
+</div>

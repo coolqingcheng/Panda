@@ -19,7 +19,7 @@ namespace Panda.Admin.Services.Account;
 public class AccountService<TU> : IAccountService<TU> where TU : Accounts, new()
 {
     private readonly AccountRepository<TU> _accountRepository;
-    
+
     private readonly IHttpContextAccessor _httpContextAccessor;
 
     public AccountService(AccountRepository<TU> accountRepository,
@@ -31,7 +31,7 @@ public class AccountService<TU> : IAccountService<TU> where TU : Accounts, new()
 
     public async Task<AuthResult> LoginAsync(string email, string password)
     {
-        var account = await _accountRepository.Where<TU>(a => a.Email == email)
+        var account = await _accountRepository.Where<TU>(a => a.Email == email || a.UserName == email)
             .FirstOrDefaultAsync();
         var result = new AuthResult();
         if (account == null)
@@ -119,9 +119,9 @@ public class AccountService<TU> : IAccountService<TU> where TU : Accounts, new()
         };
     }
 
-    public  Task<bool> CheckAdminAccountExistAsync()
+    public Task<bool> CheckAdminAccountExistAsync()
     {
-        return  _accountRepository.CheckAdminAccountExistAsync();
+        return _accountRepository.CheckAdminAccountExistAsync();
     }
 
     public async Task Disable(Guid accountId, bool status)
