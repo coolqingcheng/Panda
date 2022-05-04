@@ -1,0 +1,48 @@
+using Mapster;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Panda.Entity.DataModels;
+using Panda.Entity.Responses;
+using Panda.Site.Admin.Models;
+using Panda.Tools.Auth.Controllers;
+using Panda.Tools.Extensions;
+
+namespace Panda.Site.Admin.Controllers;
+
+public class StatisticController : AdminController
+{
+    private readonly DbContext _dbContext;
+
+    public StatisticController(DbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
+
+    public async Task<StatisticModel> Get()
+    {
+        var postCount = await _dbContext.Set<Posts>().CountAsync();
+        var begin = DateTimeOffset.Now.Date;
+        var end = DateTimeOffset.Now.AddDays(1).Date;
+        var ipCount = await _dbContext.Set<AccessStatistic>()
+            .Where(a => a.AddTime >= begin && a.AddTime < end).Select(a => a.IP).Distinct()
+            .CountAsync();
+        return new StatisticModel()
+        {
+            PostCount = postCount,
+            IpCount = ipCount
+        };
+    }
+
+    [HttpGet]
+    public async Task<PageDto<RecentAccessHistory>> GetRecentAccessRecord(int page)
+    {
+        var query = _dbContext.Set<AccessStatistic>().AsQueryable();
+
+        return new PageDto<RecentAccessHistory>()
+        {
+            Total = await query.CountAsync(),
+            Data = await query.OrderByDescending(a => a.AddTime).Page(page, 15).ProjectToType<RecentAccessHistory>()
+                .ToListAsync()
+        };
+    }
+}
