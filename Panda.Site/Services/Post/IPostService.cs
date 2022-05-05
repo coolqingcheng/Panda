@@ -1,4 +1,5 @@
 ﻿using Panda.Site.Services.Post.Models;
+using Panda.Tools.Aop;
 using Panda.Tools.Web.RSS;
 
 namespace Panda.Site.Services.Post;
@@ -10,6 +11,7 @@ public interface IPostService
     /// </summary>
     /// <param name="top"></param>
     /// <returns></returns>
+    [Cache(60 * 5)]
     Task<List<NewestPostModel>> GetNewest(int top);
 
 

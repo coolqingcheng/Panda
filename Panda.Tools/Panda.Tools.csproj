@@ -18,6 +18,7 @@
 
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+		<PackageReference Include="AspectCore.Extensions.DependencyInjection" Version="2.2.0" />
 		<PackageReference Include="HtmlSanitizer" Version="7.1.488" />
 		<PackageReference Include="MailKit" Version="3.2.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.4" />

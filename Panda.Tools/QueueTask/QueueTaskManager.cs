@@ -10,7 +10,13 @@ public class QueueTaskManager : IDisposable
 
     private bool _isRun = true;
 
-    private ILogger _logger;
+    private readonly ILogger _logger;
+
+
+    public QueueTaskManager(ILogger<QueueTaskManager> logger)
+    {
+        _logger = logger;
+    }
 
     public void Run(Func<IServiceProvider, Task> action)
     {
@@ -31,7 +37,7 @@ public class QueueTaskManager : IDisposable
                     continue;
                 }
 
-                Console.WriteLine("执行统计" + DateTime.Now);
+                _logger.LogInformation("执行统计" + DateTime.Now);
 
                 try
                 {
@@ -39,8 +45,7 @@ public class QueueTaskManager : IDisposable
                 }
                 catch (System.Exception e)
                 {
-                    Console.WriteLine(e);
-                    _logger.LogError(e.Message,e);
+                    _logger.LogError(e.Message, e);
                 }
             }
         });

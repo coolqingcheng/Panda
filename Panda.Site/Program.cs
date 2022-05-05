@@ -61,7 +61,7 @@ services.AddAutoInject(opt =>
 
 builder.AddAdmin<PandaContext>();
 services.AddSiteAdmin();
-
+builder.AddAopCache();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
