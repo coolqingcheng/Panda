@@ -1,7 +1,8 @@
 ﻿@using Panda.Site.Services.Post
+@using Panda.Tools.Helper
 @inject IPostService PostService;
 @{
-    var list = await PostService.GetNewest(6);
+    var list = await CacheHelper.CacheInvokeAsync(() => { return PostService.GetNewest(6); }, "", TimeSpan.FromMinutes(30));
 }
 <div class="post-newest">
     @foreach (var item in list)
