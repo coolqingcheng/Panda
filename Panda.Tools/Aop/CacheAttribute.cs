@@ -29,7 +29,6 @@ public class CacheAttribute : AbstractInterceptorAttribute
         if (string.IsNullOrWhiteSpace(cacheValue))
         {
             await next(context);
-            context.IsAsync();
             if (context.IsAsync())
             {
                 var value = await context.UnwrapAsyncReturnValue();
@@ -40,7 +39,6 @@ public class CacheAttribute : AbstractInterceptorAttribute
                 cacheValue = JsonConvert.SerializeObject(context.ReturnValue);
             }
 
-            context.ReturnValue = cacheValue;
             await distributedCache.SetStringAsync(key, cacheValue, new DistributedCacheEntryOptions()
             {
                 SlidingExpiration = TimeSpan.FromSeconds(_second)
@@ -48,15 +46,33 @@ public class CacheAttribute : AbstractInterceptorAttribute
         }
         else
         {
+           
             Console.WriteLine("缓存里面获取:" + key);
-            if (context.ServiceMethod.IsReturnTask())
+            var v = JsonConvert.DeserializeObject(cacheValue);
+            context.ReturnValue = GetReturnValue(cacheValue, context.ProxyMethod.ReturnType,
+                context.ServiceMethod.IsReturnTask());
+            await context.Break();
+        }
+    }
+
+    object GetReturnValue(string json, Type returnType, bool isAsync)
+    {
+        if (isAsync)
+        {
+            if (returnType.GetGenericArguments().Any())
             {
-                context.ReturnValue = Task.FromResult(JsonConvert.DeserializeObject(cacheValue));
+                var data = JsonConvert.DeserializeObject(json, returnType.GenericTypeArguments.FirstOrDefault());
+                return Task.FromResult(data);
             }
             else
             {
-                context.ReturnValue = JsonConvert.DeserializeObject(cacheValue);
+                return Task.CompletedTask;
             }
+        }
+        else
+        {
+            return JsonConvert.DeserializeObject(json, returnType);
+            ;
         }
     }
 }
