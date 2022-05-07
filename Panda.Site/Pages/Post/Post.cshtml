@@ -18,11 +18,11 @@
                             {
                                 @foreach (var cate in post.Categorys)
                                 {
-                                    <a href="/category/@cate.CateId">@cate.CateName</a>
+                                    <a href="/category/@(cate.CateId)_1">@cate.CateName</a>
                                 }
                             }
                             <span class="text-muted">/</span>
-                            <a href="/post/@(post?.Id).html">@post?.Title</a>
+                            <a href="/post/@(post?.Link).html">@post?.Title</a>
                         </div>
                     </div>
                 </div>
