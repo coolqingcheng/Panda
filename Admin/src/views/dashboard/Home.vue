@@ -2,7 +2,7 @@
   <div class="dash-content">
     <el-row :gutter="20">
       <el-col v-bind="grid">
-        <el-card shadow="never" class="dash-card" v-loading="loading">
+        <el-card shadow="never" class="dash-card" style="background: #1976D2;" v-loading="loading">
           <template #header>
             <h4>文章数</h4>
           </template>
@@ -10,7 +10,7 @@
         </el-card>
       </el-col>
       <el-col v-bind="grid">
-        <el-card shadow="never" class="dash-card" v-loading="loading">
+        <el-card shadow="never" class="dash-card" style="background: #F57C00" v-loading="loading">
           <template #header>
             <h4>今日IP数</h4>
           </template>
@@ -18,7 +18,7 @@
         </el-card>
       </el-col>
       <el-col v-bind="grid">
-        <el-card shadow="never" class="dash-card" v-loading="loading">
+        <el-card shadow="never" class="dash-card" style="background: #5D4037" v-loading="loading">
           <template #header>
             <h4>图片数量</h4>
           </template>
@@ -108,6 +108,12 @@ body {
 .dash-card {
   min-height: 170px;
   margin-bottom: 20px;
+
+  color: white;
+
+  .el-card__header {
+    border-bottom: none;
+  }
 }
 
 .dash-content {
