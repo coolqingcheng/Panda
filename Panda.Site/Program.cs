@@ -20,7 +20,7 @@ builder.Services.AddRazorPages().AddMvcOptions(opt => { opt.Filters.Add<Statisti
 var services = builder.Services;
 
 services.AddHttpClient();
-services.AddDbContextPool<PandaContext>(
+services.AddDbContext<PandaContext>(
     opt =>
     {
         var db = builder.Configuration.GetConnectionString("MYSQL");
@@ -34,16 +34,6 @@ services.AddDbContextPool<PandaContext>(
 services.AddConfig(builder.Configuration);
 
 services.AddQueueTask();
-
-services.AddEasyCaching(options =>
-{
-    //use memory cache that named default
-    options.UseInMemory(opt =>
-    {
-        opt.DBConfig.SizeLimit = 2000;
-        opt.CacheNulls = true;
-    });
-});
 
 services.AddTools();
 services.AddAutoInject(opt =>
@@ -61,7 +51,6 @@ services.AddAutoInject(opt =>
 
 builder.AddAdmin<PandaContext>();
 services.AddSiteAdmin();
-builder.AddAopCache();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

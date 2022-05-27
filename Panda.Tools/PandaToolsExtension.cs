@@ -16,10 +16,4 @@ public static class PandaToolsExtension
         serviceCollection.AddScoped<IFileStorage, LocalFileStorage>();
         return serviceCollection;
     }
-
-    public static void AddAopCache(this WebApplicationBuilder builder)
-    {
-        builder.Services.ConfigureDynamicProxy();
-        builder.Host.UseServiceProviderFactory(new DynamicProxyServiceProviderFactory());
-    }
 }
