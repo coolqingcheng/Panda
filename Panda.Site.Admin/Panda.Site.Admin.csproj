@@ -15,4 +15,7 @@
       <ProjectReference Include="..\Panda.Entity\Panda.Entity.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="IP2Region" />
+    </ItemGroup>
 </Project>

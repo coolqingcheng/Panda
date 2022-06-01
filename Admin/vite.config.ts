@@ -11,7 +11,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      "/admin": "http://localhost:5052",
+      "/admin": "http://localhost:5005",
       "/upload": "http://localhost:5052",
       "/img": "http://localhost:5052"
     }

@@ -5,16 +5,18 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
-
     <ItemGroup>
       <None Update="Site.Production.ini">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="IpDb\ip2region.db">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="6.0.4" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.4" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="6.0.5" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.5" />
       <PackageReference Include="System.Runtime" Version="4.3.1" />
     </ItemGroup>
 
@@ -29,6 +31,7 @@
       <Folder Include="Filters" />
       <Folder Include="Pages\FriendLink" />
       <Folder Include="wwwroot\RemixIcon" />
+      <Folder Include="IpDb\" />
     </ItemGroup>
 
 </Project>

@@ -20,7 +20,7 @@
                 <el-form-item label="密码" prop="pwd">
                     <el-input placeholder="输入密码" v-model="formData.pwd" show-password></el-input>
                 </el-form-item>
-                <el-form-item label>
+                <el-form-item label="">
                     <el-button type="primary" class="w_100" @click="submitHandler()">创建</el-button>
                 </el-form-item>
             </el-form>

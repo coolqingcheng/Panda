@@ -36,10 +36,16 @@
             <el-table-column label="访问地址" prop="url"></el-table-column>
             <el-table-column label="Ip" prop="ip"></el-table-column>
             <el-table-column label="时间" prop="addTime"></el-table-column>
-            <el-table-column label="Id" prop="uId"></el-table-column>
+            <el-table-column label="地区" prop="region"></el-table-column>
+            <el-table-column label="Rq-Id" prop="uId"></el-table-column>
             <el-table-column label="浏览器" prop="browser"></el-table-column>
             <el-table-column label="操作系统" prop="os"></el-table-column>
           </el-table>
+          <el-row>
+            <el-col>
+              <el-pagination background :total="total" v-model:current-page="page" @current-change="loadRecentAccess()"></el-pagination>
+            </el-col>
+          </el-row>
         </el-card>
       </el-col>
     </el-row>
@@ -71,6 +77,8 @@ const list = reactive([
 
 const page = ref(1)
 
+const total = ref(0)
+
 const url = ref('')
 
 const close = (e: { base64: string }) => {
@@ -90,6 +98,7 @@ const loadRecentAccess = () => {
     console.log(res)
     list.length = 0;
     list.push(...res.data)
+    total.value = res.total
   })
 }
 

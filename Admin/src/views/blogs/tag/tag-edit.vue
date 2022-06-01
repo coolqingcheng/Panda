@@ -5,7 +5,7 @@
         <el-form-item label="标签名称">
           <el-input placeholder="标签名称"></el-input>
         </el-form-item>
-        <el-form-item label>
+        <el-form-item label="">
           <el-button type="primary" @click="save()">保存</el-button>
           <el-button type="default" @click="back()">返回</el-button>
         </el-form-item>
