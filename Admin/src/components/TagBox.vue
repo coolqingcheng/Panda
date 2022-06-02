@@ -5,7 +5,7 @@
             v-for="(tag,index) in tags"
             :key="index"
             closable
-            size="medium"
+            size="small"
             type="success"
             @close="close(index)"
         >{{ tag }}</el-tag>

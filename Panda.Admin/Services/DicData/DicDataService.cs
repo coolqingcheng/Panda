@@ -1,5 +1,4 @@
-﻿using EasyCaching.Core;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Panda.Admin.Models.Request;
 using Panda.Admin.Repositorys.DicData;
 using Panda.Entity;
@@ -12,16 +11,14 @@ namespace Panda.Admin.Services.DicData;
 
 public class DicDataService : IDicDataService
 {
-    private readonly IEasyCachingProvider _caching;
     private readonly DicDataRepository _dataRepository;
 
     private readonly IUnitOfWork _unitOfWork;
 
-    public DicDataService(DicDataRepository dataRepository, IUnitOfWork unitOfWork, IEasyCachingProvider caching)
+    public DicDataService(DicDataRepository dataRepository, IUnitOfWork unitOfWork)
     {
         _dataRepository = dataRepository;
         _unitOfWork = unitOfWork;
-        _caching = caching;
     }
 
     public async Task AddOrUpdate(DicDataRequest request)
@@ -53,8 +50,6 @@ public class DicDataService : IDicDataService
                 Description = item.Description,
                 Pid = groupInfo.Id
             });
-
-        await _caching.RemoveByPrefixAsync(CacheKeys.DicDataGroupNameKey);
 
         await _unitOfWork.CommitAsync();
     }
@@ -88,21 +83,14 @@ public class DicDataService : IDicDataService
 
     public async Task<DicDataChildInfo?> GetItemByCache(string groupName, string key)
     {
-        var result = await _caching.GetAsync(CacheKeys.DicDataGroupNameKey + groupName,
-            async () =>
-            {
-                var list = await _dataRepository.WhereItemsByGroupName(groupName);
-                var item = list.Select(a => new DicDataChildInfo
-                {
-                    Key = a.DicKey,
-                    Value = a.DicValue,
-                    Description = a.Description
-                }).ToList();
-                return item;
-            }, TimeSpan.FromDays(1));
-        if (result.HasValue) return result.Value.FirstOrDefault(a => a.Key == key);
-
-        return null;
+        var list = await _dataRepository.WhereItemsByGroupName(groupName);
+        var item = list.Select(a => new DicDataChildInfo
+        {
+            Key = a.DicKey,
+            Value = a.DicValue,
+            Description = a.Description
+        }).ToList();
+        return item.FirstOrDefault();
     }
 
     public async Task<IEnumerable<DicDataChildInfo>> GetItemByGroupName(string groupName)

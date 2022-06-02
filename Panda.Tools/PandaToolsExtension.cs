@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Panda.Tools.Email;
 using Panda.Tools.FileStorage;
+using Panda.Tools.Helper;
 
 namespace Panda.Tools;
 
@@ -14,12 +15,7 @@ public static class PandaToolsExtension
         serviceCollection.AddHttpContextAccessor();
         serviceCollection.AddScoped<IEmailSender, DefaultEmailSender>();
         serviceCollection.AddScoped<IFileStorage, LocalFileStorage>();
+        serviceCollection.AddSingleton<IpHelper>();
         return serviceCollection;
-    }
-
-    public static void AddAopCache(this WebApplicationBuilder builder)
-    {
-        builder.Services.ConfigureDynamicProxy();
-        builder.Host.UseServiceProviderFactory(new DynamicProxyServiceProviderFactory());
     }
 }

@@ -49,4 +49,10 @@ public class RecentAccessHistory{
     /// </summary>
     public DateTimeOffset AddTime { get; set; }
 
+
+    /// <summary>
+    /// Ip所属区域
+    /// </summary>
+    public string Region { get; set; }
+
 }

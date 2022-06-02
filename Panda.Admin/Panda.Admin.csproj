@@ -12,9 +12,8 @@
 
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
-		<PackageReference Include="EasyCaching.Core" Version="1.5.1" />
 		<PackageReference Include="Mapster" Version="7.3.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="6.0.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="6.0.5" />
 		<PackageReference Include="System.Runtime" Version="4.3.1" />
 		<PackageReference Include="UAParser" Version="3.1.47" />
 	</ItemGroup>

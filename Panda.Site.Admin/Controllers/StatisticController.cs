@@ -6,6 +6,7 @@ using Panda.Entity.Responses;
 using Panda.Site.Admin.Models;
 using Panda.Tools.Auth.Controllers;
 using Panda.Tools.Extensions;
+using Panda.Tools.Helper;
 
 namespace Panda.Site.Admin.Controllers;
 
@@ -13,9 +14,12 @@ public class StatisticController : AdminController
 {
     private readonly DbContext _dbContext;
 
-    public StatisticController(DbContext dbContext)
+    private readonly IpHelper _ipHelper;
+
+    public StatisticController(DbContext dbContext, IpHelper ipHelper)
     {
         _dbContext = dbContext;
+        _ipHelper = ipHelper;
     }
 
     public async Task<StatisticModel> Get()
@@ -38,11 +42,17 @@ public class StatisticController : AdminController
     {
         var query = _dbContext.Set<AccessStatistic>().AsQueryable();
 
+        var list = await query.OrderByDescending(a => a.AddTime).Page(page, 15).ProjectToType<RecentAccessHistory>()
+                .ToListAsync();
+
+        list.ForEach(a => {
+            a.Region = _ipHelper.GetRegion(a.IP);
+        });
+
         return new PageDto<RecentAccessHistory>()
         {
             Total = await query.CountAsync(),
-            Data = await query.OrderByDescending(a => a.AddTime).Page(page, 15).ProjectToType<RecentAccessHistory>()
-                .ToListAsync()
+            Data = list
         };
     }
 }

@@ -25,8 +25,8 @@
 </template>
 
 <script lang="ts">
-import { ElForm, ElMessage } from "element-plus";
-import { defineComponent, nextTick, ref, toRefs, watch } from "vue";
+import { ElForm, ElMessage, FormRules } from "element-plus";
+import { defineComponent, nextTick, reactive, ref, toRefs, watch } from "vue";
 import { useForm } from 'shared/useForm'
 import { post } from 'shared/http/HttpClient'
 
@@ -54,7 +54,8 @@ export default defineComponent({
             repwd: ''
         })
 
-        const rules = {
+        const rules = reactive<FormRules>(
+             {
             oldpwd: [
                 {
                     required: true, message: '旧的密码不能为空'
@@ -79,6 +80,7 @@ export default defineComponent({
                 }
             ]
         }
+        )
 
         watch(() => modelValue.value, () => {
             console.log('change')
