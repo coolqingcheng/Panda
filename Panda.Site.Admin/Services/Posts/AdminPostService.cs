@@ -30,19 +30,24 @@ public class PostService : IPostService
         var list = await query.Page(request).Select(a => new PostItem()
         {
             Id = a.Id,
-            Title = a.Title, Summary = a.Summary, Cover = a.Cover,
-            CustomLink = a.CustomLink, AddTime = a.AddTime,
+            Title = a.Title,
+            Summary = a.Summary,
+            Cover = a.Cover,
+            CustomLink = a.CustomLink,
+            AddTime = a.AddTime,
             Account = a.Account,
             Categories = a.ArticleCategoryRelations.Select(b => new PostCategories()
             {
                 CateName = b.Categories.CategoryName,
                 Id = b.Categories.Id
             }).ToList(),
-            MarkDown = a.MarkDown, Status = a.Status
+            MarkDown = a.MarkDown,
+            Status = a.Status
         }).ToListAsync();
         return new PageDto<PostItem>()
         {
-            Total = await query.CountAsync(), Data = list
+            Total = await query.CountAsync(),
+            Data = list
         };
     }
 
@@ -215,9 +220,11 @@ public class PostService : IPostService
         var query = _dbContext.Set<Entity.DataModels.Posts>()
             .WhereIf(request.KeyWord != null, a => a.Title.Contains(request.KeyWord!))
             .AsQueryable();
-        var list = await query.Page(request).Select(a => new AdminPostItemResponse()
+        var list = await query.Page(request).OrderByDescending(a => a.AddTime).Select(a => new AdminPostItemResponse()
         {
-            Id = a.Id, Title = a.Title, Summary = a.Summary,
+            Id = a.Id,
+            Title = a.Title,
+            Summary = a.Summary,
             AccountName = a.Account.NickName,
             AddTime = a.AddTime,
             CategoryItems = a.ArticleCategoryRelations.Select(b => new AdminCategoryItem()
@@ -257,7 +264,7 @@ public class PostService : IPostService
                 CustomLink = a.Posts.CustomLink!,
                 Categories =
                     a.Posts.ArticleCategoryRelations.Select(b => new PostCategories
-                            { Id = b.Categories.Id, CateName = b.Categories.CategoryName })
+                    { Id = b.Categories.Id, CateName = b.Categories.CategoryName })
                         .ToList()
             }).OrderByDescending(a => a.AddTime).ToListAsync();
 
