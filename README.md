@@ -1,97 +1,105 @@
-# Panda blog system
+# Panda博客系统
 
 <div align="center">
 
-One use `ASP.NET Core MVC 7.0` developed `blog` system, which is currently under development
+一个使用`ASP.NET Core MVC 6.0`开发的`博客`系统，目前正在开发中...
 
- ![dotnet-version](https://img.shields.io/badge/.NET%207.0-blue)  ![Visual Studio 2022](https://img.shields.io/badge/Visual%20Studio%20-2022-blueviolet)     [![Github](https://img.shields.io/badge/%20-github-%2324292e)](https://github.com/coolqingcheng/Panda) [![Github stars](https://img.shields.io/github/stars/coolqingcheng/Panda)](https://github.com/coolqingcheng/Panda)
-</div>
+ ![dotnet-version](https://img.shields.io/badge/.NET%206.0-blue)  ![Visual Studio 2022](https://img.shields.io/badge/Visual%20Studio%20-2022-blueviolet)     [![Github](https://img.shields.io/badge/%20-github-%2324292e)](https://github.com/coolqingcheng/Panda) [![Github stars](https://img.shields.io/github/stars/coolqingcheng/Panda)](https://github.com/coolqingcheng/Panda)  ![协议](https://img.shields.io/github/license/coolqingcheng/Panda)
 
-English | [简体中文](README-zh_CN.md)
+ </div>
 
-## ✨ 1. Characteristics
+## ✨ 环境支持
 
-1. Use `ASP MVC. Net 6.0` development
-2. The background front end is developed using `Vue 3.0`
+- 使用`ASP.NET Core MVC 6.0`开发
+- 后台前端使用Vue 3.x + Element-plus开发
+- .NET 6.0
+- Visual Studio 2022 或 Rider
+- MySQL 8.0.x【或者其他EF驱动适配的数据库，默认使用mysql】
 
-## 🌈 2. Online example
-
-
+## 🥩 在线示例
 
 网上冲浪博客：[https://iwscl.com/](https://iwscl.com/)
 
-## 🖥 3. Use
+## 🚗 如何使用
+###  前台
 
-Support environment
+主工程目录`"/Panda.Site"`，使用 `ASP.NET Core MVC 76.0` 开发，包括网站前台，正确运行前，请先对项目进行配置，请看下面说明。
 
-- .NET 7.0
-- Visual Studio 2022
-- MySQL
 
-### 3.1 front desk
+在工程`Panda.Site`的`Site.Development.ini`文件中添加节点,如果是部署上线，请使用`Site.Production.ini`，配置MySQL连接字符串
 
-Main project directory `"/panda"`, using `ASP.NET Core MVC 7.0` development, including the website foreground. Please configure the project before running correctly. Please see the following instructions.
+``` ini
+[Site]
 
-1. Configure database connection string
+Name = 网上冲浪
 
-In the project `Panda`, add nodes to the `appsettings.json` file and configure MySQL connection strings. It is recommended to use `appsettings.Development.json` and `appsettings.Production.json` configuration:
+Domain = http://localhost:5052
 
-```json
-"ConnectionStrings": {
-  "MYSQL_DB": "server=localhost;user=[username];database=[databasename];port=[port];password=[password];SslMode=None"
-}
+[ConnectionStrings]
+
+MYSQL = server=localhost;user=[username];database=[databasename];port=[port];password=[password];SslMode=None
+
 ```
 
-2. Data migration
+#### 数据迁移
 
-Open the package console and select the project: `panda Entity`, execute the following command:
+打开程序包控制台，选择项目：`Panda.Entity`，执行以下命令：
 
 ```shell
 Update-Database
 ```
 
-If you delete `Panda.Entity/Migrations` directory, just execute the following command
+如果删除了`Panda.Entity/Migrations`目录，就执行以下命令即可
 
 ```shell
 Add-Migration InitDB
 Update-Database
 ```
 
-3. Release
+> 如果你使用是dotnet cli，也可以参考对应的EF迁移命令
+
+#### 打包发布
+
+后台使用vue.js 3.x+element-plus开发，包管理器使用的yarn (如果你喜欢，也可以使用npm)
+
+后台文件在`Admin`下
+
+
+- 安装依赖
+
+```shell
+yarn
+```
+
+- 调试运行
+
+```shell
+yarn dev
+```
+
+- 打包后台的前端静态文件
+
+```shell
+yarn build
+```
+
+- 发布
 
 ```shell
 dotnet publish
 ```
 
-### 3.2 background
 
-The background back-end is provided by the foreground `"/Panda"` project. This section only describes the background front-end developed by `Vue 3.0`.
+## 4 docker支持
 
-- Installation package
+> todo 构建脚本待完善
 
-```shell
-npm install
-```
-
-- Commissioning operation
-
-```shell
-npm run serve
-```
-
-- Release
-
-```shell
-npm run build
-```
-
-## 💕 4. Support the project
-
-
-## ☀️ 5. License
+## ☀️License
 
 MIT
 
-The project is support of [JetBrains](https://jb.gg/OpenSourceSupport)
+## 💖感谢jetbrains
+
+本项目得到  [jetbrains](https://jb.gg/OpenSourceSupport) 的支持
 
 ![jetbrains](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)
