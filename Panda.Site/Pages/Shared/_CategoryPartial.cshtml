@@ -1,7 +1,7 @@
 ﻿@using Panda.Site.Services.Post
 @using Panda.Site.Models
 
-@inject IPostService PostService 
+@inject IPostService PostService
 @{
     var list = await PostService.GetCategories(50);
 }
@@ -12,7 +12,7 @@
             <div class="card-header">分类</div>
             <div class="card-body">
                 <ul class="cate-list">
-                    @foreach (var item in list)
+                    @foreach (var item in list.Where(a => a.Count > 0))
                     {
                         <li class="cate-item">
                             <a href="/category/@(item.Id)_1">@item.CateName</a>
