@@ -19,10 +19,10 @@ public class BaseTable
     /// <summary>
     ///     添加时间
     /// </summary>
-    public DateTimeOffset AddTime { get; set; }
+    public DateTime AddTime { get; set; }
 
     /// <summary>
     ///     修改时间
     /// </summary>
-    public DateTimeOffset UpdateTime { get; set; }
+    public DateTime UpdateTime { get; set; }
 }

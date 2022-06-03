@@ -120,7 +120,7 @@ public class PostService : IPostService
             post.Content = request.Content.LazyHandler(request.Title)!;
             post.Text = text;
             post.Summary = text.GetSummary(80);
-            post.UpdateTime = DateTimeOffset.Now;
+            post.UpdateTime = DateTime.Now;
             post.Cover = request.Cover;
             post.Account = account;
             post.MarkDown = request.MarkDown;
@@ -168,8 +168,8 @@ public class PostService : IPostService
             {
                 Title = request.Title,
                 Content = request.Content.LazyHandler(request.Title)!,
-                AddTime = DateTimeOffset.Now,
-                UpdateTime = DateTimeOffset.Now,
+                AddTime = DateTime.Now,
+                UpdateTime = DateTime.Now,
                 Text = text,
                 Summary = text.GetSummary(80),
                 Cover = request.Cover,

@@ -30,7 +30,7 @@ public class AccountRepository<T> : BaseRepository where T : Accounts, new()
                 UserName = request.UserName,
                 NickName = "管理员",
                 Passwd = IdentitySecurity.HashPassword(request.Pwd),
-                AddTime = DateTimeOffset.Now,
+                AddTime = DateTime.Now,
                 Email = request.Email
             });
             await _context.SaveChangesAsync();

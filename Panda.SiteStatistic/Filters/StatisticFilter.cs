@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Panda.Entity.DataModels;
 using Panda.Tools.Extensions;
 using Panda.Tools.QueueTask;
@@ -16,16 +18,22 @@ public class StatisticFilter : IAsyncPageFilter
 
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public StatisticFilter(QueueTaskManager queueTaskManager, IHttpContextAccessor httpContextAccessor)
+    private readonly IWebHostEnvironment _hostEnvironment;
+
+    public StatisticFilter(QueueTaskManager queueTaskManager, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment hostEnvironment)
     {
         _queueTaskManager = queueTaskManager;
         _httpContextAccessor = httpContextAccessor;
+        _hostEnvironment = hostEnvironment;
     }
 
     public Task OnPageHandlerSelectionAsync(PageHandlerSelectedContext context)
     {
-        string uid;
-        if (context.HttpContext.Request.Cookies.TryGetValue("id", out uid) == false)
+        if (_hostEnvironment.IsDevelopment())
+        {
+            return Task.CompletedTask;
+        }
+        if (context.HttpContext.Request.Cookies.TryGetValue("id", out var uid) == false)
         {
             uid = Guid.NewGuid().ToString("N");
             context.HttpContext.Response.Cookies.Append("id", uid);
