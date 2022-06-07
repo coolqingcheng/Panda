@@ -17,11 +17,11 @@ FROM node:14.17.5 as admin
 WORKDIR "/Panda/Admin"
 COPY "./Admin" "."
 WORKDIR "/Panda/Admin"
-RUN rm ./yarn.lock
-RUN rm -rf ./node_modules
-RUN npm install -g npm --registry=https://registry.npm.taobao.org
-RUN npm install
-RUN npm run build
+# RUN rm ./yarn.lock
+# RUN rm -rf ./node_modules
+RUN curl -o- -L https://yarnpkg.com/install.sh | bash
+RUN $HOME/.yarn/bin/yarn install
+RUN $HOME/.yarn/bin/yarn run build
 
 
 FROM base AS final
