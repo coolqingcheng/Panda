@@ -4,6 +4,7 @@
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
     <ItemGroup>
       <None Update="Site.Production.ini">
@@ -12,11 +13,15 @@
       <None Update="IpDb\ip2region.db">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+      <None Update="Site.Development.ini">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="6.0.5" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.5" />
+      <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
       <PackageReference Include="System.Runtime" Version="4.3.1" />
     </ItemGroup>
 

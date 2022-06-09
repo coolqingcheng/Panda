@@ -14,6 +14,9 @@ using SimpleMvcSitemap;
 
 namespace Panda.Controllers;
 
+/// <summary>
+/// 公共接口
+/// </summary>
 [ApiController]
 public class CommonController : Controller
 {
@@ -30,6 +33,12 @@ public class CommonController : Controller
         _accountService = accountService;
     }
 
+    /// <summary>
+    /// 图片文件上传
+    /// </summary>
+    /// <param name="form"></param>
+    /// <returns></returns>
+    /// <exception cref="UserException"></exception>
     [IgnoreAntiforgeryToken]
     [HttpPost("/upload")]
     public async Task<UploadResult> Upload(IFormCollection form)
@@ -58,6 +67,11 @@ public class CommonController : Controller
         };
     }
 
+    /// <summary>
+    /// base64图片上传
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     [IgnoreAntiforgeryToken]
     [HttpPost("/uploadbase64")]
     public async Task<UploadResult> UploadBase64(UploadBase64Model request)

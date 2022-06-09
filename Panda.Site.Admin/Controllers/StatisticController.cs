@@ -10,6 +10,12 @@ using Panda.Tools.Helper;
 
 namespace Panda.Site.Admin.Controllers;
 
+
+
+
+/// <summary>
+/// 仪表盘分析
+/// </summary>
 public class StatisticController : AdminController
 {
     private readonly DbContext _dbContext;
@@ -22,6 +28,11 @@ public class StatisticController : AdminController
         _ipHelper = ipHelper;
     }
 
+    /// <summary>
+    /// 获取汇总信息
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
     public async Task<StatisticModel> Get()
     {
         var postCount = await _dbContext.Set<Posts>().CountAsync();
@@ -37,6 +48,11 @@ public class StatisticController : AdminController
         };
     }
 
+    /// <summary>
+    /// 获取访问记录
+    /// </summary>
+    /// <param name="page"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<PageDto<RecentAccessHistory>> GetRecentAccessRecord(int page)
     {
