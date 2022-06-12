@@ -12,8 +12,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 var env = builder.Environment;
 
-var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
 
 builder.Configuration.AddIniFile($"Site.{env.EnvironmentName}.ini", false, true);
 builder.Services.AddControllers();
@@ -33,15 +31,6 @@ builder.Services.AddSwaggerGen(c =>
         c.IncludeXmlComments(path,true);
         c.OrderActionsBy(o=>o.RelativePath);
     }
-});
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: MyAllowSpecificOrigins,
-        policy  =>
-        {
-            policy.WithOrigins("https://editor.swagger.io")
-                .AllowAnyHeader().AllowAnyMethod();
-        });
 });
 
 
@@ -103,7 +92,6 @@ app.UseStaticFiles();
 
 
 app.UseRouting();
-app.UseCors(MyAllowSpecificOrigins);
 
 
 app.UseAuthentication();

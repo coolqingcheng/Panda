@@ -32,15 +32,11 @@ public static class PandaAdminExtensions
         services.AddScoped<DicDataRepository>();
         services.AddScoped<DbContext>(a => a.GetService<T>()!);
 
-        services.AddAntiforgery(options =>
-            options.HeaderName = "X-CSRF-TOKEN"
-        );
         services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
         services.AddControllersWithViews(opt =>
         {
             opt.Filters.Add<GlobalExceptionFilter>();
             opt.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
-            opt.Filters.Add<CSRFFilter>();
         }).AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
