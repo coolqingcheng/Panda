@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { AccountService } from 'src/app/net';
 
@@ -14,7 +15,9 @@ export class AuthLoginComponent implements OnInit {
 
   loading = false;
 
-  constructor(private fb: FormBuilder, private account: AccountService) {
+  constructor(private fb: FormBuilder, private account: AccountService
+    , private router: Router
+  ) {
     this.loginFormGroup = this.fb.group({
       userName: [null, [Validators.required]],
       password: [null, [Validators.required]]
@@ -29,7 +32,9 @@ export class AuthLoginComponent implements OnInit {
       console.log('验证通过')
       this.loading = true;
       this.account.adminAccountLoginPost(this.loginFormGroup.value).pipe(finalize(() => this.loading = false)).subscribe(res => {
-
+        this.router.navigate(["/welcomle"], {
+          replaceUrl: true
+        })
       })
     } else {
       Object.values(this.loginFormGroup.controls).forEach(control => {

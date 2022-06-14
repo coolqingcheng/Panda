@@ -19,20 +19,23 @@ export class SharedHttpInterceptor implements HttpInterceptor {
                 if (error.status === 400) {
                     this.message.error("请求失败[400]")
 
-                }
-                if (error.status == 500) {
-                    this.message.error("服务器繁忙！")
+                } else
+                    if (error.status == 500) {
+                        this.message.error("服务器繁忙！")
 
-                }
-                if (error.status == 401) {
-                    this.router.navigate(['/auth/login'])
+                    } else
+                        if (error.status == 401) {
+                            this.router.navigate(['/auth/login'])
 
-                }
-                if (error.status == 403) {
-                    this.message.error("当前没有访问权限")
+                        } else
+                            if (error.status == 403) {
+                                this.message.error("当前没有访问权限")
 
-                }
-                this.message.error('网络错误！')
+                            }
+                            else {
+
+                                this.message.error('网络错误！')
+                            }
                 return;
             }
         }));

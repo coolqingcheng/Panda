@@ -22,8 +22,4 @@
 		<ProjectReference Include="..\Panda.Tools\Panda.Tools.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<Folder Include="Entities" />
-	</ItemGroup>
-
 </Project>

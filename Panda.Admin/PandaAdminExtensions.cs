@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Panda.Admin.Repositorys;
 using Panda.Admin.Repositorys.DicData;
 using Panda.Admin.Services.Account;
-using Panda.Admin.Services.DicData;
 using Panda.Tools.CSRF;
 using Panda.Tools.EF.UnitOfWork;
 using Panda.Tools.Filter;
@@ -35,7 +34,6 @@ public static class PandaAdminExtensions
         services.AddControllersWithViews(opt =>
         {
             opt.Filters.Add<GlobalExceptionFilter>();
-            opt.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
         }).AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
@@ -53,8 +51,5 @@ public static class PandaAdminExtensions
                 return result;
             };
         });
-
-        services.AddScoped<IUnitOfWork, EFUnitOfWork>();
-        services.AddScoped<IDicDataProvider, EFDicDataProvider>();
     }
 }
