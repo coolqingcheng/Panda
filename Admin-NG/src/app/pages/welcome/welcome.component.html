@@ -1,0 +1,61 @@
+<nz-layout class="app-layout">
+  <nz-sider class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null">
+    <div class="sidebar-logo">
+      <a href="https://ng.ant.design/" target="_blank">
+        <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
+        <h1>Ant Design</h1>
+      </a>
+    </div>
+    <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+
+      <li nz-menu-item nzTitle="Dashboard" nzIcon="dashboard" [nzSelected]>
+        <i nz-icon nzType="dashboard" nzTheme="outline"></i>
+        <span>仪表盘</span>
+      </li>
+      <li nz-submenu nzTitle="博客管理" nzIcon="form">
+        <ul>
+          <li nz-menu-item>
+            <a>我的文章</a>
+          </li>
+          <li nz-menu-item>
+            <a>我的分类</a>
+          </li>
+          <li nz-menu-item>
+            <a>我的标签</a>
+          </li>
+          <li nz-menu-item>
+            <a>评论</a>
+          </li>
+        </ul>
+      </li>
+
+      <li nz-submenu nzTitle="系统管理" nzIcon="setting">
+        <ul>
+          <li nz-menu-item>
+            <i nz-icon nzType="user" nzTheme="outline"></i>
+            <span>用户管理</span>
+          </li>
+          <li nz-menu-item>
+            <i nz-icon nzType="user-switch" nzTheme="outline"></i>
+            <span>角色管理</span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <div class="app-header">
+        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+          <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
+        </span>
+      </div>
+    </nz-header>
+    <nz-content>
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

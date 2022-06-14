@@ -1,0 +1,43 @@
+<div class="auth">
+  <nz-spin [nzSpinning]="loading">
+    <div class="login-form">
+      <form nz-form [formGroup]="formGroup" (ngSubmit)="regist()" [nzLayout]="'vertical'" #form>
+        <nz-form-item>
+          <nz-form-label>邮箱</nz-form-label>
+          <nz-form-control [nzErrorTip]="emailTip">
+            <input nz-input placeholder="输入邮箱" name="email" formControlName="email">
+            <ng-template #emailTip let-control>
+              <ng-container *ngIf="control.hasError('required')">邮箱不能为空</ng-container>
+              <ng-container *ngIf="control.hasError('email')">邮箱格式错误</ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>用户名</nz-form-label>
+          <nz-form-control nzErrorTip="用户名不能为空">
+            <input nz-input placeholder="输入用户名" name="userName" formControlName="userName">
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>密码</nz-form-label>
+          <nz-form-control [nzErrorTip]="pwdError">
+            <input nz-input placeholder="输入密码" name="pwd" formControlName="pwd" type="password" (ngModelChange)="updateValidate()">
+            <ng-template #pwdError let-control>
+              <ng-container *ngIf="control.hasError('pwdValid')">两次密码输入不一致</ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>重复密码</nz-form-label>
+          <nz-form-control [nzErrorTip]="rePwdError">
+            <input nz-input placeholder="重复输入密码" name="rePwd" formControlName="rePwd" type="password" (ngModelChange)="updateValidate()">
+            <ng-template #rePwdError let-control>
+              <ng-container *ngIf="control.hasError('pwdValid')">两次密码输入不一致</ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+        <button nz-button nzType="primary" class="login-btn" [disabled]="!formGroup.valid">初始化</button>
+      </form>
+    </div>
+  </nz-spin>
+</div>
