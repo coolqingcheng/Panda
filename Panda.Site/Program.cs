@@ -9,11 +9,6 @@ using Panda.Tools;
 using Panda.Tools.QueueTask;
 
 var builder = WebApplication.CreateBuilder(args);
-
-var env = builder.Environment;
-
-
-builder.Configuration.AddIniFile($"Site.{env.EnvironmentName}.ini", false, true);
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(c =>
 {

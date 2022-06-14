@@ -7,9 +7,6 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-      <None Update="Site.Production.ini">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
       <None Update="IpDb\ip2region.db">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
@@ -33,7 +30,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Filters" />
       <Folder Include="Pages\FriendLink" />
       <Folder Include="wwwroot\RemixIcon" />
       <Folder Include="IpDb\" />
