@@ -28,7 +28,6 @@ public static class PandaAdminExtensions
         services.AddScoped(typeof(AccountRepository<>));
         services.AddScoped(typeof(IAccountService<>),
             typeof(AccountService<>));
-        services.AddScoped<IDicDataService, DicDataService>();
         services.AddScoped<DicDataRepository>();
         services.AddScoped<DbContext>(a => a.GetService<T>()!);
 
