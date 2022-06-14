@@ -26,7 +26,7 @@ public class HttpContextLocal
             var fieldInfo =
                 typeof(HttpContextAccessor).GetField("_httpContextCurrent",
                     BindingFlags.Static | BindingFlags.NonPublic);
-            var field = Expression.Field(null, fieldInfo);
+            var field = Expression.Field(null, fieldInfo!);
             return Expression.Lambda<Func<object>>(field).Compile();
         }
 
@@ -36,7 +36,7 @@ public class HttpContextLocal
             var method = typeof(AsyncLocal<>).MakeGenericType(holderType).GetProperty("Value")?.GetGetMethod();
             var target = Expression.Parameter(typeof(object));
             var convert = Expression.Convert(target, asyncLocal.GetType());
-            var getValue = Expression.Call(convert, method);
+            var getValue = Expression.Call(convert, method!);
             return Expression.Lambda<Func<object, object>>(getValue, target).Compile();
         }
 

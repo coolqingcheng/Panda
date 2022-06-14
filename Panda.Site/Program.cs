@@ -12,29 +12,24 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1",new OpenApiInfo()
+    c.SwaggerDoc("v1", new OpenApiInfo()
     {
         Title = "后台api文档",
         Version = "v1",
         Description = ""
     });
-    var list = new string[] { "Panda.Site.xml", "Panda.Site.Admin.xml", "Panda.Admin.xml" };
+    var list = new string[] {"Panda.Site.xml", "Panda.Site.Admin.xml", "Panda.Admin.xml"};
     foreach (var item in list)
     {
         var file = Path.Combine(AppContext.BaseDirectory, item);
         var path = Path.Combine(AppContext.BaseDirectory, file);
-        c.IncludeXmlComments(path,true);
-        c.OrderActionsBy(o=>o.RelativePath);
+        c.IncludeXmlComments(path, true);
+        c.OrderActionsBy(o => o.RelativePath);
     }
 });
-
-
 // Add services to the container.
 builder.Services.AddRazorPages().AddMvcOptions(opt => { opt.Filters.Add<StatisticFilter>(); });
-
-
 var services = builder.Services;
-
 services.AddHttpClient();
 services.AddDbContext<PandaContext>(
     opt =>
@@ -48,9 +43,7 @@ services.AddDbContext<PandaContext>(
 );
 
 services.AddConfig(builder.Configuration);
-
 services.AddQueueTask();
-
 services.AddTools();
 services.AddAutoInject(opt =>
 {
@@ -64,7 +57,6 @@ services.AddAutoInject(opt =>
         InjectSelf = true
     });
 });
-//Site.Development.ini
 
 builder.AddAdmin<PandaContext>();
 services.AddSiteAdmin();
@@ -76,13 +68,13 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     // app.UseHsts();
-   
 }
 else
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 app.UseStaticFiles();
 
 

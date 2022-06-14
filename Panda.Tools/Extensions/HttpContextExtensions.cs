@@ -35,7 +35,7 @@ public static class HttpContextExtensions
 
         ip = context.Connection.RemoteIpAddress?.ToString();
 
-        return IpReplace(ip);
+        return IpReplace(ip!);
     }
 
     static string IpReplace(string ip)
@@ -54,15 +54,15 @@ public static class HttpContextExtensions
     /// 获取当前请求完整的Url地址
     /// </summary>
     /// <returns></returns>
-    public static string GetCompleteUrl( this IHttpContextAccessor httpContextAccessor)
+    public static string GetFullUrl( this IHttpContextAccessor httpContextAccessor)
     { 
         return new StringBuilder()
             .Append(httpContextAccessor.HttpContext?.Request.Scheme)
             .Append("://")
-            .Append(httpContextAccessor.HttpContext.Request.Host)
-            .Append(httpContextAccessor.HttpContext.Request.PathBase)
-            .Append(httpContextAccessor.HttpContext.Request.Path)
-            .Append(httpContextAccessor.HttpContext.Request.QueryString)
+            .Append(httpContextAccessor.HttpContext?.Request.Host)
+            .Append(httpContextAccessor.HttpContext?.Request.PathBase)
+            .Append(httpContextAccessor.HttpContext?.Request.Path)
+            .Append(httpContextAccessor.HttpContext?.Request.QueryString)
             .ToString();
     }
 
@@ -74,10 +74,8 @@ public static class HttpContextExtensions
     public static bool IsAjax(this HttpRequest req)
     {
         var result = false;
-
         var xreq = req.Headers.ContainsKey("x-requested-with");
         if (xreq) result = req.Headers["x-requested-with"] == "XMLHttpRequest";
-
         return result;
     }
 }
