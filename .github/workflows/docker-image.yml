@@ -27,7 +27,7 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: |
-      name=panda-blog:$(date +%s)
-      docker build . --file dockerfile --tag panda-blog:$(date +%s)
-      docker push iwscl/$name
+        name=panda-blog:$(date +%s)
+        docker build . --file dockerfile --tag panda-blog:$(date +%s)
+        docker push iwscl/$name
 
