@@ -19,8 +19,8 @@ jobs:
     - name: 登录docker
       uses: docker/login-action@v2.0.0
       with:
-        username: ${{ secrets.DOCKER_USER_NAME }}
-        password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+        username: ${{ secrets.DOCKER_USER }}
+        password: ${{ secrets.DOCKER_PWD }}
         registry: ${{ secrets.DOCKER_REGISTRY }}
         
     
