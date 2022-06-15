@@ -29,5 +29,6 @@ jobs:
       run: |
         name=panda-blog:$(date +%s)
         docker build . --file dockerfile --tag $name
+        docker tag $name  iwscl/$name
         docker push iwscl/$name
 
