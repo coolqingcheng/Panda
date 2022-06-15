@@ -99,7 +99,13 @@ dotnet publish
 
 ## 4 docker支持
 
-> todo 构建脚本待完善
+本项目使用GitHub Actions自动构建，Docker仓库上的镜像是主分支上最新的代码。
+
+> docker pull iwscl/panda-blog
+
+docker部署需要先生成迁移脚本创建数据库。后面会添加docker-compose脚本来做一键部署
+
+> 发布正式版后，会单独切出一个dev分支。目前是在主分支上梭哈
 
 ## ☀️License
 
