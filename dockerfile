@@ -13,7 +13,7 @@ RUN dotnet publish "Panda/Panda.Site/Panda.Site.csproj" -c Release -o /publish
 
 # # 构建后台
 
-FROM node:14.17.5 as admin
+FROM node as admin
 WORKDIR "/Panda/Admin-NG"
 COPY "./Admin-NG" "."
 WORKDIR "/Panda/Admin-NG"
