@@ -29,8 +29,6 @@ jobs:
   
     - name: Set up Docker Buildx
       run: |
-        name=panda-blog:$(date +%s)
-        docker buildx build . --file dockerfile --platform linux/amd64,linux/arm64 --tag $name
-        docker tag $name  iwscl/$name
-        docker push iwscl/$name
+        name=iwscl/panda-blog:$(date +%s)
+        docker buildx build . --file dockerfile --platform linux/amd64,linux/arm64 -t $name --push
 
