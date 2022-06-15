@@ -28,6 +28,6 @@ jobs:
     - name: Build the Docker image
       run: |
         name=panda-blog:$(date +%s)
-        docker build . --file dockerfile --tag panda-blog:$(date +%s)
+        docker build . --file dockerfile --tag $name
         docker push iwscl/$name
 
