@@ -18,7 +18,7 @@ WORKDIR "/Panda/Admin-NG"
 COPY "./Admin-NG" "."
 WORKDIR "/Panda/Admin-NG"
 RUN rm ./yarn.lock
-RUN npm install --registry=https://registry.npm.taobao.org && npm run build
+RUN npm install && npm run build
 
 
 
