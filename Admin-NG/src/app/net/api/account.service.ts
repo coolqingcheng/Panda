@@ -37,7 +37,6 @@ export class AccountService {
         if (basePath) {
             this.basePath = basePath;
         }
-        console.log(basePath)
         if (configuration) {
             this.configuration = configuration;
             this.basePath = basePath || configuration.basePath || this.basePath;
@@ -210,7 +209,7 @@ export class AccountService {
         if (httpContentTypeSelected != undefined) {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
-        console.log('basePath:'+this.basePath)
+
         return this.httpClient.request<any>('post',`${this.basePath}/admin/Account/Login`,
             {
                 body: body,

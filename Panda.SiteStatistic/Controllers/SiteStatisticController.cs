@@ -4,6 +4,7 @@ using Panda.Admin.Attributes;
 using Panda.Entity.DataModels;
 using Panda.SiteStatistic.Models;
 using Panda.Tools.Auth.Controllers;
+using Panda.Tools.Extensions;
 
 namespace Panda.SiteStatistic.Controllers;
 
@@ -26,12 +27,13 @@ public class SiteStatisticController : AdminController
     public async Task<SiteStatisticModel> GetStatisticCollect([FromQuery] SiteStatisticRequest request)
     {
         request.BuildDate();
-        var query = _dbContext.Set<AccessStatistic>().Where(a => a.AddTime >= request.Begin && a.AddTime < request.End);
+        var query = _dbContext.Set<AccessStatistic>().
+            WhereIf(request.Begin!=null,a => a.AddTime >= request.Begin && a.AddTime < request.End);
         return new SiteStatisticModel()
         {
-            Ip = await query.DistinctBy(a => a.IP).CountAsync(),
+            Ip = await query.Select(a=>a.IP).Distinct().CountAsync(),
             Pv = await query.CountAsync(),
-            Uv = await query.DistinctBy(a => a.UId).CountAsync()
+            Uv = await query.Select(a => a.UId).Distinct().CountAsync()
         };
     }
 }

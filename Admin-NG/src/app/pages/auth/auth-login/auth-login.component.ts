@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { finalize } from 'rxjs';
 import { AccountService } from 'src/app/net';
 
@@ -15,8 +16,11 @@ export class AuthLoginComponent implements OnInit {
 
   loading = false;
 
-  constructor(private fb: FormBuilder, private account: AccountService
-    , private router: Router
+  constructor(
+    private fb: FormBuilder, 
+    private account: AccountService, 
+    private router: Router,
+    private message: NzMessageService
   ) {
     this.loginFormGroup = this.fb.group({
       userName: [null, [Validators.required]],
@@ -32,7 +36,8 @@ export class AuthLoginComponent implements OnInit {
       console.log('验证通过')
       this.loading = true;
       this.account.adminAccountLoginPost(this.loginFormGroup.value).pipe(finalize(() => this.loading = false)).subscribe(res => {
-        this.router.navigate(["/welcomle"], {
+        this.message.success('登录成功')
+        this.router.navigate(["/welcome"], {
           replaceUrl: true
         })
       })

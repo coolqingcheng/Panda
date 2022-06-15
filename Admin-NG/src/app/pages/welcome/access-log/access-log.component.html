@@ -1,1 +1,36 @@
-<p>access-log works!</p>
+<div nz-row style="margin-top: 1rem">
+    <div nz-col nzSpan="24">
+        <nz-table #basicTable [nzData]="dataSet" nzBordered [nzFrontPagination]="false" [nzLoading]="loading"
+        nzShowSizeChanger
+        [nzPageIndex]="page"
+        [nzPageSize]="size"
+        [nzTotal]="total"
+        (nzQueryParams)="tableChange($event)"
+        >
+            <thead>
+                <tr>
+                    <th>访问地址</th>
+                    <th>Ip</th>
+                    <th>地区</th>
+                    <th>Id</th>
+                    <th>浏览器</th>
+                    <th>操作系统</th>
+                    <th>时间</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of basicTable.data">
+                    <td>{{data.url}}</td>
+                    <td>{{data.ip}}</td>
+                    <td>{{data.region}}</td>
+                    <td>
+                        {{data.uId}}
+                    </td>
+                    <td>{{data.os}}</td>
+                    <td>{{data.browser}}</td>
+                    <td>{{data.addTime}}</td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SiteStatisticService } from 'src/app/net';
+import { DateType, SiteStatisticModel, SiteStatisticService } from 'src/app/net';
 
 @Component({
   selector: 'app-statistic',
@@ -12,11 +12,15 @@ export class StatisticComponent implements OnInit {
 
   dataSet = []
 
+  model?:SiteStatisticModel;
+
   ngOnInit(): void {
 
-    this.statistic.adminSiteStatisticGetStatisticCollectGet().subscribe(res=>{
+    this.statistic.adminSiteStatisticGetStatisticCollectGet(DateType.NUMBER_2)
+    .subscribe(res=>{
       console.log('调用')
       console.log(res)
+      this.model = res
     })
   }
 

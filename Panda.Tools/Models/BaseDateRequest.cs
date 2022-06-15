@@ -6,9 +6,9 @@ public class BaseDateRequest
 {
     public DateType DateType { get; set; }
 
-    public DateTime? Begin { get; set; }
+    public DateTime? Begin { get; set; } 
 
-    public DateTime? End { get; set; }
+    public DateTime? End { get; set; } 
 
     public void BuildDate()
     {

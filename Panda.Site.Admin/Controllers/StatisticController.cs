@@ -48,17 +48,18 @@ public class StatisticController : AdminController
         };
     }
 
-    /// <summary>
-    /// 获取访问记录
-    /// </summary>
-    /// <param name="page"></param>
-    /// <returns></returns>
+   /// <summary>
+   /// 获取访问记录
+   /// </summary>
+   /// <param name="page"></param>
+   /// <param name="size"></param>
+   /// <returns></returns>
     [HttpGet]
-    public async Task<PageDto<RecentAccessHistory>> GetRecentAccessRecord(int page)
+    public async Task<PageDto<RecentAccessHistory>> GetRecentAccessRecord(int page,int size)
     {
         var query = _dbContext.Set<AccessStatistic>().AsQueryable();
 
-        var list = await query.OrderByDescending(a => a.AddTime).Page(page, 15).ProjectToType<RecentAccessHistory>()
+        var list = await query.OrderByDescending(a => a.AddTime).Page(page, size).ProjectToType<RecentAccessHistory>()
                 .ToListAsync();
 
         list.ForEach(a => {

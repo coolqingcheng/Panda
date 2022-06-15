@@ -98,18 +98,23 @@ export class StatisticService {
      * 获取访问记录
      * 
      * @param page 
+     * @param size 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public adminStatisticGetRecentAccessRecordGet(page?: number, observe?: 'body', reportProgress?: boolean): Observable<RecentAccessHistoryPageDto>;
-    public adminStatisticGetRecentAccessRecordGet(page?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<RecentAccessHistoryPageDto>>;
-    public adminStatisticGetRecentAccessRecordGet(page?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<RecentAccessHistoryPageDto>>;
-    public adminStatisticGetRecentAccessRecordGet(page?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public adminStatisticGetRecentAccessRecordGet(page?: number, size?: number, observe?: 'body', reportProgress?: boolean): Observable<RecentAccessHistoryPageDto>;
+    public adminStatisticGetRecentAccessRecordGet(page?: number, size?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<RecentAccessHistoryPageDto>>;
+    public adminStatisticGetRecentAccessRecordGet(page?: number, size?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<RecentAccessHistoryPageDto>>;
+    public adminStatisticGetRecentAccessRecordGet(page?: number, size?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
 
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (page !== undefined && page !== null) {
             queryParameters = queryParameters.set('page', <any>page);
+        }
+        if (size !== undefined && size !== null) {
+            queryParameters = queryParameters.set('size', <any>size);
         }
 
         let headers = this.defaultHeaders;

@@ -1,60 +1,25 @@
 <div nz-row nzGutter="6">
-  <div nz-col nzSpan="6" nzXs="24" nzSm="12" nzMd="8" nzXl="8" nzLg="6" nzXl="4" nzXXl="3">
+  <div nz-col nzSpan="6" nzXs="24" nzSm="12" nzMd="8" nzXl="8" nzLg="6" nzXXl="3">
     <nz-card>
-      <nz-statistic [nzValue]="(11.28 )!" [nzTitle]="'访问人数'" [nzPrefix]="prefixTplOne" [nzSuffix]="'%'"
-        [nzValueStyle]="{ color: '#3F8600' }"></nz-statistic>
+      <nz-statistic [nzValue]="model?.pv" [nzTitle]="'访问人数'" [nzSuffix]="''" [nzValueStyle]="{ color: '#3F8600' }">
+      </nz-statistic>
       <ng-template #prefixTplOne><i nz-icon nzType="arrow-up"></i></ng-template>
     </nz-card>
   </div>
-  <div nz-col nzSpan="6" nzSpan="6" nzXs="24" nzSm="12" nzMd="8" nzXl="8" nzLg="6" nzXl="4" nzXXl="3">
+  <div nz-col nzSpan="6" nzXs="24" nzSm="12" nzMd="8" nzXl="8" nzLg="6" nzXXl="3">
     <nz-card>
-      <nz-statistic [nzValue]="(11.28 )!" [nzTitle]="'访问人数'" [nzPrefix]="prefixTplOne" [nzSuffix]="'%'"
-        [nzValueStyle]="{ color: 'red' }"></nz-statistic>
+      <nz-statistic [nzValue]="model?.ip" [nzTitle]="'Ip'" [nzSuffix]="''" [nzValueStyle]="{ color: 'red' }">
+      </nz-statistic>
       <ng-template #prefixTplOne><i nz-icon nzType="arrow-up"></i></ng-template>
     </nz-card>
   </div>
-  <div nz-col nzSpan="6" nzSpan="6" nzXs="24" nzSm="12" nzMd="8" nzXl="8" nzLg="6" nzXl="4" nzXXl="3">
+  <div nz-col nzSpan="6" nzXs="24" nzSm="12" nzMd="8" nzXl="8" nzLg="6" nzXXl="3">
     <nz-card>
-      <nz-statistic [nzValue]="(11.28 )!" [nzTitle]="'访问人数'" [nzPrefix]="prefixTplOne" [nzSuffix]="'%'"
-        [nzValueStyle]="{ color: '#3F8600' }"></nz-statistic>
-      <ng-template #prefixTplOne><i nz-icon nzType="arrow-up"></i></ng-template>
-    </nz-card>
-  </div>
-  <div nz-col nzSpan="6" nzSpan="6" nzXs="24" nzSm="12" nzMd="8" nzXl="8" nzLg="6" nzXl="4" nzXXl="3">
-    <nz-card>
-      <nz-statistic [nzValue]="(11.28 )!" [nzTitle]="'访问人数'" [nzPrefix]="prefixTplOne" [nzSuffix]="'%'"
-        [nzValueStyle]="{ color: 'red' }"></nz-statistic>
+      <nz-statistic [nzValue]="model?.uv" [nzTitle]="'UV'" [nzSuffix]="''" [nzValueStyle]="{ color: '#3F8600' }">
+      </nz-statistic>
       <ng-template #prefixTplOne><i nz-icon nzType="arrow-up"></i></ng-template>
     </nz-card>
   </div>
 </div>
 
-<div nz-row style="margin-top: 1rem">
-  <div nz-col nzSpan="24">
-    <nz-table #basicTable [nzData]="dataSet" nzBordered>
-      <thead>
-        <tr>
-          <th>访问地址</th>
-          <th>Ip</th>
-          <th>地区</th>
-          <th>Id</th>
-          <th>浏览器</th>
-          <th>操作系统</th>
-          <th>时间</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let data of basicTable.data">
-          <!-- <td>{{data.name}}</td>
-          <td>{{data.age}}</td>
-          <td>{{data.address}}</td>
-          <td>
-            <a>Action 一 {{data.name}}</a>
-            <nz-divider nzType="vertical"></nz-divider>
-            <a>Delete</a>
-          </td> -->
-        </tr>
-      </tbody>
-    </nz-table>
-  </div>
-</div>
+<app-access-log></app-access-log>
