@@ -1,0 +1,29 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: test
+      run: echo ${{ secrets.DOCKER_USER_NAME }}
+      
+    - name: 登录docker
+      uses: docker/login-action@v2.0.0
+      with:
+        username: ${{ secrets.DOCKER_USER_NAME }}
+        password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+        registry: ${{ secrets.DOCKER_REGISTRY }}
+        
+    
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file dockerfile --tag panda-blog:$(date +%s)
