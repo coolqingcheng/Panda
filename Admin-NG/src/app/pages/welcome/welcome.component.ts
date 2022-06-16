@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WelcomeComponent implements OnInit {
   isCollapsed = false;
+  value =100;
   constructor() { }
 
   ngOnInit() {

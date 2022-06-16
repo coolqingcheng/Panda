@@ -7,14 +7,10 @@ import { WelcomeComponent } from './welcome.component';
 
 const routes: Routes = [
   {
-    path: '', component: WelcomeComponent, children: [
-      {
-        path: "", component: StatisticComponent
-      }
-    ]
+    path: '', component: StatisticComponent
   },
   {
-    path: 'blog', component:WelcomeComponent,
+    path: 'blog', component:ShareRouteOutComponent,
     loadChildren: () => import('../blog/blog.module').then(m => m.BlogModule)
   },
   {

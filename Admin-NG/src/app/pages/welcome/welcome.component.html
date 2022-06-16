@@ -5,13 +5,16 @@
       <a href="https://ng.ant.design/" target="_blank">
         <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
         <h1>网上冲浪博客</h1>
+        
       </a>
     </div>
     <ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed" routerLinkActive>
 
-      <li nz-menu-item nzTitle="Dashboard" nzIcon="dashboard" [nzSelected]>
+      <li nz-menu-item nzTitle="Dashboard" nzIcon="dashboard" [nzMatchRouterExact]="true">
         <i nz-icon nzType="dashboard" nzTheme="outline"></i>
-        <span>仪表盘</span>
+        <span >
+          <a routerLink="/admin">仪表盘</a>
+        </span>
       </li>
       <li nz-submenu nzTitle="博客管理" nzIcon="form">
         <ul>
@@ -19,7 +22,7 @@
             <a>我的文章</a>
           </li>
           <li nz-menu-item nzMatchRouter>
-            <a routerLink="/admin/blog/category/list" >我的分类</a>
+            <a [routerLink]="['/','admin','blog','category','list']" >我的分类</a>
           </li>
           <li nz-menu-item>
             <a>我的标签</a>
