@@ -3,6 +3,7 @@ using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,10 +45,10 @@ public static class PandaAdminExtensions
             options.InvalidModelStateResponseFactory = context =>
             {
                 var errors = context.ModelState.Values.SelectMany(a => a.Errors)
-                    .Select(a => new {a.ErrorMessage});
+                    .Select(a => new { a.ErrorMessage });
                 var errMsg = string.Join("|", errors);
-                var result = new JsonResult(new {Message = errMsg});
-                context.HttpContext.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+                var result = new JsonResult(new { Message = errMsg });
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return result;
             };
         });

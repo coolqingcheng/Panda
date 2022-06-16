@@ -14,7 +14,11 @@ export class SharedHttpInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        return next.handle(req).pipe(tap(() => { }, (error) => {
+       var temReq = req.clone({
+            headers:req.headers.set('X-Requested-With','XMLHttpRequest')
+        })
+
+        return next.handle(temReq).pipe(tap(() => { }, (error) => {
             if (error instanceof HttpErrorResponse) {
                 if (error.status === 400) {
                     this.message.error("请求失败[400]")
