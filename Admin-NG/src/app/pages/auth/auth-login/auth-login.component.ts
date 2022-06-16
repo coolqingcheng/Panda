@@ -37,7 +37,7 @@ export class AuthLoginComponent implements OnInit {
       this.loading = true;
       this.account.adminAccountLoginPost(this.loginFormGroup.value).pipe(finalize(() => this.loading = false)).subscribe(res => {
         this.message.success('登录成功')
-        this.router.navigate(["/welcome"], {
+        this.router.navigate(["/admin"], {
           replaceUrl: true
         })
       })

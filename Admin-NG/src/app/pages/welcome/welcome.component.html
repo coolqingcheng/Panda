@@ -1,13 +1,13 @@
 <nz-layout class="app-layout">
-  <nz-sider class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
+  <nz-sider class="menu-sidebar" nzTheme="light" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
     [nzTrigger]="null">
     <div class="sidebar-logo">
       <a href="https://ng.ant.design/" target="_blank">
         <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
-        <h1>Ant Design</h1>
+        <h1>网上冲浪博客</h1>
       </a>
     </div>
-    <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+    <ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed" routerLinkActive>
 
       <li nz-menu-item nzTitle="Dashboard" nzIcon="dashboard" [nzSelected]>
         <i nz-icon nzType="dashboard" nzTheme="outline"></i>
@@ -18,8 +18,8 @@
           <li nz-menu-item>
             <a>我的文章</a>
           </li>
-          <li nz-menu-item>
-            <a>我的分类</a>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/admin/blog/category/list" >我的分类</a>
           </li>
           <li nz-menu-item>
             <a>我的标签</a>
