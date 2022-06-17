@@ -34,7 +34,8 @@ services.AddHttpClient();
 services.AddDbContext<PandaContext>(
     opt =>
     {
-        var db = builder.Configuration.GetConnectionString("MYSQL");
+        var envMysql = Environment.GetEnvironmentVariable("MYSQL");
+        var db = string.IsNullOrWhiteSpace("envMysql") ? envMysql : builder.Configuration.GetConnectionString("MYSQL");
         opt.UseLazyLoadingProxies()
             .UseMySql(db, ServerVersion.AutoDetect(db))
             .EnableSensitiveDataLogging()

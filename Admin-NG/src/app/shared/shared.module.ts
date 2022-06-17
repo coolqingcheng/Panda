@@ -10,9 +10,11 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzDividerModule } from 'ng-zorro-antd/divider'
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 import { NzFormModule } from "ng-zorro-antd/form"
 import { NzInputModule } from "ng-zorro-antd/input"
+import { NzSwitchModule } from "ng-zorro-antd/switch"
 import { NzMessageModule } from "ng-zorro-antd/message"
 
 import { NzStatisticModule } from 'ng-zorro-antd/statistic';
@@ -42,7 +44,10 @@ const antd = [
   NzStatisticModule, NzTableModule, NzDividerModule,
   NzFormModule,
   NzInputModule,
-  NzMessageModule
+  NzMessageModule,
+  NzModalModule,
+  NzFormModule,
+  NzSwitchModule
 ]
 
 const common = [
