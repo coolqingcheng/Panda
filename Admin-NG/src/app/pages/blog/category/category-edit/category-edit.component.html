@@ -1,5 +1,4 @@
 <nz-spin [nzSpinning]="loading">
-
     <form nz-form [formGroup]="formGroup" (submit)="save()" [nzLayout]="'vertical'">
         <nz-form-item>
             <nz-form-label>分类名称</nz-form-label>
@@ -10,7 +9,7 @@
         <nz-form-item>
             <nz-form-label>说明</nz-form-label>
             <nz-form-control nzErrorTip="">
-                <input nz-input formControlName="categoryName">
+                <input nz-input formControlName="categoryDesc">
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>

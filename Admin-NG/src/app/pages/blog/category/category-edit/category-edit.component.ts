@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef } from 'ng-zorro-antd/modal';
@@ -16,6 +16,9 @@ export class CategoryEditComponent implements OnInit {
 
   loading = false;
 
+  @Input()
+  id: number = 0;
+
   constructor(
     private fb: FormBuilder
     , private category: CategoryService,
@@ -24,16 +27,30 @@ export class CategoryEditComponent implements OnInit {
   ) {
 
     this.formGroup = fb.group({
-      id: [0],
+      id: [this.id],
       categoryName: [null, [Validators.required]],
       categoryDesc: [null],
       pid: [0],
       isShow: [true],
     })
+
   }
 
   ngOnInit(): void {
-
+    console.log("id:" + this.id)
+    if (this.id > 0) {
+      this.loading = true
+      this.category.adminCategoryGetGet(this.id).pipe(finalize(() => {
+        this.loading = false
+      })).subscribe(res => {
+        this.formGroup.setValue({
+          id: res.id, categoryName: res.categoryName,
+          isShow: res.isShow,
+          categoryDesc:res.categoryDesc,
+          pid:res.pid
+        })
+      })
+    }
   }
 
   save() {

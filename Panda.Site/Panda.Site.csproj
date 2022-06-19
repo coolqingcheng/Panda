@@ -6,6 +6,10 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
+
+    <ItemGroup>
+      <Content Remove="compilerconfig.json" />
+    </ItemGroup>
     <ItemGroup>
       <None Update="IpDb\ip2region.db">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -33,6 +37,10 @@
       <Folder Include="Pages\FriendLink" />
       <Folder Include="wwwroot\RemixIcon" />
       <Folder Include="IpDb\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="compilerconfig.json" />
     </ItemGroup>
 
 </Project>

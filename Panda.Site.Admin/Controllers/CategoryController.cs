@@ -15,6 +15,12 @@ public class CategoryController : AdminController
         _categoryService = categoryService;
     }
 
+    [HttpGet]
+    public Task<CategoryItem> Get(int id)
+    {
+        return _categoryService.GetCategoryById(id);
+    }
+
     [HttpPost]
     public async Task AddOrUpdate(CategoryAddOrUpdate input)
     {

@@ -147,6 +147,52 @@ export class CategoryService {
     /**
      * 
      * 
+     * @param id 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public adminCategoryGetGet(id?: number, observe?: 'body', reportProgress?: boolean): Observable<CategoryItem>;
+    public adminCategoryGetGet(id?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<CategoryItem>>;
+    public adminCategoryGetGet(id?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<CategoryItem>>;
+    public adminCategoryGetGet(id?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (id !== undefined && id !== null) {
+            queryParameters = queryParameters.set('id', <any>id);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'text/plain',
+            'application/json',
+            'text/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<CategoryItem>('get',`${this.basePath}/admin/Category/Get`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
      * @param index 
      * @param size 
      * @param cateName 

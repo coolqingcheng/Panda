@@ -38,11 +38,14 @@ export class CategoryListComponent extends BaseTableComponent implements OnInit 
     })
   }
 
-  edit() {
+  edit(id:number) {
     this.modal.create({
       nzTitle: '添加分类',
       nzContent: CategoryEditComponent,
-      nzFooter: null, nzKeyboard: false
+      nzFooter: null, nzKeyboard: false,
+      nzComponentParams:{
+        id:id
+      }
     })
   }
 
