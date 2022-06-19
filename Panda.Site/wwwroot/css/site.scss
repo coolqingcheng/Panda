@@ -27,7 +27,15 @@ html {
 }
 
 body {
-  margin-bottom: 220px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+    .content {
+        /*min-height: calc(100vh - 220px - 57px)*/
+        flex:1;
+        
+    }
 }
 
 .footer {
