@@ -18,14 +18,14 @@
       </li>
       <li nz-submenu nzTitle="博客管理" nzIcon="form">
         <ul>
-          <li nz-menu-item>
-            <a routerLink="/admin/blog/post">我的文章</a>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/admin/blog/post/list">我的文章</a>
           </li>
           <li nz-menu-item nzMatchRouter>
             <a [routerLink]="['/','admin','blog','category','list']" >我的分类</a>
           </li>
-          <li nz-menu-item>
-            <a>我的标签</a>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/admin/blog/tag/list">我的标签</a>
           </li>
           <li nz-menu-item>
             <a>评论</a>

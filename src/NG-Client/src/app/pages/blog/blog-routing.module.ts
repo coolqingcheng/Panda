@@ -9,11 +9,11 @@ const routes: Routes = [
   },
   {
     path: 'post', component: ShareRouteOutComponent,
-    loadChildren: () => import("./post/post.module")
+    loadChildren: () => import("./post/post.module").then(m=>m.PostModule)
   },
   {
     path: 'tag', component: ShareRouteOutComponent,
-    loadChildren: () => import('./tags/tags.module')
+    loadChildren: () => import('./tags/tags.module').then(m=>m.TagsModule)
   }
 ];
 
