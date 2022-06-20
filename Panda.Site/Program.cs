@@ -17,11 +17,15 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1",
         Description = ""
     });
-    var list = new string[] {"Panda.Site.xml", "Panda.Site.Admin.xml", "Panda.Admin.xml"};
+    var list = new string[] { "Panda.Site.xml", "Panda.Site.Admin.xml", "Panda.Admin.xml" };
     foreach (var item in list)
     {
         var file = Path.Combine(AppContext.BaseDirectory, item);
         var path = Path.Combine(AppContext.BaseDirectory, file);
+        if (File.Exists(path) == false)
+        {
+            continue;
+        }
         c.IncludeXmlComments(path, true);
         c.OrderActionsBy(o => o.RelativePath);
     }
