@@ -4,7 +4,7 @@ EXPOSE 5005
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["./", "Panda"]
+COPY "./src/Server" "."
 RUN dotnet restore "Panda/Panda.Site/Panda.Site.csproj"
 
 
@@ -15,7 +15,7 @@ RUN dotnet publish "Panda/Panda.Site/Panda.Site.csproj" -c Release -o /publish
 
 FROM node as admin
 WORKDIR "/Panda/Admin-NG"
-COPY "./Admin-NG" "."
+COPY "./src/NG-Client" "."
 WORKDIR "/Panda/Admin-NG"
 RUN rm ./yarn.lock
 RUN npm install && npm run build
