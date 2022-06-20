@@ -1,18 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Entity", "Panda.Entity\Panda.Entity.csproj", "{8A8BB200-C2C8-4C33-A858-3CA57CBD6272}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32516.85
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Entity", "Panda.Entity\Panda.Entity.csproj", "{8A8BB200-C2C8-4C33-A858-3CA57CBD6272}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Tools", "Panda.Tools\Panda.Tools.csproj", "{68D7FA49-29FA-4B2D-ACB8-C82F65223C6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Tools", "Panda.Tools\Panda.Tools.csproj", "{68D7FA49-29FA-4B2D-ACB8-C82F65223C6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Migrations", "Panda.Migrations\Panda.Migrations.csproj", "{5A1D1CCB-1EB8-41B5-B38E-C5CBAE241AEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Migrations", "Panda.Migrations\Panda.Migrations.csproj", "{5A1D1CCB-1EB8-41B5-B38E-C5CBAE241AEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Admin", "Panda.Admin\Panda.Admin.csproj", "{877B1BBC-CE30-4D88-9EF1-9C347635D83B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Admin", "Panda.Admin\Panda.Admin.csproj", "{877B1BBC-CE30-4D88-9EF1-9C347635D83B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Site", "Panda.Site\Panda.Site.csproj", "{739F25F9-9BFA-4378-A7B8-7725D18752CA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.SiteStatistic", "Panda.SiteStatistic\Panda.SiteStatistic.csproj", "{36994216-BBE6-4436-8371-617369FB8FB1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Site.Admin", "Panda.Site.Admin\Panda.Site.Admin.csproj", "{BB7363DD-E295-4F35-BE76-962E4D1218E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Site", "Panda.Site\Panda.Site.csproj", "{739F25F9-9BFA-4378-A7B8-7725D18752CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,13 +39,11 @@ Global
 		{739F25F9-9BFA-4378-A7B8-7725D18752CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{739F25F9-9BFA-4378-A7B8-7725D18752CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{739F25F9-9BFA-4378-A7B8-7725D18752CA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{36994216-BBE6-4436-8371-617369FB8FB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{36994216-BBE6-4436-8371-617369FB8FB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{36994216-BBE6-4436-8371-617369FB8FB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{36994216-BBE6-4436-8371-617369FB8FB1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BB7363DD-E295-4F35-BE76-962E4D1218E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BB7363DD-E295-4F35-BE76-962E4D1218E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BB7363DD-E295-4F35-BE76-962E4D1218E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BB7363DD-E295-4F35-BE76-962E4D1218E9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A0E89D0A-5588-470B-927B-9098ECCE9947}
 	EndGlobalSection
 EndGlobal

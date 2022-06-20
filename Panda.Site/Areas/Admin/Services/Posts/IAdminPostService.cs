@@ -2,7 +2,7 @@ using Panda.Entity.Models;
 using Panda.Entity.Requests;
 using Panda.Entity.Responses;
 
-namespace Panda.Site.Admin.Services.Posts;
+namespace Panda.Site.Areas.Admin.Services.Posts;
 
 public interface IPostService
 {

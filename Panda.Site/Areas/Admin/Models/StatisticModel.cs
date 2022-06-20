@@ -1,4 +1,4 @@
-namespace Panda.Site.Admin.Models;
+namespace Panda.Site.Areas.Admin.Models;
 
 public class StatisticModel
 {

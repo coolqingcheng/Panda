@@ -9,7 +9,7 @@ using Panda.Tools.Exception;
 using Panda.Tools.Extensions;
 using Panda.Tools.Web.Html;
 
-namespace Panda.Site.Admin.Services.Posts;
+namespace Panda.Site.Areas.Admin.Services.Posts;
 
 public class PostService : IPostService
 {

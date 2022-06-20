@@ -2,7 +2,7 @@ using Panda.Entity.DataModels;
 using Panda.Entity.Requests;
 using Panda.Entity.Responses;
 
-namespace Panda.Site.Admin.Services.PostTag;
+namespace Panda.Site.Areas.Admin.Services.PostTag;
 
 public interface IPostTagService
 {

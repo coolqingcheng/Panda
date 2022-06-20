@@ -7,7 +7,7 @@ using Panda.Entity.Responses;
 using Panda.Tools.Exception;
 using Panda.Tools.Extensions;
 
-namespace Panda.Site.Admin.Services.Category;
+namespace Panda.Site.Areas.Admin.Services.Category;
 
 public class CategoryService : ICategoryService
 {

@@ -4,7 +4,7 @@ using Panda.Entity.Requests;
 using Panda.Entity.Responses;
 using Panda.Tools.Extensions;
 
-namespace Panda.Site.Admin.Services.PostTag;
+namespace Panda.Site.Areas.Admin.Services.PostTag;
 
 public class PostTagService : IPostTagService
 {

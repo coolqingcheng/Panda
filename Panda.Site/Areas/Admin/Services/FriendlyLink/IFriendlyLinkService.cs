@@ -6,7 +6,7 @@ using Panda.Entity.Requests;
 using Panda.Entity.Responses;
 using Panda.Tools.Extensions;
 
-namespace Panda.Site.Admin.Services.FriendlyLink;
+namespace Panda.Site.Areas.Admin.Services.FriendlyLink;
 
 public interface IFriendlyLinkService
 {

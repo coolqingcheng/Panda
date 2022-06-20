@@ -4,7 +4,6 @@ using Panda.Admin;
 using Panda.App;
 using Panda.Site.Configs;
 using Panda.Entity;
-using Panda.Site.Admin;
 using Panda.Tools;
 using Panda.Tools.QueueTask;
 
@@ -52,15 +51,9 @@ services.AddAutoInject(opt =>
     {
         EndWdith = "Service"
     });
-    opt.Options.Add(new AutoInjectOptionItem
-    {
-        EndWdith = "Repository",
-        InjectSelf = true
-    });
 });
 
 builder.AddAdmin<PandaContext>();
-services.AddSiteAdmin();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -86,10 +79,16 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 
-app.MapControllerRoute(
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
     "default",
     "{controller=Home}/{action=Index}/{id?}");
-
+    endpoints.MapControllerRoute(
+      name: "areas",
+      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
+});
 app.UseStatusCodePagesWithReExecute("/{0}.html");
 app.MapRazorPages();
 

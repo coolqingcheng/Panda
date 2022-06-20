@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Panda.Site.Admin.Controllers;
+namespace Panda.Site.Areas.Admin.Controllers;
 
 public class HomeController : Controller
 {

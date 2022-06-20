@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Panda.Entity.DataModels;
 using Panda.Entity.Responses;
-using Panda.Site.Admin.Models;
+using Panda.Site.Areas.Admin.Models;
 using Panda.Tools.Auth.Controllers;
 using Panda.Tools.Extensions;
 using Panda.Tools.Helper;
 
-namespace Panda.Site.Admin.Controllers;
+namespace Panda.Site.Areas.Admin.Controllers;
 
 
 

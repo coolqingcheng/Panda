@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Panda.Entity.Models;
 using Panda.Entity.Requests;
 using Panda.Entity.Responses;
-using Panda.Site.Admin.Services.Posts;
+using Panda.Site.Areas.Admin.Services.Posts;
 using Panda.Tools.Auth.Controllers;
 
-namespace Panda.Site.Admin.Controllers;
+namespace Panda.Site.Areas.Admin.Controllers;
 
 public class PostController : AdminController
 {

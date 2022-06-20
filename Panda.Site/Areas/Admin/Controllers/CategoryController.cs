@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Panda.Entity.Requests;
 using Panda.Entity.Responses;
-using Panda.Site.Admin.Services.Category;
+using Panda.Site.Areas.Admin.Services.Category;
 using Panda.Tools.Auth.Controllers;
 
-namespace Panda.Site.Admin.Controllers;
+namespace Panda.Site.Areas.Admin.Controllers;
 
 public class CategoryController : AdminController
 {
