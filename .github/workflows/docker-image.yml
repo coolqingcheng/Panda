@@ -27,7 +27,7 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
   
-    - name: Set up Docker Buildx
+    - name: 开始构建
       run: |
         name=iwscl/panda-blog:$(date +%s)
         docker buildx build . --file dockerfile --platform linux/amd64,linux/arm64 -t $name -t iwscl/panda-blog:latest --push
