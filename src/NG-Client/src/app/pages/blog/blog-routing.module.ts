@@ -4,7 +4,16 @@ import { ShareRouteOutComponent } from 'src/app/shared/share-route-out/share-rou
 
 const routes: Routes = [
   {
-    path: 'category', component: ShareRouteOutComponent, loadChildren: () => import("./category/category.module").then(m => m.CategoryModule)
+    path: 'category', component: ShareRouteOutComponent,
+    loadChildren: () => import("./category/category.module").then(m => m.CategoryModule)
+  },
+  {
+    path: 'post', component: ShareRouteOutComponent,
+    loadChildren: () => import("./post/post.module")
+  },
+  {
+    path: 'tag', component: ShareRouteOutComponent,
+    loadChildren: () => import('./tags/tags.module')
   }
 ];
 
