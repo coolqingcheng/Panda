@@ -5,11 +5,11 @@ EXPOSE 5005
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY "./src/Server" "./src/Server"
-RUN dotnet restore "Panda.Site/Panda.Site.csproj"
+RUN dotnet restore "./Panda.Site/Panda.Site.csproj"
 
 
 FROM build AS publish
-RUN dotnet publish "Panda/Panda.Site/Panda.Site.csproj" -c Release -o /publish
+RUN dotnet publish "./Panda.Site/Panda.Site.csproj" -c Release -o /publish
 
 # # 构建后台
 
