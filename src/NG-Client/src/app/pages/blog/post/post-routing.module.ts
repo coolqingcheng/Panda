@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ShareRouteOutComponent } from 'src/app/shared/share-route-out/share-route-out.component';
+import { PostEditComponent } from './post-edit/post-edit.component';
 import { PostListComponent } from './post-list/post-list.component';
 
 const routes: Routes = [
@@ -10,6 +11,9 @@ const routes: Routes = [
   },
   {
     path: 'list', component: PostListComponent
+  },
+  {
+    path:'edit', component:PostEditComponent
   }
 ];
 

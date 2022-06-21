@@ -1,1 +1,36 @@
-<p>post-list works!</p>
+<nz-card nzTitle="文章">
+    <div class="toolbar-box">
+        <a routerLink="/admin/blog/post/edit" nz-button nzType="primary">写一篇</a>
+    </div>
+    <nz-table #table [nzData]="dataList" [nzLoading]="loading" [nzFrontPagination]="false" [nzTotal]="total"
+        (nzQueryParams)="tableChange($event)" nzShowSizeChanger>
+        <thead>
+            <tr>
+                <th>名称</th>
+                <th>添加日期</th>
+                <th>分类</th>
+                <th>阅读人数</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of dataList">
+                <td>
+                    {{data.title}}
+                </td>
+                <td>{{data.addTime}}</td>
+                <td>
+                    <nz-tag nzColor="success" *ngFor="let tag of data.categoryItems">
+                        {{tag.cateName}}
+                    </nz-tag>
+                </td>
+                <td>0</td>
+                <td>
+                    <a>编辑</a>
+                    <nz-divider nzType="vertical"></nz-divider>
+                    <a>删除</a>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</nz-card>

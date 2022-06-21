@@ -219,7 +219,7 @@ public class PostService : IPostService
         var query = _dbContext.Set<Entity.DataModels.Posts>()
             .WhereIf(request.KeyWord != null, a => a.Title.Contains(request.KeyWord!))
             .AsQueryable();
-        var list = await query.Page(request).OrderByDescending(a => a.AddTime).Select(a => new AdminPostItemResponse()
+        var list = await query.OrderByDescending(a => a.AddTime).Page(request).Select(a => new AdminPostItemResponse()
         {
             Id = a.Id,
             Title = a.Title,

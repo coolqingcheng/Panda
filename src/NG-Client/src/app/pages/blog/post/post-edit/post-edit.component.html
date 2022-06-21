@@ -1,1 +1,29 @@
-<p>post-edit works!</p>
+<nz-card nzTitle="写一篇">
+
+    <form nz-form nzLayout="vertical">
+
+        <nz-form-item>
+            <nz-form-label>标题</nz-form-label>
+            <nz-form-control>
+                <input nz-input>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>
+                正文
+            </nz-form-label>
+            <nz-form-control>
+                <p-vditor></p-vditor>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>
+                分类
+            </nz-form-label>
+            <nz-form-control>
+                <nz-checkbox-group [(ngModel)]="cateGroups" name="category">
+                </nz-checkbox-group>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</nz-card>

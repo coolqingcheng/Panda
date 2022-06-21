@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { PostRoutingModule } from './post-routing.module';
 import { PostListComponent } from './post-list/post-list.component';
 import { PostEditComponent } from './post-edit/post-edit.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { PandaModule } from 'src/app/components/panda/panda.module';
 
 
 @NgModule({
@@ -13,7 +15,9 @@ import { PostEditComponent } from './post-edit/post-edit.component';
   ],
   imports: [
     CommonModule,
-    PostRoutingModule
+    PostRoutingModule,
+    SharedModule,
+    PandaModule
   ]
 })
 export class PostModule { }

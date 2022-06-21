@@ -1,12 +1,8 @@
 <div nz-row style="margin-top: 1rem">
     <div nz-col nzSpan="24">
         <nz-table #basicTable [nzData]="dataSet" nzBordered [nzFrontPagination]="false" [nzLoading]="loading"
-        nzShowSizeChanger
-        [nzPageIndex]="page"
-        [nzPageSize]="size"
-        [nzTotal]="total"
-        (nzQueryParams)="tableChange($event)"
-        >
+            nzShowSizeChanger [nzPageIndex]="page" [nzPageSize]="size" [nzTotal]="total"
+            (nzQueryParams)="tableChange($event)">
             <thead>
                 <tr>
                     <th>访问地址</th>
@@ -20,7 +16,11 @@
             </thead>
             <tbody>
                 <tr *ngFor="let data of basicTable.data">
-                    <td>{{data.url}}</td>
+                    <td nzBreakWord>
+                        <div>
+                            {{data.url}}
+                        </div>
+                    </td>
                     <td>{{data.ip}}</td>
                     <td>{{data.region}}</td>
                     <td>

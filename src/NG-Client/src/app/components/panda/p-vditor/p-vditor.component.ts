@@ -61,7 +61,6 @@ export class PVditorComponent implements OnInit, ControlValueAccessor {
   }
 
   ngAfterViewInit() {
-    console.log('native-ngAfterViewInit', this.viewelement)
     this.init();
   }
 
