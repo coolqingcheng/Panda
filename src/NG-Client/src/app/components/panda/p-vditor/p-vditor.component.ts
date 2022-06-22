@@ -21,6 +21,7 @@ export class PVditorComponent implements OnInit, ControlValueAccessor {
   @ViewChild('vditor') viewelement!: ElementRef;
 
   private onChange = (_: any) => { };
+  private onTouched = (_: any) => { };
 
 
   constructor() { }
@@ -34,6 +35,9 @@ export class PVditorComponent implements OnInit, ControlValueAccessor {
     }
   }
   registerOnTouched(fn: any): void {
+    if (fn) {
+      this.onTouched = fn;
+    }
   }
 
   ngOnInit(): void {
