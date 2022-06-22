@@ -11,6 +11,8 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzDividerModule } from 'ng-zorro-antd/divider'
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
+
 
 import { NzFormModule } from "ng-zorro-antd/form"
 import { NzInputModule } from "ng-zorro-antd/input"
@@ -51,7 +53,8 @@ const antd = [
   NzFormModule,
   NzSwitchModule,
   NzTagModule,
-  NzCheckboxModule
+  NzCheckboxModule,
+  NzUploadModule
 ]
 
 const common = [

@@ -36,8 +36,7 @@ public class CommonController : Controller
     /// <param name="form"></param>
     /// <returns></returns>
     /// <exception cref="UserException"></exception>
-    [IgnoreAntiforgeryToken]
-    [HttpPost("/upload")]
+    [HttpPost("/admin/upload")]
     public async Task<UploadResult> Upload(IFormCollection form)
     {
         var files = form.Files;
