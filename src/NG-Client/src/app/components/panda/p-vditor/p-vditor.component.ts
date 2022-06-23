@@ -18,6 +18,8 @@ export class PVditorComponent implements OnInit, ControlValueAccessor {
 
   vditor?: Vditor;
 
+  isInit = false;
+
   @ViewChild('vditor') viewelement!: ElementRef;
 
   private onChange = (_: any) => { };
@@ -33,8 +35,8 @@ export class PVditorComponent implements OnInit, ControlValueAccessor {
     if (obj) {
       this.md = obj
     }
-    if (this.vditor) {
-      this.vditor.setValue(obj)
+    if (this.isInit) {
+      this.vditor?.setValue(obj)
     }
   }
   registerOnChange(fn: any): void {
@@ -67,6 +69,7 @@ export class PVditorComponent implements OnInit, ControlValueAccessor {
         position: 'left'
       },
       after: () => {
+        this.isInit = true
         this.vditor?.setValue(this.md);
       },
       blur: (v: string) => {

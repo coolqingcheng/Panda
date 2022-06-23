@@ -21,6 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Markdig.Signed" Version="0.30.2" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="6.0.6" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.6" />
       <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.6" />

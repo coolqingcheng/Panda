@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { NzUploadChangeParam } from 'ng-zorro-antd/upload';
-import { CategoryService, TagService } from 'src/app/net';
+import { finalize } from 'rxjs';
+import { CategoryService, PostService, TagService } from 'src/app/net';
 
 @Component({
   selector: 'app-post-edit',
@@ -17,13 +19,16 @@ export class PostEditComponent implements OnInit {
   constructor(
     private cateService: CategoryService,
     private tagService: TagService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: ActivatedRoute,
+    private post: PostService
   ) {
     this.fromGroup = this.fb.group({
+      id: [0],
       tags: [[], [Validators.required]],
       title: ['', [Validators.required]],
       markdown: ['', [Validators.required,]],
-      categories: [[], [Validators.minLength(1)]]
+      categories: [[], [Validators.required, Validators.minLength(1)]]
     })
   }
 
@@ -43,12 +48,31 @@ export class PostEditComponent implements OnInit {
   //   return {}
   // }
 
-  cateGroups: { label: string, value: number, checked?: boolean }[] = [
-  ]
+  cateGroups: { label: string, value: number, checked?: boolean }[] = []
+
+  loading = false
 
   ngOnInit(): void {
     this.getCateList()
     this.getTagList()
+    this.router.queryParams.subscribe(res => {
+      let id = res['id'];
+      if (id) {
+        this.loading = true;
+        this.post.adminPostGetGet(id)
+          .pipe(finalize(() => this.loading = false))
+          .subscribe(res => {
+            console.log(res.categories?.map(a => a.id))
+            this.fromGroup.patchValue({
+              id: res.id,
+              tags: res.tags,
+              title: res.title,
+              markdown: res.markDown,
+              categories: res.categories?.map(a => a.id)
+            })
+          })
+      }
+    })
   }
 
   cateList: { label: string, value: number, checked?: boolean }[] = [];
