@@ -14,8 +14,8 @@ export class SharedHttpInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-       var temReq = req.clone({
-            headers:req.headers.set('X-Requested-With','XMLHttpRequest')
+        var temReq = req.clone({
+            headers: req.headers.set('X-Requested-With', 'XMLHttpRequest')
         })
 
         return next.handle(temReq).pipe(tap(() => { }, (error) => {
@@ -25,7 +25,11 @@ export class SharedHttpInterceptor implements HttpInterceptor {
 
                 } else
                     if (error.status == 500) {
-                        this.message.error("服务器繁忙！")
+                        if (error.error?.message) {
+                            this.message.error(error.error?.message)
+                        } else {
+                            this.message.error("服务器繁忙！")
+                        }
 
                     } else
                         if (error.status == 401) {

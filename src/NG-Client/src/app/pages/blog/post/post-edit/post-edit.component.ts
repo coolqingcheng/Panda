@@ -20,27 +20,26 @@ export class PostEditComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.fromGroup = this.fb.group({
-      tags: [[]],
+      tags: [[], [Validators.required]],
       title: ['', [Validators.required]],
-      content: [''],
-      markdown: ['1'],
-      categories: [[], [this.ValidatorCategory]]
+      content: ['', [Validators.required]],
+      categories: [[], [Validators.minLength(1)]]
     })
   }
 
-  ValidatorCategory = (control: FormControl): { [s: string]: boolean } => {
-    let selectedOne = [];
+  // ValidatorCategory = (control: FormControl): { [s: string]: boolean } => {
+  //   let selectedOne = [];
 
-    for (const i in control.value) {
-      if (control.value[i].checked) {
-        selectedOne.push(control.value[i]);
-      }
-    }
-    if (selectedOne.length == 0) {
-      return { required: true };
-    }
-    return {}
-  }
+  //   for (const i in control.value) {
+  //     if (control.value[i].checked) {
+  //       selectedOne.push(control.value[i]);
+  //     }
+  //   }
+  //   if (selectedOne.length == 0) {
+  //     return { required: true };
+  //   }
+  //   return {}
+  // }
 
   cateGroups: { label: string, value: number, checked?: boolean }[] = [
   ]
@@ -54,16 +53,12 @@ export class PostEditComponent implements OnInit {
 
   getCateList() {
     this.cateService.adminCategoryGetListGet(1, 100).subscribe(res => {
-      let list = res.map(item => {
-        let cate = {
+      res.forEach(item => {
+
+        this.cateList.push({
           label: item.categoryName!,
           value: item.id!
-        }
-        return cate
-      })
-      // this.cateList.push(...list)
-      this.fromGroup.patchValue({
-        categories:list
+        })
       })
     })
   }

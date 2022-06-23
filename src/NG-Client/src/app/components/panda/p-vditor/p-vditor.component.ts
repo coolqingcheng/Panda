@@ -16,7 +16,7 @@ import Vditor from 'vditor';
 })
 export class PVditorComponent implements OnInit, ControlValueAccessor {
 
-  vditor!: Vditor;
+  vditor?: Vditor;
 
   @ViewChild('vditor') viewelement!: ElementRef;
 
@@ -24,10 +24,18 @@ export class PVditorComponent implements OnInit, ControlValueAccessor {
   private onTouched = (_: any) => { };
 
 
+  private md = ''
+
   constructor() { }
 
   writeValue(obj: any): void {
     console.log('OBJ:', obj)
+    if (obj) {
+      this.md = obj
+    }
+    if (this.vditor) {
+      this.vditor.setValue(obj)
+    }
   }
   registerOnChange(fn: any): void {
     if (fn) {
@@ -59,7 +67,30 @@ export class PVditorComponent implements OnInit, ControlValueAccessor {
         position: 'left'
       },
       after: () => {
-        this.vditor.setValue('');
+        this.vditor?.setValue(this.md);
+      },
+      blur: (v: string) => {
+        this.onChange(v)
+      },
+      upload: {
+        url: '/admin/upload',
+        linkToImgUrl: '/admin/upload',
+        format: (files, text) => {
+          console.log('text:', text)
+          let obj = JSON.parse(text)
+          let file = obj.url.match(new RegExp(/\w+\.\w+/));
+          var resp = {
+            msg: obj.message,
+            code: obj.code,
+            data: {
+              errFiles: [],
+              succMap: {
+                file: obj.url
+              }
+            }
+          }
+          return JSON.stringify(resp)
+        }
       }
     });
   }
