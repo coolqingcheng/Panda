@@ -9,7 +9,7 @@ public class PostAddOrUpdate
 
     [Required] public string Title { get; set; }
 
-    [Required] public string Content { get; set; }
+    public string Content { get; set; }
 
     /// <summary>
     ///     markdown语法

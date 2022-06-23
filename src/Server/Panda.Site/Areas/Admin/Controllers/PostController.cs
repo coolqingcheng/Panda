@@ -1,3 +1,4 @@
+using Markdig;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Panda.Entity.Models;
@@ -20,6 +21,10 @@ public class PostController : AdminController
     [HttpPost]
     public async Task AddOrUpdate(PostAddOrUpdate request)
     {
+        if (string.IsNullOrWhiteSpace(request.MarkDown) == false)
+        {
+            request.Content = Markdown.ToHtml(request.MarkDown);
+        }
         await _postService.AddOrUpdate(request);
     }
 

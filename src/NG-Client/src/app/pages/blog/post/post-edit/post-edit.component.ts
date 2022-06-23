@@ -22,10 +22,12 @@ export class PostEditComponent implements OnInit {
     this.fromGroup = this.fb.group({
       tags: [[], [Validators.required]],
       title: ['', [Validators.required]],
-      content: ['', [Validators.required]],
+      markdown: ['', [Validators.required,]],
       categories: [[], [Validators.minLength(1)]]
     })
   }
+
+
 
   // ValidatorCategory = (control: FormControl): { [s: string]: boolean } => {
   //   let selectedOne = [];
