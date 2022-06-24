@@ -1,7 +1,7 @@
 <nz-card nzTitle="写一篇">
 
   <nz-spin [nzSpinning]="loading">
-    <form #postForm nz-form [formGroup]="fromGroup" nzLayout="vertical">
+    <form #postForm nz-form [formGroup]="formGroup" nzLayout="vertical">
       <nz-form-item>
         <nz-form-label>标题</nz-form-label>
         <nz-form-control>
@@ -57,8 +57,8 @@
         </nz-form-control>
       </nz-form-item>
       <div class="save-box-left">
-        <button nz-button nzType="primary" [disabled]="!fromGroup.valid" (click)="save()">发布</button>
-        <button nz-button nzType="primary" [disabled]="!fromGroup.valid">保存到草稿箱</button>
+        <button nz-button nzType="primary" [disabled]="!formGroup.valid" (click)="save()" [nzLoading]="saving">发布</button>
+        <button nz-button nzType="primary" [disabled]="!formGroup.valid">保存到草稿箱</button>
         <button nz-button nzType="default" (click)="save()">返回</button>
       </div>
     </form>

@@ -31,7 +31,6 @@ export class PVditorComponent implements OnInit, ControlValueAccessor {
   constructor() { }
 
   writeValue(obj: any): void {
-    console.log('OBJ:', obj)
     if (obj) {
       this.md = obj
     }
@@ -55,14 +54,14 @@ export class PVditorComponent implements OnInit, ControlValueAccessor {
 
   init() {
     this.vditor = new Vditor(this.viewelement.nativeElement, {
-      height: 360,
+      height: 500,
       toolbarConfig: {
         pin: true,
       },
       cache: {
         enable: false,
       },
-      mode: 'ir',
+      mode: 'wysiwyg',
       icon: 'ant',
       outline: {
         enable: true,
@@ -82,17 +81,21 @@ export class PVditorComponent implements OnInit, ControlValueAccessor {
           console.log('text:', text)
           let obj = JSON.parse(text)
           let file = obj.url.match(new RegExp(/\w+\.\w+/));
-          var resp = {
-            msg: obj.message,
-            code: obj.code,
-            data: {
-              errFiles: [],
-              succMap: {
-                file: obj.url
+          
+          var resp = `
+          {
+            "msg": "${obj.message}",
+            "code": ${obj.code},
+            "data": {
+              "errFiles": [],
+              "succMap": {
+                "${file}":"${obj.url}"
               }
             }
           }
-          return JSON.stringify(resp)
+          `
+          console.log('format:', resp)
+          return resp;
         }
       }
     });

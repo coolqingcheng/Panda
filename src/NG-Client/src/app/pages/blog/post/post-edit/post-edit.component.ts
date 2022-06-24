@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzUploadChangeParam } from 'ng-zorro-antd/upload';
 import { finalize } from 'rxjs';
 import { CategoryService, PostService, TagService } from 'src/app/net';
@@ -12,23 +13,26 @@ import { CategoryService, PostService, TagService } from 'src/app/net';
 })
 export class PostEditComponent implements OnInit {
 
-  fromGroup!: FormGroup;
+  formGroup!: FormGroup;
 
-  tags = ['tag1', 'tag2']
+  tags:string[] = []
 
   constructor(
     private cateService: CategoryService,
     private tagService: TagService,
     private fb: FormBuilder,
-    private router: ActivatedRoute,
-    private post: PostService
+    private routeActivate: ActivatedRoute,
+    private post: PostService,
+    private message:NzMessageService,
+    private router:Router
   ) {
-    this.fromGroup = this.fb.group({
+    this.formGroup = this.fb.group({
       id: [0],
       tags: [[], [Validators.required]],
       title: ['', [Validators.required]],
       markdown: ['', [Validators.required,]],
-      categories: [[], [Validators.required, Validators.minLength(1)]]
+      categories: [[], [Validators.required, Validators.minLength(1)]],
+      cover:['']
     })
   }
 
@@ -55,7 +59,7 @@ export class PostEditComponent implements OnInit {
   ngOnInit(): void {
     this.getCateList()
     this.getTagList()
-    this.router.queryParams.subscribe(res => {
+    this.routeActivate.queryParams.subscribe(res => {
       let id = res['id'];
       if (id) {
         this.loading = true;
@@ -63,13 +67,15 @@ export class PostEditComponent implements OnInit {
           .pipe(finalize(() => this.loading = false))
           .subscribe(res => {
             console.log(res.categories?.map(a => a.id))
-            this.fromGroup.patchValue({
+            this.formGroup.patchValue({
               id: res.id,
               tags: res.tags,
               title: res.title,
               markdown: res.markDown,
-              categories: res.categories?.map(a => a.id)
+              categories: res.categories?.map(a => a.id),
+              cover:res.cover
             })
+            this.coverUrl = res.cover
           })
       }
     })
@@ -111,6 +117,9 @@ export class PostEditComponent implements OnInit {
       this.uploading = false
       if (event.file.response.code == 0) {
         this.coverUrl = event.file.response.url
+        this.formGroup.patchValue({
+          cover:this.coverUrl
+        })
       }
     }
     if (event.type == 'start') {
@@ -118,9 +127,18 @@ export class PostEditComponent implements OnInit {
     }
   }
 
+  saving = false
 
   save() {
-    console.log(this.fromGroup.value)
+    this.saving = true;
+    console.log(this.formGroup.value)
+    this.post.adminPostAddOrUpdatePost(
+      this.formGroup.value
+    ).pipe(finalize(()=>this.saving = false)).subscribe(_=>{
+      this.message.success('保存成功')
+      this.formGroup.reset()
+      this.router.navigate(['/admin/blog/post'])
+    })
   }
 
 }

@@ -17,6 +17,8 @@ public class PostModel
 
     public List<PostCategory>? Categorys { get; set; }
 
+    public List<string>? Tags { get; set; }
+
     public NextPrePost? NextPost { get; set; }
     
     public NextPrePost? PrePost { get; set; }

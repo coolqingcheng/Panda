@@ -31,6 +31,7 @@ export class CategoryListComponent extends BaseTableComponent implements OnInit 
 
   getData() {
     this.loading = true;
+    this.size = 100;
     this.categoryService.adminCategoryGetListGet(this.page, this.size).pipe(finalize(() => {
       this.loading = false
     })).subscribe(res => {

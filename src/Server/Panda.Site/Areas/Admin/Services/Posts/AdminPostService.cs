@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Markdig;
+using Microsoft.EntityFrameworkCore;
 using Panda.Admin.Repositorys;
 using Panda.Entity.DataModels;
 using Panda.Entity.Models;
@@ -87,7 +88,7 @@ public class PostService : IPostService
                     }),
                     Categories = a.ArticleCategoryRelations.Where(c => c.Posts == a).Select(c => new PostCategories()
                     {
-                        Id = c.Id,
+                        Id = c.Categories.Id,
                         CateName = c.Categories.CategoryName
                     }).ToList()
                 }).FirstOrDefaultAsync();
@@ -107,7 +108,8 @@ public class PostService : IPostService
     public async Task AddOrUpdate(PostAddOrUpdate request)
     {
         var account = await _accountRepository.GetCurrentAccountsAsync();
-        var text = request.Content.GetHtmlText();
+        string htmlContent = Markdown.ToHtml(request.MarkDown);
+        var text = htmlContent.GetHtmlText();
         var tran = await _dbContext.Database.BeginTransactionAsync();
         if (request.Id > 0)
         {
@@ -116,7 +118,7 @@ public class PostService : IPostService
             if (post == null) throw new UserException("修改的文章不存在");
 
             post.Title = request.Title;
-            post.Content = request.Content.LazyHandler(request.Title)!;
+            post.Content = htmlContent.LazyHandler(request.Title)!;
             post.Text = text;
             post.Summary = text.GetSummary(80);
             post.UpdateTime = DateTime.Now;
@@ -127,15 +129,29 @@ public class PostService : IPostService
 
             await _dbContext.SaveChangesAsync();
 
-            var beforeCategories = await _dbContext.Set<PostsCategoryRelations>().Where(a => a.Posts == post)
-                .Select(a => a.Categories.Id).ToListAsync();
-            var afterCategories = await _dbContext.Set<Categorys>().Where(a => request.Categories.Contains(a.Id))
-                .Select(a => a.Id).ToListAsync();
+            var oldCategories = await _dbContext.Set<PostsCategoryRelations>().Where(a => a.Posts == post)
+                .ToListAsync();
+            var newCategories = await _dbContext.Set<Categorys>().Where(a => request.Categories.Contains(a.Id))
+                .ToListAsync();
+            var newRelations = new List<PostsCategoryRelations>();
+            foreach (var category in newCategories)
+            {
+                newRelations.Add(new PostsCategoryRelations()
+                {
+                    Posts = post,
+                    Categories = category
+                });
+            }
 
-            _dbContext.RemoveRange(beforeCategories);
+            _dbContext.RemoveRange(oldCategories);
             await _dbContext.SaveChangesAsync();
-            await _dbContext.AddAsync(afterCategories);
+            await _dbContext.AddRangeAsync(newRelations);
             await _dbContext.SaveChangesAsync();
+            //删除标签关系
+           var tagRelationList = await _dbContext.Set<TagsRelation>().Where(a => a.Posts == post).ToListAsync();
+          _dbContext.RemoveRange(tagRelationList);
+          await _dbContext.SaveChangesAsync();
+            //重新添加标签关系
             if (request.Tags != null)
                 foreach (var tag in request.Tags)
                 {
@@ -166,7 +182,7 @@ public class PostService : IPostService
             var post = new Entity.DataModels.Posts
             {
                 Title = request.Title,
-                Content = request.Content.LazyHandler(request.Title)!,
+                Content = htmlContent.LazyHandler(request.Title)!,
                 AddTime = DateTime.Now,
                 UpdateTime = DateTime.Now,
                 Text = text,

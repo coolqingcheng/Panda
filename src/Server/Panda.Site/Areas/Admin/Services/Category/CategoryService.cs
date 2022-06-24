@@ -23,7 +23,15 @@ public class CategoryService : ICategoryService
         var res = await _dbContext.Set<Categorys>()
             .WhereIf(string.IsNullOrWhiteSpace(request.CateName) == false,
                 a => a.CategoryName.Contains(request.CateName!))
-            .OrderByDescending(a => a.AddTime).Page(request).ProjectToType<CategoryItem>().ToListAsync();
+            .OrderByDescending(a => a.AddTime).Page(request).Select(a=>new CategoryItem()
+            {
+                CategoryName = a.CategoryName,
+                CategoryDesc = a.CategoryDesc,
+                Count = _dbContext.Set<PostsCategoryRelations>().Count(b => b.Categories==a),
+                IsShow = a.IsShow,
+                Id = a.Id,
+                Pid = a.Pid
+            }).ToListAsync();
         return res;
     }
 

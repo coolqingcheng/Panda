@@ -17,7 +17,7 @@ public class CategoryItem
     /// <summary>
     ///     描述
     /// </summary>
-    public string CategoryDesc { get; set; }
+    public string? CategoryDesc { get; set; }
 
     /// <summary>
     ///     分类上级Id

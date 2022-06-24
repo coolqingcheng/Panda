@@ -14,14 +14,7 @@
                         <div class="crumbs">
                             <a href="/">@Configuration.GetSection("site:Name").Value</a>
                             <span class="text-muted">/</span>
-                            @if (post?.Categorys != null)
-                            {
-                                @foreach (var cate in post.Categorys)
-                                {
-                                    <a href="/category/@(cate.CateId)_1">@cate.CateName</a>
-                                }
-                            }
-                            <span class="text-muted">/</span>
+
                             <a href="/post/@(post?.Link).html">@post?.Title</a>
                         </div>
                     </div>
@@ -44,6 +37,33 @@
                             @Html.Raw(post?.Content)
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="p-3">
+                        所属分类
+                        @if (post?.Categorys != null)
+                        {
+                            @foreach (var cate in post.Categorys)
+                            {
+                                <a class="badge bg-success text-white" href="/category/@(cate.CateId)_1">@cate.CateName</a>
+                            }
+                        }
+                    </p>
+                </div>
+                <div class="col">
+                    <p class="p-3">
+                        <span class="">标签</span>
+
+                        @if (post?.Tags != null)
+                        {
+                            foreach (var tag in post.Tags)
+                            {
+                                <a class="badge bg-info text-white" href="/tag/@(tag)_1">@tag</a>
+                            }
+                        }
+                    </p>
                 </div>
             </div>
             <div class="row">

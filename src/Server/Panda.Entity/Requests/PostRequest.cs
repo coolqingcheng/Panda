@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using Panda.Tools.Models;
 
 namespace Panda.Entity.Requests;
@@ -8,8 +9,6 @@ public class PostAddOrUpdate
     public int Id { get; set; }
 
     [Required] public string Title { get; set; }
-
-    public string Content { get; set; }
 
     /// <summary>
     ///     markdown语法

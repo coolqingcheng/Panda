@@ -33,7 +33,8 @@ public class Post : PageModel
                 Content = a.Content,
                 UpdateTime = a.UpdateTime,
                 Author = a.Account.NickName,
-                Link = a.CustomLink
+                Link = a.CustomLink,
+                Tags = a.TagsRelations.Select(a=>a.Tags.TagName).ToList()
             }).AsNoTracking().FirstOrDefaultAsync();
         if (PostModel == null)
         {
