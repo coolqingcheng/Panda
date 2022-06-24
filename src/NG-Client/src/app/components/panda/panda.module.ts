@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { PVditorComponent } from './p-vditor/p-vditor.component';
 import { PCropperComponent } from './p-cropper/p-cropper.component';
 
+import { NzSpinComponent, NzSpinModule } from 'ng-zorro-antd/spin'
+
 
 
 @NgModule({
@@ -11,7 +13,8 @@ import { PCropperComponent } from './p-cropper/p-cropper.component';
     PCropperComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    NzSpinModule
   ],
   exports: [
     PVditorComponent
