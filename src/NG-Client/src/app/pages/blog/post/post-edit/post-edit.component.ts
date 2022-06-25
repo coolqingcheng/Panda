@@ -15,7 +15,7 @@ export class PostEditComponent implements OnInit {
 
   formGroup!: FormGroup;
 
-  tags:string[] = []
+  tags: string[] = []
 
   constructor(
     private cateService: CategoryService,
@@ -23,8 +23,8 @@ export class PostEditComponent implements OnInit {
     private fb: FormBuilder,
     private routeActivate: ActivatedRoute,
     private post: PostService,
-    private message:NzMessageService,
-    private router:Router
+    private message: NzMessageService,
+    private router: Router
   ) {
     this.formGroup = this.fb.group({
       id: [0],
@@ -32,7 +32,8 @@ export class PostEditComponent implements OnInit {
       title: ['', [Validators.required]],
       markdown: ['', [Validators.required,]],
       categories: [[], [Validators.required, Validators.minLength(1)]],
-      cover:['']
+      cover: [''],
+      status: [0]
     })
   }
 
@@ -73,7 +74,8 @@ export class PostEditComponent implements OnInit {
               title: res.title,
               markdown: res.markDown,
               categories: res.categories?.map(a => a.id),
-              cover:res.cover
+              cover: res.cover,
+              status: res.status
             })
             this.coverUrl = res.cover
           })
@@ -118,7 +120,7 @@ export class PostEditComponent implements OnInit {
       if (event.file.response.code == 0) {
         this.coverUrl = event.file.response.url
         this.formGroup.patchValue({
-          cover:this.coverUrl
+          cover: this.coverUrl
         })
       }
     }
@@ -129,16 +131,40 @@ export class PostEditComponent implements OnInit {
 
   saving = false
 
+  saveDrafting = false;
+
   save() {
+    this.formGroup.patchValue({
+      status: 0
+    })
     this.saving = true;
     console.log(this.formGroup.value)
+    this.saveServer();
+  }
+
+  saveDraft() {
+    this.formGroup.patchValue({
+      status: 1
+    })
+    this.saveDrafting = true;
+    this.saveServer();
+  }
+
+  saveServer() {
     this.post.adminPostAddOrUpdatePost(
       this.formGroup.value
-    ).pipe(finalize(()=>this.saving = false)).subscribe(_=>{
+    ).pipe(finalize(() => {
+      this.saving = false
+      this.saveDrafting = false
+    })).subscribe(_ => {
       this.message.success('保存成功')
       this.formGroup.reset()
-      this.router.navigate(['/admin/blog/post'])
+      this.backToList();
     })
+  }
+
+  backToList(){
+    this.router.navigate(['/admin/blog/post'])
   }
 
 }

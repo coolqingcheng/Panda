@@ -6,7 +6,6 @@ import { HttpClient } from '@angular/common/http';
 import { AccountService } from './api/account.service';
 import { CategoryService } from './api/category.service';
 import { CommonService } from './api/common.service';
-import { DicDataService } from './api/dicData.service';
 import { FriendLinkService } from './api/friendLink.service';
 import { HomeService } from './api/home.service';
 import { PostService } from './api/post.service';
@@ -24,7 +23,6 @@ import { TestService } from './api/test.service';
     AccountService,
     CategoryService,
     CommonService,
-    DicDataService,
     FriendLinkService,
     HomeService,
     PostService,

@@ -10,8 +10,12 @@ const routes: Routes = [
     path: '', component: StatisticComponent
   },
   {
-    path: 'blog', component:ShareRouteOutComponent,
+    path: 'blog', component: ShareRouteOutComponent,
     loadChildren: () => import('../blog/blog.module').then(m => m.BlogModule)
+  },
+  {
+    path: 'sys', component: ShareRouteOutComponent,
+    loadChildren: () => import("../system/system.module").then(m => m.SystemModule)
   },
   {
     path: '**', component: Page404Component

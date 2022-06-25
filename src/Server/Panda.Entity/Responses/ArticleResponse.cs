@@ -22,6 +22,8 @@ public class AdminPostItemResponse
 
     public PostStatus Status { get; set; }
 
+    public string StatusName => Status.Description();
+
     public List<AdminCategoryItem> CategoryItems { get; set; }
 
 

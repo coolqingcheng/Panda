@@ -14,7 +14,6 @@
                         <div class="crumbs">
                             <a href="/">@Configuration.GetSection("site:Name").Value</a>
                             <span class="text-muted">/</span>
-
                             <a href="/post/@(post?.Link).html">@post?.Title</a>
                         </div>
                     </div>
@@ -26,7 +25,16 @@
                         <p class="d-flex d-flex-row-align-center text-muted toolbar mt-3 flex-wrap">
                             <i class="ri-calendar-line"></i><span class="me-3">@post?.UpdateTime.ToLocalTime().ToString("yyyy-MM-dd")</span>
                             <i class="ri-user-line"></i><span class="me-3">@post?.Author</span>
-                            <i class="ri-links-line"></i><span>@(Configuration.GetSection("Site:Domain").Value + $"/post/{Model.PostModel?.Link}.html")</span>
+                            <i class="ri-folders-line"></i>
+                            <span class="me-3">
+                                @if (post?.Categorys != null)
+                                {
+                                    @foreach (var cate in post.Categorys)
+                                    {
+                                        <a class="badge bg-success text-white" href="/category/@(cate.CateId)_1" target="_blank">@cate.CateName</a>
+                                    }
+                                }
+                            </span>
                         </p>
                     </div>
                 </div>
@@ -42,25 +50,13 @@
             <div class="row">
                 <div class="col">
                     <p class="p-3">
-                        所属分类
-                        @if (post?.Categorys != null)
-                        {
-                            @foreach (var cate in post.Categorys)
-                            {
-                                <a class="badge bg-success text-white" href="/category/@(cate.CateId)_1">@cate.CateName</a>
-                            }
-                        }
-                    </p>
-                </div>
-                <div class="col">
-                    <p class="p-3">
                         <span class="">标签</span>
 
                         @if (post?.Tags != null)
                         {
                             foreach (var tag in post.Tags)
                             {
-                                <a class="badge bg-info text-white" href="/tag/@(tag)_1">@tag</a>
+                                <a class="badge bg-info text-white" target="_blank" href="/tag/@(tag)_1">@tag</a>
                             }
                         }
                     </p>

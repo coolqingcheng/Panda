@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Panda.Entity.DataModels;
 using Panda.Tools.Models;
 
 namespace Panda.Entity.Requests;
@@ -23,6 +24,9 @@ public class PostAddOrUpdate
     ///     封面图
     /// </summary>
     public string? Cover { get; set; }
+
+
+    public  PostStatus Status { get; set; }
 }
 
 public class AdminPostGetListRequest : BasePageRequest

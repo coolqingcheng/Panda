@@ -36,6 +36,9 @@ public class PostItem
 
     public PostStatus Status { get; set; }
 
+
+    public string StatusName => Status.Description();
+
     public string MarkDown { get; set; }
 
     /// <summary>

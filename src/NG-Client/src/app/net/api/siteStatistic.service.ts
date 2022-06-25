@@ -57,7 +57,7 @@ export class SiteStatisticService {
 
 
     /**
-     * 
+     * 获取昨日汇总统计
      * 
      * @param dateType 
      * @param begin 

@@ -67,7 +67,7 @@ public class PostService : IPostService
     public async Task<PostDetailItem> GetPost(int id)
     {
         var item = await _dbContext.Set<Entity.DataModels.Posts>()
-            .Where(a => a.Id == id && a.Status == PostStatus.Publish)
+            .Where(a => a.Id == id)
             .Include(a => a.Account).Include(a => a.TagsRelations).Select(a =>
                 new PostDetailItem
                 {
@@ -81,6 +81,7 @@ public class PostService : IPostService
                     Cover = a.Cover,
                     MarkDown = a.MarkDown,
                     CustomLink = a.CustomLink!,
+                    
                     TagItems = a.TagsRelations.Select(b => new PostTagItem
                     {
                         Id = b.Tags.Id,
@@ -125,6 +126,8 @@ public class PostService : IPostService
             post.Cover = request.Cover;
             post.Account = account;
             post.MarkDown = request.MarkDown;
+            post.Status = request.Status;
+            Console.WriteLine("发布状态："+request.Status);
             if (string.IsNullOrWhiteSpace(post.CustomLink)) post.CustomLink = Guid.NewGuid().ToString("N");
 
             await _dbContext.SaveChangesAsync();
@@ -190,7 +193,8 @@ public class PostService : IPostService
                 Cover = request.Cover,
                 Account = account,
                 MarkDown = request.MarkDown,
-                CustomLink = Guid.NewGuid().ToString("N")
+                CustomLink = Guid.NewGuid().ToString("N"),
+                Status = request.Status
             };
             await _dbContext.Set<Entity.DataModels.Posts>().AddAsync(post);
             await _dbContext.SaveChangesAsync();

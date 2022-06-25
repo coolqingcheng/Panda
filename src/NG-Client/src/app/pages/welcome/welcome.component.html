@@ -1,18 +1,18 @@
 <nz-layout class="app-layout">
-  <nz-sider class="menu-sidebar" nzTheme="light" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
-    [nzTrigger]="null">
+  <nz-sider class="menu-sidebar" nzTheme="light" nzCollapsible nzWidth="256px" nzBreakpoint="md"
+    [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
     <div class="sidebar-logo">
       <a href="https://ng.ant.design/" target="_blank">
         <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
         <h1>网上冲浪博客</h1>
-        
+
       </a>
     </div>
     <ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed" routerLinkActive>
 
       <li nz-menu-item nzTitle="Dashboard" nzIcon="dashboard" [nzMatchRouterExact]="true">
         <i nz-icon nzType="dashboard" nzTheme="outline"></i>
-        <span >
+        <span>
           <a routerLink="/admin">仪表盘</a>
         </span>
       </li>
@@ -22,7 +22,7 @@
             <a routerLink="/admin/blog/post">我的文章</a>
           </li>
           <li nz-menu-item nzMatchRouter>
-            <a [routerLink]="['/','admin','blog','category','list']" >我的分类</a>
+            <a [routerLink]="['/','admin','blog','category','list']">我的分类</a>
           </li>
           <li nz-menu-item nzMatchRouter>
             <a routerLink="/admin/blog/tag/list">我的标签</a>
@@ -35,9 +35,9 @@
 
       <li nz-submenu nzTitle="系统管理" nzIcon="setting">
         <ul>
-          <li nz-menu-item>
+          <li nz-menu-item nzMatchRouter>
             <i nz-icon nzType="user" nzTheme="outline"></i>
-            <span>用户管理</span>
+            <span> <a routerLink="/admin/sys/account/list">用户管理</a></span>
           </li>
           <li nz-menu-item>
             <i nz-icon nzType="user-switch" nzTheme="outline"></i>

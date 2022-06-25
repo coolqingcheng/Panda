@@ -58,61 +58,16 @@ export class CommonService {
 
 
     /**
-     * 
-     * 
-     * @param day 
-     * @param file 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public imgDayFileGet(day: string, file: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public imgDayFileGet(day: string, file: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public imgDayFileGet(day: string, file: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public imgDayFileGet(day: string, file: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (day === null || day === undefined) {
-            throw new Error('Required parameter day was null or undefined when calling imgDayFileGet.');
-        }
-
-        if (file === null || file === undefined) {
-            throw new Error('Required parameter file was null or undefined when calling imgDayFileGet.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<any>('get',`${this.basePath}/img/${encodeURIComponent(String(day))}/${encodeURIComponent(String(file))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
      * 图片文件上传
      * 
      * @param form 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public uploadPostForm(form?: Array<StringStringValuesKeyValuePair>, observe?: 'body', reportProgress?: boolean): Observable<UploadResult>;
-    public uploadPostForm(form?: Array<StringStringValuesKeyValuePair>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UploadResult>>;
-    public uploadPostForm(form?: Array<StringStringValuesKeyValuePair>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UploadResult>>;
-    public uploadPostForm(form?: Array<StringStringValuesKeyValuePair>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public adminUploadPostForm(form?: Array<StringStringValuesKeyValuePair>, observe?: 'body', reportProgress?: boolean): Observable<UploadResult>;
+    public adminUploadPostForm(form?: Array<StringStringValuesKeyValuePair>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UploadResult>>;
+    public adminUploadPostForm(form?: Array<StringStringValuesKeyValuePair>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UploadResult>>;
+    public adminUploadPostForm(form?: Array<StringStringValuesKeyValuePair>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
         let headers = this.defaultHeaders;
@@ -150,9 +105,54 @@ export class CommonService {
             })
         }
 
-        return this.httpClient.request<UploadResult>('post',`${this.basePath}/upload`,
+        return this.httpClient.request<UploadResult>('post',`${this.basePath}/admin/upload`,
             {
                 body: convertFormParamsToString ? formParams.toString() : formParams,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param day 
+     * @param file 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public imgDayFileGet(day: string, file: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public imgDayFileGet(day: string, file: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public imgDayFileGet(day: string, file: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public imgDayFileGet(day: string, file: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (day === null || day === undefined) {
+            throw new Error('Required parameter day was null or undefined when calling imgDayFileGet.');
+        }
+
+        if (file === null || file === undefined) {
+            throw new Error('Required parameter file was null or undefined when calling imgDayFileGet.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('get',`${this.basePath}/img/${encodeURIComponent(String(day))}/${encodeURIComponent(String(file))}`,
+            {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
