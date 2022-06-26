@@ -3,14 +3,14 @@
     <div class="login-form">
       <form nz-form [formGroup]="loginFormGroup" (ngSubmit)="login()" [nzLayout]="'vertical'">
         <nz-form-item>
-          <nz-form-control nzErrorTip="用户名不能为空">
+          <nz-form-control nzErrorTip="用户名不能为空" nzHasFeedback>
             <nz-input-group nzPrefixIcon="user">
               <input nz-input placeholder="输入用户名" name="userName" formControlName="userName">
             </nz-input-group>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-control nzErrorTip="密码不能为空">
+          <nz-form-control nzErrorTip="密码不能为空" nzHasFeedback>
             <nz-input-group nzPrefixIcon="lock">
               <input nz-input placeholder="输入密码" name="password" type="password" formControlName="password">
             </nz-input-group>

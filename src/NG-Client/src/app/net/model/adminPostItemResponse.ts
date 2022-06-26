@@ -20,7 +20,7 @@ export interface AdminPostItemResponse {
     updateTime?: Date;
     accountName?: string;
     status?: PostStatus;
+    readonly statusName?: string;
     categoryItems?: Array<AdminCategoryItem>;
     customLink?: string;
-    readonly statusName?: string;
 }

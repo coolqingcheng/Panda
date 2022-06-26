@@ -14,13 +14,13 @@
         </nz-form-item>
         <nz-form-item>
           <nz-form-label>用户名</nz-form-label>
-          <nz-form-control nzErrorTip="用户名不能为空">
+          <nz-form-control nzErrorTip="用户名不能为空" nzHasFeedback>
             <input nz-input placeholder="输入用户名" name="userName" formControlName="userName">
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
           <nz-form-label>密码</nz-form-label>
-          <nz-form-control [nzErrorTip]="pwdError">
+          <nz-form-control [nzErrorTip]="pwdError" nzHasFeedback>
             <input nz-input placeholder="输入密码" name="pwd" formControlName="pwd" type="password" (ngModelChange)="updateValidate()">
             <ng-template #pwdError let-control>
               <ng-container *ngIf="control.hasError('pwdValid')">两次密码输入不一致</ng-container>
@@ -29,7 +29,7 @@
         </nz-form-item>
         <nz-form-item>
           <nz-form-label>重复密码</nz-form-label>
-          <nz-form-control [nzErrorTip]="rePwdError">
+          <nz-form-control [nzErrorTip]="rePwdError" nzHasFeedback>
             <input nz-input placeholder="重复输入密码" name="rePwd" formControlName="rePwd" type="password" (ngModelChange)="updateValidate()">
             <ng-template #rePwdError let-control>
               <ng-container *ngIf="control.hasError('pwdValid')">两次密码输入不一致</ng-container>

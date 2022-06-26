@@ -22,12 +22,10 @@ public static class AutoInject
             foreach (var type in types)
                 if (item.InjectSelf == false)
                 {
-                    if (type.Name.EndsWith(item.EndWdith) && type.GetInterfaces().Length > 0 &&
-                        type.GetInterfaces().Any(a => a.Name.EndsWith(item.EndWdith)))
-                    {
-                        var impInterface = type.GetInterfaces().FirstOrDefault();
-                        Inject(serviceCollection, type, impInterface!);
-                    }
+                    if (!type.Name.EndsWith(item.EndWdith) || type.GetInterfaces().Length <= 0 ||
+                        !type.GetInterfaces().Any(a => a.Name.EndsWith(item.EndWdith))) continue;
+                    var impInterface = type.GetInterfaces().FirstOrDefault();
+                    Inject(serviceCollection, type, impInterface!);
                 }
                 else
                 {

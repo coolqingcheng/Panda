@@ -2,19 +2,19 @@
     <form nz-form [formGroup]="formGroup" (submit)="save()" [nzLayout]="'vertical'">
         <nz-form-item>
             <nz-form-label>分类名称</nz-form-label>
-            <nz-form-control nzErrorTip="分类名称不能为空">
+            <nz-form-control nzErrorTip="分类名称不能为空" nzHasFeedback>
                 <input nz-input formControlName="categoryName">
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label>说明</nz-form-label>
-            <nz-form-control nzErrorTip="">
+            <nz-form-control nzErrorTip="" nzHasFeedback>
                 <input nz-input formControlName="categoryDesc">
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label>是否显示</nz-form-label>
-            <nz-form-control nzErrorTip="">
+            <nz-form-control nzErrorTip="" nzHasFeedback>
                 <nz-switch formControlName="isShow"></nz-switch>
             </nz-form-control>
         </nz-form-item>

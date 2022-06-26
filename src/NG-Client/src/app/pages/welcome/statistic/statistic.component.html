@@ -1,21 +1,21 @@
 <div nz-row nzGutter="6">
   <div nz-col nzSpan="6" nzXs="24" nzSm="12" nzMd="8" nzXl="8" nzLg="6" nzXXl="3">
     <nz-card>
-      <nz-statistic [nzValue]="model?.pv" [nzTitle]="'访问人数'" [nzSuffix]="''" [nzValueStyle]="{ color: '#3F8600' }">
+      <nz-statistic [nzValue]="model?.pv??0" [nzTitle]="'访问人数'" [nzSuffix]="''" [nzValueStyle]="{ color: '#3F8600' }">
       </nz-statistic>
       <ng-template #prefixTplOne><i nz-icon nzType="arrow-up"></i></ng-template>
     </nz-card>
   </div>
   <div nz-col nzSpan="6" nzXs="24" nzSm="12" nzMd="8" nzXl="8" nzLg="6" nzXXl="3">
     <nz-card>
-      <nz-statistic [nzValue]="model?.ip" [nzTitle]="'Ip'" [nzSuffix]="''" [nzValueStyle]="{ color: 'red' }">
+      <nz-statistic [nzValue]="model?.ip??0" [nzTitle]="'Ip'" [nzSuffix]="''" [nzValueStyle]="{ color: 'red' }">
       </nz-statistic>
       <ng-template #prefixTplOne><i nz-icon nzType="arrow-up"></i></ng-template>
     </nz-card>
   </div>
   <div nz-col nzSpan="6" nzXs="24" nzSm="12" nzMd="8" nzXl="8" nzLg="6" nzXXl="3">
     <nz-card>
-      <nz-statistic [nzValue]="model?.uv" [nzTitle]="'UV'" [nzSuffix]="''" [nzValueStyle]="{ color: '#3F8600' }">
+      <nz-statistic [nzValue]="model?.uv??0" [nzTitle]="'UV'" [nzSuffix]="''" [nzValueStyle]="{ color: '#3F8600' }">
       </nz-statistic>
       <ng-template #prefixTplOne><i nz-icon nzType="arrow-up"></i></ng-template>
     </nz-card>

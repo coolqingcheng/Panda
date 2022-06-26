@@ -1,3 +1,4 @@
+using Panda.Admin.Models;
 using Panda.Admin.Models.Request;
 using Panda.Entity.Responses;
 using Panda.Tools.Auth;
@@ -7,7 +8,7 @@ using Panda.Tools.Auth.Response;
 
 namespace Panda.Admin.Services.Account;
 
-public interface IAccountService<TU> where TU : Accounts
+public interface IAccountService
 {
     // Task InitAsync();
 
@@ -25,7 +26,7 @@ public interface IAccountService<TU> where TU : Accounts
     /// <param name="oldPwd"></param>
     /// <param name="newPwd"></param>
     /// <returns></returns>
-    Task ChangePwdAsync(string oldPwd, string newPwd);
+    Task ChangePwdAsync(ChangePwdRequest request);
 
 
     /// <summary>
@@ -54,7 +55,7 @@ public interface IAccountService<TU> where TU : Accounts
     ///     获取当前用户
     /// </summary>
     /// <returns></returns>
-    Task<TU?> GetCurrentAccount();
+    Task<TU?> GetCurrentAccount<TU>() where TU : Accounts, new();
 
     /// <summary>
     ///     获取用户列表

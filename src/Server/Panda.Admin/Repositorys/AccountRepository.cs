@@ -9,12 +9,12 @@ using Panda.Tools.Security;
 
 namespace Panda.Admin.Repositorys;
 
-public class AccountRepository<T> : BaseRepository where T : Accounts, new()
+public class AccountRepository
 {
     private new readonly DbContext _context;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public AccountRepository(DbContext context, IHttpContextAccessor httpContextAccessor) : base(context)
+    public AccountRepository(DbContext context, IHttpContextAccessor httpContextAccessor)
     {
         _context = context;
         _httpContextAccessor = httpContextAccessor;
@@ -22,10 +22,10 @@ public class AccountRepository<T> : BaseRepository where T : Accounts, new()
 
     public async Task InitAccountAsync(CreateAdminAccountRequest request)
     {
-        var any = await _context.Set<T>().AnyAsync();
+        var any = await _context.Set<Accounts>().AnyAsync();
         if (any == false)
         {
-            await _context.Set<T>().AddAsync(new T
+            await _context.Set<Accounts>().AddAsync(new()
             {
                 UserName = request.UserName,
                 NickName = "管理员",
@@ -41,7 +41,7 @@ public class AccountRepository<T> : BaseRepository where T : Accounts, new()
         }
     }
 
-    public async Task LoginFailAsync(T account)
+    public async Task LoginFailAsync<T>(T account) where T : Accounts
     {
         account.LoginFailCount += 1;
         if (account.LoginFailCount >= 5 && IsLocked(account) == false)
@@ -65,7 +65,7 @@ public class AccountRepository<T> : BaseRepository where T : Accounts, new()
         await _context.SaveChangesAsync();
     }
 
-    public async Task<T> GetCurrentAccountsAsync()
+    public async Task<T> GetCurrentAccountsAsync<T>() where T : Accounts
     {
         var accountId = _httpContextAccessor.HttpContext?.CurrentAccountId();
         var account = await _context.Set<T>().Where(a => a.Id == accountId).FirstOrDefaultAsync();
@@ -75,6 +75,6 @@ public class AccountRepository<T> : BaseRepository where T : Accounts, new()
 
     public Task<bool> CheckAdminAccountExistAsync()
     {
-        return _context.Set<T>().AnyAsync();
+        return _context.Set<Accounts>().AnyAsync();
     }
 }

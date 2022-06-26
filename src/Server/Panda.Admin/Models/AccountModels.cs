@@ -15,6 +15,7 @@ public class AccountLoginRequest
 
 public class ChangePwdRequest
 {
+    public Guid? Id { get; set; }
     [Required] public string OldPwd { get; set; }
 
     [Required] public string NewPwd { get; set; }

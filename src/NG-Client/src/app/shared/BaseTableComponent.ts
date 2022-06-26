@@ -16,11 +16,16 @@ export class BaseTableComponent {
 
     loading = false;
     tableChange(params: NzTableQueryParams) {
+        console.log('tableChange')
         const { pageIndex, pageSize } = params;
         this.page = pageIndex
         this.size = pageSize;
         if (this._getDataFunc) {
             this._getDataFunc()
         }
+    }
+
+    currentPageChanged(){
+
     }
 }

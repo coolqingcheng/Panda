@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Panda.Admin.Models;
 using Panda.Admin.Models.Request;
 using Panda.Admin.Repositorys;
 using Panda.Entity.Responses;
@@ -16,22 +17,25 @@ using Panda.Tools.Security;
 
 namespace Panda.Admin.Services.Account;
 
-public class AccountService<TU> : IAccountService<TU> where TU : Accounts, new()
+public class AccountService : IAccountService
 {
-    private readonly AccountRepository<TU> _accountRepository;
+    private readonly DbContext _dbContext;
 
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public AccountService(AccountRepository<TU> accountRepository,
-        IHttpContextAccessor httpContextAccessor)
+    private readonly AccountRepository _accountRepository;
+
+    public AccountService(DbContext context,
+        IHttpContextAccessor httpContextAccessor, AccountRepository accountRepository)
     {
-        _accountRepository = accountRepository;
+        _dbContext = context;
         _httpContextAccessor = httpContextAccessor;
+        _accountRepository = accountRepository;
     }
 
     public async Task<AuthResult> LoginAsync(string email, string password)
     {
-        var account = await _accountRepository.Where<TU>(a => a.Email == email || a.UserName == email)
+        var account = await _dbContext.Set<Accounts>().Where(a => a.Email == email || a.UserName == email)
             .FirstOrDefaultAsync();
         var result = new AuthResult();
         if (account == null)
@@ -75,29 +79,39 @@ public class AccountService<TU> : IAccountService<TU> where TU : Accounts, new()
     }
 
 
-    public async Task ChangePwdAsync(string oldPwd, string newPwd)
+    public async Task ChangePwdAsync(ChangePwdRequest request)
     {
-        var account = await GetCurrentAccount();
-        account.IsNullThrow("登录信息读取失败，请重新登录！");
-        if (IdentitySecurity.VerifyHashedPassword(account!.Passwd, oldPwd) == false) throw new UserException("旧密码错误！");
+        var account = await _dbContext.Set<Accounts>().Where(a => a.Id == request.Id).FirstOrDefaultAsync();
+        if (account == null)
+        {
+            account = await GetCurrentAccount<Accounts>();
+        }
 
-        account.Passwd = IdentitySecurity.HashPassword(newPwd);
-        await _accountRepository.SaveAsync();
-        await SignOutAsync();
+        account.IsNullThrow("登录信息读取失败，请重新登录！");
+        if (IdentitySecurity.VerifyHashedPassword(account!.Passwd, request.OldPwd) == false)
+            throw new UserException("旧密码错误！");
+
+        account.Passwd = IdentitySecurity.HashPassword(request.NewPwd);
+        await _dbContext.SaveChangesAsync();
+        if (request.Id == null)
+        {
+            await SignOutAsync();
+        }
     }
 
-    public async Task<TU?> GetCurrentAccount()
+    public async Task<TU?> GetCurrentAccount<TU>() where TU : Accounts, new()
     {
-        return await _accountRepository.GetCurrentAccountsAsync();
+        return await _accountRepository.GetCurrentAccountsAsync<TU>();
     }
 
     public async Task InitAdminPassword()
     {
-        var account = await _accountRepository.Where<TU>(a => a.Email == "qingchengcode@qq.com").FirstOrDefaultAsync();
+        var account = await _dbContext.Set<Accounts>().Where(a => a.Email == "qingchengcode@qq.com")
+            .FirstOrDefaultAsync();
         if (account != null)
         {
             account.Passwd = IdentitySecurity.HashPassword("123456.");
-            await _accountRepository.SaveAsync();
+            await _dbContext.SaveChangesAsync();
         }
     }
 
@@ -108,7 +122,7 @@ public class AccountService<TU> : IAccountService<TU> where TU : Accounts, new()
 
     public async Task<PageDto<AccountResp>> GetAccountList(AccountReq req)
     {
-        var query = _accountRepository.Queryable<TU>();
+        var query = _dbContext.Set<Accounts>().AsQueryable();
         var list = await query.Page(req).OrderByDescending(a => a.LastLoginTime)
             .ProjectToType<AccountResp>()
             .ToListAsync();
@@ -126,13 +140,13 @@ public class AccountService<TU> : IAccountService<TU> where TU : Accounts, new()
 
     public async Task Disable(Guid accountId, bool status)
     {
-        var account = await _accountRepository.Where<TU>(a => a.Id == accountId).FirstOrDefaultAsync();
+        var account = await _dbContext.Set<Accounts>().Where(a => a.Id == accountId).FirstOrDefaultAsync();
         if (account != null)
         {
             account.IsDisable = status;
             if (status == false) account.LockedTime = DateTimeOffset.Now.AddSeconds(-1);
 
-            await _accountRepository.SaveAsync();
+            await _dbContext.SaveChangesAsync();
         }
     }
 

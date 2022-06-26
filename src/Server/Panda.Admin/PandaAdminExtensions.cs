@@ -25,10 +25,9 @@ public static class PandaAdminExtensions
         app.AddNLog();
         var services = app.Services;
         services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
-        services.AddScoped(typeof(AccountRepository<>));
-        services.AddScoped(typeof(IAccountService<>),
-            typeof(AccountService<>));
+        services.AddScoped<AccountRepository>();
         services.AddScoped<DicDataRepository>();
+        services.AddScoped<IAccountService, AccountService>();
         services.AddScoped<DbContext>(a => a.GetService<T>()!);
 
         services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();

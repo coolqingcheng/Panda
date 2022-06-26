@@ -25,7 +25,14 @@
             {{tag.cateName}}
           </nz-tag>
         </td>
-        <td>{{data.statusName}}</td>
+        <td>
+          <nz-tag nzColor="#87d068" *ngIf="data.status == 0">
+            {{data.statusName}}
+          </nz-tag>
+          <nz-tag nzColor="#f50" *ngIf="data.status == 1">
+            {{data.statusName}}
+          </nz-tag>
+        </td>
         <td>0</td>
         <td>
           <a routerLink="/admin/blog/post/edit" [queryParams]="{id:data.id}">编辑</a>

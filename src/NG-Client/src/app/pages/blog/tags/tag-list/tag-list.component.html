@@ -1,5 +1,17 @@
 <nz-card nzTitle="标签">
-    <table>
-        
-    </table>
+    <nz-table [nzData]="datas" [nzTotal]="total" [nzFrontPagination]="false" [nzTotal]="total"
+        (nzQueryParams)="tableChange($event)" nzShowSizeChanger [nzPageSize]="size">
+        <thead>
+            <tr>
+                <th>名称</th>
+                <th>关联数</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of datas">
+                <td>{{item.tagName}}</td>
+                <td>{{item.count}}</td>
+            </tr>
+        </tbody>
+    </nz-table>
 </nz-card>

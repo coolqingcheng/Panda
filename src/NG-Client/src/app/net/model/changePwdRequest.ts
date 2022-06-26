@@ -11,6 +11,7 @@
  */
 
 export interface ChangePwdRequest { 
+    id?: string;
     oldPwd: string;
     newPwd: string;
 }

@@ -17,13 +17,13 @@ namespace Panda.Controllers;
 [ApiController]
 public class CommonController : Controller
 {
-    private readonly IAccountService<Accounts> _accountService;
+    private readonly IAccountService _accountService;
 
     private readonly IFileStorage _fileStorage;
     private readonly IWebHostEnvironment _webHostEnvironment;
 
     public CommonController(IFileStorage fileStorage, IWebHostEnvironment webHostEnvironment,
-        IAccountService<Accounts> accountService)
+        IAccountService accountService)
     {
         _fileStorage = fileStorage;
         _webHostEnvironment = webHostEnvironment;

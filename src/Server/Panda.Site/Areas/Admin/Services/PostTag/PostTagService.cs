@@ -31,7 +31,8 @@ public class PostTagService : IPostTagService
         var query = _dbContext.Set<PostTags>().AsQueryable();
         var list = await query.Page(request).Select(a => new TagResponse
         {
-            TagName = a.TagName, Count = a.PostCount, Id = a.Id
+            TagName = a.TagName, Count = _dbContext.Set<TagsRelation>().Where((b=>b.Tags==a)).Count()
+            , Id = a.Id
         }).ToListAsync();
         return new PageDto<TagResponse>
         {

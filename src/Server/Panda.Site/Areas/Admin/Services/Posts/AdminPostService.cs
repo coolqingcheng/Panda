@@ -16,9 +16,9 @@ public class PostService : IPostService
 {
     private readonly DbContext _dbContext;
 
-    private readonly AccountRepository<Accounts> _accountRepository;
+    private readonly AccountRepository _accountRepository;
 
-    public PostService(DbContext dbContext, AccountRepository<Accounts> accountRepository)
+    public PostService(DbContext dbContext, AccountRepository accountRepository)
     {
         _dbContext = dbContext;
         _accountRepository = accountRepository;
@@ -81,7 +81,7 @@ public class PostService : IPostService
                     Cover = a.Cover,
                     MarkDown = a.MarkDown,
                     CustomLink = a.CustomLink!,
-                    
+
                     TagItems = a.TagsRelations.Select(b => new PostTagItem
                     {
                         Id = b.Tags.Id,
@@ -108,7 +108,7 @@ public class PostService : IPostService
 
     public async Task AddOrUpdate(PostAddOrUpdate request)
     {
-        var account = await _accountRepository.GetCurrentAccountsAsync();
+        var account = await _accountRepository.GetCurrentAccountsAsync<Accounts>();
         string htmlContent = Markdown.ToHtml(request.MarkDown);
         var text = htmlContent.GetHtmlText();
         var tran = await _dbContext.Database.BeginTransactionAsync();
@@ -127,7 +127,7 @@ public class PostService : IPostService
             post.Account = account;
             post.MarkDown = request.MarkDown;
             post.Status = request.Status;
-            Console.WriteLine("发布状态："+request.Status);
+            Console.WriteLine("发布状态：" + request.Status);
             if (string.IsNullOrWhiteSpace(post.CustomLink)) post.CustomLink = Guid.NewGuid().ToString("N");
 
             await _dbContext.SaveChangesAsync();
@@ -151,9 +151,9 @@ public class PostService : IPostService
             await _dbContext.AddRangeAsync(newRelations);
             await _dbContext.SaveChangesAsync();
             //删除标签关系
-           var tagRelationList = await _dbContext.Set<TagsRelation>().Where(a => a.Posts == post).ToListAsync();
-          _dbContext.RemoveRange(tagRelationList);
-          await _dbContext.SaveChangesAsync();
+            var tagRelationList = await _dbContext.Set<TagsRelation>().Where(a => a.Posts == post).ToListAsync();
+            _dbContext.RemoveRange(tagRelationList);
+            await _dbContext.SaveChangesAsync();
             //重新添加标签关系
             if (request.Tags != null)
                 foreach (var tag in request.Tags)
@@ -239,22 +239,23 @@ public class PostService : IPostService
         var query = _dbContext.Set<Entity.DataModels.Posts>()
             .WhereIf(request.KeyWord != null, a => a.Title.Contains(request.KeyWord!))
             .AsQueryable();
-        var list = await query.OrderByDescending(a => a.AddTime).Page(request).Select(a => new AdminPostItemResponse()
-        {
-            Id = a.Id,
-            Title = a.Title,
-            Summary = a.Summary,
-            AccountName = a.Account.NickName,
-            AddTime = a.AddTime,
-            CategoryItems = a.ArticleCategoryRelations.Select(b => new AdminCategoryItem()
+        var list = await query.OrderByDescending(a => a.Status).ThenByDescending(a => a.AddTime).Page(request).Select(
+            a => new AdminPostItemResponse()
             {
-                CateName = b.Categories.CategoryName,
-                Id = b.Categories.Id
-            }).ToList(),
-            CustomLink = a.CustomLink,
-            Status = a.Status,
-            UpdateTime = a.UpdateTime
-        }).ToListAsync();
+                Id = a.Id,
+                Title = a.Title,
+                Summary = a.Summary,
+                AccountName = a.Account.NickName,
+                AddTime = a.AddTime,
+                CategoryItems = a.ArticleCategoryRelations.Select(b => new AdminCategoryItem()
+                {
+                    CateName = b.Categories.CategoryName,
+                    Id = b.Categories.Id
+                }).ToList(),
+                CustomLink = a.CustomLink,
+                Status = a.Status,
+                UpdateTime = a.UpdateTime
+            }).ToListAsync();
         return new PageDto<AdminPostItemResponse>()
         {
             Total = await query.CountAsync(),
@@ -283,7 +284,7 @@ public class PostService : IPostService
                 CustomLink = a.Posts.CustomLink!,
                 Categories =
                     a.Posts.ArticleCategoryRelations.Select(b => new PostCategories
-                    { Id = b.Categories.Id, CateName = b.Categories.CategoryName })
+                            { Id = b.Categories.Id, CateName = b.Categories.CategoryName })
                         .ToList()
             }).OrderByDescending(a => a.AddTime).ToListAsync();
 

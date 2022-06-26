@@ -22,10 +22,10 @@ export interface PostDetailItem {
     addTime?: Date;
     account?: Accounts;
     status?: PostStatus;
+    readonly statusName?: string;
     markDown?: string;
     cover?: string;
     categories?: Array<PostCategories>;
-    readonly statusName?: string;
     content?: string;
     tagItems?: Array<PostTagItem>;
     readonly tags?: Array<string>;

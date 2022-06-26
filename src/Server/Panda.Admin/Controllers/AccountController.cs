@@ -7,6 +7,8 @@ using Panda.Admin.Models.Request;
 using Panda.Admin.Services.Account;
 using Panda.Entity.Responses;
 using Panda.Tools.Auth.Models;
+using Panda.Tools.Auth.Request;
+using Panda.Tools.Auth.Response;
 using Panda.Tools.Exception;
 
 namespace Panda.Admin.Controllers;
@@ -14,10 +16,9 @@ namespace Panda.Admin.Controllers;
 [Permission("用户管理")]
 public class AccountController : AdminController
 {
-    private readonly IAccountService<Accounts> _accountService;
+    private readonly IAccountService _accountService;
 
-
-    public AccountController(IAccountService<Accounts> accountService)
+    public AccountController(IAccountService accountService)
     {
         _accountService = accountService;
     }
@@ -71,6 +72,17 @@ public class AccountController : AdminController
     [Permission("修改密码")]
     public async Task ChangePwd(ChangePwdRequest request)
     {
-        await _accountService.ChangePwdAsync(request.OldPwd, request.NewPwd);
+        await _accountService.ChangePwdAsync(request);
+    }
+
+    /// <summary>
+    /// 获取用户列表
+    /// </summary>
+    /// <param name="req"></param>
+    /// <returns></returns>
+    [HttpGet]
+    public async Task<PageDto<AccountResp>> GetAccountList([FromQuery] AccountReq req)
+    {
+        return await _accountService.GetAccountList(req);
     }
 }

@@ -30,11 +30,22 @@ export class PostEditComponent implements OnInit {
       id: [0],
       tags: [[], [Validators.required]],
       title: ['', [Validators.required]],
-      markdown: ['', [Validators.required,]],
+      markdown: ['', [Validators.required, this.markdownValidator]],
       categories: [[], [Validators.required, Validators.minLength(1)]],
       cover: [''],
       status: [0]
     })
+  }
+
+  markdownValidator = (control: FormControl) => {
+    let v = control.value as string;
+    if (!v.trim()) {
+      return {
+        error: true,
+        required: true
+      }
+    }
+    return {}
   }
 
 
@@ -163,7 +174,7 @@ export class PostEditComponent implements OnInit {
     })
   }
 
-  backToList(){
+  backToList() {
     this.router.navigate(['/admin/blog/post'])
   }
 

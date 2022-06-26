@@ -9,14 +9,10 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { PostStatus } from './postStatus';
+import { AccountResp } from './accountResp';
 
-export interface PostAddOrUpdate { 
-    id?: number;
-    title: string;
-    markDown?: string;
-    categories: Array<number>;
-    tags?: Array<string>;
-    cover?: string;
-    status?: PostStatus;
+export interface AccountRespPageDto { 
+    message?: string;
+    data?: Array<AccountResp>;
+    total?: number;
 }

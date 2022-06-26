@@ -18,6 +18,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { AccountLoginRequest } from '../model/accountLoginRequest';
+import { AccountRespPageDto } from '../model/accountRespPageDto';
 import { ChangePwdRequest } from '../model/changePwdRequest';
 import { CreateAdminAccountRequest } from '../model/createAdminAccountRequest';
 import { LoginStatusResult } from '../model/loginStatusResult';
@@ -95,6 +96,63 @@ export class AccountService {
         return this.httpClient.request<any>('post',`${this.basePath}/admin/Account/ChangePwd`,
             {
                 body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 获取用户列表
+     * 
+     * @param index 
+     * @param size 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public adminAccountGetAccountListGet(index: number, size: number, observe?: 'body', reportProgress?: boolean): Observable<AccountRespPageDto>;
+    public adminAccountGetAccountListGet(index: number, size: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AccountRespPageDto>>;
+    public adminAccountGetAccountListGet(index: number, size: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AccountRespPageDto>>;
+    public adminAccountGetAccountListGet(index: number, size: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (index === null || index === undefined) {
+            throw new Error('Required parameter index was null or undefined when calling adminAccountGetAccountListGet.');
+        }
+
+        if (size === null || size === undefined) {
+            throw new Error('Required parameter size was null or undefined when calling adminAccountGetAccountListGet.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (index !== undefined && index !== null) {
+            queryParameters = queryParameters.set('Index', <any>index);
+        }
+        if (size !== undefined && size !== null) {
+            queryParameters = queryParameters.set('Size', <any>size);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'text/plain',
+            'application/json',
+            'text/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<AccountRespPageDto>('get',`${this.basePath}/admin/Account/GetAccountList`,
+            {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

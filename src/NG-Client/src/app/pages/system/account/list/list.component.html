@@ -1,2 +1,38 @@
+<nz-card nzTitle="用户">
+    <nz-table [nzData]="datas" [nzLoading]="loading" [nzTotal]="total" [nzFrontPagination]="false">
+        <thead>
+            <tr>
+                <th>用户名</th>
+                <th>邮箱</th>
+                <th>状态</th>
+                <th>最后登录时间</th>
+                <th>角色</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of datas">
+                <td>{{item.userName}}</td>
+                <td>{{item.email}}</td>
+                <td>
+                    <nz-tag *ngIf="item.status == 0" nzColor="success">正常</nz-tag>
+                    <nz-tag *ngIf="item.status == 1" nzColor="error">禁用</nz-tag>
+                    <nz-tag *ngIf="item.status == 2" nzColor="warning">锁定</nz-tag>
+                </td>
+                <td>{{item.lastLoginTime}}</td>
+                <td></td>
+                <td>
+                    <button nz-button nz-dropdown nzTrigger="hover" [nzDropdownMenu]="menu">操作</button>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu>
+                            <li nz-menu-item>编辑</li>
+                            <li nz-menu-item (click)="changePwd(item.id!)">修改密码</li>
+                            <li nz-menu-item>禁止登录</li>
 
-<nz-card nzTitle="用户"></nz-card>
+                        </ul>
+                    </nz-dropdown-menu>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</nz-card>

@@ -4,7 +4,7 @@
     <form #postForm nz-form [formGroup]="formGroup" nzLayout="vertical">
       <nz-form-item>
         <nz-form-label>标题</nz-form-label>
-        <nz-form-control>
+        <nz-form-control nzErrorTip="标题不能为空" nzHasFeedback>
           <input nz-input formControlName="title">
         </nz-form-control>
       </nz-form-item>
@@ -12,7 +12,7 @@
         <nz-form-label>
           正文
         </nz-form-label>
-        <nz-form-control>
+        <nz-form-control nzErrorTip="正文不能为空" nzHasFeedback>
           <p-vditor formControlName="markdown"></p-vditor>
         </nz-form-control>
       </nz-form-item>
@@ -20,7 +20,7 @@
         <nz-form-label>
           分类
         </nz-form-label>
-        <nz-form-control>
+        <nz-form-control nzErrorTip="分类不能为空" nzHasFeedback>
           <nz-select nzMode="multiple" formControlName="categories">
             <nz-option *ngFor="let item of cateList" [nzLabel]="item.label" [nzValue]="item.value">
             </nz-option>

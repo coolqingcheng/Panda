@@ -9,14 +9,11 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { PostStatus } from './postStatus';
 
-export interface PostAddOrUpdate { 
-    id?: number;
-    title: string;
-    markDown?: string;
-    categories: Array<number>;
-    tags?: Array<string>;
-    cover?: string;
-    status?: PostStatus;
-}
+export type AccountStatus = 0 | 1 | 2;
+
+export const AccountStatus = {
+    NUMBER_0: 0 as AccountStatus,
+    NUMBER_1: 1 as AccountStatus,
+    NUMBER_2: 2 as AccountStatus
+};
