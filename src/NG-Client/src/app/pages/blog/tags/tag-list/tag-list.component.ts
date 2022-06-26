@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { finalize } from 'rxjs';
 import { TagResponse, TagResponsePageDto, TagService } from 'src/app/net';
 import { BaseTableComponent } from 'src/app/shared/BaseTableComponent';
 
@@ -23,8 +24,10 @@ export class TagListComponent extends BaseTableComponent implements OnInit {
 
   datas:TagResponse[] = []
   init(){
-
-    this.tag.adminTagGetListGet(this.page,this.size).subscribe(res=>{
+    this.loading = true
+    this.tag.adminTagGetListGet(this.page,this.size).pipe(finalize(()=>{
+      this.loading = false
+    })).subscribe(res=>{
       this.datas = [];
       this.datas.push(...res.data!)
       this.total = res.total!

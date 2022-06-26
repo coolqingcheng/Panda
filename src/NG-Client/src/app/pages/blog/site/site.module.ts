@@ -4,16 +4,21 @@ import { CommonModule } from '@angular/common';
 import { SiteRoutingModule } from './site-routing.module';
 import { SiteSettingComponent } from './site-setting/site-setting.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { SettingContainerComponent } from './setting-container/setting-container.component';
+
+import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 
 
 @NgModule({
   declarations: [
-    SiteSettingComponent
+    SiteSettingComponent,
+    SettingContainerComponent
   ],
   imports: [
     CommonModule,
     SiteRoutingModule,
-    SharedModule
+    SharedModule,
+    CodemirrorModule
   ]
 })
 export class SiteModule { }

@@ -1,3 +1,29 @@
-<nz-card nzTitle="网站设置">
-
-</nz-card>
+<form nz-form nzLayout="vertical" [formGroup]="formGroup">
+    <nz-form-item>
+        <nz-form-label nzRequired>网站名称</nz-form-label>
+        <nz-form-control nzHasFeedback>
+            <input nz-input>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label>网站说明</nz-form-label>
+        <nz-form-control nzHasFeedback>
+            <textarea rows="5" nz-input></textarea>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label>备案号</nz-form-label>
+        <nz-form-control nzHasFeedback>
+            <input nz-input>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label>统计代码</nz-form-label>
+        <nz-form-control nzHasFeedback>
+            <ngx-codemirror formControlName="statistic" [options]="options"></ngx-codemirror>
+        </nz-form-control>
+    </nz-form-item>
+    <div class="save-box-left">
+        <button nz-button nzType="primary" [nzLoading]="saving" [disabled]="!formGroup.valid">保存</button>
+    </div>
+</form>

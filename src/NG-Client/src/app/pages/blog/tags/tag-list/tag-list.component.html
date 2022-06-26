@@ -1,6 +1,6 @@
 <nz-card nzTitle="标签">
     <nz-table [nzData]="datas" [nzTotal]="total" [nzFrontPagination]="false" [nzTotal]="total"
-        (nzQueryParams)="tableChange($event)" nzShowSizeChanger [nzPageSize]="size">
+        (nzQueryParams)="tableChange($event)" nzShowSizeChanger [nzPageSize]="size" [nzLoading]="loading">
         <thead>
             <tr>
                 <th>名称</th>

@@ -13,6 +13,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider'
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzTabsModule } from 'ng-zorro-antd/tabs'
 
 
 import { NzFormModule } from "ng-zorro-antd/form"
@@ -56,11 +57,12 @@ const antd = [
   NzTagModule,
   NzCheckboxModule,
   NzUploadModule,
-  NzDropDownModule
+  NzDropDownModule,
+  NzTabsModule
 ]
 
 const common = [
-  CommonModule, FormsModule, ReactiveFormsModule,RouterModule
+  CommonModule, FormsModule, ReactiveFormsModule, RouterModule
 ]
 
 @NgModule({
