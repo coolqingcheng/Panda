@@ -12,5 +12,6 @@ public class SiteSettingController : AdminController
     [HttpPost]
     public Task SetSiteInfo(SiteSettingRequest request)
     {
+        return Task.CompletedTask;
     }
 }
