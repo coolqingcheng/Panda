@@ -1,7 +1,7 @@
 {
     "/admin": {
         "target": "http://localhost:5005/",
-        "changeOrigin": true,
+        "changeOrigin": false,
         "secure": false
     },
     "/img": {
