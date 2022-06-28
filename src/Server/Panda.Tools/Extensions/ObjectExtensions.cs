@@ -1,7 +1,9 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Reflection;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml;
 using Panda.Tools.Exception;
+using TencentCloud.Iotcloud.V20210408.Models;
 
 namespace Panda;
 
@@ -38,7 +40,39 @@ public static class ObjectExtensions
         var reader =
             XmlDictionaryReader.CreateTextReader(memoryStream, new XmlDictionaryReaderQuotas());
         var ser = new DataContractSerializer(typeof(T));
-        var result = (T) ser.ReadObject(reader, true)!;
+        var result = (T)ser.ReadObject(reader, true)!;
         return result;
+    }
+
+    public static void SetValue(this object obj, PropertyInfo propertyInfo, object value)
+    {
+        if (propertyInfo.PropertyType == typeof(string))
+        {
+            propertyInfo.SetValue(obj, value.ToString());
+        }
+
+        if (propertyInfo.PropertyType == typeof(int))
+        {
+            var temp = Convert.ToInt32(value);
+            propertyInfo.SetValue(obj, temp);
+        }
+
+        if (propertyInfo.PropertyType == typeof(long))
+        {
+            var temp = Convert.ToInt64(value);
+            propertyInfo.SetValue(obj, temp);
+        }
+
+        if (propertyInfo.PropertyType == typeof(DateTime))
+        {
+            var temp = Convert.ToDateTime(value);
+            propertyInfo.SetValue(obj, temp);
+        }
+
+        if (propertyInfo.PropertyType == typeof(bool))
+        {
+            var temp = Convert.ToBoolean(value);
+            propertyInfo.SetValue(obj, temp);
+        }
     }
 }

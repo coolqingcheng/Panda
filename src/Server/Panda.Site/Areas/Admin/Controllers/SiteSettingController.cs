@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Reflection;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Panda.Site.Areas.Admin.Models;
+using Panda.Site.Areas.Admin.Services.SiteOption;
 using Panda.Tools.Auth.Controllers;
 
 namespace Panda.Site.Areas.Admin.Controllers;
@@ -9,9 +12,23 @@ namespace Panda.Site.Areas.Admin.Controllers;
 /// </summary>
 public class SiteSettingController : AdminController
 {
-    [HttpPost]
-    public Task SetSiteInfo(SiteSettingRequest request)
+    private readonly ISiteOptionService _siteOptionService;
+
+    public SiteSettingController(ISiteOptionService siteOptionService)
     {
-        return Task.CompletedTask;
+        _siteOptionService = siteOptionService;
+    }
+
+    [HttpPost]
+    public async Task SetSiteInfo(SiteSettingModel model)
+    {
+        var dic = _siteOptionService.GetDic(model);
+        await _siteOptionService.AddOrUpdate(dic);
+    }
+
+    [HttpGet]
+    public async Task<SiteSettingModel> GetSiteInfo()
+    {
+        return await _siteOptionService.GetModel<SiteSettingModel>();
     }
 }

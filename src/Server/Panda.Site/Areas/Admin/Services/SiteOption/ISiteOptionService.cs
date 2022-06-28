@@ -6,16 +6,22 @@ using System.Linq;
 
 namespace Panda.Site.Areas.Admin.Services.SiteOption
 {
-    public interface ISiteOptionServicce
+    public interface ISiteOptionService
     {
         Task AddOrUpdate(Dictionary<string, string> dic);
+
+
+        Dictionary<string, string> GetDic<T>(T obj) where T : class, new();
+
+        Task<T> GetModel<T>() where T : class, new();
 
         Task<int> GetInt(string key, int defaultValue);
         Task<string> GetString(string key, string defaultValue);
 
         Task<Dictionary<string, string>> GetAll();
     }
-    public class SiteOptionServicce : ISiteOptionServicce
+
+    public class SiteOptionService : ISiteOptionService
     {
         private readonly DbContext _context;
 
@@ -23,7 +29,7 @@ namespace Panda.Site.Areas.Admin.Services.SiteOption
 
         private const string SITEOPTION_CACHE_KEY = "SITEOPTION_CACHE_KEY";
 
-        public SiteOptionServicce(DbContext context, IDistributedCache cache)
+        public SiteOptionService(DbContext context, IDistributedCache cache)
         {
             _context = context;
             _cache = cache;
@@ -37,7 +43,7 @@ namespace Panda.Site.Areas.Admin.Services.SiteOption
                 var optionItem = list.FirstOrDefault(a => a.Name == item.Key);
                 if (optionItem == null)
                 {
-                    list.Add(new SiteOptions()
+                    await _context.AddAsync(new SiteOptions()
                     {
                         Name = item.Key,
                         Value = item.Value
@@ -48,8 +54,44 @@ namespace Panda.Site.Areas.Admin.Services.SiteOption
                     optionItem.Value = item.Value;
                 }
             }
+
             await _context.SaveChangesAsync();
             await _cache.RemoveAsync(SITEOPTION_CACHE_KEY);
+        }
+
+        public Dictionary<string, string> GetDic<T>(T obj) where T : class, new()
+        {
+            var dic = new Dictionary<string, string>();
+            var type = obj.GetType();
+            var properties = type.GetProperties();
+            foreach (var propertyInfo in properties)
+            {
+                var value = propertyInfo.GetValue(obj);
+                if (value != null)
+                {
+                    dic.TryAdd(propertyInfo.Name, value.ToString()!);
+                }
+            }
+
+            return dic;
+        }
+
+        public async Task<T> GetModel<T>() where T : class, new()
+        {
+            var dic = await GetAll();
+            var model = new T();
+            var type = model.GetType();
+            foreach (var propertyInfo in type.GetProperties())
+            {
+                var value = dic.Where(a => a.Key == propertyInfo.Name)
+                    .Select(a => a.Value).FirstOrDefault();
+                if (string.IsNullOrWhiteSpace(value) == false)
+                {
+                    model.SetValue(propertyInfo, value);
+                }
+            }
+
+            return model;
         }
 
         public async Task<int> GetInt(string key, int defaultValue)
@@ -59,6 +101,7 @@ namespace Panda.Site.Areas.Admin.Services.SiteOption
             {
                 return defaultValue;
             }
+
             return Convert.ToInt32(item);
         }
 
@@ -77,6 +120,7 @@ namespace Panda.Site.Areas.Admin.Services.SiteOption
             {
                 return value.JsonToObj<Dictionary<string, string>>();
             }
+
             var dic = list.ToDictionary(a => a.Name, a => a.Value);
             await _cache.SetStringAsync(SITEOPTION_CACHE_KEY, dic.ToJson());
             return dic;
@@ -89,7 +133,19 @@ namespace Panda.Site.Areas.Admin.Services.SiteOption
             {
                 return defaultValue;
             }
+
             return item;
         }
+    }
+
+
+    public class SiteOptionAttribute : Attribute
+    {
+        public SiteOptionAttribute(string key)
+        {
+            Key = key;
+        }
+
+        public string Key { get; set; }
     }
 }
