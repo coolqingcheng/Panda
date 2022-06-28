@@ -32,6 +32,11 @@ public class PandaContext : AppContext<Accounts>
 
     public DbSet<Notices> Notices { get; set; }
 
+    /// <summary>
+    /// 站点配置
+    /// </summary>
+    public DbSet<SiteOptions> SiteOptions { get; set; }
+
 
     /// <summary>
     /// 访问统计

@@ -11,8 +11,12 @@ public static class StringExtension
     }
 
 
-    public static T? JsonToObj<T>(this string json)
+    public static T? JsonToObj<T>(this string? json)
     {
+        if (string.IsNullOrEmpty(json))
+        {
+            return default;
+        }
         var res = JsonSerializer.Deserialize<T>(json);
         return res;
     }
