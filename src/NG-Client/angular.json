@@ -29,6 +29,9 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "less",
+            "allowedCommonJsDependencies": [
+              "codemirror"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets",
