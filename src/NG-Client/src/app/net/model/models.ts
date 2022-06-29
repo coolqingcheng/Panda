@@ -25,6 +25,7 @@ export * from './postStatus';
 export * from './postTagItem';
 export * from './recentAccessHistory';
 export * from './recentAccessHistoryPageDto';
+export * from './siteSettingModel';
 export * from './siteStatisticModel';
 export * from './statisticModel';
 export * from './stringStringValuesKeyValuePair';

@@ -10,6 +10,7 @@ import { FriendLinkService } from './api/friendLink.service';
 import { HomeService } from './api/home.service';
 import { PostService } from './api/post.service';
 import { RssService } from './api/rss.service';
+import { SiteSettingService } from './api/siteSetting.service';
 import { SiteStatisticService } from './api/siteStatistic.service';
 import { StatisticService } from './api/statistic.service';
 import { TagService } from './api/tag.service';
@@ -27,6 +28,7 @@ import { TestService } from './api/test.service';
     HomeService,
     PostService,
     RssService,
+    SiteSettingService,
     SiteStatisticService,
     StatisticService,
     TagService,
