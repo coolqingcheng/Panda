@@ -27,7 +27,7 @@ public class FriendlyLinkRecord : PandaBaseTable
 
 public enum AuditStatusEnum
 {
-    [Description("未审核")] unaudit = 0,
+    [Description("未审核")] Unaudit = 0,
     [Description("ͨ审核通过")] Pass = 1,
     [Description("拒绝")] Reject = 2
 }

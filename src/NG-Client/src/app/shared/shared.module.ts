@@ -18,12 +18,15 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs'
 
 import { NzFormModule } from "ng-zorro-antd/form"
 import { NzInputModule } from "ng-zorro-antd/input"
+import { NzInputNumberModule } from "ng-zorro-antd/input-number"
 import { NzSwitchModule } from "ng-zorro-antd/switch"
 import { NzMessageModule } from "ng-zorro-antd/message"
 
 import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -58,7 +61,9 @@ const antd = [
   NzCheckboxModule,
   NzUploadModule,
   NzDropDownModule,
-  NzTabsModule
+  NzTabsModule,
+  NzInputNumberModule,
+  NzRadioModule
 ]
 
 const common = [

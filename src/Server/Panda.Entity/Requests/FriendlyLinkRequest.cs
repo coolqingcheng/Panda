@@ -21,6 +21,8 @@ public class AddFriendLinkRequest
     [Required] public string siteUrl { get; set; }
 
     public AuditStatusEnum? AuditStatus { get; set; }
+
+    public int Weight { get; set; }
 }
 
 public class FriendLinkAuditRequest

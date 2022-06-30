@@ -18,6 +18,10 @@ const routes: Routes = [
   {
     path: 'site', component: ShareRouteOutComponent,
     loadChildren: () => import('./site/site.module').then(m => m.SiteModule)
+  },
+  {
+    path: 'friendlink', component: ShareRouteOutComponent,
+    loadChildren: () => import("./friendlink/friendlink.module").then(m => m.FriendlinkModule)
   }
 ];
 

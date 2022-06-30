@@ -104,7 +104,8 @@ public class FriendlyLinkService : IFriendlyLinkService
             {
                 SiteName = request.siteName,
                 SiteUrl = request.siteUrl,
-                AuditStatus = request.AuditStatus ?? AuditStatusEnum.unaudit
+                AuditStatus = request.AuditStatus ?? AuditStatusEnum.Unaudit,
+                Weight = request.Weight
             };
             await _dbContext.Set<FriendlyLinks>().AddAsync(item);
             await _dbContext.SaveChangesAsync();
@@ -113,6 +114,7 @@ public class FriendlyLinkService : IFriendlyLinkService
         {
             item.SiteUrl = request.siteUrl;
             item.SiteName = request.siteName;
+            item.Weight = request.Weight;
             if (request.AuditStatus != null) item.AuditStatus = (AuditStatusEnum) request.AuditStatus;
 
             await _dbContext.SaveChangesAsync();

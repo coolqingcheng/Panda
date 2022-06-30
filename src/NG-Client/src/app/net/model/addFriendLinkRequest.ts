@@ -16,4 +16,5 @@ export interface AddFriendLinkRequest {
     siteName: string;
     siteUrl: string;
     auditStatus?: AuditStatusEnum;
+    weight?: number;
 }

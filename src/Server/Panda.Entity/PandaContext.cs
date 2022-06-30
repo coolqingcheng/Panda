@@ -57,7 +57,7 @@ public class PandaContext : AppContext<Accounts>
         modelBuilder.Entity<Posts>().HasIndex(a => a.CustomLink).IsUnique();
         modelBuilder.Entity<Posts>().HasIndex(a => a.UpdateTime);
         modelBuilder.Entity<DicDatas>().Property(a => a.Pid).HasDefaultValue(0);
-        modelBuilder.Entity<FriendlyLinks>().Property(a => a.AuditStatus).HasDefaultValue(AuditStatusEnum.unaudit);
+        modelBuilder.Entity<FriendlyLinks>().Property(a => a.AuditStatus).HasDefaultValue(AuditStatusEnum.Unaudit);
         modelBuilder.Entity<Notices>().Property(a => a.IsTop).HasDefaultValue(false);
         modelBuilder.Entity<WikiDoc>().Property(a => a.WikiContent).HasColumnType("longtext");
     }

@@ -13,8 +13,6 @@ export class SiteSettingComponent implements OnInit {
 
   formGroup!: FormGroup;
 
-  content = '# var a  = 100'
-
   options = {
     lineNumbers: true,
     readOnly: false, // nocursor can not copy
