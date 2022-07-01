@@ -39,7 +39,7 @@ services.AddDbContext<PandaContext>(
     {
         var envMysql = Environment.GetEnvironmentVariable("MYSQL", EnvironmentVariableTarget.Process);
         Console.WriteLine("环境变量读取MYSQL:" + envMysql);
-        var db = string.IsNullOrWhiteSpace(envMysql) ? envMysql : builder.Configuration.GetConnectionString("MYSQL");
+        var db = string.IsNullOrWhiteSpace(envMysql) == false ? envMysql : builder.Configuration.GetConnectionString("MYSQL");
         Console.WriteLine("使用的数据库连接:" + db);
         opt.UseLazyLoadingProxies()
             .UseMySql(db, ServerVersion.AutoDetect(db))
