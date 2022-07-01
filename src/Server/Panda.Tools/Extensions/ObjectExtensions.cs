@@ -50,29 +50,33 @@ public static class ObjectExtensions
         {
             propertyInfo.SetValue(obj, value.ToString());
         }
-
+        else
         if (propertyInfo.PropertyType == typeof(int))
         {
             var temp = Convert.ToInt32(value);
             propertyInfo.SetValue(obj, temp);
         }
-
+        else
         if (propertyInfo.PropertyType == typeof(long))
         {
             var temp = Convert.ToInt64(value);
             propertyInfo.SetValue(obj, temp);
         }
-
+        else
         if (propertyInfo.PropertyType == typeof(DateTime))
         {
             var temp = Convert.ToDateTime(value);
             propertyInfo.SetValue(obj, temp);
         }
-
+        else
         if (propertyInfo.PropertyType == typeof(bool))
         {
             var temp = Convert.ToBoolean(value);
             propertyInfo.SetValue(obj, temp);
+        }
+        else
+        {
+            throw new UserException($"暂时不支持类型为:{propertyInfo.PropertyType.Name}");
         }
     }
 }

@@ -68,7 +68,7 @@ public class CategoryService : ICategoryService
         if (res.Count > 0) throw new UserException("分类不为空，无法删除");
 
         var item = await _dbContext.Set<Categorys>().FirstOrDefaultAsync(a => a.Id == id);
-        _dbContext.Set<Categorys>().Remove(item);
+        if (item != null) _dbContext.Set<Categorys>().Remove(item);
         await _dbContext.SaveChangesAsync();
     }
 

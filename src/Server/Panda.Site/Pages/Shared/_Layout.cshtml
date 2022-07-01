@@ -1,66 +1,79 @@
-﻿<!DOCTYPE html>
+﻿@using Panda.Site.Areas.Admin.Models
+@using Panda.Site.Areas.Admin.Services.SiteOption
+@inject ISiteOptionService _siteOptionService
+<!DOCTYPE html>
 @inject IConfiguration Configuration;
+@{
+    var siteConfig = await _siteOptionService.GetModel<SiteSettingModel>();
+}
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - @Configuration.GetSection("site:Name").Value</title>
-    <link rel="stylesheet" href="~/lib-js/bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/Panda.App.styles.css" asp-append-version="true"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - @siteConfig.SiteName</title>
+    <link rel="stylesheet" href="~/lib-js/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Panda.App.styles.css" asp-append-version="true" />
     <link href="~/RemixIcon/fonts/remixicon.css" asp-append-version="true" rel="stylesheet">
     @await RenderSectionAsync("Css", false)
 </head>
 <body>
-<header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-black border-bottom box-shadow mb-3">
-        <div class="container">
-            <a class="navbar-brand" asp-area="" asp-page="/Index">@Configuration.GetSection("Site:Name").Value</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="/">
-                            <i class="ri-home-smile-line"></i><span>首页</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="/Contact.html">
-                            <i class="ri-contacts-line"></i><span>与我联系</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="/feed" target="_blank">
-                            <i class="ri-rss-line"></i>
-                            <span>RSS订阅</span>
-                        </a>
-                    </li>
-                </ul>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-black border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-page="/Index">@siteConfig.SiteName</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="/">
+                                <i class="ri-home-smile-line"></i><span>首页</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="/Contact.html">
+                                <i class="ri-contacts-line"></i><span>与我联系</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="/feed" target="_blank">
+                                <i class="ri-rss-line"></i>
+                                <span>RSS订阅</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-</header>
-<div class="container content">
-    <main role="main" class="pb-3">
-        @RenderBody()
-    </main>
-</div>
-
-<footer class="border-top footer">
-    <div class="container ">
-        @await Html.PartialAsync("_FriendLinkPartial")
-        <p class="mt-2"> &copy; 2022 - @Configuration.GetSection("site:Name").Value - <a asp-area="" asp-page="/Contact.html">与我联系</a> - 本站基于.NET 7.0开发</p>
+        </nav>
+    </header>
+    <div class="container content">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
     </div>
-</footer>
 
-<script src="~/lib-js/jquery/dist/jquery.min.js"></script>
-<script src="~/lib-js/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/jquery.lazyload.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
+    <footer class="border-top footer">
+        <div class="container ">
+            @await Html.PartialAsync("_FriendLinkPartial")
+            <p class="mt-2"> &copy; 2022 - @siteConfig.SiteName - <a asp-area="" asp-page="/Contact.html">与我联系</a> - 本站基于.NET 6.0开发</p>
+            @if (string.IsNullOrWhiteSpace(siteConfig.IcpNo) == false)
+            {
+                <p class="mt-2"><a href="https://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">@siteConfig.IcpNo</a></p>
+            }
+        </div>
+    </footer>
 
-@await RenderSectionAsync("Scripts", required: false)
+    <script src="~/lib-js/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib-js/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/jquery.lazyload.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @if (string.IsNullOrWhiteSpace(siteConfig.StatisticCode) == false)
+    {
+        @Html.Raw(siteConfig.StatisticCode)
+    }
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

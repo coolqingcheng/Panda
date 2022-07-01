@@ -9,8 +9,6 @@ namespace Panda.Site.Areas.Admin.Services.SiteOption
     public interface ISiteOptionService
     {
         Task AddOrUpdate(Dictionary<string, string> dic);
-
-
         Dictionary<string, string> GetDic<T>(T obj) where T : class, new();
 
         Task<T> GetModel<T>() where T : class, new();
