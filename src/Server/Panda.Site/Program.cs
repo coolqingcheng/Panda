@@ -26,6 +26,7 @@ builder.Services.AddSwaggerGen(c =>
         {
             continue;
         }
+
         c.IncludeXmlComments(path, true);
         c.OrderActionsBy(o => o.RelativePath);
     }
@@ -69,6 +70,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     // app.UseHsts();
 }
+
 app.UseSwagger();
 app.UseSwaggerUI();
 
@@ -80,16 +82,16 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseTools();
 
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
-    "default",
-    "{controller=Home}/{action=Index}/{id?}");
+        "default",
+        "{controller=Home}/{action=Index}/{id?}");
     endpoints.MapControllerRoute(
-      name: "areas",
-      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+        name: "areas",
+        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
     );
 });
 app.UseStatusCodePagesWithReExecute("/{0}.html");

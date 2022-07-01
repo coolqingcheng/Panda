@@ -1,5 +1,6 @@
 ﻿@page "/{index?}"
 @using Panda.Site.Models
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model IndexModel
 @{
     ViewData["Title"] = "主页";
@@ -22,7 +23,7 @@
             <div class="col">
                 @await Html.PartialAsync("Shared/_PaginationPartial", new PaginationModel()
                 {
-                CurrIndex = Model.CurrIndex, Count = Model.Count, Url = "/{0}"
+                    CurrIndex = Model.CurrIndex, Count = Model.Count, Url = "/{0}"
                 })
             </div>
         </div>
@@ -34,7 +35,7 @@
             </div>
             <div class="card-body">
                 <img src="qr.png" alt="微信公众号" style="max-width: 90%;
-margin: 0 auto" />
+margin: 0 auto"/>
             </div>
         </div>
         <div class="card mb-2">
@@ -44,7 +45,7 @@ margin: 0 auto" />
             <div class="card-body">
                 <form class="row g-1">
                     <div class="col-auto">
-                        <input class="form-control" />
+                        <input class="form-control"/>
                     </div>
                     <div class="col-auto">
                         <button type="button" class="btn btn-outline-success">搜索</button>

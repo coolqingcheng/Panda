@@ -1,19 +1,18 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Panda.Admin.Attributes;
 using Panda.Admin.Models;
 using Panda.Admin.Models.Request;
 using Panda.Admin.Services.Account;
 using Panda.Entity.Responses;
-using Panda.Tools.Auth.Models;
+using Panda.Tools.Attributes;
 using Panda.Tools.Auth.Request;
 using Panda.Tools.Auth.Response;
 using Panda.Tools.Exception;
 
 namespace Panda.Admin.Controllers;
 
-[Permission("用户管理")]
+[PermissionGroup("用户管理")]
 public class AccountController : AdminController
 {
     private readonly IAccountService _accountService;
@@ -81,6 +80,7 @@ public class AccountController : AdminController
     /// <param name="req"></param>
     /// <returns></returns>
     [HttpGet]
+    [Permission("用户列表")]
     public async Task<PageDto<AccountResp>> GetAccountList([FromQuery] AccountReq req)
     {
         return await _accountService.GetAccountList(req);
