@@ -19,6 +19,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Panda.Entity\Panda.Entity.csproj" />
 		<ProjectReference Include="..\Panda.Tools\Panda.Tools.csproj" />
 	</ItemGroup>
 
