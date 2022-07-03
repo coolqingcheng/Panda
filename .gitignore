@@ -354,3 +354,5 @@ MigrationBackup/
 build.sh
 publish/
 wwwroot/admin
+Admin-NG/.angular/
+Panda.Site/Site.Development.ini
