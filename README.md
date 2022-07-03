@@ -11,7 +11,7 @@
 ## ✨ 环境支持
 
 - 使用`ASP.NET Core MVC 6.0`开发
-- 后台前端使用Vue 3.x + Element-plus开发
+- 后台前端使用Angular13+NG-Zorro开发
 - .NET 6.0
 - Visual Studio 2022 或 Rider
 - MySQL 8.0.x【或者其他EF驱动适配的数据库，默认使用mysql】
@@ -81,7 +81,7 @@ yarn
 - 调试运行
 
 ```shell
-yarn dev
+yarn start
 ```
 
 - 打包后台的前端静态文件
@@ -89,6 +89,8 @@ yarn dev
 ```shell
 yarn build
 ```
+
+然后拷贝dist下的文件到Panda.Site的wwwroot/admin下
 
 - 发布
 
