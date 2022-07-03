@@ -5,10 +5,14 @@ using Panda.Entity.Models;
 using Panda.Entity.Requests;
 using Panda.Entity.Responses;
 using Panda.Site.Areas.Admin.Services.Posts;
+using Panda.Tools.Attributes;
 using Panda.Tools.Auth.Controllers;
+using Panda.Tools.Auth.Permission;
 
 namespace Panda.Site.Areas.Admin.Controllers;
 
+
+[PermissionGroup("文章管理")]
 public class PostController : AdminController
 {
     private readonly IPostService _postService;
@@ -18,25 +22,28 @@ public class PostController : AdminController
         _postService = postService;
     }
 
+    [Permission("添加和编辑")]
     [HttpPost]
     public async Task AddOrUpdate(PostAddOrUpdate request)
     {
         await _postService.AddOrUpdate(request);
     }
 
+    [Permission("删除")]
     [HttpDelete]
     public async Task Delete(int id)
     {
         await _postService.Delete(id);
     }
 
-    [AllowAnonymous]
+    [Permission("查看")]
     [HttpGet]
     public async Task<PostDetailItem> Get(int id)
     {
         return await _postService.AdminGetPost(id);
     }
 
+    [Permission("查看")]
     [HttpGet]
     public async Task<PageDto<AdminPostItemResponse>> GetList([FromQuery] AdminPostGetListRequest request)
     {

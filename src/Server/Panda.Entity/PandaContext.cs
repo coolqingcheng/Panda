@@ -43,6 +43,12 @@ public class PandaContext : AppContext<Accounts>
     /// </summary>
     public DbSet<AccessStatistic> AccessStatistics { get; set; }
 
+
+    /// <summary>
+    /// 权限
+    /// </summary>
+    public DbSet<SysPermissions> permissions { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

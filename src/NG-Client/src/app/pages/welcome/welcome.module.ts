@@ -11,6 +11,7 @@ import { StatisticComponent } from './statistic/statistic.component';
 import { AccessLogComponent } from './access-log/access-log.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Page404Component } from './page404/page404.component';
+import { PandaModule } from 'src/app/components/panda/panda.module';
 
 
 @NgModule({

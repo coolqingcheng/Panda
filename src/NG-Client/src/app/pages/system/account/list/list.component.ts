@@ -3,6 +3,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { finalize } from 'rxjs';
 import { AccountResp, AccountRespPageDto, AccountService } from 'src/app/net';
 import { BaseTableComponent } from 'src/app/shared/BaseTableComponent';
+import { PermissionEditComponent } from '../../permission-edit/permission-edit.component';
 import { ChangeThePasswordComponent } from '../change-the-password/change-the-password.component';
 
 @Component({
@@ -41,7 +42,7 @@ export class ListComponent extends BaseTableComponent implements OnInit {
   }
 
   changePwd(id: string) {
-    let modal =  this.modal.create({
+    let modal = this.modal.create({
       nzTitle: '修改密码',
       nzFooter: null,
       nzContent: ChangeThePasswordComponent,
@@ -50,9 +51,21 @@ export class ListComponent extends BaseTableComponent implements OnInit {
         id: id
       }
     })
-    modal.afterClose.subscribe(res=>{
-      if(res){
+    modal.afterClose.subscribe(res => {
+      if (res) {
         this.init();
+      }
+    })
+  }
+
+  openPermissionSetting(id: string) {
+    this.modal.create({
+      nzTitle: '权限设置',
+      nzFooter: null,
+      nzContent: PermissionEditComponent,
+      nzKeyboard: false,
+      nzComponentParams: {
+        id: id
       }
     })
   }

@@ -26,6 +26,7 @@ import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzTreeModule } from 'ng-zorro-antd/tree';
 
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -37,6 +38,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedHttpInterceptor } from './SharedHttpInterceptor';
 import { ShareRouteOutComponent } from './share-route-out/share-route-out.component';
 import { RouterModule } from '@angular/router';
+import { PandaModule } from '../components/panda/panda.module';
 
 const icons = [
   AlertOutline, PlusOutline, SettingOutline
@@ -63,11 +65,12 @@ const antd = [
   NzDropDownModule,
   NzTabsModule,
   NzInputNumberModule,
-  NzRadioModule
+  NzRadioModule,
+  NzTreeModule
 ]
 
 const common = [
-  CommonModule, FormsModule, ReactiveFormsModule, RouterModule
+  CommonModule, FormsModule, ReactiveFormsModule, RouterModule,PandaModule
 ]
 
 @NgModule({

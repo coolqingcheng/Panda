@@ -18,6 +18,7 @@ public static class PermissionExtensions
     public static void UsePermission(this IServiceCollection collection)
     {
         collection.AddSingleton<IPermissionScan>(new PermissionScan());
+        collection.AddScoped<IPermissionUtils, PermissionUtils>();
     }
 }
 

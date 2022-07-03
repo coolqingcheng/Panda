@@ -18,6 +18,8 @@ export * from './friendLinkAuditRequest';
 export * from './friendlyLinkResponse';
 export * from './friendlyLinkResponsePageDto';
 export * from './loginStatusResult';
+export * from './permissionGroup';
+export * from './permissionItem';
 export * from './postAddOrUpdate';
 export * from './postCategories';
 export * from './postDetailItem';

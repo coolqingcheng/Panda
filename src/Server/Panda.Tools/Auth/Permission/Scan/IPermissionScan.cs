@@ -6,6 +6,7 @@ namespace Panda.Tools.Auth.Permission.Scan;
 
 public interface IPermissionScan
 {
+    Dictionary<string, HashSet<string>> GetAll();
 }
 
 public class PermissionScan : IPermissionScan
@@ -18,6 +19,7 @@ public class PermissionScan : IPermissionScan
         var files = Directory.GetFiles(dir, "Panda.*.dll");
         foreach (var file in files)
         {
+            Console.WriteLine("É¨Ãèdll");
             var controllers = Assembly.LoadFile(file).GetTypes()
                 .Where(type => typeof(AdminController).IsAssignableFrom(type))
                 .Select(a => a);
@@ -47,5 +49,10 @@ public class PermissionScan : IPermissionScan
                 }
             }
         }
+    }
+
+    public Dictionary<string, HashSet<string>> GetAll()
+    {
+        return this._dictionary;
     }
 }

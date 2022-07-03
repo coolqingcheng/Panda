@@ -8,6 +8,7 @@ import { CategoryService } from './api/category.service';
 import { CommonService } from './api/common.service';
 import { FriendLinkService } from './api/friendLink.service';
 import { HomeService } from './api/home.service';
+import { PermissionService } from './api/permission.service';
 import { PostService } from './api/post.service';
 import { RssService } from './api/rss.service';
 import { SiteSettingService } from './api/siteSetting.service';
@@ -26,6 +27,7 @@ import { TestService } from './api/test.service';
     CommonService,
     FriendLinkService,
     HomeService,
+    PermissionService,
     PostService,
     RssService,
     SiteSettingService,
