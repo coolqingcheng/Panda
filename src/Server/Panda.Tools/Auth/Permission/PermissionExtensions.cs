@@ -28,8 +28,6 @@ public class PermissionMiddleware
 {
     private readonly RequestDelegate _request;
 
-    private readonly IPermissionContainer _permissionContainer;
-
     public PermissionMiddleware(RequestDelegate request)
     {
         _request = request;
@@ -40,7 +38,7 @@ public class PermissionMiddleware
         var endpoint = GetEndpoint(context);
         if (endpoint != null)
         {
-            var group = endpoint.Metadata.GetMetadata<PermissionGroupAttribute>();
+            
             var permission = endpoint.Metadata.GetMetadata<PermissionAttribute>();
             if (permission != null)
             {

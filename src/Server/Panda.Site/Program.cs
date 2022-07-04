@@ -39,9 +39,7 @@ services.AddDbContext<PandaContext>(
     opt =>
     {
         var envMysql = Environment.GetEnvironmentVariable("MYSQL", EnvironmentVariableTarget.Process);
-        Console.WriteLine("环境变量读取MYSQL:" + envMysql);
         var db = string.IsNullOrWhiteSpace(envMysql) == false ? envMysql : builder.Configuration.GetConnectionString("MYSQL");
-        Console.WriteLine("使用的数据库连接:" + db);
         opt.UseLazyLoadingProxies()
             .UseMySql(db, ServerVersion.AutoDetect(db))
             .EnableSensitiveDataLogging()
@@ -89,10 +87,6 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllerRoute(
         "default",
         "{controller=Home}/{action=Index}/{id?}");
-    endpoints.MapControllerRoute(
-        name: "areas",
-        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-    );
 });
 app.UseStatusCodePagesWithReExecute("/{0}.html");
 app.MapRazorPages();
