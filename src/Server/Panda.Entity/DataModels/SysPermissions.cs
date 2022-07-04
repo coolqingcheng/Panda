@@ -12,9 +12,9 @@ namespace Panda.Entity.DataModels
     {
         public new long Id { get; set; }
 
-        public Accounts? Account { get; set; }
+        public virtual Accounts? Account { get; set; }
 
-        public Roles? Role { get; set; }
+        public virtual Roles? Role { get; set; }
 
 
         public string PermissionKey { get; set; }

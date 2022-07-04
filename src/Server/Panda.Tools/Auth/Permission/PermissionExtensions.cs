@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.DependencyInjection;
 using Panda.Tools.Attributes;
+using Panda.Tools.Auth.Permission.Models;
 using Panda.Tools.Auth.Permission.Scan;
 using Panda.Tools.Web;
 
@@ -19,12 +20,15 @@ public static class PermissionExtensions
     {
         collection.AddSingleton<IPermissionScan>(new PermissionScan());
         collection.AddScoped<IPermissionUtils, PermissionUtils>();
+        collection.AddScoped<IPermissionContainer, PermissionContainer>();
     }
 }
 
 public class PermissionMiddleware
 {
     private readonly RequestDelegate _request;
+
+    private readonly IPermissionContainer _permissionContainer;
 
     public PermissionMiddleware(RequestDelegate request)
     {
@@ -36,6 +40,7 @@ public class PermissionMiddleware
         var endpoint = GetEndpoint(context);
         if (endpoint != null)
         {
+            var group = endpoint.Metadata.GetMetadata<PermissionGroupAttribute>();
             var permission = endpoint.Metadata.GetMetadata<PermissionAttribute>();
             if (permission != null)
             {

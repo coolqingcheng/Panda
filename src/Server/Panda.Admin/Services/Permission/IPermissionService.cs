@@ -2,11 +2,7 @@
 using Panda.Admin.Admin.Models.Permission;
 using Panda.Entity.DataModels;
 using Panda.Tools.Auth.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Panda.Admin.Services.Permission
 {
@@ -18,7 +14,7 @@ namespace Panda.Admin.Services.Permission
 
         Task AccountSetPermission(AccountSetPermissionRequest request);
 
-        Task<List<string>> GetAccountPermission(Guid accountId);
+        Task<HashSet<string>> GetAccountPermission(Guid accountId);
     }
 
     public class PermissionService : IPermissionService
@@ -53,9 +49,11 @@ namespace Panda.Admin.Services.Permission
             await tran.CommitAsync();
         }
 
-        public Task<List<string>> GetAccountPermission(Guid accountId)
+        public async Task<HashSet<string>> GetAccountPermission(Guid accountId)
         {
-            return _context.Set<SysPermissions>().Where(a => a.Account!.Id == accountId).Select(a => a.PermissionKey).ToListAsync();
+            var accountPermissionKeys = await _context.Set<SysPermissions>().Where(a => a.Account!.Id == accountId).Select(a => a.PermissionKey).ToListAsync();
+
+            return accountPermissionKeys.ToHashSet();
         }
     }
 }

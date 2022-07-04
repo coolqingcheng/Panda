@@ -48,6 +48,7 @@ public class PermissionController : AdminController
     [HttpGet]
     public async Task<List<string>> GetPermissions(Guid accountId)
     {
-        return await _permissionService.GetAccountPermission(accountId);
+        var hasSet = await _permissionService.GetAccountPermission(accountId);
+        return hasSet.ToList();
     }
 }
