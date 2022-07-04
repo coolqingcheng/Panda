@@ -27,26 +27,34 @@ public static class PandaAdminExtensions
         services.AddScoped<IAccountService, AccountService>();
         services.AddScoped<DbContext>(a => a.GetService<T>()!);
 
-        services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
-        services.AddControllersWithViews(opt =>
-        {
-            opt.Filters.Add<GlobalExceptionFilter>();
-        }).AddJsonOptions(options =>
-        {
-            options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
-            options.JsonSerializerOptions.Converters.Add(new DateTimeNullConverter());
-            options.JsonSerializerOptions.Converters.Add(new DateTimeOffsetConverter());
-        }).ConfigureApiBehaviorOptions(options =>
-        {
-            options.InvalidModelStateResponseFactory = context =>
+        services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(opt =>
             {
-                var errors = context.ModelState.Values.SelectMany(a => a.Errors)
-                    .Select(a => new { a.ErrorMessage });
-                var errMsg = string.Join("|", errors);
-                var result = new JsonResult(new { Message = errMsg });
-                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return result;
-            };
-        });
+                opt.Events.OnRedirectToLogin = context =>
+                {
+                    context.Response.StatusCode = 401;
+                    return Task.CompletedTask;
+                };
+            });
+        //services.AddControllersWithViews(opt =>
+        //{
+        //    opt.Filters.Add<GlobalExceptionFilter>();
+        //}).AddJsonOptions(options =>
+        //{
+        //    options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
+        //    options.JsonSerializerOptions.Converters.Add(new DateTimeNullConverter());
+        //    options.JsonSerializerOptions.Converters.Add(new DateTimeOffsetConverter());
+        //}).ConfigureApiBehaviorOptions(options =>
+        //{
+        //    options.InvalidModelStateResponseFactory = context =>
+        //    {
+        //        var errors = context.ModelState.Values.SelectMany(a => a.Errors)
+        //            .Select(a => new { a.ErrorMessage });
+        //        var errMsg = string.Join("|", errors);
+        //        var result = new JsonResult(new { Message = errMsg });
+        //        context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+        //        return result;
+        //    };
+        //});
     }
 }

@@ -6,6 +6,7 @@ using Panda.Site.Configs;
 using Panda.Entity;
 using Panda.Tools;
 using Panda.Tools.QueueTask;
+using Panda.Tools.Exception;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -72,6 +73,7 @@ if (!app.Environment.IsDevelopment())
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.UseMyEx();
 app.UseStaticFiles();
 
 
