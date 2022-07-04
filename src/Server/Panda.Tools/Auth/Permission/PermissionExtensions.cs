@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 using Panda.Tools.Attributes;
 using Panda.Tools.Auth.Permission.Models;
@@ -38,6 +39,7 @@ public class PermissionMiddleware
         var endpoint = GetEndpoint(context);
         if (endpoint != null)
         {
+            var controllerActionDescriptor = endpoint.Metadata.GetMetadata<ControllerActionDescriptor>();
             
             var permission = endpoint.Metadata.GetMetadata<PermissionAttribute>();
             if (permission != null)
