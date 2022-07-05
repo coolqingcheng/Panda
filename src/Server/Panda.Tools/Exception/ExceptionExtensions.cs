@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Panda.Tools.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,19 +34,28 @@ namespace Panda.Tools.Exception
             }
             catch (UserException ex)
             {
-                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                await context.Response.WriteAsJsonAsync(new
-                {
-                    Message = ex.Message
-                });
+                await ResponseError(context, ex);
             }
             catch (System.Exception ex)
             {
-                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                await ResponseError(context, ex);
+            }
+        }
+
+        private async Task ResponseError(HttpContext context, System.Exception exp)
+        {
+            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            if (context.Request.IsResponseJson())
+            {
                 await context.Response.WriteAsJsonAsync(new
                 {
-                    Message = "服务器内部错误"
+                    Message = exp.Message
                 });
+            }
+            else
+            {
+                context.Items["exp"] = exp;
+                context.Response.Redirect("/500.html");
             }
         }
     }

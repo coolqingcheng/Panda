@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Net.Http.Headers;
+using System.Text;
 using Microsoft.AspNetCore.Http;
 
 namespace Panda.Tools.Extensions;
@@ -49,13 +50,13 @@ public static class HttpContextExtensions
         return ip;
     }
 
-    
+
     /// <summary>
     /// 获取当前请求完整的Url地址
     /// </summary>
     /// <returns></returns>
-    public static string GetFullUrl( this IHttpContextAccessor httpContextAccessor)
-    { 
+    public static string GetFullUrl(this IHttpContextAccessor httpContextAccessor)
+    {
         return new StringBuilder()
             .Append(httpContextAccessor.HttpContext?.Request.Scheme)
             .Append("://")
@@ -77,5 +78,18 @@ public static class HttpContextExtensions
         var xreq = req.Headers.ContainsKey("x-requested-with");
         if (xreq) result = req.Headers["x-requested-with"] == "XMLHttpRequest";
         return result;
+    }
+    /// <summary>
+    /// 返回值是否是需要json
+    /// </summary>
+    /// <param name="req"></param>
+    /// <returns></returns>
+    public static bool IsResponseJson(this HttpRequest req)
+    {
+        if (req.Headers.TryGetValue("Content-Type", out var value))
+        {
+            return value.ToString().Contains("json");
+        }
+        return false;
     }
 }
