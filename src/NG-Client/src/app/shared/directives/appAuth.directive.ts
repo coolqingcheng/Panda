@@ -1,9 +1,9 @@
 import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 
 @Directive({
-  selector: '[permission]'
+  selector: '[appAuth]'
 })
-export class PermissionDirective {
+export class appAuthDirective {
 
   constructor(
     private templateRef: TemplateRef<any>,
@@ -12,7 +12,8 @@ export class PermissionDirective {
 
   hasView = false;
 
-  @Input() set permission(status: boolean) {
+  @Input("appAuth") set appAuth(status: boolean) {
+    console.log('status:' + status)
     if (status) {
       this.viewContainer.createEmbeddedView(this.templateRef);
       this.hasView = true;

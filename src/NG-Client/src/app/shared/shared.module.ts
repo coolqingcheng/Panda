@@ -39,7 +39,7 @@ import { SharedHttpInterceptor } from './SharedHttpInterceptor';
 import { ShareRouteOutComponent } from './share-route-out/share-route-out.component';
 import { RouterModule } from '@angular/router';
 import { PandaModule } from '../components/panda/panda.module';
-import { PermissionDirective } from './directives/permission.directive';
+import { appAuthDirective } from './directives/appAuth.directive';
 
 const icons = [
   AlertOutline, PlusOutline, SettingOutline
@@ -71,20 +71,24 @@ const antd = [
 ]
 
 const common = [
-  CommonModule, FormsModule, ReactiveFormsModule, RouterModule,PandaModule
+  CommonModule, FormsModule, ReactiveFormsModule, RouterModule, PandaModule
+]
+
+const directive = [
+  appAuthDirective
 ]
 
 @NgModule({
   declarations: [
     ShareRouteOutComponent,
-    PermissionDirective
+    appAuthDirective
   ],
   imports: [
     ...common,
     ...antd,
     NzIconModule.forRoot(icons)
   ],
-  exports: [...antd, ...common],
+  exports: [...antd, ...common, ...directive],
   providers: [
     { provide: BASE_PATH, useValue: " " },
   ]
