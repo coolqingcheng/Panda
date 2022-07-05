@@ -104,6 +104,10 @@ public class PermissionMiddleware
             {
                 context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
             }
+            else
+            {
+                await _request.Invoke(context);
+            }
         }
         else
         {

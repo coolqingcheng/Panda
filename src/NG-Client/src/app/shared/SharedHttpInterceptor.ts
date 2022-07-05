@@ -41,11 +41,11 @@ export class SharedHttpInterceptor implements HttpInterceptor {
 
                             }
                             else {
-
                                 this.message.error('网络错误！')
                             }
-                return;
+
             }
+            
         }));
     }
 
