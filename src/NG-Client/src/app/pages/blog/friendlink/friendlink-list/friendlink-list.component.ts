@@ -16,7 +16,7 @@ export class FriendlinkListComponent extends BaseTableComponent implements OnIni
   constructor(
     private friend: FriendLinkService,
     private modal: NzModalService,
-    private message:NzMessageService
+    private message: NzMessageService
   ) {
     super(() => {
       this.init();
@@ -54,12 +54,12 @@ export class FriendlinkListComponent extends BaseTableComponent implements OnIni
     })
   }
 
-  del(item:FriendlyLinkResponse) {
+  del(item: FriendlyLinkResponse) {
     this.modal.confirm({
       nzTitle: '提示',
       nzContent: `确定删除【${item.siteName}】?`,
       nzOnOk: () => {
-        let messageId =  this.message.loading('删除中...',{nzDuration:0}).messageId
+        let messageId = this.message.loading('删除中...', { nzDuration: 0 }).messageId
         this.friend.adminFriendLinkDeleteDelete(item.id).pipe(finalize(() => this.loading = false)).subscribe(() => {
           this.message.success('删除成功')
           this.init();
