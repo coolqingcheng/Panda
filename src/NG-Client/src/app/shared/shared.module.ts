@@ -39,6 +39,7 @@ import { SharedHttpInterceptor } from './SharedHttpInterceptor';
 import { ShareRouteOutComponent } from './share-route-out/share-route-out.component';
 import { RouterModule } from '@angular/router';
 import { PandaModule } from '../components/panda/panda.module';
+import { PermissionDirective } from './directives/permission.directive';
 
 const icons = [
   AlertOutline, PlusOutline, SettingOutline
@@ -75,7 +76,8 @@ const common = [
 
 @NgModule({
   declarations: [
-    ShareRouteOutComponent
+    ShareRouteOutComponent,
+    PermissionDirective
   ],
   imports: [
     ...common,
