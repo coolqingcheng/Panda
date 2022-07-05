@@ -68,8 +68,9 @@ public class AccountService : IAccountService
         var identity = new ClaimsIdentity(new Claim[]
         {
             new(ClaimTypes.Name, account.UserName),
-            new("Id", account.Id.ToString())
-        }, CookieAuthenticationDefaults.AuthenticationScheme);
+            new("Id", account.Id.ToString()),
+            new("IsAdmin",account.IsAdmin.ToString())
+        }, CookieAuthenticationDefaults.AuthenticationScheme) ;
         var claimsPrincipal = new ClaimsPrincipal(identity);
 
         //后台全部走ajax请求，请求头header必须带上 X-Requested-With=XMLHttpRequest，否则中间件会执行重定向
@@ -102,17 +103,6 @@ public class AccountService : IAccountService
     public async Task<TU?> GetCurrentAccount<TU>() where TU : Accounts, new()
     {
         return await _accountRepository.GetCurrentAccountsAsync<TU>();
-    }
-
-    public async Task InitAdminPassword()
-    {
-        var account = await _dbContext.Set<Accounts>().Where(a => a.Email == "qingchengcode@qq.com")
-            .FirstOrDefaultAsync();
-        if (account != null)
-        {
-            account.Passwd = IdentitySecurity.HashPassword("123456.");
-            await _dbContext.SaveChangesAsync();
-        }
     }
 
     public async Task CreateAdminAccount(CreateAdminAccountRequest request)

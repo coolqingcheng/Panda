@@ -64,6 +64,7 @@ public class PermissionMiddleware
                         logger?.LogInformation($"正在验证权限:{groupName}-{permission.Name}");
                         var claimsIdentity = context.User.Identity as ClaimsIdentity;
                         var accountId = claimsIdentity?.Claims.Where(a => a.Type == "id").Select(a => a.Value).FirstOrDefault();
+                        var isAdmin = claimsIdentity?.Claims.Where(a => a.Type == "IsAdmin").Select(a => a.Value.ToLower() == "true").First();
                         if (accountId == null)
                         {
                             context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
@@ -73,14 +74,21 @@ public class PermissionMiddleware
                             var permissionChecker = context.RequestServices.GetService<IPermissionUtils>();
                             if (permissionChecker != null)
                             {
-                                var res = await permissionChecker.ChecPermission(Guid.Parse(accountId), groupName, permission.Name);
-                                if (res)
+                                if (isAdmin.HasValue && isAdmin.Value)
                                 {
                                     await _request.Invoke(context);
                                 }
                                 else
                                 {
-                                    context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+                                    var res = await permissionChecker.ChecPermission(Guid.Parse(accountId), groupName, permission.Name);
+                                    if (res)
+                                    {
+                                        await _request.Invoke(context);
+                                    }
+                                    else
+                                    {
+                                        context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+                                    }
                                 }
                             }
                             else

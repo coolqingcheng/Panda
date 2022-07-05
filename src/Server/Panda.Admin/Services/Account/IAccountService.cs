@@ -30,13 +30,7 @@ public interface IAccountService
 
 
     /// <summary>
-    ///     初始化管理员密码
-    /// </summary>
-    /// <returns></returns>
-    Task InitAdminPassword();
-
-    /// <summary>
-    ///     初始化一个后台账号
+    ///     初始化一个后台管理员账号
     /// </summary>
     /// <returns></returns>
     Task CreateAdminAccount(CreateAdminAccountRequest request);

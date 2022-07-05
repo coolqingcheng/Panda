@@ -45,4 +45,7 @@ public class Accounts : KeyGuidTable
     ///     是否禁用
     /// </summary>
     public bool IsDisable { get; set; }
+
+
+    public bool IsAdmin { get; set; } = false;
 }

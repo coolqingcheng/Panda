@@ -31,7 +31,8 @@ public class AccountRepository
                 NickName = "管理员",
                 Passwd = IdentitySecurity.HashPassword(request.Pwd),
                 AddTime = DateTime.Now,
-                Email = request.Email
+                Email = request.Email,
+                IsAdmin = true
             });
             await _context.SaveChangesAsync();
         }

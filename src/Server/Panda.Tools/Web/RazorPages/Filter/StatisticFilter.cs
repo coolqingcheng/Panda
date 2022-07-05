@@ -5,12 +5,12 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Panda.Entity.DataModels;
 using Panda.Tools.Extensions;
 using Panda.Tools.QueueTask;
+using Panda.Tools.Web.RazorPages;
 using UAParser;
 
-namespace Panda.App;
+namespace Panda.Tools.Web;
 
 public class StatisticFilter : IAsyncPageFilter
 {
@@ -20,11 +20,14 @@ public class StatisticFilter : IAsyncPageFilter
 
     private readonly IWebHostEnvironment _hostEnvironment;
 
-    public StatisticFilter(QueueTaskManager queueTaskManager, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment hostEnvironment)
+    private readonly IStatisticUtils _statisticUtils;
+
+    public StatisticFilter(QueueTaskManager queueTaskManager, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment hostEnvironment, IStatisticUtils statisticUtils)
     {
         _queueTaskManager = queueTaskManager;
         _httpContextAccessor = httpContextAccessor;
         _hostEnvironment = hostEnvironment;
+        _statisticUtils = statisticUtils;
     }
 
     public Task OnPageHandlerSelectionAsync(PageHandlerSelectedContext context)
@@ -48,20 +51,16 @@ public class StatisticFilter : IAsyncPageFilter
         _queueTaskManager.Run(async serviceProvider =>
         {
             var parser = Parser.GetDefault().Parse(ua);
-            var item = new AccessStatistic
+            await _statisticUtils.Save(new StatisticModel()
             {
-                UId = uid,
+                Ip = ip,
                 UA = ua,
-                OS = parser.OS.ToString(),
-                Browser = parser.UA.ToString(),
-                IP = ip,
+                UId = uid,
+                Url = url,
+                Info = parser,
                 Referer = referer,
-                Url = url
-            };
-            using var scope = serviceProvider.CreateScope();
-            var db = scope.ServiceProvider.GetService<DbContext>();
-            db!.Set<AccessStatistic>().Add(item);
-            var count = await db.SaveChangesAsync();
+            });
+
         });
         return Task.CompletedTask;
     }

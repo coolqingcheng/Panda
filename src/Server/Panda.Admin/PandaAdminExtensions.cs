@@ -6,12 +6,15 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 using Panda.Admin.Repositorys;
 using Panda.Admin.Repositorys.DicData;
 using Panda.Admin.Services.Account;
+using Panda.Admin.Services.Statistics;
 using Panda.Tools.Filter;
 using Panda.Tools.NLog;
 using Panda.Tools.Web;
+using Panda.Tools.Web.RazorPages;
 
 namespace Panda.Admin;
 
@@ -26,7 +29,7 @@ public static class PandaAdminExtensions
         services.AddScoped<DicDataRepository>();
         services.AddScoped<IAccountService, AccountService>();
         services.AddScoped<DbContext>(a => a.GetService<T>()!);
-
+        services.AddScoped<IStatisticUtils, StatisticUtils>();
         services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(opt =>
             {
@@ -36,10 +39,7 @@ public static class PandaAdminExtensions
                     return Task.CompletedTask;
                 };
             });
-        services.AddControllers(opt =>
-        {
-            //opt.Filters.Add<GlobalExceptionFilter>();
-        }).AddJsonOptions(options =>
+        services.AddControllers().AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
             options.JsonSerializerOptions.Converters.Add(new DateTimeNullConverter());
@@ -55,6 +55,31 @@ public static class PandaAdminExtensions
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return result;
             };
+        }); ;
+        services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo()
+            {
+                Title = "ºóÌ¨apiÎÄµµ",
+                Version = "v1",
+                Description = ""
+            });
+            var list = new string[] { "Panda.Site.xml", "Panda.Admin.xml" };
+            foreach (var item in list)
+            {
+                var file = Path.Combine(AppContext.BaseDirectory, item);
+                var path = Path.Combine(AppContext.BaseDirectory, file);
+                if (File.Exists(path) == false)
+                {
+                    continue;
+                }
+
+                c.IncludeXmlComments(path, true);
+                c.OrderActionsBy(o => o.RelativePath);
+            }
         });
+        // Add services to the container.
+        services.AddRazorPages()
+            .AddMvcOptions(opt => { opt.Filters.Add<StatisticFilter>(); });
     }
 }
