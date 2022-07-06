@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Panda.Admin.Models;
+using Panda.Admin.Models.Accounts;
 using Panda.Admin.Models.Request;
 using Panda.Admin.Services.Account;
 using Panda.Entity.Responses;
@@ -9,6 +10,7 @@ using Panda.Tools.Attributes;
 using Panda.Tools.Auth.Request;
 using Panda.Tools.Auth.Response;
 using Panda.Tools.Exception;
+using Panda.Tools.Web;
 
 namespace Panda.Admin.Controllers;
 
@@ -84,5 +86,24 @@ public class AccountController : AdminController
     public async Task<PageDto<AccountResp>> GetAccountList([FromQuery] AccountReq req)
     {
         return await _accountService.GetAccountList(req);
+    }
+
+    /// <summary>
+    /// 添加用户
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    [HttpPost]
+    public async Task AddOrUpdate(CreateAccountModel model)
+    {
+        App.Validator<CreateAccountModel>().Validate(model);
+        if (model.Id.HasValue)
+        {
+
+        }
+        else
+        {
+            await _accountService.CreateAccount(model);
+        }
     }
 }

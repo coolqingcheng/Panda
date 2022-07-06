@@ -6,8 +6,6 @@ using Panda.Entity;
 using Panda.Tools;
 using Panda.Tools.QueueTask;
 using Panda.Tools.Exception;
-using Panda.Tools.Web;
-using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +20,8 @@ services.AddDbContext<PandaContext>(
         opt.UseLazyLoadingProxies()
             .UseMySql(db, ServerVersion.AutoDetect(db))
             .EnableSensitiveDataLogging()
-            .EnableDetailedErrors();
+            .EnableDetailedErrors()
+            ;
     }
 );
 
@@ -36,6 +35,7 @@ services.AddAutoInject(opt =>
         EndWdith = "Service"
     });
 });
+
 
 builder.AddAdmin<PandaContext>();
 var app = builder.Build();

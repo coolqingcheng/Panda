@@ -59,6 +59,11 @@ public class AccountResp
             return AccountStatus.Normal;
         }
     }
+
+    /// <summary>
+    /// 是否是管理员
+    /// </summary>
+    public bool IsAdmin { get; set; }
 }
 
 public enum AccountStatus

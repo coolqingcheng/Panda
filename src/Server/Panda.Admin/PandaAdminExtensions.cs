@@ -1,16 +1,21 @@
 using System.Net;
+using System.Reflection;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Panda.Admin.Controllers;
 using Panda.Admin.Repositorys;
 using Panda.Admin.Repositorys.DicData;
 using Panda.Admin.Services.Account;
 using Panda.Admin.Services.Statistics;
+using Panda.Tools;
 using Panda.Tools.Filter;
 using Panda.Tools.NLog;
 using Panda.Tools.Web;
@@ -39,7 +44,10 @@ public static class PandaAdminExtensions
                     return Task.CompletedTask;
                 };
             });
-        services.AddControllers().AddJsonOptions(options =>
+        services.AddScanFluentValidation();
+        services.AddControllers()
+            .AddFluentValidation()
+            .AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
             options.JsonSerializerOptions.Converters.Add(new DateTimeNullConverter());
@@ -48,10 +56,8 @@ public static class PandaAdminExtensions
         {
             options.InvalidModelStateResponseFactory = context =>
             {
-                var errors = context.ModelState.Values.SelectMany(a => a.Errors)
-                    .Select(a => new { a.ErrorMessage });
-                var errMsg = string.Join("|", errors);
-                var result = new JsonResult(new { Message = errMsg });
+                var errorMsg = context.ModelState.Values.SelectMany(a => a.Errors).Select(a => a.ErrorMessage).FirstOrDefault();
+                var result = new JsonResult(new { Message = errorMsg });
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return result;
             };
@@ -82,4 +88,6 @@ public static class PandaAdminExtensions
         services.AddRazorPages()
             .AddMvcOptions(opt => { opt.Filters.Add<StatisticFilter>(); });
     }
+
+
 }

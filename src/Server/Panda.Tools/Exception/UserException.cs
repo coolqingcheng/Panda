@@ -1,8 +1,12 @@
-﻿namespace Panda.Tools.Exception;
+﻿using System.Net;
+
+namespace Panda.Tools.Exception;
 
 public class UserException : System.Exception
 {
-    public UserException(string? message) : base(message)
+    public HttpStatusCode StatusCode { get; set; }
+    public UserException(string? message, HttpStatusCode statusCode = HttpStatusCode.InternalServerError) : base(message)
     {
+        this.StatusCode = statusCode;
     }
 }

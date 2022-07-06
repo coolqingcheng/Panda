@@ -24,3 +24,12 @@ public class PermissionGroupAttribute : Attribute
 
     public string Name { get; set; }
 }
+
+/// <summary>
+/// 权限控制不拦截
+/// </summary>
+[AttributeUsage(AttributeTargets.Method)]
+public class NoPermissionAttribute : Attribute
+{
+
+}

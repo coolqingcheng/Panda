@@ -20,5 +20,10 @@ namespace Panda.Tools.Auth.Permission.Models
         public string Name { get; set; }
 
         public string Key { get; set; }
+
+        /// <summary>
+        /// 是否授权给当前用户
+        /// </summary>
+        public bool IsGrant { get; set; }
     }
 }

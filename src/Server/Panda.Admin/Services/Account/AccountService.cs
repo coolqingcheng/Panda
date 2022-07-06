@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Panda.Admin.Models;
+using Panda.Admin.Models.Accounts;
 using Panda.Admin.Models.Request;
 using Panda.Admin.Repositorys;
 using Panda.Entity.Responses;
@@ -70,7 +71,7 @@ public class AccountService : IAccountService
             new(ClaimTypes.Name, account.UserName),
             new("Id", account.Id.ToString()),
             new("IsAdmin",account.IsAdmin.ToString())
-        }, CookieAuthenticationDefaults.AuthenticationScheme) ;
+        }, CookieAuthenticationDefaults.AuthenticationScheme);
         var claimsPrincipal = new ClaimsPrincipal(identity);
 
         //后台全部走ajax请求，请求头header必须带上 X-Requested-With=XMLHttpRequest，否则中间件会执行重定向
@@ -144,5 +145,69 @@ public class AccountService : IAccountService
     {
         if (_httpContextAccessor.HttpContext != null)
             await _httpContextAccessor.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+    }
+
+    public async Task CreateAccount(CreateAccountModel model)
+    {
+        await CheckAccount(model);
+        if (IdentitySecurity.PasswordStrength(model.Password) == Strength.Weak)
+        {
+            throw new UserException("密码请设置复杂一点！");
+        }
+        await _dbContext.Set<Accounts>().AddAsync(new Accounts()
+        {
+            Email = model.Email,
+            UserName = model.UserName,
+            IsAdmin = false,
+            Passwd = IdentitySecurity.HashPassword(model.Password)
+        });
+        await _dbContext.SaveChangesAsync();
+    }
+
+    private async Task CheckAccount(CreateAccountModel model)
+    {
+        var any = await _dbContext.Set<Accounts>().Where(a => a.Email == model.Email).AnyAsync();
+        if (any)
+        {
+            throw new UserException("邮箱已经存在");
+        }
+        any = await _dbContext.Set<Accounts>().Where(a => a.UserName == model.UserName).AnyAsync();
+        if (any)
+        {
+            throw new UserException("用户名已经存在");
+        }
+    }
+
+    public async Task<bool> IsAdmin(Guid AccountId)
+    {
+        return await _dbContext.Set<Accounts>().Where(a => a.Id == AccountId && a.IsAdmin).AnyAsync();
+    }
+
+    public async Task EditAccount(CreateAccountModel model)
+    {
+        var account = await _dbContext.Set<Accounts>().Where(a => a.Email == model.Email).FirstOrDefaultAsync();
+        if (account != null)
+        {
+            if (account.Id != model.Id)
+            {
+                throw new UserException("邮箱被其他的用户使用了！");
+            }
+        }
+        account = await _dbContext.Set<Accounts>().Where(a => a.UserName == model.UserName).FirstOrDefaultAsync();
+        if (account != null)
+        {
+            if (account.Id != model.Id)
+            {
+                throw new UserException("用户名被其他的用户使用了！");
+            }
+        }
+        account = await _dbContext.Set<Accounts>().Where(a => a.Id == model.Id).FirstAsync();
+        account.Email = model.Email;
+        account.UserName = model.UserName;
+        if (string.IsNullOrWhiteSpace(model.Password) == false)
+        {
+            account.Passwd = IdentitySecurity.HashPassword(model.Password);
+        }
+        await _dbContext.SaveChangesAsync();
     }
 }

@@ -1,4 +1,5 @@
 using Panda.Admin.Models;
+using Panda.Admin.Models.Accounts;
 using Panda.Admin.Models.Request;
 using Panda.Entity.Responses;
 using Panda.Tools.Auth;
@@ -52,7 +53,7 @@ public interface IAccountService
     Task<TU?> GetCurrentAccount<TU>() where TU : Accounts, new();
 
     /// <summary>
-    ///     获取用户列表
+    /// 获取用户列表
     /// </summary>
     /// <param name="req"></param>
     /// <returns></returns>
@@ -63,4 +64,25 @@ public interface IAccountService
     /// </summary>
     /// <returns></returns>
     Task<bool> CheckAdminAccountExistAsync();
+
+    /// <summary>
+    /// 创建账户
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    Task CreateAccount(CreateAccountModel model);
+    /// <summary>
+    /// 编辑账户
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    Task EditAccount(CreateAccountModel model);
+
+
+    /// <summary>
+    /// 检查用户是否是超级用户
+    /// </summary>
+    /// <param name="AccountId"></param>
+    /// <returns></returns>
+    Task<bool> IsAdmin(Guid AccountId);
 }

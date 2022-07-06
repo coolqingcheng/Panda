@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Panda.Tools;
@@ -40,18 +41,49 @@ public static class AutoInject
         if (att != null)
             switch (att)
             {
-                case {InjectType: AutoInjectType.Scope}:
+                case { InjectType: AutoInjectType.Scope }:
                     serviceCollection.AddScoped(impInterface, type);
                     break;
-                case {InjectType: AutoInjectType.Single}:
+                case { InjectType: AutoInjectType.Single }:
                     serviceCollection.AddSingleton(impInterface, type);
                     break;
-                case {InjectType: AutoInjectType.Transient}:
+                case { InjectType: AutoInjectType.Transient }:
                     serviceCollection.AddTransient(impInterface, type);
                     break;
             }
         else
             serviceCollection.AddScoped(impInterface, type);
+    }
+
+    /// <summary>
+    /// 自动扫描注入FluentValidation的规则
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="startName"></param>
+    public static void AddScanFluentValidation(this IServiceCollection services, string startName = "Panda.")
+    {
+        var assemblyList = Assembly.GetEntryAssembly()?.GetReferencedAssemblies()
+            .Where(a => string.IsNullOrWhiteSpace(a.Name) == false && a.Name.StartsWith(startName));
+        if (assemblyList != null)
+        {
+            foreach (var assembly in assemblyList)
+            {
+                var validators = Assembly.Load(assembly).GetTypes()
+                   .Where(type => type.GetInterfaces().Where(a => a == typeof(IValidator)).Any())
+                   .Select(a => a).ToList();
+                foreach (var validator in validators)
+                {
+                    var baseType = validator.BaseType;
+                    if (baseType!.IsGenericType)
+                    {
+                        var args = baseType.GetGenericArguments();
+                        var v = typeof(IValidator<>).MakeGenericType(args[0]);
+                        Console.WriteLine("注入验证器:" + v.FullName + "   " + validator.FullName);
+                        services.AddScoped(v, validator);
+                    }
+                }
+            }
+        }
     }
 }
 

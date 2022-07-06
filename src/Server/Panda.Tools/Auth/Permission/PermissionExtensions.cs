@@ -48,69 +48,47 @@ public class PermissionMiddleware
             var permissionGroup = controllerActionDescriptor?.ControllerTypeInfo.GetCustomAttributes(false).FirstOrDefault(a => a.GetType() == typeof(PermissionGroupAttribute));
             var permission = endpoint.Metadata.GetMetadata<PermissionAttribute>();
             var allowAnony = endpoint.Metadata.GetMetadata<AllowAnonymousAttribute>();
-            if (permission != null)
+            var NoPermission = endpoint.Metadata.GetMetadata<NoPermissionAttribute>();
+            if (allowAnony != null || NoPermission != null || controllerActionDescriptor == null)
             {
-                Console.WriteLine($"访问:{permission.Name}");
-                if (permissionGroup == null)
+                await _request.Invoke(context);
+            }
+            else
+            {
+                if (permission == null || permissionGroup == null)
                 {
                     context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
                 }
                 else
                 {
                     var groupName = ((PermissionGroupAttribute)permissionGroup).Name;
-                    //验证
-                    if (allowAnony == null)
+                    var permissionName = permission.Name;
+                    logger?.LogInformation($"正在验证权限:{groupName}-{permission.Name}");
+                    var accountId = App.GetAccountId();
+                    var isAdmin = App.IsAdmin();
+                    if (isAdmin)
                     {
-                        logger?.LogInformation($"正在验证权限:{groupName}-{permission.Name}");
-                        var claimsIdentity = context.User.Identity as ClaimsIdentity;
-                        var accountId = claimsIdentity?.Claims.Where(a => a.Type == "id").Select(a => a.Value).FirstOrDefault();
-                        var isAdmin = claimsIdentity?.Claims.Where(a => a.Type == "IsAdmin").Select(a => a.Value.ToLower() == "true").First();
-                        if (accountId == null)
+                        await _request.Invoke(context);
+                    }
+                    else
+                    {
+                        var permissionChecker = context.RequestServices.GetService<IPermissionUtils>();
+                        var isGrant = await permissionChecker!.ChecPermission(accountId, groupName, permission.Name);
+                        if (isGrant)
                         {
-                            context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+                            await _request.Invoke(context);
                         }
                         else
                         {
-                            var permissionChecker = context.RequestServices.GetService<IPermissionUtils>();
-                            if (permissionChecker != null)
-                            {
-                                if (isAdmin.HasValue && isAdmin.Value)
-                                {
-                                    await _request.Invoke(context);
-                                }
-                                else
-                                {
-                                    var res = await permissionChecker.ChecPermission(Guid.Parse(accountId), groupName, permission.Name);
-                                    if (res)
-                                    {
-                                        await _request.Invoke(context);
-                                    }
-                                    else
-                                    {
-                                        context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
-                            }
+                            context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
                         }
                     }
-
                 }
-            }
-            if (controllerActionDescriptor != null && permission == null)
-            {
-                context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
-            }
-            else
-            {
-                await _request.Invoke(context);
             }
         }
         else
         {
+            await _request.Invoke(context);
         }
 
     }
