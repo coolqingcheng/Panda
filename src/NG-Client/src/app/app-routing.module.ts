@@ -2,11 +2,15 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { IndexComponent } from './pages/welcome/index/index.component';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
+import { AuthGuard } from './shared/routers/auth.guard';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/index' },
   {
-    path: 'index', component: IndexComponent
+    path: 'index', component: IndexComponent, data: {
+      auth: 'test-index'
+    },
+    canActivate: [AuthGuard]
   },
   {
     path: 'admin', component: WelcomeComponent,

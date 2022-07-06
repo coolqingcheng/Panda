@@ -3,11 +3,15 @@ import { Routes, RouterModule } from '@angular/router';
 import { ShareRouteOutComponent } from 'src/app/shared/share-route-out/share-route-out.component';
 import { Page404Component } from './page404/page404.component';
 import { StatisticComponent } from './statistic/statistic.component';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { WelcomeComponent } from './welcome.component';
 
 const routes: Routes = [
   {
     path: '', component: StatisticComponent
+  },
+  {
+    path: 'unauthorized', component: UnauthorizedComponent
   },
   {
     path: 'blog', component: ShareRouteOutComponent,

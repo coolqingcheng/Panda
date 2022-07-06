@@ -17,7 +17,6 @@ export class appAuthDirective {
     })
   }
 
-  hasView = false;
 
   $name = "";
 
@@ -30,10 +29,8 @@ export class appAuthDirective {
   updateStatus() {
     if (this.permission.checkPermission(this.$name)) {
       this.viewContainer.createEmbeddedView(this.templateRef);
-      this.hasView = true;
     } else {
       this.viewContainer.clear();
-      this.hasView = false;
     }
   }
 

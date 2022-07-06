@@ -13,6 +13,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { Page404Component } from './page404/page404.component';
 import { PandaModule } from 'src/app/components/panda/panda.module';
 import { IndexComponent } from './index/index.component';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 
 @NgModule({
@@ -24,7 +25,7 @@ import { IndexComponent } from './index/index.component';
     NzMenuModule,
     SharedModule
   ],
-  declarations: [WelcomeComponent, StatisticComponent, AccessLogComponent, Page404Component, IndexComponent],
+  declarations: [WelcomeComponent, StatisticComponent, AccessLogComponent, Page404Component, IndexComponent, UnauthorizedComponent],
   exports: [WelcomeComponent]
 })
 export class WelcomeModule { }

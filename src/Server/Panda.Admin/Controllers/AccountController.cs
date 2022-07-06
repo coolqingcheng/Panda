@@ -99,7 +99,7 @@ public class AccountController : AdminController
         App.Validator<CreateAccountModel>().Validate(model);
         if (model.Id.HasValue)
         {
-
+            await _accountService.EditAccount(model);
         }
         else
         {
