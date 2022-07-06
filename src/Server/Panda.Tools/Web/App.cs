@@ -19,7 +19,7 @@ public class App
     public static Guid GetAccountId()
     {
         var claimsIdentity = Context?.User.Identity as ClaimsIdentity;
-        var accountId = claimsIdentity?.Claims.Where(a => a.Type == "id").Select(a => a.Value).FirstOrDefault();
+        var accountId = claimsIdentity?.Claims.Where(a => a.Type == "Id").Select(a => a.Value).FirstOrDefault();
         if (string.IsNullOrWhiteSpace(accountId))
         {
             throw new UserException("获取用户信息失败", HttpStatusCode.Unauthorized);

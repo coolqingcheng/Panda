@@ -4,7 +4,8 @@ import { PVditorComponent } from './p-vditor/p-vditor.component';
 import { PCropperComponent } from './p-cropper/p-cropper.component';
 
 import { NzSpinComponent, NzSpinModule } from 'ng-zorro-antd/spin';
-import { PSearchBoxComponent } from './p-search-box/p-search-box.component'
+import { PSearchBoxComponent } from './p-search-box/p-search-box.component';
+import { PFormSubmitBoxComponent } from './p-form-submit-box/p-form-submit-box.component'
 
 
 
@@ -12,7 +13,8 @@ import { PSearchBoxComponent } from './p-search-box/p-search-box.component'
   declarations: [
     PVditorComponent,
     PCropperComponent,
-    PSearchBoxComponent
+    PSearchBoxComponent,
+    PFormSubmitBoxComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +22,7 @@ import { PSearchBoxComponent } from './p-search-box/p-search-box.component'
   ],
   exports: [
     PVditorComponent,
-    PSearchBoxComponent
+    PSearchBoxComponent,PFormSubmitBoxComponent
   ]
 })
 export class PandaModule { }

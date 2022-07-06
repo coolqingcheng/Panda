@@ -22,10 +22,11 @@ public class PermissionController : AdminController
 
     private readonly IAccountService _accountService;
 
-    public PermissionController(IPermissionUtils permissionUtils, IAccountService accountService)
+    public PermissionController(IPermissionUtils permissionUtils, IAccountService accountService, IPermissionService permissionService)
     {
         _permissionUtils = permissionUtils;
         _accountService = accountService;
+        _permissionService = permissionService;
     }
     /// <summary>
     /// 获取所有的权限
@@ -71,9 +72,14 @@ public class PermissionController : AdminController
     public async Task<AccountPermissionModel> GetPermissions()
     {
         var hasSet = await _permissionService.GetAccountPermission(App.GetAccountId());
+        var isAdmin = App.IsAdmin();
+        if (isAdmin)
+        {
+            hasSet = _permissionUtils.GetAllPermission().SelectMany(a => a.List.Select(b => b.Key)).ToHashSet();
+        }
         return new AccountPermissionModel()
         {
-            IsAdmin = App.IsAdmin(),
+            IsAdmin = isAdmin,
             Permissions = hasSet.ToList()
         };
     }

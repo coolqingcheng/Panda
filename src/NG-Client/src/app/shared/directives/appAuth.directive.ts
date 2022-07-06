@@ -1,5 +1,5 @@
 import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
-import { PermissionService } from '../services/permission.service';
+import { AuthService } from '../services/auth.service'
 
 @Directive({
   selector: '[appAuth]'
@@ -9,7 +9,7 @@ export class appAuthDirective {
   constructor(
     private templateRef: TemplateRef<any>,
     private viewContainer: ViewContainerRef,
-    private permission: PermissionService
+    private permission: AuthService
   ) {
 
     permission.stateChange().subscribe(res => {

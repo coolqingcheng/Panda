@@ -158,6 +158,7 @@ public class AccountService : IAccountService
         {
             Email = model.Email,
             UserName = model.UserName,
+            NickName = model.UserName,
             IsAdmin = false,
             Passwd = IdentitySecurity.HashPassword(model.Password)
         });
@@ -202,8 +203,7 @@ public class AccountService : IAccountService
             }
         }
         account = await _dbContext.Set<Accounts>().Where(a => a.Id == model.Id).FirstAsync();
-        account.Email = model.Email;
-        account.UserName = model.UserName;
+        model.Adapt(account);
         if (string.IsNullOrWhiteSpace(model.Password) == false)
         {
             account.Passwd = IdentitySecurity.HashPassword(model.Password);

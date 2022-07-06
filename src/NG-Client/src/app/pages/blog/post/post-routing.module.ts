@@ -10,10 +10,13 @@ const routes: Routes = [
 
   },
   {
-    path: 'list', component: PostListComponent
+    path: 'list', component: PostListComponent,
+    data: {
+      auth: '文章管理-查看'
+    }
   },
   {
-    path:'edit', component:PostEditComponent
+    path: 'edit', component: PostEditComponent
   }
 ];
 

@@ -96,7 +96,6 @@ public class AccountController : AdminController
     [HttpPost]
     public async Task AddOrUpdate(CreateAccountModel model)
     {
-        App.Validator<CreateAccountModel>().Validate(model);
         if (model.Id.HasValue)
         {
             await _accountService.EditAccount(model);

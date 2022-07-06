@@ -1,4 +1,7 @@
 <nz-card nzTitle="用户">
+    <p-search-box>
+        <button nz-button nzType="primary" (click)="addAccount()">添加账号</button>
+    </p-search-box>
     <nz-table [nzData]="datas" [nzLoading]="loading" [nzTotal]="total" [nzFrontPagination]="false">
         <thead>
             <tr>

@@ -9,17 +9,8 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { AccountStatus } from './accountStatus';
 
-export interface AccountResp { 
-    id?: string;
-    userName?: string;
-    nickName?: string;
-    email?: string;
-    lastLoginTime?: Date;
-    lockedTime?: Date;
-    loginFailCount?: number;
-    isDisable?: boolean;
-    status?: AccountStatus;
-    isAdmin?: boolean;
+export interface AccountSetPermissionRequest { 
+    accountId: string;
+    permissionKeys?: Array<string>;
 }

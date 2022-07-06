@@ -1,6 +1,6 @@
 <nz-card nzTitle="文章">
   <div class="toolbar-box">
-    <a routerLink="/admin/blog/post/edit" nz-button nzType="primary">写一篇</a>
+    <a routerLink="/admin/blog/post/edit" nz-button nzType="primary" *appAuth="'文章管理-添加和编辑'">写一篇</a>
   </div>
   <nz-table #table [nzData]="dataList" [nzLoading]="loading" [nzFrontPagination]="false" [nzTotal]="total"
     (nzQueryParams)="tableChange($event)" nzShowSizeChanger>
@@ -35,9 +35,9 @@
         </td>
         <td>0</td>
         <td>
-          <a routerLink="/admin/blog/post/edit" [queryParams]="{id:data.id}">编辑</a>
+          <a routerLink="/admin/blog/post/edit" [queryParams]="{id:data.id}" *appAuth="'文章管理-添加或编辑'">编辑</a>
           <nz-divider nzType="vertical"></nz-divider>
-          <a>删除</a>
+          <a *appAuth="'文章管理-删除'">删除</a>
         </td>
       </tr>
     </tbody>

@@ -22,4 +22,5 @@ export interface Accounts {
     lockedTime?: Date;
     loginFailCount?: number;
     isDisable?: boolean;
+    isAdmin?: boolean;
 }

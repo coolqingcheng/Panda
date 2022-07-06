@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { finalize } from 'rxjs';
 import { AdminCategoryItem, AdminPostItemResponse, PostService } from 'src/app/net';
 import { BaseTableComponent } from 'src/app/shared/BaseTableComponent';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-post-list',
@@ -14,7 +15,8 @@ export class PostListComponent extends BaseTableComponent implements OnInit {
   dataList: Array<AdminPostItemResponse> = []
 
   constructor(
-    private post: PostService
+    private post: PostService,
+    private auth:AuthService
   ) {
     super(() => {
       this.getData();

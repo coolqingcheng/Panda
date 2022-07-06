@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { finalize } from 'rxjs';
-import { AccountService } from 'src/app/net';
+import { AccountService, PermissionService } from 'src/app/net';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-auth-login',
@@ -17,10 +18,12 @@ export class AuthLoginComponent implements OnInit {
   loading = false;
 
   constructor(
-    private fb: FormBuilder, 
-    private account: AccountService, 
+    private fb: FormBuilder,
+    private account: AccountService,
     private router: Router,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private permission: PermissionService,
+    private auth: AuthService
   ) {
     this.loginFormGroup = this.fb.group({
       userName: [null, [Validators.required]],
@@ -37,9 +40,17 @@ export class AuthLoginComponent implements OnInit {
       this.loading = true;
       this.account.adminAccountLoginPost(this.loginFormGroup.value).pipe(finalize(() => this.loading = false)).subscribe(res => {
         this.message.success('登录成功')
-        this.router.navigate(["/admin"], {
-          replaceUrl: true
+        let loading = this.message.loading("loading...")
+        this.permission.adminPermissionGetPermissionsGet().pipe(finalize(() => this.message.remove(loading.messageId))).subscribe(res => {
+          console.log(res)
+          this.auth.refreshPermission(res.permissions!, res.isAdmin!)
+          if (this.auth.checkPermission("用户管理-登陆")) {
+            this.router.navigate(["/admin"], {
+              replaceUrl: true
+            })
+          }
         })
+
       })
     } else {
       Object.values(this.loginFormGroup.controls).forEach(control => {

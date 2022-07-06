@@ -13,4 +13,5 @@
 export interface PermissionItem { 
     name?: string;
     key?: string;
+    isGrant?: boolean;
 }

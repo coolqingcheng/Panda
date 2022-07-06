@@ -18,7 +18,7 @@
       </li>
       <li nz-submenu nzTitle="博客管理" nzIcon="form">
         <ul>
-          <li nz-menu-item nzMatchRouter>
+          <li nz-menu-item nzMatchRouter *appAuth="'文章管理-查看'">
             <a routerLink="/admin/blog/post">我的文章</a>
           </li>
           <li nz-menu-item nzMatchRouter>
@@ -41,10 +41,6 @@
           <li nz-menu-item nzMatchRouter>
             <i nz-icon nzType="user" nzTheme="outline"></i>
             <span> <a routerLink="/admin/sys/account/list">用户管理</a></span>
-          </li>
-          <li nz-menu-item>
-            <i nz-icon nzType="user-switch" nzTheme="outline"></i>
-            <span>角色管理</span>
           </li>
         </ul>
       </li>

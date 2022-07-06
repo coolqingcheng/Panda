@@ -49,7 +49,8 @@ public class PermissionMiddleware
             var permission = endpoint.Metadata.GetMetadata<PermissionAttribute>();
             var allowAnony = endpoint.Metadata.GetMetadata<AllowAnonymousAttribute>();
             var NoPermission = endpoint.Metadata.GetMetadata<NoPermissionAttribute>();
-            if (allowAnony != null || NoPermission != null || controllerActionDescriptor == null)
+            var isAdmin = App.IsAdmin();
+            if (allowAnony != null || NoPermission != null || controllerActionDescriptor == null || isAdmin)
             {
                 await _request.Invoke(context);
             }
@@ -65,23 +66,15 @@ public class PermissionMiddleware
                     var permissionName = permission.Name;
                     logger?.LogInformation($"正在验证权限:{groupName}-{permission.Name}");
                     var accountId = App.GetAccountId();
-                    var isAdmin = App.IsAdmin();
-                    if (isAdmin)
+                    var permissionChecker = context.RequestServices.GetService<IPermissionUtils>();
+                    var isGrant = await permissionChecker!.ChecPermission(accountId, groupName, permission.Name);
+                    if (isGrant)
                     {
                         await _request.Invoke(context);
                     }
                     else
                     {
-                        var permissionChecker = context.RequestServices.GetService<IPermissionUtils>();
-                        var isGrant = await permissionChecker!.ChecPermission(accountId, groupName, permission.Name);
-                        if (isGrant)
-                        {
-                            await _request.Invoke(context);
-                        }
-                        else
-                        {
-                            context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
-                        }
+                        context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
                     }
                 }
             }

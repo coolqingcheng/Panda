@@ -1,6 +1,8 @@
 export * from './accountLoginRequest';
+export * from './accountPermissionModel';
 export * from './accountResp';
 export * from './accountRespPageDto';
+export * from './accountSetPermissionRequest';
 export * from './accountStatus';
 export * from './accounts';
 export * from './addFriendLinkRequest';
@@ -12,6 +14,7 @@ export * from './auditStatusEnum';
 export * from './categoryAddOrUpdate';
 export * from './categoryItem';
 export * from './changePwdRequest';
+export * from './createAccountModel';
 export * from './createAdminAccountRequest';
 export * from './dateType';
 export * from './friendLinkAuditRequest';

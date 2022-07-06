@@ -5,6 +5,7 @@ import { AccountResp, AccountRespPageDto, AccountService } from 'src/app/net';
 import { BaseTableComponent } from 'src/app/shared/BaseTableComponent';
 import { PermissionEditComponent } from '../../permission-edit/permission-edit.component';
 import { ChangeThePasswordComponent } from '../change-the-password/change-the-password.component';
+import { EditComponent } from '../edit/edit.component';
 
 @Component({
   selector: 'app-list',
@@ -66,6 +67,22 @@ export class ListComponent extends BaseTableComponent implements OnInit {
       nzKeyboard: false,
       nzComponentParams: {
         id: id
+      }
+    })
+  }
+
+  addAccount() {
+    let modal =  this.modal.create({
+      nzTitle: '添加账号',
+      nzFooter: null,
+      nzContent: EditComponent,
+      nzComponentParams: {
+        id: undefined
+      }
+    })
+    modal.afterClose.subscribe(res=>{
+      if(res){
+        this.init();
       }
     })
   }

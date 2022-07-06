@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { NzTreeComponent, NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { finalize } from 'rxjs';
 import { PermissionGroup, PermissionService } from 'src/app/net';
 
@@ -13,7 +14,8 @@ export class PermissionEditComponent implements OnInit {
   @Input() id!: string;
 
   constructor(
-    private permission: PermissionService
+    private permission: PermissionService,
+    private modal: NzModalRef
   ) { }
 
   ngOnInit(): void {
@@ -26,25 +28,33 @@ export class PermissionEditComponent implements OnInit {
 
   datas: PermissionGroup[] = []
 
+  checkedKeys: string[] = []
+
+  selectKeys = []
+
+
+  loading = false
 
   init() {
+    this.loading = true;
     this.permission.adminPermissionGetAllGet().pipe(finalize(() => {
-
+      this.loading = false
     }))
       .subscribe(res => {
-        this.datas = []
-        this.datas.push(...res)
-        this.toTreeData();
+        this.permission.adminPermissionGetPermissionsGet().subscribe(checkedKeys => {
+          this.checkedKeys = checkedKeys.permissions!
+          this.datas = []
+          this.datas.push(...res)
+          this.toTreeData();
+        })
       })
   }
 
   treeData: NzTreeNodeOptions[] = [
   ]
 
-  selectKey = []
-  
 
-  test(){
+  test() {
     this.treeData.push(
       {
         title: 'TEST', key: ''
@@ -62,8 +72,7 @@ export class PermissionEditComponent implements OnInit {
         children: item.list!.map(a => {
           return {
             title: a.name!,
-            key: a.key!,
-            isLeaf:true
+            key: a.key!
           }
         })
       }
@@ -72,6 +81,22 @@ export class PermissionEditComponent implements OnInit {
 
 
     console.log(this.treeData)
+  }
+
+
+  close() {
+    this.modal.close()
+  }
+
+  @ViewChild("tree") tree!: NzTreeComponent
+
+  save() {
+    let checkedKeys: string[] = [];
+
+    this.tree.getCheckedNodeList().map(a => a.children.map(b => b.key)).forEach(item => {
+      checkedKeys.push(...item)
+    });
+    console.log(checkedKeys)
   }
 
 }
