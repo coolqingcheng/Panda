@@ -1,6 +1,9 @@
-﻿using System.Net.Http.Headers;
+﻿using System.Net;
+using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Http;
+using Panda.Tools.Exception;
 
 namespace Panda.Tools.Extensions;
 
@@ -91,5 +94,27 @@ public static class HttpContextExtensions
             return value.ToString().Contains("json");
         }
         return false;
+    }
+
+    public static Guid GetAccountId(this HttpContext Context)
+    {
+        var claimsIdentity = Context?.User.Identity as ClaimsIdentity;
+        var accountId = claimsIdentity?.Claims.Where(a => a.Type == "Id").Select(a => a.Value).FirstOrDefault();
+        if (string.IsNullOrWhiteSpace(accountId))
+        {
+            throw new UserException("获取用户信息失败", HttpStatusCode.Unauthorized);
+        }
+        return Guid.Parse(accountId);
+    }
+
+    public static bool IsAdmin(this HttpContext Context)
+    {
+        var claimsIdentity = Context?.User.Identity as ClaimsIdentity;
+        var isAdmin = claimsIdentity?.Claims.Where(a => a.Type == "IsAdmin").Select(a => a.Value).FirstOrDefault();
+        if (isAdmin == null)
+        {
+            return false;
+        }
+        return isAdmin == "True";
     }
 }

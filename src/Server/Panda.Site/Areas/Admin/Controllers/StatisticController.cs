@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Panda.Entity.DataModels;
 using Panda.Entity.Responses;
 using Panda.Site.Areas.Admin.Models;
+using Panda.Tools.Attributes;
 using Panda.Tools.Auth.Controllers;
 using Panda.Tools.Extensions;
 using Panda.Tools.Helper;
@@ -16,6 +17,7 @@ namespace Panda.Site.Areas.Admin.Controllers;
 /// <summary>
 /// 仪表盘分析
 /// </summary>
+[PermissionGroup("网站访问数据统计")]
 public class StatisticController : AdminController
 {
     private readonly DbContext _dbContext;
@@ -33,6 +35,7 @@ public class StatisticController : AdminController
     /// </summary>
     /// <returns></returns>
     [HttpGet]
+    [Permission("汇总信息")]
     public async Task<StatisticModel> Get()
     {
         var postCount = await _dbContext.Set<Posts>().CountAsync();
@@ -55,6 +58,7 @@ public class StatisticController : AdminController
    /// <param name="size"></param>
    /// <returns></returns>
     [HttpGet]
+    [Permission("访问记录")]
     public async Task<PageDto<RecentAccessHistory>> GetRecentAccessRecord(int page,int size)
     {
         var query = _dbContext.Set<AccessStatistic>().AsQueryable();

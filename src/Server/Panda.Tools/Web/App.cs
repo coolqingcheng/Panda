@@ -15,7 +15,11 @@ public class App
     {
         return Context?.RequestServices.GetService<TService>();
     }
-
+    /// <summary>
+    /// 获取当前的AccountId 
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="UserException"></exception>
     public static Guid GetAccountId()
     {
         var claimsIdentity = Context?.User.Identity as ClaimsIdentity;
@@ -26,7 +30,10 @@ public class App
         }
         return Guid.Parse(accountId);
     }
-
+    /// <summary>
+    /// 检查当前是否是管理员身份
+    /// </summary>
+    /// <returns></returns>
     public static bool IsAdmin()
     {
         var claimsIdentity = Context?.User.Identity as ClaimsIdentity;

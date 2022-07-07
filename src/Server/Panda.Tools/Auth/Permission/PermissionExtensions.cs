@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Panda.Tools.Attributes;
 using Panda.Tools.Auth.Permission.Models;
 using Panda.Tools.Auth.Permission.Scan;
+using Panda.Tools.Extensions;
 using Panda.Tools.Web;
 using System.Net;
 using System.Security.Claims;
@@ -49,14 +50,18 @@ public class PermissionMiddleware
             var permission = endpoint.Metadata.GetMetadata<PermissionAttribute>();
             var allowAnony = endpoint.Metadata.GetMetadata<AllowAnonymousAttribute>();
             var NoPermission = endpoint.Metadata.GetMetadata<NoPermissionAttribute>();
-            var isAdmin = App.IsAdmin();
-            if (allowAnony != null || NoPermission != null || controllerActionDescriptor == null || isAdmin)
+            if (allowAnony != null || NoPermission != null || controllerActionDescriptor == null)
             {
                 await _request.Invoke(context);
             }
             else
             {
-                if (permission == null || permissionGroup == null)
+                var isAdmin = context.IsAdmin();
+                if (isAdmin)
+                {
+                    await _request.Invoke(context);
+                }
+                else if (permission == null || permissionGroup == null)
                 {
                     context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
                 }
@@ -65,7 +70,7 @@ public class PermissionMiddleware
                     var groupName = ((PermissionGroupAttribute)permissionGroup).Name;
                     var permissionName = permission.Name;
                     logger?.LogInformation($"正在验证权限:{groupName}-{permission.Name}");
-                    var accountId = App.GetAccountId();
+                    var accountId = context.GetAccountId();
                     var permissionChecker = context.RequestServices.GetService<IPermissionUtils>();
                     var isGrant = await permissionChecker!.ChecPermission(accountId, groupName, permission.Name);
                     if (isGrant)

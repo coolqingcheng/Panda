@@ -13,6 +13,7 @@ export * from './adminUploadBody';
 export * from './auditStatusEnum';
 export * from './categoryAddOrUpdate';
 export * from './categoryItem';
+export * from './changeAccountPasswordRequest';
 export * from './changePwdRequest';
 export * from './createAccountModel';
 export * from './createAdminAccountRequest';

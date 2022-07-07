@@ -68,14 +68,29 @@ public class AccountController : AdminController
             IsInit = await _accountService.CheckAdminAccountExistAsync()
         };
     }
-
+    /// <summary>
+    /// 修改自己密码
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     [HttpPost]
-    [Permission("修改密码")]
+    [Permission("修改自己密码")]
     public async Task ChangePwd(ChangePwdRequest request)
     {
-        await _accountService.ChangePwdAsync(request);
+        await _accountService.ChangeSelfPasswordAsync(request);
     }
 
+    /// <summary>
+    /// 修改其他账号密码
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    [HttpPost]
+    [Permission("修改其他账号密码")]
+    public async Task ChangeAccountPwd(ChangeAccountPasswordRequest request)
+    {
+        await _accountService.ChangeAccountPasswordAsync(request.AccountId, request.NewPassword);
+    }
     /// <summary>
     /// 获取用户列表
     /// </summary>

@@ -34,20 +34,20 @@ export class AuthLoginComponent implements OnInit {
   ngOnInit(): void {
   }
   login() {
-    console.log('login:' + this.loginFormGroup.valid)
     if (this.loginFormGroup.valid) {
-      console.log('验证通过')
       this.loading = true;
       this.account.adminAccountLoginPost(this.loginFormGroup.value).pipe(finalize(() => this.loading = false)).subscribe(res => {
-        this.message.success('登录成功')
         let loading = this.message.loading("loading...")
         this.permission.adminPermissionGetPermissionsGet().pipe(finalize(() => this.message.remove(loading.messageId))).subscribe(res => {
           console.log(res)
           this.auth.refreshPermission(res.permissions!, res.isAdmin!)
-          if (this.auth.checkPermission("用户管理-登陆")) {
+          if (this.auth.checkPermission("用户管理-登录")) {
+            this.message.success('登录成功')
             this.router.navigate(["/admin"], {
               replaceUrl: true
             })
+          } else {
+            this.message.error('当前账号没有登录权限')
           }
         })
 

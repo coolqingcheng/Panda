@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { NzTreeComponent, NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { finalize } from 'rxjs';
@@ -15,7 +16,8 @@ export class PermissionEditComponent implements OnInit {
 
   constructor(
     private permission: PermissionService,
-    private modal: NzModalRef
+    private modal: NzModalRef,
+    private message: NzMessageService
   ) { }
 
   ngOnInit(): void {
@@ -37,32 +39,19 @@ export class PermissionEditComponent implements OnInit {
 
   init() {
     this.loading = true;
-    this.permission.adminPermissionGetAllGet().pipe(finalize(() => {
+    this.permission.adminPermissionGetAllGet(this.id).pipe(finalize(() => {
       this.loading = false
     }))
       .subscribe(res => {
-        this.permission.adminPermissionGetPermissionsGet().subscribe(checkedKeys => {
-          this.checkedKeys = checkedKeys.permissions!
-          this.datas = []
-          this.datas.push(...res)
-          this.toTreeData();
-        })
+
+        this.datas = []
+        this.datas.push(...res)
+        this.toTreeData();
       })
   }
 
   treeData: NzTreeNodeOptions[] = [
   ]
-
-
-  test() {
-    this.treeData.push(
-      {
-        title: 'TEST', key: ''
-      }
-    )
-
-    console.log(this.treeData)
-  }
 
   toTreeData() {
     this.datas.forEach(item => {
@@ -70,9 +59,13 @@ export class PermissionEditComponent implements OnInit {
         title: item.groupName!,
         key: item.key!,
         children: item.list!.map(a => {
+          if (a.isGrant) {
+            this.checkedKeys.push(a.key!)
+          }
           return {
             title: a.name!,
-            key: a.key!
+            key: a.key!,
+            isLeaf: true
           }
         })
       }
@@ -90,6 +83,8 @@ export class PermissionEditComponent implements OnInit {
 
   @ViewChild("tree") tree!: NzTreeComponent
 
+  saving = false
+
   save() {
     let checkedKeys: string[] = [];
 
@@ -97,6 +92,16 @@ export class PermissionEditComponent implements OnInit {
       checkedKeys.push(...item)
     });
     console.log(checkedKeys)
+    this.saving = true
+    this.permission.adminPermissionAccountSetPermissionPost({
+      accountId: this.id,
+      permissionKeys: checkedKeys
+    })
+      .pipe(finalize(() => this.saving = false))
+      .subscribe(_ => {
+        this.message.success('保存成功')
+        this.modal.close(true)
+      })
   }
 
 }

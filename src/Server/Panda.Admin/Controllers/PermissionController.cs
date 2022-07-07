@@ -36,13 +36,14 @@ public class PermissionController : AdminController
     [Permission("查看所有用户权限")]
     public async Task<IEnumerable<PermissionGroup>> GetAllAsync(Guid accountId)
     {
-        var list = _permissionUtils.GetAllPermission();
+        var list = _permissionUtils.GetAllPermission().ToList();
         var hasSet = await _permissionService.GetAccountPermission(accountId);
+        var isAdmin = await _accountService.IsAdmin(accountId);
         foreach (var item in list)
         {
             foreach (var children in item.List)
             {
-                if (hasSet.Contains(children.Key) || await _accountService.IsAdmin(accountId))
+                if (hasSet.Contains(children.Key) || isAdmin)
                 {
                     children.IsGrant = true;
                 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Panda.Tools.Extensions;
 using System;
 using System.Collections.Generic;
@@ -21,9 +22,13 @@ namespace Panda.Tools.Exception
     public class ExceptionMiddleware
     {
         private readonly RequestDelegate _requestDelegate;
-        public ExceptionMiddleware(RequestDelegate request)
+
+        private readonly ILogger _logger;
+
+        public ExceptionMiddleware(RequestDelegate request, ILogger<ExceptionMiddleware> logger)
         {
             _requestDelegate = request;
+            _logger = logger;
         }
 
         public async Task Invoke(HttpContext context)
@@ -54,6 +59,7 @@ namespace Panda.Tools.Exception
             }
             else
             {
+                _logger.LogError(exp,exp.Message);
                 context.Items["exp"] = exp;
                 context.Response.Redirect("/500.html");
             }

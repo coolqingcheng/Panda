@@ -25,6 +25,7 @@ public class SiteStatisticController : AdminController
     /// </summary>
     /// <returns></returns>
     [HttpGet]
+    [Permission("数据汇总")]
     public async Task<SiteStatisticModel> GetStatisticCollect([FromQuery] SiteStatisticRequest request)
     {
         request.BuildDate();

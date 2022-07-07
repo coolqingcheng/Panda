@@ -3,13 +3,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Panda.Site.Areas.Admin.Models;
 using Panda.Site.Areas.Admin.Services.SiteOption;
+using Panda.Tools.Attributes;
 using Panda.Tools.Auth.Controllers;
 
 namespace Panda.Site.Areas.Admin.Controllers;
 
 /// <summary>
 /// 网站设置
-/// </summary>
+[PermissionGroup("网站设置")]
 public class SiteSettingController : AdminController
 {
     private readonly ISiteOptionService _siteOptionService;
@@ -20,6 +21,7 @@ public class SiteSettingController : AdminController
     }
 
     [HttpPost]
+    [Permission("站点设置")]
     public async Task SetSiteInfo(SiteSettingModel model)
     {
         var dic = _siteOptionService.GetDic(model);
@@ -27,6 +29,7 @@ public class SiteSettingController : AdminController
     }
 
     [HttpGet]
+    [Permission("站点设置")]
     public async Task<SiteSettingModel> GetSiteInfo()
     {
         return await _siteOptionService.GetModel<SiteSettingModel>();

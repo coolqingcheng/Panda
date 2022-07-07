@@ -27,7 +27,15 @@ public interface IAccountService
     /// <param name="oldPwd"></param>
     /// <param name="newPwd"></param>
     /// <returns></returns>
-    Task ChangePwdAsync(ChangePwdRequest request);
+    Task ChangeSelfPasswordAsync(ChangePwdRequest request);
+
+    /// <summary>
+    /// 修改账号密码
+    /// </summary>
+    /// <param name="accountId"></param>
+    /// <param name="newPassword"></param>
+    /// <returns></returns>
+    Task ChangeAccountPasswordAsync(Guid accountId, string newPassword);
 
 
     /// <summary>

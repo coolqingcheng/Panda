@@ -81,12 +81,12 @@ public class AccountService : IAccountService
     }
 
 
-    public async Task ChangePwdAsync(ChangePwdRequest request)
+    public async Task ChangeSelfPasswordAsync(ChangePwdRequest request)
     {
         var account = await _dbContext.Set<Accounts>().Where(a => a.Id == request.Id).FirstOrDefaultAsync();
         if (account == null)
         {
-            account = await GetCurrentAccount<Accounts>();
+            throw new UserException("账号未找到");
         }
 
         account.IsNullThrow("登录信息读取失败，请重新登录！");
@@ -95,10 +95,21 @@ public class AccountService : IAccountService
 
         account.Passwd = IdentitySecurity.HashPassword(request.NewPwd);
         await _dbContext.SaveChangesAsync();
-        if (request.Id == null)
+        await SignOutAsync();
+
+    }
+
+
+
+    public async Task ChangeAccountPasswordAsync(Guid accountId, string newPassword)
+    {
+        var account = await _dbContext.Set<Accounts>().Where(a => a.Id == accountId).FirstOrDefaultAsync();
+        if (account == null)
         {
-            await SignOutAsync();
+            throw new UserException("账号未找到");
         }
+        account.Passwd = IdentitySecurity.HashPassword(newPassword);
+        await _dbContext.SaveChangesAsync();
     }
 
     public async Task<TU?> GetCurrentAccount<TU>() where TU : Accounts, new()

@@ -9,7 +9,7 @@
                 <th>邮箱</th>
                 <th>状态</th>
                 <th>最后登录时间</th>
-                <th>角色</th>
+                <th>是否是管理员</th>
                 <th>操作</th>
             </tr>
         </thead>
@@ -23,7 +23,10 @@
                     <nz-tag *ngIf="item.status == 2" nzColor="warning">锁定</nz-tag>
                 </td>
                 <td>{{item.lastLoginTime}}</td>
-                <td></td>
+                <td>
+                    <nz-tag *ngIf="item.isAdmin" nzColor="success">是</nz-tag>
+                    <nz-tag *ngIf="!item.isAdmin">否</nz-tag>
+                </td>
                 <td>
                     <button nz-button nz-dropdown nzTrigger="hover" [nzDropdownMenu]="menu">操作</button>
                     <nz-dropdown-menu #menu="nzDropdownMenu">

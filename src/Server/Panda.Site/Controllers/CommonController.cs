@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Panda.Admin.Services.Account;
 using Panda.Site.Models;
@@ -87,6 +88,7 @@ public class CommonController : Controller
         };
     }
 
+    [AllowAnonymous]
     [HttpGet("/img/{day}/{file}")]
     public ActionResult Img(string day, string file)
     {

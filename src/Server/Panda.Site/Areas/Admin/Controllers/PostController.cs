@@ -12,7 +12,7 @@ using Panda.Tools.Auth.Permission;
 namespace Panda.Site.Areas.Admin.Controllers;
 
 
-[PermissionGroup("文章管理")]
+[PermissionGroup("博客-文章管理")]
 public class PostController : AdminController
 {
     private readonly IPostService _postService;

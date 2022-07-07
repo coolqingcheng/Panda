@@ -23,16 +23,15 @@ export class ChangeThePasswordComponent implements OnInit {
     private modal: NzModalRef
   ) {
     this.formGroup = this.fb.group({
-      id: ['', [Validators.required]],
-      oldPwd: ['', [Validators.required]],
-      newPwd: ['', [Validators.required]],
+      accountId: [this.id, [Validators.required]],
+      newPassword: ['', [Validators.required,Validators.minLength(8)]],
       confirmPwd: ['', [Validators.required, this.confirmPwdValidator]]
     })
   }
 
   ngOnInit(): void {
     this.formGroup.patchValue({
-      id: this.id
+      accountId: this.id
     })
   }
 
@@ -40,9 +39,11 @@ export class ChangeThePasswordComponent implements OnInit {
 
 
   save() {
+
+    console.log(this.formGroup.value)
     if (this.formGroup.valid && this.saving == false) {
       this.saving = true;
-      this.account.adminAccountChangePwdPost(this.formGroup.value).pipe(finalize(() => {
+      this.account.adminAccountChangeAccountPwdPost(this.formGroup.value).pipe(finalize(() => {
         this.saving = false
       })).subscribe(() => {
         this.message.success('修改密码成功')
@@ -58,9 +59,9 @@ export class ChangeThePasswordComponent implements OnInit {
   confirmPwdValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     let confirmPwd = control?.value;
     if (!confirmPwd) return {};
-    let newPwd = this.formGroup.get('newPwd')?.value
-    console.log(`newPwd:`, newPwd, 'newPwd', confirmPwd)
-    if (newPwd != confirmPwd) {
+    let newPassword = this.formGroup.get('newPassword')?.value
+    // console.log(`newPassword:`, newPassword, 'newPwd', confirmPwd)
+    if (newPassword != confirmPwd) {
       return {
         confirm: true,
         error: true

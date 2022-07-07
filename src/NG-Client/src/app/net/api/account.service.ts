@@ -19,6 +19,7 @@ import { Observable }                                        from 'rxjs';
 
 import { AccountLoginRequest } from '../model/accountLoginRequest';
 import { AccountRespPageDto } from '../model/accountRespPageDto';
+import { ChangeAccountPasswordRequest } from '../model/changeAccountPasswordRequest';
 import { ChangePwdRequest } from '../model/changePwdRequest';
 import { CreateAccountModel } from '../model/createAccountModel';
 import { CreateAdminAccountRequest } from '../model/createAdminAccountRequest';
@@ -106,7 +107,52 @@ export class AccountService {
     }
 
     /**
+     * 修改其他账号密码
      * 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public adminAccountChangeAccountPwdPost(body?: ChangeAccountPasswordRequest, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public adminAccountChangeAccountPwdPost(body?: ChangeAccountPasswordRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public adminAccountChangeAccountPwdPost(body?: ChangeAccountPasswordRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public adminAccountChangeAccountPwdPost(body?: ChangeAccountPasswordRequest, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json',
+            'text/json',
+            'application/_*+json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<any>('post',`${this.basePath}/admin/Account/ChangeAccountPwd`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 修改自己密码
      * 
      * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
