@@ -77,6 +77,49 @@
                 }
             </div>
         </div>
+        <div id="comment" class="card mt-2">
+            <div class="card-header" v-on:click="send()">
+                评论
+            </div>
+            <div class="card-body">
+                <form class="row">
+                    <div class="col">
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <label class="form-label">昵称</label>
+                                <input class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">邮箱</label>
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="留下邮箱，以便收到留言回复"/>
+                                    <button class="btn btn-outline-primary">获取验证码</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <label class="form-label">验证码</label>
+                                <input placeholder="输入验证码" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col">
+                                <label class="form-label">评论内容</label>
+                                <textarea placeholder="输入友善评论" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col">
+                                <button class="btn btn-primary">提交评论</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
     <div class="col-12 col-lg-3">
         @await Html.PartialAsync("_CategoryPartial")
@@ -91,6 +134,7 @@
 @section Scripts
 {
     <script src="~/js/highlight.js"></script>
+    <script src="~/js/vue.js"></script>
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded',
             (event) => {
@@ -98,5 +142,22 @@
                     hljs.highlightElement(el);
                 });
             });
+    </script>
+    <script>
+     new Vue({
+        el:'#comment',
+        data:{
+           form:{
+            email:'',code:'',    
+           },
+           loading:false
+        },
+        methods:{
+            send(){
+                console.log('send')
+            }
+        }
+     })
+     
     </script>
 }
