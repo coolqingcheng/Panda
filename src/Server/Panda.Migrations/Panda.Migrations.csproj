@@ -7,6 +7,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Panda.Entity\Panda.Entity.csproj" />
+		<ProjectReference Include="..\Panda.Site\Panda.Site.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

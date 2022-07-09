@@ -87,14 +87,14 @@
                         <div class="row g-3">
                             <div class="col-md-3">
                                 <label class="form-label">昵称</label>
-                                <input class="form-control"/>
+                                <input class="form-control" v-model="form.nickName"/>
                             </div>
                         </div>
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label class="form-label">邮箱</label>
                                 <div class="input-group">
-                                    <input class="form-control" placeholder="留下邮箱，以便收到留言回复"/>
+                                    <input class="form-control" placeholder="留下邮箱，以便收到留言回复" v-model="form.email"/>
                                     <button class="btn btn-outline-primary">获取验证码</button>
                                 </div>
                             </div>
@@ -102,18 +102,18 @@
                         <div class="row g-3">
                             <div class="col-md-3">
                                 <label class="form-label">验证码</label>
-                                <input placeholder="输入验证码" class="form-control"/>
+                                <input placeholder="输入验证码" class="form-control" v-model="form.code"/>
                             </div>
                         </div>
                         <div class="row mt-3">
                             <div class="col">
                                 <label class="form-label">评论内容</label>
-                                <textarea placeholder="输入友善评论" class="form-control"></textarea>
+                                <textarea placeholder="输入友善评论" class="form-control" rows="10"></textarea>
                             </div>
                         </div>
                         <div class="row mt-3">
                             <div class="col">
-                                <button class="btn btn-primary">提交评论</button>
+                                <button class="btn btn-primary" v-on:click="submit()" type="button">提交评论</button>
                             </div>
                         </div>
                     </div>
@@ -148,13 +148,14 @@
         el:'#comment',
         data:{
            form:{
+            nickName:'',
             email:'',code:'',    
            },
            loading:false
         },
         methods:{
-            send(){
-                console.log('send')
+            submit(){
+                console.log('send',this.form)
             }
         }
      })

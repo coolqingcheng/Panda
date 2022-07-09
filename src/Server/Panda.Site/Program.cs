@@ -3,6 +3,7 @@ using Microsoft.OpenApi.Models;
 using Panda.Admin;
 using Panda.Site.Configs;
 using Panda.Entity;
+using Panda.Site;
 using Panda.Tools;
 using Panda.Tools.QueueTask;
 using Panda.Tools.Exception;

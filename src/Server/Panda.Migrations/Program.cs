@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Panda.Entity;
+using Panda.Site;
 
 Console.WriteLine(args[0]);
 Console.WriteLine("begin migration:");

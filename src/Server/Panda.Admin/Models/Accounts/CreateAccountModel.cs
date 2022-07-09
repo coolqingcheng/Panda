@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Panda.Tools.Auth.Models;
 
 namespace Panda.Admin.Models.Accounts
 {
@@ -19,6 +20,11 @@ namespace Panda.Admin.Models.Accounts
         public string UserName { get; set; }
 
         public string Password { get; set; }
+
+        /// <summary>
+        /// 账号类型
+        /// </summary>
+        public AccountType  AccountType{ get; set; }
     }
 
     //public class CreateAccountModelValidator : AbstractValidator<CreateAccountModel>

@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Panda.Admin.Entities.DataModels;
 
@@ -48,4 +49,22 @@ public class Accounts : KeyGuidTable
 
 
     public bool IsAdmin { get; set; } = false;
+
+    /// <summary>
+    /// 账号类型
+    /// </summary>
+    public AccountType AccountType { get; set; }
+}
+
+public enum AccountType
+{
+    /// <summary>
+    /// 后台账号
+    /// </summary>
+    BackgroundManage = 0,
+
+    /// <summary>
+    /// 访客账号
+    /// </summary>
+    Visitor = 1
 }
