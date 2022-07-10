@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Panda.Site.Models;
 using Panda.Site.Services.Site;
@@ -42,6 +43,7 @@ public class VisitorController : Controller
     /// </summary>
     /// <returns></returns>
     [HttpGet]
+    [AllowAnonymous]
     public void Test()
     {
         App.GetService<IEmailSender>()!

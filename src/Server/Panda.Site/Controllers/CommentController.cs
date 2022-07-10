@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Panda.Entity.DataModels;
 using Panda.Entity.Responses;
@@ -25,6 +26,7 @@ public class CommentController : Controller
     /// <param name="model"></param>
     /// <returns></returns>
     [HttpGet]
+    [AllowAnonymous]
     public async Task<PageDto<CommentModel>> GetList([FromQuery]QueryComment model)
     {
         var query = () => _context.Set<PostComments>().Where(a => a.Post.CustomLink == model.Link).AsQueryable();

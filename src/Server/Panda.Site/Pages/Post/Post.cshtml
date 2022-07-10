@@ -151,11 +151,25 @@
             nickName:'',
             email:'',code:'',    
            },
-           loading:false
+           loading:false,
+           commentList:[],
+           comment:{
+            index:1,size:20,link:'@post.Link'    
+           }
         },
         methods:{
             submit(){
                 console.log('send',this.form)
+                let that = this;
+                $.get('/api/Comment/GetList',this.comment,function (res){
+                    console.log(res,that.comment)
+                    for (let i =0 ;i<res.data.length;i++){
+                         that.commentList.push(res.data[i])
+                    }
+                })
+            },
+            getComment(){
+                
             }
         }
      })
