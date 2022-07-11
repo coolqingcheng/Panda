@@ -53,7 +53,7 @@ public class PandaContext : AppContext<Accounts>
     /// <summary>
     /// 临时访客
     /// </summary>
-    public SiteVisitors SiteVisitors { get; set; }
+    public DbSet<SiteVisitors> SiteVisitors { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

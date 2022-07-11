@@ -30,7 +30,6 @@ public class VisitorService : IVisitorService
     {
         var account = await _context.Set<Accounts>()
             .Where(a => a.Email == email && a.AccountType == AccountType.Visitor).FirstOrDefaultAsync();
-        var visitor = await _context.Set<SiteVisitors>().Where(a => a.Account.Email == email).FirstOrDefaultAsync();
         if (account == null)
         {
             //创建账号
@@ -41,18 +40,34 @@ public class VisitorService : IVisitorService
                 Password = "/",
                 AccountType = AccountType.Visitor
             });
-            account = await _context.Set<Accounts>()
-                .Where(a => a.Email == email && a.AccountType == AccountType.Visitor).FirstOrDefaultAsync();
-            visitor = new SiteVisitors()
-            {
-                Account = account!
-            };
-            await _context.Set<SiteVisitors>().AddAsync(visitor);
         }
 
-        string code = ValidateCodeHelper.Str(6);
-        string content = $"你的验证码是:<strong>{code}</strong>";
-        await _email.SendEmail(email, nickName, "注册验证码", content);
+        account = await _context.Set<Accounts>()
+            .Where(a => a.Email == email && a.AccountType == AccountType.Visitor).FirstOrDefaultAsync();
+        
+        var code = ValidateCodeHelper.Str(6);
+        var visitor = await _context.Set<SiteVisitors>().Where(a => a.Account == account).FirstOrDefaultAsync();
+        if (visitor == null)
+        {
+            visitor = new SiteVisitors()
+            {
+                Account = account!,
+                ValidKey = Guid.NewGuid().ToString("N"),
+                SendTime = DateTime.Now,
+                EndTime = DateTime.Now.AddHours(2),
+                Code = code
+            };
+        }
+        else
+        {
+            visitor.Code = code;
+            visitor.SendTime = DateTime.Now;
+            visitor.EndTime = DateTime.Now.AddHours(2);
+        }
+
+        await _context.Set<SiteVisitors>().AddAsync(visitor);
+        var content = $"你的验证码是:<strong>{code}</strong>";
+        await _email.SendEmail(email, nickName, "身份验证邮件", content);
 
         await _context.SaveChangesAsync();
     }

@@ -33,6 +33,7 @@ public class VisitorController : Controller
     /// <returns></returns>
     [HttpPost]
     [EFTransacation]
+    [AllowAnonymous]
     public async Task SendVerificationCode(VisitorSendVerificationCode model)
     {
         await _visitor.SendVerificationCode(model.NickName, model.Email);

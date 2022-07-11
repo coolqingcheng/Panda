@@ -70,7 +70,7 @@ public class AccountService : IAccountService
         {
             new(ClaimTypes.Name, account.UserName),
             new("Id", account.Id.ToString()),
-            new("IsAdmin",account.IsAdmin.ToString())
+            new("IsAdmin", account.IsAdmin.ToString())
         }, CookieAuthenticationDefaults.AuthenticationScheme);
         var claimsPrincipal = new ClaimsPrincipal(identity);
 
@@ -96,9 +96,7 @@ public class AccountService : IAccountService
         account.Passwd = IdentitySecurity.HashPassword(request.NewPwd);
         await _dbContext.SaveChangesAsync();
         await SignOutAsync();
-
     }
-
 
 
     public async Task ChangeAccountPasswordAsync(Guid accountId, string newPassword)
@@ -108,6 +106,7 @@ public class AccountService : IAccountService
         {
             throw new UserException("账号未找到");
         }
+
         account.Passwd = IdentitySecurity.HashPassword(newPassword);
         await _dbContext.SaveChangesAsync();
     }
@@ -161,17 +160,14 @@ public class AccountService : IAccountService
     public async Task CreateAccount(CreateAccountModel model)
     {
         await CheckAccount(model);
-        if (IdentitySecurity.PasswordStrength(model.Password) == Strength.Weak)
-        {
-            throw new UserException("密码请设置复杂一点！");
-        }
         await _dbContext.Set<Accounts>().AddAsync(new Accounts()
         {
             Email = model.Email,
             UserName = model.UserName,
             NickName = model.UserName,
             IsAdmin = false,
-            Passwd = IdentitySecurity.HashPassword(model.Password)
+            Passwd = IdentitySecurity.HashPassword(model.Password),
+            AccountType = model.AccountType
         });
         await _dbContext.SaveChangesAsync();
     }
@@ -183,6 +179,7 @@ public class AccountService : IAccountService
         {
             throw new UserException("邮箱已经存在");
         }
+
         any = await _dbContext.Set<Accounts>().Where(a => a.UserName == model.UserName).AnyAsync();
         if (any)
         {
@@ -205,6 +202,7 @@ public class AccountService : IAccountService
                 throw new UserException("邮箱被其他的用户使用了！");
             }
         }
+
         account = await _dbContext.Set<Accounts>().Where(a => a.UserName == model.UserName).FirstOrDefaultAsync();
         if (account != null)
         {
@@ -213,12 +211,14 @@ public class AccountService : IAccountService
                 throw new UserException("用户名被其他的用户使用了！");
             }
         }
+
         account = await _dbContext.Set<Accounts>().Where(a => a.Id == model.Id).FirstAsync();
         model.Adapt(account);
         if (string.IsNullOrWhiteSpace(model.Password) == false)
         {
             account.Passwd = IdentitySecurity.HashPassword(model.Password);
         }
+
         await _dbContext.SaveChangesAsync();
     }
 }
