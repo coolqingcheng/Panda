@@ -97,7 +97,7 @@
                                         <label class="form-label">邮箱</label>
                                         <div class="input-group">
                                             <input class="form-control" placeholder="留下邮箱，以便收到留言回复" v-model="form.email"/>
-                                            <button class="btn btn-outline-primary" v-on:click="sendcode()" type="button">获取验证码</button>
+                                            <button class="btn btn-outline-primary" v-on:click="sendcode()" type="button" :disabled="sending">{{sendtext}}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -144,7 +144,7 @@
 {
     <script src="~/js/highlight.js"></script>
     <script src="~/js/vue.js" asp-append-version="true"></script>
-    <script src="layer/layer.js"></script>
+    <script src="~/layer/layer.js"></script>
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded',
             (event) => {
@@ -167,6 +167,9 @@
            comment:{
             index:1,size:20,link:'@post.Link'    
            }
+           ,sending:false,
+           sendtext:'获取验证码'
+           
         },
         methods:{
             submit(){
@@ -183,18 +186,31 @@
                 })
             },
             sendcode(){
+                if (!this.form.nickName){
+                    layer.msg('昵称不能为空')
+                    return
+                }
+                if (!this.form.email){
+                    layer.msg('邮箱不能为空')
+                    return;
+                }
+                this.sendtext = "发送中..."
+                this.sending = true
                 $.ajax({
                 url:'/api/Visitor/SendVerificationCode',
                 method:'post',
                 data:JSON.stringify({email:this.form.email,nickname:this.form.nickName}),
-                contentType:'application/json',
-                dataType:'json'
+                contentType:'application/json'
                 ,success:(res)=>{
                     layer.msg('发送验证码成功')
                 }
                 ,error:(err)=>{
                     console.error(err)
-                    layer.msg()
+                    layer.msg('发送验证码失败')
+                },
+                complete:()=>{
+                    this.sending = false
+                    this.sendtext = "获取验证码"
                 }
                 })
             }

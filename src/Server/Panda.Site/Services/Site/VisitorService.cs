@@ -57,6 +57,7 @@ public class VisitorService : IVisitorService
                 EndTime = DateTime.Now.AddHours(2),
                 Code = code
             };
+            await _context.Set<SiteVisitors>().AddAsync(visitor);
         }
         else
         {
@@ -65,7 +66,6 @@ public class VisitorService : IVisitorService
             visitor.EndTime = DateTime.Now.AddHours(2);
         }
 
-        await _context.Set<SiteVisitors>().AddAsync(visitor);
         var content = $"你的验证码是:<strong>{code}</strong>";
         await _email.SendEmail(email, nickName, "身份验证邮件", content);
 
