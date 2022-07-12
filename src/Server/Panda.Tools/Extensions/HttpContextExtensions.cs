@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 using Panda.Tools.Exception;
+using System.Web;
 
 namespace Panda.Tools.Extensions;
 
@@ -50,6 +51,7 @@ public static class HttpContextExtensions
         {
             ip = ip.Replace("::ffff:", "");
         }
+
         return ip;
     }
 
@@ -82,6 +84,7 @@ public static class HttpContextExtensions
         if (xreq) result = req.Headers["x-requested-with"] == "XMLHttpRequest";
         return result;
     }
+
     /// <summary>
     /// 返回值是否是需要json
     /// </summary>
@@ -93,6 +96,7 @@ public static class HttpContextExtensions
         {
             return value.ToString().Contains("json");
         }
+
         return false;
     }
 
@@ -104,6 +108,7 @@ public static class HttpContextExtensions
         {
             throw new UserException("获取用户信息失败", HttpStatusCode.Unauthorized);
         }
+
         return Guid.Parse(accountId);
     }
 
@@ -115,6 +120,17 @@ public static class HttpContextExtensions
         {
             return false;
         }
+
         return isAdmin == "True";
+    }
+
+    public static string GetUserAgent(this HttpContext context)
+    {
+        if (context.Request.Headers.TryGetValue("User-Agent", out var ua))
+        {
+            return ua.ToString();
+        }
+
+        return "";
     }
 }

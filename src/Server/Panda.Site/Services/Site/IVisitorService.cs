@@ -2,9 +2,10 @@
 
 public interface IVisitorService
 {
-    
-    public  const string VisitorCookieNickName = "VisitorCookieNickName";
-    public  const string VisitorCookieNickKey = "VisitorCookieNickKey";
+    public const string VisitorCookieNickName = "VisitorCookieNickName";
+    public const string VisitorCookieNickKey = "VisitorCookieNickKey";
+    public const string VisitorCookieNickEmail = "VisitorCookieNickEmail";
+
     /// <summary>
     /// 发送验证码
     /// </summary>
@@ -20,4 +21,10 @@ public interface IVisitorService
     /// <param name="code"></param>
     /// <returns></returns>
     Task ConfirmEmail(string email, string code);
+
+    /// <summary>
+    /// 检查当前访客身份
+    /// </summary>
+    /// <returns></returns>
+    Task CheckVisitorIdentity();
 }

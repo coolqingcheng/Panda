@@ -69,11 +69,23 @@ public class App
     /// <param name="value"></param>
     public static void SetCookie(string key, string value)
     {
-        Context?.Response.Cookies.Append(key, value);
+        Context?.Response.Cookies.Append(key, value, new CookieOptions()
+        {
+            HttpOnly = true,
+            Expires = DateTimeOffset.Now.AddYears(10)
+        });
     }
 
     public static string? GetCookie(string key)
     {
         return Context?.Request.Cookies.TryGetValue(key, out var value) == true ? value : null;
+    }
+
+    public static void DeleteCookie(string key)
+    {
+        if (Context?.Request.Cookies.TryGetValue(key, out var _) == true)
+        {
+            Context?.Response.Cookies.Delete(key);
+        }
     }
 }

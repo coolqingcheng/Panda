@@ -44,7 +44,7 @@ public class VisitorService : IVisitorService
 
         account = await _context.Set<Accounts>()
             .Where(a => a.Email == email && a.AccountType == AccountType.Visitor).FirstOrDefaultAsync();
-        
+
         var code = ValidateCodeHelper.Str(6);
         var visitor = await _context.Set<SiteVisitors>().Where(a => a.Account == account).FirstOrDefaultAsync();
         if (visitor == null)
@@ -84,10 +84,26 @@ public class VisitorService : IVisitorService
             await _context.SaveChangesAsync();
             App.SetCookie(IVisitorService.VisitorCookieNickName, visitor.Account.NickName);
             App.SetCookie(IVisitorService.VisitorCookieNickKey, guid);
+            App.SetCookie(IVisitorService.VisitorCookieNickEmail, visitor.Account.Email);
         }
         else
         {
             throw new UserException("验证码错误");
+        }
+    }
+
+    public async Task CheckVisitorIdentity()
+    {
+        var key = App.GetCookie(IVisitorService.VisitorCookieNickKey);
+        var email = App.GetCookie(IVisitorService.VisitorCookieNickEmail);
+        var any = await _context.Set<SiteVisitors>().Where(a =>
+            a.Account.Email == email && a.ValidKey == key && a.Account.AccountType == AccountType.Visitor).AnyAsync();
+        if (any == false)
+        {
+            // App.DeleteCookie(IVisitorService.VisitorCookieNickEmail);
+            // App.DeleteCookie(IVisitorService.VisitorCookieNickKey);
+            // App.DeleteCookie(IVisitorService.VisitorCookieNickName);
+            throw new UserException("访客身份不存在");
         }
     }
 }
