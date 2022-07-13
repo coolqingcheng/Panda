@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Panda.Tools.Exception;
 using System.Net;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
+using Panda.Tools.Auth.Models;
 
 namespace Panda.Tools.Web;
 
@@ -31,6 +33,12 @@ public class App
         }
 
         return Guid.Parse(accountId);
+    }
+
+    public static async Task<Accounts> GetAccount()
+    {
+        var db = GetService<DbContext>();
+        return await db.Set<Accounts>().Where(a => a.Id == GetAccountId()).FirstOrDefaultAsync();
     }
 
     /// <summary>

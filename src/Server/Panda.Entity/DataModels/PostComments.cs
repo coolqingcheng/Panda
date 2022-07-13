@@ -46,4 +46,25 @@ public class PostComments : PandaBaseTable
     ///     上级评论
     /// </summary>
     public int Pid { get; set; }
+
+    /// <summary>
+    /// 站长已读
+    /// </summary>
+    public virtual ICollection<PostCommentRead> CommentReads { get; set; }
+}
+
+/// <summary>
+/// 评论阅读
+/// </summary>
+public class PostCommentRead : KeyGuidTable
+{
+    /// <summary>
+    /// 评论
+    /// </summary>
+    public virtual PostComments Comments { get; set; }
+
+    /// <summary>
+    /// 阅读人
+    /// </summary>
+    public virtual Accounts Accounts { get; set; }
 }

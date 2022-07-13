@@ -55,6 +55,11 @@ public class PandaContext : AppContext<Accounts>
     /// </summary>
     public DbSet<SiteVisitors> SiteVisitors { get; set; }
 
+    public DbSet<PostComments> PostComments { get; set; }
+    
+
+    public DbSet<PostCommentRead> PostCommentReads { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
