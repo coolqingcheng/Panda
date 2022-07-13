@@ -123,7 +123,7 @@
                                 <div class="row mt-3">
                                     <div class="col">
                                         <label class="form-label">评论内容</label>
-                                        <textarea placeholder="输入友善评论" class="form-control" rows="5" v-model="form.content"></textarea>
+                                        <textarea placeholder="输入友善评论(支持markdown格式)" class="form-control" rows="5" v-model="form.content"></textarea>
                                     </div>
                                 </div>
                                 <div class="row mt-3">
@@ -137,16 +137,23 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <div class="row" v-for=" item in commentList">
+                        <div class="row comment-box" v-for=" item in commentList">
                             <div class="col">
                                 <p>
-                                    {{item.nickName}}
+                                    <span class="comment-nickname">{{item.nickName}}</span>
+                                    <span class="text-black-50">评论时间：{{item.addTime}}</span>
                                 </p>
-                                <div>
-                                    {{item.content}}
+                                <div class="bg-light comment-content" v-html="item.content">
                                 </div>
-                                <div>评论时间{{item.addTime}}</div>
+                                <div></div>
                             </div>
+                        </div>
+                        <div class="comment-more" v-if="showMore" v-on:click="loadMore()">
+                            <label>
+                                {{
+                                comment.loading?'加载中...':'点击加载更多'
+                                }}
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -177,8 +184,6 @@
             });
     </script>
     <script>
-    
-   
      new Vue({
         el:'#comment',
         data:{
@@ -190,7 +195,7 @@
            loading:false,
            commentList:[],
            comment:{
-            index:1,size:20,link:'@post.Link',total:0,totalSize:0   
+            index:1,size:3,link:'@post.Link',total:0
            }
            ,sending:false,
            sendtext:'获取验证码',
@@ -199,6 +204,11 @@
         },
         created(){
             this.getComment();
+        },
+        computed:{
+            showMore:function (){
+                return this.comment.index * this.comment.size < this.comment.total
+            }
         },
         methods:{
             submit(){
@@ -218,6 +228,7 @@
                 }),
                 success:(res)=>{
                     layer.msg('评论成功，审核后显示')
+                    this.form.content = ''
                 },
                 error:(err)=>{
                     console.log(err)
@@ -232,6 +243,8 @@
                 let that = this;
                 $.get('/api/Comment/GetList',this.comment,function (res){
                     console.log(res,that.comment)
+                    that.comment.total = res.total;
+                    that.comment.loading = false
                     for (let i =0 ;i<res.data.length;i++){
                          that.commentList.push(res.data[i])
                     }
@@ -269,6 +282,14 @@
                     this.sendtext = "获取验证码"
                 }
                 })
+            }
+            ,loadMore(){
+                if (this.comment.loading){
+                    return;
+                }
+                this.comment.index+=1;
+                this.comment.loading = true;
+                this.getComment();
             }
         }
      })

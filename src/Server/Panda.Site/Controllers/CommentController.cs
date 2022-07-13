@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Markdig;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Org.BouncyCastle.Ocsp;
 using Panda.Entity.DataModels;
 using Panda.Entity.Responses;
 using Panda.Site.Models;
@@ -46,6 +46,13 @@ public class CommentController : Controller
             model.Email = App.GetCookie(IVisitorService.VisitorCookieNickEmail)!;
         }
 
+        //markdown转html
+
+        var html = Markdown.ToHtml(model.Content);
+        model.Content = html;
+        // 过滤xss
+
+        model.Content = model.Content.HtmlXssFilter();
 
         var account = await _context.Set<Accounts>()
             .Where(a => a.Email == model.Email).FirstOrDefaultAsync();
@@ -76,14 +83,15 @@ public class CommentController : Controller
     {
         var query = () => _context.Set<PostComments>().Where(a => a.Post.CustomLink == model.Link).AsQueryable();
 
-        var list = await query().OrderByDescending(a => a.AddTime).Page(model.Index, 20).Select(a => new CommentModel()
-        {
-            Id = a.Id,
-            Content = a.Content,
-            NickName = a.Account.NickName,
-            AddTime = a.AddTime,
-            UA = a.UserAgent
-        }).ToListAsync();
+        var list = await query().OrderByDescending(a => a.AddTime).Page(model.Index, model.Size).Select(a =>
+            new CommentModel()
+            {
+                Id = a.Id,
+                Content = a.Content,
+                NickName = a.Account.NickName,
+                AddTime = a.AddTime,
+                UA = a.UserAgent
+            }).ToListAsync();
 
         var parser = Parser.GetDefault();
         foreach (var item in from item in list let ua = parser.Parse(item.UA) select item)

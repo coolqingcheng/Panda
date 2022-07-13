@@ -40,4 +40,5 @@ public class QueryComment
 {
     public string Link { get; set; }
     public int Index { get; set; }
+    public int Size { get; set; }
 }

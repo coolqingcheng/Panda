@@ -27,16 +27,16 @@ html {
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 
-    .content {
-        /*min-height: calc(100vh - 220px - 57px)*/
-        flex:1;
-        
+  .content {
+    /*min-height: calc(100vh - 220px - 57px)*/
+    flex: 1;
 
-    }
+
+  }
 }
 
 .footer {
@@ -287,7 +287,37 @@ body {
     .friend-link-item {
       display: inline-block;
       padding: .3rem 0.4rem;
-      padding-left: 0;
+      margin-left: 0;
     }
+  }
+}
+
+.comment-box {
+  padding: 0 0 1.5rem 0;
+
+  .comment-nickname {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-right: 8px;
+
+  }
+
+  border-bottom: .5px solid #ccc;
+
+  .comment-content {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+}
+
+.comment-more {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  cursor: pointer;
+  padding: 1rem;
+
+  label {
+    cursor: pointer;
   }
 }
