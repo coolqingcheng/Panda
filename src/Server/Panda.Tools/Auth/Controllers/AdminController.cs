@@ -18,7 +18,7 @@ public class AdminController : Controller
         var request = context.HttpContext.Request;
         var host = $"{request.Scheme}://{request.Host.Value}";
         var referer = context.HttpContext.Request.Headers.Referer.ToString();
-        // Console.WriteLine($" {host}  {referer}");
+        Console.WriteLine($" {host}  {referer}");
         if (referer.StartsWith(host))
         {
             await next();

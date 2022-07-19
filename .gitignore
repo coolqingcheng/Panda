@@ -356,3 +356,4 @@ publish/
 wwwroot/admin
 Admin-NG/.angular/
 Panda.Site/Site.Development.ini
+/src/Server/Panda.Site/wwwroot/admin
