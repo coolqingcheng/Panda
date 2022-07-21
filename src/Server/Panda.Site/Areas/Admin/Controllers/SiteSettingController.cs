@@ -10,7 +10,7 @@ namespace Panda.Site.Areas.Admin.Controllers;
 
 /// <summary>
 /// 网站设置
-[PermissionGroup("网站设置")]
+[PermissionGroup("设置")]
 public class SiteSettingController : AdminController
 {
     private readonly ISiteOptionService _siteOptionService;
@@ -33,5 +33,18 @@ public class SiteSettingController : AdminController
     public async Task<SiteSettingModel> GetSiteInfo()
     {
         return await _siteOptionService.GetModel<SiteSettingModel>();
+    }
+
+    [HttpPost,Permission("邮箱设置")]
+    public async Task SetEmail(EmailSettingModel model)
+    {
+        var dic = _siteOptionService.GetDic(model);
+        await _siteOptionService.AddOrUpdate(dic);
+    }
+
+    [HttpGet, Permission("邮箱设置")]
+    public async Task<EmailSettingModel> GetEmail()
+    {
+        return await _siteOptionService.GetModel<EmailSettingModel>();
     }
 }

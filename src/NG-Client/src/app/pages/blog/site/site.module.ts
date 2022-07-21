@@ -7,12 +7,14 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { SettingContainerComponent } from './setting-container/setting-container.component';
 
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
+import { EmailSettingComponent } from './email-setting/email-setting.component';
 
 
 @NgModule({
   declarations: [
     SiteSettingComponent,
-    SettingContainerComponent
+    SettingContainerComponent,
+    EmailSettingComponent
   ],
   imports: [
     CommonModule,

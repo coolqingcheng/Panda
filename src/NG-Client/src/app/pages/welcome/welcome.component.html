@@ -1,14 +1,12 @@
 <nz-layout class="app-layout">
-  <nz-sider class="menu-sidebar" nzTheme="light" nzCollapsible nzWidth="256px" nzBreakpoint="md"
+  <nz-sider class="menu-sidebar" nzTheme="dark" nzCollapsible [nzCollapsedWidth]="0" nzWidth="256px" nzBreakpoint="lg"
     [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
     <div class="sidebar-logo">
-      <a href="https://ng.ant.design/" target="_blank">
-        <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
+      <a href="/" target="_blank">
         <h1>网上冲浪博客</h1>
-
       </a>
     </div>
-    <ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed" routerLinkActive>
+    <ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed" routerLinkActive nzTheme="dark">
 
       <li nz-menu-item nzTitle="Dashboard" nzIcon="dashboard" [nzMatchRouterExact]="true">
         <i nz-icon nzType="dashboard" nzTheme="outline"></i>

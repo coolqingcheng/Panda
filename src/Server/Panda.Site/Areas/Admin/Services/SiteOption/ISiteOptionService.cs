@@ -2,7 +2,10 @@
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 using Panda.Entity.DataModels;
+using Panda.Tools.Attributes.Setting;
+using Panda.Tools.Exception;
 using System.Linq;
+using System.Reflection;
 
 namespace Panda.Site.Areas.Admin.Services.SiteOption
 {
@@ -61,13 +64,20 @@ namespace Panda.Site.Areas.Admin.Services.SiteOption
         {
             var dic = new Dictionary<string, string>();
             var type = obj.GetType();
+            var prefixAttribute = type.GetCustomAttribute<SettingPrefixAttribute>();
+            if (prefixAttribute==null)
+            {
+                throw new UserException($"{type.FullName}未设置配置前缀");
+            }
+            var prefix = prefixAttribute.Prefix;
             var properties = type.GetProperties();
             foreach (var propertyInfo in properties)
             {
                 var value = propertyInfo.GetValue(obj);
                 if (value != null)
                 {
-                    dic.TryAdd(propertyInfo.Name, value.ToString()!);
+                    string key = $"{prefix}:{propertyInfo.Name}";
+                    dic.TryAdd(key, value.ToString()!);
                 }
             }
 

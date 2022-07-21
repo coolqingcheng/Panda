@@ -30,10 +30,10 @@ export class SiteSettingComponent implements OnInit {
   ) {
     this.formGroup = this.fb.group({
       siteName: ['', [Validators.required]],
-      siteDesc: ['', [Validators.required]],
-      siteHost: ['', [Validators.required]],
-      icpNo: [null, [Validators.required]],
-      statisticCode: ['', [Validators.required]]
+      siteDesc: ['' ],
+      siteHost: [''],
+      icpNo: [null],
+      statisticCode: ['']
     })
   }
 
