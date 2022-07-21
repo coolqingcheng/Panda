@@ -63,7 +63,10 @@ public class AccountService : IAccountService
             await _accountRepository.LoginFailAsync(account);
             return result;
         }
-
+        if (account.AccountType != AccountType.BackgroundManage)
+        {
+            throw new UserException("访问无权限");
+        }
         result.IsSuccess = true;
         await _accountRepository.LoginSuccessAsync(account);
         var identity = new ClaimsIdentity(new Claim[]
