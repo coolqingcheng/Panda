@@ -358,3 +358,4 @@ Admin-NG/.angular/
 Panda.Site/Site.Development.ini
 /src/Server/Panda.Site/wwwroot/admin
 src/NG-Client/package-lock.json
+src/NG-Client/yarn.lock
