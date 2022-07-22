@@ -17,7 +17,6 @@ FROM node as admin
 WORKDIR "/Panda/Admin-NG"
 COPY "./src/NG-Client" "."
 WORKDIR "/Panda/Admin-NG"
-RUN rm ./yarn.lock
 RUN npm install && npm run build
 
 
