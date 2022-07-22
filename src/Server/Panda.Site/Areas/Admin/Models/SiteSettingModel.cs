@@ -5,7 +5,7 @@ using Panda.Tools.Attributes.Setting;
 
 namespace Panda.Site.Areas.Admin.Models;
 
-[SettingPrefix(Prefix ="Site")]
+[SettingPrefix(Prefix = "Site")]
 public class SiteSettingModel
 {
     [Required]
@@ -13,13 +13,13 @@ public class SiteSettingModel
     public string SiteName { get; set; }
 
     [Description("站点说明")]
-    public string SiteDesc { get; set; }
+    public string? SiteDesc { get; set; }
 
     [Description("ICP备案号")]
-    public string IcpNo { get; set; }
+    public string? IcpNo { get; set; }
 
     [Description("第三方统计代码")]
-    public string StatisticCode { get; set; }
+    public string? StatisticCode { get; set; }
 }
 
 [SettingPrefix(Prefix = "Email")]

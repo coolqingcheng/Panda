@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 
 import { AccountService } from './api/account.service';
 import { CategoryService } from './api/category.service';
+import { CommentService } from './api/comment.service';
+import { CommentsService } from './api/comments.service';
 import { CommonService } from './api/common.service';
 import { FriendLinkService } from './api/friendLink.service';
 import { HomeService } from './api/home.service';
@@ -16,6 +18,7 @@ import { SiteStatisticService } from './api/siteStatistic.service';
 import { StatisticService } from './api/statistic.service';
 import { TagService } from './api/tag.service';
 import { TestService } from './api/test.service';
+import { VisitorService } from './api/visitor.service';
 
 @NgModule({
   imports:      [],
@@ -24,6 +27,8 @@ import { TestService } from './api/test.service';
   providers: [
     AccountService,
     CategoryService,
+    CommentService,
+    CommentsService,
     CommonService,
     FriendLinkService,
     HomeService,
@@ -34,7 +39,8 @@ import { TestService } from './api/test.service';
     SiteStatisticService,
     StatisticService,
     TagService,
-    TestService ]
+    TestService,
+    VisitorService ]
 })
 export class ApiModule {
     public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders<ApiModule> {

@@ -9,10 +9,10 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { RecentAccessHistory } from './recentAccessHistory';
 
-export interface RecentAccessHistoryPageDto { 
-    message?: string;
-    data?: Array<RecentAccessHistory>;
-    total?: number;
-}
+export type AccountType = 0 | 1;
+
+export const AccountType = {
+    NUMBER_0: 0 as AccountType,
+    NUMBER_1: 1 as AccountType
+};

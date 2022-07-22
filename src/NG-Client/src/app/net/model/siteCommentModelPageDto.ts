@@ -9,10 +9,10 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { RecentAccessHistory } from './recentAccessHistory';
+import { SiteCommentModel } from './siteCommentModel';
 
-export interface RecentAccessHistoryPageDto { 
+export interface SiteCommentModelPageDto { 
     message?: string;
-    data?: Array<RecentAccessHistory>;
+    data?: Array<SiteCommentModel>;
     total?: number;
 }

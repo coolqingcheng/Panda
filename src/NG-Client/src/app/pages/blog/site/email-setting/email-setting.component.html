@@ -1,43 +1,43 @@
 <nz-spin [nzSpinning]="loading">
-    <form nz-form nzLayout="vertical" [formGroup]="formGroup">
+    <form nz-form nzLayout="vertical" [formGroup]="formGroup" (ngSubmit)="save()">
         <nz-form-item>
             <nz-form-label nzRequired>昵称</nz-form-label>
             <nz-form-control nzMd="5" >
-                <input  nz-input >
+                <input  nz-input formControlName="nickName">
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label nzRequired>用户名</nz-form-label>
             <nz-form-control nzMd="8">
-                <input nz-input >
+                <input nz-input formControlName="userName">
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label nzRequired>密码</nz-form-label>
             <nz-form-control nzMd="8">
-                <input nz-input >
+                <input nz-input formControlName="password">
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label nzRequired>STMP地址</nz-form-label>
             <nz-form-control nzMd="8">
-                <input nz-input >
+                <input nz-input formControlName="host">
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label nzRequired>STMP端口</nz-form-label>
             <nz-form-control nzMd="4">
-                <nz-input-number></nz-input-number>
+                <nz-input-number formControlName="port"></nz-input-number>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label nzRequired>使用SSL</nz-form-label>
             <nz-form-control nzMd="4">
-                <nz-switch></nz-switch>
+                <nz-switch formControlName="useSSL"></nz-switch>
             </nz-form-control>
         </nz-form-item>
         <p-form-submit-box [left]="true">
-            <button nz-button nzType="primary">保存</button>
+            <button nz-button nzType="primary" [disabled]="!formGroup.valid">保存</button>
         </p-form-submit-box>
     </form>
 </nz-spin>

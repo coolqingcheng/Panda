@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Panda.Entity.DataModels;
 using Panda.Tools.Attributes.Setting;
 using Panda.Tools.Exception;
+using Panda.Tools.Extensions;
 using System.Linq;
 using System.Reflection;
 
@@ -65,7 +66,7 @@ namespace Panda.Site.Areas.Admin.Services.SiteOption
             var dic = new Dictionary<string, string>();
             var type = obj.GetType();
             var prefixAttribute = type.GetCustomAttribute<SettingPrefixAttribute>();
-            if (prefixAttribute==null)
+            if (prefixAttribute == null)
             {
                 throw new UserException($"{type.FullName}未设置配置前缀");
             }
@@ -89,13 +90,22 @@ namespace Panda.Site.Areas.Admin.Services.SiteOption
             var dic = await GetAll();
             var model = new T();
             var type = model.GetType();
+            var prefixAttribute = type.GetCustomAttribute<SettingPrefixAttribute>();
+            if (prefixAttribute == null)
+            {
+                throw new UserException($"{type.FullName}未设置配置前缀");
+            }
+            var prefix = prefixAttribute.Prefix;
             foreach (var propertyInfo in type.GetProperties())
             {
-                var value = dic.Where(a => a.Key == propertyInfo.Name)
+                string key = $"{prefix}:{propertyInfo.Name}";
+                var value = dic.Where(a => a.Key == key)
                     .Select(a => a.Value).FirstOrDefault();
                 if (string.IsNullOrWhiteSpace(value) == false)
                 {
-                    model.SetValue(propertyInfo, value);
+                    //model.SetValue(propertyInfo, value);
+                    model.SetPropertyValue<T>(propertyInfo.Name, value);
+
                 }
             }
 
@@ -122,16 +132,16 @@ namespace Panda.Site.Areas.Admin.Services.SiteOption
 
         public async Task<Dictionary<string, string>> GetAll()
         {
-            var list = await _context.Set<SiteOptions>().ToListAsync();
-            var value = await _cache.GetStringAsync(SITEOPTION_CACHE_KEY);
-            if (string.IsNullOrWhiteSpace(value) == false)
-            {
-                return value.JsonToObj<Dictionary<string, string>>();
-            }
 
-            var dic = list.ToDictionary(a => a.Name, a => a.Value);
-            await _cache.SetStringAsync(SITEOPTION_CACHE_KEY, dic.ToJson());
-            return dic;
+            var value = await _cache.GetStringAsync(SITEOPTION_CACHE_KEY);
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                var list = await _context.Set<SiteOptions>().ToListAsync();
+                var dic = list.ToDictionary(a => a.Name, a => a.Value);
+                await _cache.SetStringAsync(SITEOPTION_CACHE_KEY, dic.ToJson());
+                return dic;
+            }
+            return value.JsonToObj<Dictionary<string, string>>();
         }
 
         public async Task<string> GetString(string key, string defaultValue)
