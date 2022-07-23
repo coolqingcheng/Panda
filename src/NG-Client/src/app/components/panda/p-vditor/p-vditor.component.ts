@@ -61,7 +61,7 @@ export class PVditorComponent implements OnInit, ControlValueAccessor {
       cache: {
         enable: false,
       },
-      mode: 'wysiwyg',
+      mode: 'ir',
       icon: 'ant',
       outline: {
         enable: true,
