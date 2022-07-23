@@ -29,6 +29,6 @@ jobs:
   
     - name: 开始构建
       run: |
-        name=iwscl/panda-blog:$(date +%s)
+        name=iwscl/panda-blog:$(date +%Y%m%d%H%M%S)
         docker buildx build . --file dockerfile --platform linux/amd64,linux/arm64 -t $name -t iwscl/panda-blog:latest --push
 
