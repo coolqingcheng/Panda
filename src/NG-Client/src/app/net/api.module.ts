@@ -8,6 +8,7 @@ import { CategoryService } from './api/category.service';
 import { CommentService } from './api/comment.service';
 import { CommentsService } from './api/comments.service';
 import { CommonService } from './api/common.service';
+import { EmailService } from './api/email.service';
 import { FriendLinkService } from './api/friendLink.service';
 import { HomeService } from './api/home.service';
 import { PermissionService } from './api/permission.service';
@@ -30,6 +31,7 @@ import { VisitorService } from './api/visitor.service';
     CommentService,
     CommentsService,
     CommonService,
+    EmailService,
     FriendLinkService,
     HomeService,
     PermissionService,

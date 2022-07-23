@@ -4,6 +4,7 @@ import { finalize } from 'rxjs';
 import { AccountResp, AccountRespPageDto, AccountService } from 'src/app/net';
 import { BaseTableComponent } from 'src/app/shared/BaseTableComponent';
 import { PermissionEditComponent } from '../../permission-edit/permission-edit.component';
+import { AccountLogsComponent } from '../account-logs/account-logs.component';
 import { ChangeThePasswordComponent } from '../change-the-password/change-the-password.component';
 import { EditComponent } from '../edit/edit.component';
 
@@ -72,7 +73,7 @@ export class ListComponent extends BaseTableComponent implements OnInit {
   }
 
   addAccount() {
-    let modal =  this.modal.create({
+    let modal = this.modal.create({
       nzTitle: '添加账号',
       nzFooter: null,
       nzContent: EditComponent,
@@ -80,9 +81,20 @@ export class ListComponent extends BaseTableComponent implements OnInit {
         id: undefined
       }
     })
-    modal.afterClose.subscribe(res=>{
-      if(res){
+    modal.afterClose.subscribe(res => {
+      if (res) {
         this.init();
+      }
+    })
+  }
+
+  loginLogs(id: string) {
+    this.modal.create({
+      nzTitle: '用户日志',
+      nzFooter: null,
+      nzContent: AccountLogsComponent,
+      nzComponentParams: {
+        id: id
       }
     })
   }

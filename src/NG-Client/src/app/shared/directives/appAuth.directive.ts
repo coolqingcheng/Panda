@@ -28,6 +28,7 @@ export class appAuthDirective {
 
   updateStatus() {
     if (this.permission.checkPermission(this.$name)) {
+      this.viewContainer.clear();
       this.viewContainer.createEmbeddedView(this.templateRef);
     } else {
       this.viewContainer.clear();

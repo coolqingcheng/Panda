@@ -15,7 +15,7 @@
         <nz-form-item>
             <nz-form-label nzRequired>密码</nz-form-label>
             <nz-form-control nzMd="8">
-                <input nz-input formControlName="password">
+                <input nz-input formControlName="password" type="password">
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
@@ -37,7 +37,8 @@
             </nz-form-control>
         </nz-form-item>
         <p-form-submit-box [left]="true">
-            <button nz-button nzType="primary" [disabled]="!formGroup.valid">保存</button>
+            <button nz-button nzType="primary" [disabled]="!formGroup.valid" [nzLoading]="saving">保存</button>
+            <button nz-button (click)="createSendTest()" type="button">发送测试邮件</button>
         </p-form-submit-box>
     </form>
 </nz-spin>

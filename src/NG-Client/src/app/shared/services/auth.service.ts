@@ -13,6 +13,8 @@ export class AuthService {
 
   $isAdmin = false;
 
+  serverLoad = false;
+
   stateChange() {
     return this.sub.asObservable();
   }
@@ -24,7 +26,13 @@ export class AuthService {
   refreshPermission(permission: string[], isAdmin: boolean) {
     this.permissionList = []
     this.permissionList.push(...permission)
+    let model = {
+      isadmin: isAdmin,
+      permission: permission
+    }
+    localStorage.setItem('auth', JSON.stringify(model))
     this.$isAdmin = isAdmin
+    this.serverLoad = true;
     this.sub.next();
   }
 
@@ -35,6 +43,15 @@ export class AuthService {
    * @returns 
    */
   checkPermission(name: string) {
+    if (this.serverLoad == false) {
+      let item = localStorage.getItem('auth')
+      if (item) {
+        var model = JSON.parse(item) as { isadmin: boolean, permission: string[] }
+        this.$isAdmin = model.isadmin
+        this.permissionList = []
+        this.permissionList.push(...model.permission)
+      }
+    }
     if (this.$isAdmin) return true;
     return this.permissionList.indexOf(name) > -1
   }

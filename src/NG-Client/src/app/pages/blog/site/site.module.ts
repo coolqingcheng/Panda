@@ -8,13 +8,15 @@ import { SettingContainerComponent } from './setting-container/setting-container
 
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 import { EmailSettingComponent } from './email-setting/email-setting.component';
+import { SendTestEmailComponent } from './email-setting/send-test-email/send-test-email.component';
 
 
 @NgModule({
   declarations: [
     SiteSettingComponent,
     SettingContainerComponent,
-    EmailSettingComponent
+    EmailSettingComponent,
+    SendTestEmailComponent
   ],
   imports: [
     CommonModule,

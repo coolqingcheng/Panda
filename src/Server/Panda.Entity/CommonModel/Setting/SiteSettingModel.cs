@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using Panda.Site.Areas.Admin.Services.SiteOption;
 using Panda.Tools.Attributes.Setting;
 
-namespace Panda.Site.Areas.Admin.Models;
+namespace Panda.Entity.CommonModel.Setting;
 
 [SettingPrefix(Prefix = "Site")]
 public class SiteSettingModel

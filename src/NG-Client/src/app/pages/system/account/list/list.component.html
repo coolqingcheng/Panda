@@ -10,6 +10,7 @@
                 <th>状态</th>
                 <th>最后登录时间</th>
                 <th>是否是管理员</th>
+                <th>账号类型</th>
                 <th>操作</th>
             </tr>
         </thead>
@@ -28,6 +29,10 @@
                     <nz-tag *ngIf="!item.isAdmin">否</nz-tag>
                 </td>
                 <td>
+                    <nz-tag *ngIf="item.accountType == 0" nzColor="#108ee9">后台</nz-tag>
+                    <nz-tag *ngIf="item.accountType == 1" nzColor="cyan">访客</nz-tag>
+                </td>
+                <td>
                     <button nz-button nz-dropdown nzTrigger="hover" [nzDropdownMenu]="menu">操作</button>
                     <nz-dropdown-menu #menu="nzDropdownMenu">
                         <ul nz-menu>
@@ -35,6 +40,7 @@
                             <li nz-menu-item (click)="changePwd(item.id!)">修改密码</li>
                             <li nz-menu-item>禁止登录</li>
                             <li nz-menu-item (click)="openPermissionSetting(item.id!)">权限控制</li>
+                            <li nz-menu-item (click)="loginLogs(item.id!)">账户日志</li>
                         </ul>
                     </nz-dropdown-menu>
                 </td>

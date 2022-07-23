@@ -1,4 +1,6 @@
-﻿namespace Panda.Tools.Auth.Response;
+﻿using Panda.Tools.Auth.Models;
+
+namespace Panda.Tools.Auth.Response;
 
 public class AccountResp
 {
@@ -64,6 +66,12 @@ public class AccountResp
     /// 是否是管理员
     /// </summary>
     public bool IsAdmin { get; set; }
+
+
+    /// <summary>
+    /// 账号类型
+    /// </summary>
+    public AccountType AccountType { get; set; }
 }
 
 public enum AccountStatus

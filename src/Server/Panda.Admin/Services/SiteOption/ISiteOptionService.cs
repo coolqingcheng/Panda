@@ -8,7 +8,7 @@ using Panda.Tools.Extensions;
 using System.Linq;
 using System.Reflection;
 
-namespace Panda.Site.Areas.Admin.Services.SiteOption
+namespace Panda.Admin.Services.SiteOption
 {
     public interface ISiteOptionService
     {

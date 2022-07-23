@@ -1,0 +1,16 @@
+
+<form nz-form [formGroup]="formGroup" nzLayout="vertical" (ngSubmit)="send()">
+    <nz-form-item>
+        <nz-form-label nzRequired>邮箱</nz-form-label>
+        <nz-form-control [nzErrorTip]="emailTmp">
+            <input nz-input type="email" formControlName="email" />
+            <ng-template #emailTmp let-control>
+                <ng-container *ngIf="control.hasError('required')">邮箱不能为空</ng-container>
+                <ng-container *ngIf="control.hasError('email')">邮箱格式错误</ng-container>
+            </ng-template>
+        </nz-form-control>
+    </nz-form-item>
+    <p-form-submit-box>
+        <button nz-button [disabled]="!formGroup.valid" [nzLoading]="loading">确定</button>
+    </p-form-submit-box>
+</form>

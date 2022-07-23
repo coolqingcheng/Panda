@@ -1,8 +1,9 @@
 ﻿using System.Reflection;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Panda.Admin.Services.SiteOption;
+using Panda.Entity.CommonModel.Setting;
 using Panda.Site.Areas.Admin.Models;
-using Panda.Site.Areas.Admin.Services.SiteOption;
 using Panda.Tools.Attributes;
 using Panda.Tools.Auth.Controllers;
 

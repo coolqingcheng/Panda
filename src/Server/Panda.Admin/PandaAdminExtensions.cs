@@ -14,8 +14,10 @@ using Panda.Admin.Controllers;
 using Panda.Admin.Repositorys;
 using Panda.Admin.Repositorys.DicData;
 using Panda.Admin.Services.Account;
+using Panda.Admin.Services.Email;
 using Panda.Admin.Services.Statistics;
 using Panda.Tools;
+using Panda.Tools.Email;
 using Panda.Tools.Filter;
 using Panda.Tools.NLog;
 using Panda.Tools.Web;
@@ -35,6 +37,7 @@ public static class PandaAdminExtensions
         services.AddScoped<IAccountService, AccountService>();
         services.AddScoped<DbContext>(a => a.GetService<T>()!);
         services.AddScoped<IStatisticUtils, StatisticUtils>();
+        services.AddScoped<IEmailSender, SiteOptionEmailSender>();
         services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(opt =>
             {

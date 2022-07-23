@@ -23,6 +23,7 @@ export * from './commentSubmitModel';
 export * from './createAccountModel';
 export * from './createAdminAccountRequest';
 export * from './dateType';
+export * from './emailSendModel';
 export * from './emailSettingModel';
 export * from './friendLinkAuditRequest';
 export * from './friendlyLinkResponse';
