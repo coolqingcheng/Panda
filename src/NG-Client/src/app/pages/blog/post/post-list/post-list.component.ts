@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { finalize } from 'rxjs';
+import { PCropperComponent } from 'src/app/components/panda/p-cropper/p-cropper.component';
 import { AdminCategoryItem, AdminPostItemResponse, PostService } from 'src/app/net';
 import { BaseTableComponent } from 'src/app/shared/BaseTableComponent';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -16,7 +18,8 @@ export class PostListComponent extends BaseTableComponent implements OnInit {
 
   constructor(
     private post: PostService,
-    private auth:AuthService
+    private auth: AuthService,
+    private modal: NzModalService
   ) {
     super(() => {
       this.getData();
@@ -45,5 +48,6 @@ export class PostListComponent extends BaseTableComponent implements OnInit {
     }
 
   }
+
 
 }

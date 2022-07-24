@@ -21,7 +21,7 @@ export class appAuthDirective {
   $name = "";
 
   @Input("appAuth") set appAuth(name: string) {
-    console.log('status:' + status)
+    // console.log('status:' + status)
     this.$name = name;
     this.updateStatus();
   }

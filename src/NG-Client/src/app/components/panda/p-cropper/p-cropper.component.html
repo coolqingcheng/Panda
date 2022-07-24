@@ -1,1 +1,8 @@
-<p>p-cropper works!</p>
+<nz-spin [nzSpinning]="loading">
+    <div class="cropper-box">
+        <img class="cropper-img" #img [src]="imgData">
+    </div>
+    <p-form-submit-box>
+        <button nz-button nzType="primary" (click)="getImageData()">确定</button>
+    </p-form-submit-box>
+</nz-spin>

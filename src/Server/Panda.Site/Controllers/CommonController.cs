@@ -46,7 +46,7 @@ public class CommonController : Controller
         if (files[0].Length >= 1024 * 1024 * 8) //图片不能大于4M
             throw new UserException("图片不能大于4M");
 
-        var list = new List<string> {"jpg", "png", "jpeg", "gif"};
+        var list = new List<string> { "jpg", "png", "jpeg", "gif" };
         var regex = Regex.Match(files[0].FileName, @"[^\.]\w*$");
         if (regex.Success == false || list.Contains(regex.Value) == false) throw new UserException("文件格式不支持！");
 
@@ -55,7 +55,7 @@ public class CommonController : Controller
         var readAsync = await stream.ReadAsync(buffer);
         // todo 图片水印功能
         var file = await _fileStorage.SaveAsync(buffer, $"{Md5Helper.ComputeHash(buffer)[..10]}.{regex.Value}");
-        if (file.Success == false) return new UploadResult {Code = 1, Message = file.Message};
+        if (file.Success == false) return new UploadResult { Code = 1, Message = file.Message };
 
         return new UploadResult
         {
@@ -70,8 +70,8 @@ public class CommonController : Controller
     /// <param name="request"></param>
     /// <returns></returns>
     [IgnoreAntiforgeryToken]
-    [HttpPost("/uploadbase64")]
-    public async Task<UploadResult> UploadBase64(UploadBase64Model request)
+    [HttpPost("admin/upload/base64")]
+    public async Task<UploadResult> UploadBase64([FromForm] UploadBase64Model request)
     {
         var bytes = Convert.FromBase64String(Base64Utils.GetBase64byImage(request.Base64));
         request.Base64 = ImageUtils.GetPicThumbnail(bytes, request.W, request.H);
@@ -79,7 +79,7 @@ public class CommonController : Controller
         var extName = MimeUtils.GetMimeExtName(mime);
         ;
         var file = await _fileStorage.SaveAsync(bytes, $"{Md5Helper.ComputeHash(bytes)[..10]}.{extName}");
-        if (file.Success == false) return new UploadResult {Code = 1, Message = file.Message};
+        if (file.Success == false) return new UploadResult { Code = 1, Message = file.Message };
 
         return new UploadResult
         {

@@ -4,6 +4,7 @@ import { PVditorComponent } from './p-vditor/p-vditor.component';
 import { PCropperComponent } from './p-cropper/p-cropper.component';
 
 import { NzSpinComponent, NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import { PSearchBoxComponent } from './p-search-box/p-search-box.component';
 import { PFormSubmitBoxComponent } from './p-form-submit-box/p-form-submit-box.component'
 
@@ -18,7 +19,8 @@ import { PFormSubmitBoxComponent } from './p-form-submit-box/p-form-submit-box.c
   ],
   imports: [
     CommonModule,
-    NzSpinModule
+    NzSpinModule,
+    NzButtonModule
   ],
   exports: [
     PVditorComponent,

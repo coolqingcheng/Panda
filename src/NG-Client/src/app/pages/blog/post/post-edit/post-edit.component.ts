@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzUploadChangeParam } from 'ng-zorro-antd/upload';
-import { finalize } from 'rxjs';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
+import { finalize, Observable, Observer } from 'rxjs';
+import { PCropperComponent } from 'src/app/components/panda/p-cropper/p-cropper.component';
 import { CategoryService, PostService, TagService } from 'src/app/net';
 
 @Component({
@@ -24,7 +26,8 @@ export class PostEditComponent implements OnInit {
     private routeActivate: ActivatedRoute,
     private post: PostService,
     private message: NzMessageService,
-    private router: Router
+    private router: Router,
+    private modal: NzModalService
   ) {
     this.formGroup = this.fb.group({
       id: [0],
@@ -140,6 +143,33 @@ export class PostEditComponent implements OnInit {
     }
   }
 
+  copperFile = (file: NzUploadFile) => {
+    return new Observable((observer: Observer<string>) => {
+      const reader = new FileReader();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      reader.readAsDataURL(file as any);
+      reader.onload = () => {
+        let imgData = reader.result as string
+        console.log(imgData)
+        let modal = this.modal.create({
+          nzContent: PCropperComponent,
+          nzTitle: '选择封面图',
+          nzComponentParams: {
+            width: 200, height: 200,
+            imgData: imgData
+          }, nzFooter: null
+        })
+        modal.afterClose.subscribe((res: { success: Boolean, data: string }) => {
+          if (res && res.success) {
+            console.log('选择图片:' + res.data)
+            observer.next(res.data)
+            observer.complete()
+          }
+        })
+      }
+    })
+  }
+
   saving = false
 
   saveDrafting = false;
@@ -160,6 +190,7 @@ export class PostEditComponent implements OnInit {
     this.saveDrafting = true;
     this.saveServer();
   }
+
 
   saveServer() {
     this.post.adminPostAddOrUpdatePost(

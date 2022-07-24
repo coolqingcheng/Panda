@@ -44,7 +44,7 @@
         </nz-form-label>
         <nz-form-control>
           <nz-spin [nzSpinning]="uploading">
-            <nz-upload nzAction="/admin/upload" (nzChange)="uploadChange($event)" [nzShowUploadList]="false">
+            <nz-upload nzAction="/admin/upload/base64" nzName="base64" (nzChange)="uploadChange($event)" [nzShowUploadList]="false" [nzTransformFile]="copperFile">
               <ng-container *ngIf="!coverUrl">
                 <button nz-button>
                   <i nz-icon nzType="upload"></i>
