@@ -201,6 +201,7 @@ export class PostEditComponent implements OnInit {
     })).subscribe(_ => {
       this.message.success('保存成功')
       this.formGroup.reset()
+      this.coverUrl = '';
       this.backToList();
     })
   }
