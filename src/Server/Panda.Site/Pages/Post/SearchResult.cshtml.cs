@@ -5,11 +5,7 @@ namespace Panda.Site.Pages.Post;
 
 public class SearchResult : PageModel
 {
-    private LuceneHelper _luceneHelper;
-    public SearchResult(LuceneHelper luceneHelper)
-    {
-        _luceneHelper = luceneHelper;
-    }
+    
     public void OnGet(string keyword)
     {
         // _luceneHelper.WriteDocument("http://www.baidu.com","百度一下","百度是最大的中文搜索引擎");

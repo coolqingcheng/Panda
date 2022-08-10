@@ -7,13 +7,10 @@ using Panda.Site;
 using Panda.Tools;
 using Panda.Tools.Exception;
 using Microsoft.AspNetCore.HttpOverrides;
-<<<<<<< HEAD
 using Panda.Site.Services.SearchService;
-using Panda.Tools.Lucene;
-=======
+
 using Panda.Site.Filter;
 using Panda.Site.Worker;
->>>>>>> 0c8cf9c7ae573ee15c5659530e87868a8cf353f7
 
 var builder = WebApplication.CreateBuilder(args);
 
