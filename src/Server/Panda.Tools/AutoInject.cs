@@ -38,6 +38,7 @@ public static class AutoInject
     private static void Inject(IServiceCollection serviceCollection, Type type, Type impInterface)
     {
         var att = type.GetCustomAttribute<AutoInjectScopeAttribute>();
+        Console.WriteLine($"注入{type.FullName} -> {impInterface.FullName}");
         if (att != null)
             switch (att)
             {

@@ -88,8 +88,7 @@ public static class PandaAdminExtensions
             }
         });
         // Add services to the container.
-        services.AddRazorPages()
-            .AddMvcOptions(opt => { opt.Filters.Add<StatisticFilter>(); });
+      
         services.AddAutoInject(opt =>
         {
             opt.Options.Add(new AutoInjectOptionItem

@@ -15,7 +15,7 @@ public static class PandaToolsExtension
         serviceCollection.AddScoped<IEmailSender, DefaultEmailSender>();
         serviceCollection.AddScoped<IFileStorage, LocalFileStorage>();
         serviceCollection.AddSingleton<IpHelper>();
-        serviceCollection.UsePermission();
+        serviceCollection.AddPermission();
         return serviceCollection;
     }
 

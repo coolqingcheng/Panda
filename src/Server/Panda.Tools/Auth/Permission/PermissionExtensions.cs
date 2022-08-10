@@ -22,7 +22,7 @@ public static class PermissionExtensions
         app.UseMiddleware<PermissionMiddleware>();
     }
 
-    public static void UsePermission(this IServiceCollection collection)
+    public static void AddPermission(this IServiceCollection collection)
     {
         collection.AddSingleton<IPermissionScan>(new PermissionScan());
         collection.AddScoped<IPermissionUtils, PermissionUtils>();

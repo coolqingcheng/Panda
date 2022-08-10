@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Panda.Site.Services.Post;
 using Panda.Tools.Web.RSS;
 
@@ -12,7 +13,7 @@ public class RssController : Controller
     {
         _postService = postService;
     }
-
+    [AllowAnonymous]
     [HttpGet("/feed")]
     public async Task<IActionResult> Index()
     {

@@ -13,12 +13,11 @@ namespace Panda.Admin.Services.Statistics
 {
     public class StatisticUtils : IStatisticUtils
     {
+        private readonly DbContext _db;
 
-        private readonly IServiceProvider _serviceProvider;
-
-        public StatisticUtils(IServiceProvider serviceProvider)
+        public StatisticUtils(DbContext db)
         {
-            _serviceProvider = serviceProvider;
+            _db = db;
         }
 
         public async Task Save(StatisticModel model)
@@ -33,10 +32,8 @@ namespace Panda.Admin.Services.Statistics
                 Referer = model.Referer,
                 Url = model.Url
             };
-            using var scope = _serviceProvider.CreateScope();
-            var db = scope.ServiceProvider.GetService<DbContext>();
-            db!.Set<AccessStatistic>().Add(item);
-            var count = await db.SaveChangesAsync();
+            _db!.Set<AccessStatistic>().Add(item);
+            var count = await _db.SaveChangesAsync();
         }
     }
 }
