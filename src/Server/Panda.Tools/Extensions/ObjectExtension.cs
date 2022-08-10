@@ -7,7 +7,6 @@ namespace Panda.Tools.Extensions
 {
     public static class ObjectExtension
     {
-
         /// <summary>
         /// 根据属性名获取属性值
         /// </summary>
@@ -23,6 +22,7 @@ namespace Panda.Tools.Extensions
             {
                 throw new UserException(String.Format("该类型没有名为{0}的属性", name));
             }
+
             var param_obj = Expression.Parameter(typeof(T));
             var param_val = Expression.Parameter(typeof(object));
 
@@ -60,29 +60,25 @@ namespace Panda.Tools.Extensions
             var setMethod = p.GetSetMethod(true);
 
             //如果只是只读,则setMethod==null
-            if (setMethod != null)
+            if (setMethod == null) return;
+            var body = Expression.Call(param_obj, p.GetSetMethod(), body_val);
+            var setValue = Expression.Lambda<Action<T, object>>(body, param_obj, param_val).Compile();
+            if (p.PropertyType == typeof(Int32))
             {
-                var body = Expression.Call(param_obj, p.GetSetMethod(), body_val);
-                var setValue = Expression.Lambda<Action<T, object>>(body, param_obj, param_val).Compile();
-                if (p.PropertyType == typeof(Int32))
-                {
-
-                    setValue(t, Convert.ToInt32(value));
-                }
-                else
-                if (p.PropertyType == typeof(Boolean))
-                {
-                    setValue(t, Convert.ToBoolean(value));
-                }
-                else
-                {
-
-                    setValue(t, value);
-                }
+                setValue(t, Convert.ToInt32(value));
+            }
+            else if (p.PropertyType == typeof(Boolean))
+            {
+                setValue(t, Convert.ToBoolean(value));
+            }
+            else if (p.PropertyType == typeof(string))
+            {
+                setValue(t, value.ToString() ?? string.Empty);
+            }
+            else
+            {
+                setValue(t, value);
             }
         }
-
-
     }
 }
-

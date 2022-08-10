@@ -8,6 +8,8 @@ using Panda.Tools;
 using Panda.Tools.QueueTask;
 using Panda.Tools.Exception;
 using Microsoft.AspNetCore.HttpOverrides;
+using Panda.Site.Services.SearchService;
+using Panda.Tools.Lucene;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +25,9 @@ services.AddDbContext<PandaContext>(
     opt =>
     {
         var envMysql = Environment.GetEnvironmentVariable("MYSQL", EnvironmentVariableTarget.Process);
-        var db = string.IsNullOrWhiteSpace(envMysql) == false ? envMysql : builder.Configuration.GetConnectionString("MYSQL");
+        var db = string.IsNullOrWhiteSpace(envMysql) == false
+            ? envMysql
+            : builder.Configuration.GetConnectionString("MYSQL");
         opt.UseLazyLoadingProxies()
             .UseMySql(db, ServerVersion.AutoDetect(db))
             .EnableSensitiveDataLogging()
@@ -35,6 +39,7 @@ services.AddDbContext<PandaContext>(
 services.AddConfig(builder.Configuration);
 services.AddQueueTask();
 services.AddTools();
+services.AddSingleton<SiteSearch>();
 services.AddAutoInject(opt =>
 {
     opt.Options.Add(new AutoInjectOptionItem
@@ -54,6 +59,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     // app.UseHsts();
 }
+
 app.UseForwardedHeaders();
 app.UseSwagger();
 app.UseSwaggerUI();
