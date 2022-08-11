@@ -2,6 +2,7 @@
 using Hangfire.Annotations;
 using Hangfire.Dashboard;
 using Hangfire.MemoryStorage;
+using Panda.Site.Jobs;
 using Panda.Tools.Extensions;
 
 namespace Panda.Site.Extensions
@@ -14,6 +15,7 @@ namespace Panda.Site.Extensions
             {
                 config.UseMemoryStorage();
             });
+            services.AddScoped<PostIndexCreator>();
             services.AddHangfireServer();
             return services;
         }
@@ -24,6 +26,7 @@ namespace Panda.Site.Extensions
             {
                 Authorization = new[] { new HangFireAuth() }
             });
+            SiteJobs.Init();
         }
     }
 
