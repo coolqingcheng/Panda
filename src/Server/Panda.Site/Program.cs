@@ -11,6 +11,7 @@ using Panda.Site.Services.SearchService;
 
 using Panda.Site.Filter;
 using Panda.Site.Worker;
+using Panda.Site.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,6 +51,8 @@ services.AddAutoInject(opt =>
     });
 });
 
+services.AddHangFireEx();
+
 
 builder.AddAdmin<PandaContext>();
 var app = builder.Build();
@@ -75,8 +78,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseHangFireEx();
 app.UseTools();
-
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(

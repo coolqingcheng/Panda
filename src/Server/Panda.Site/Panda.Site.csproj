@@ -21,6 +21,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Hangfire" Version="1.7.30" />
+      <PackageReference Include="Hangfire.AspNetCore" Version="1.7.30" />
+      <PackageReference Include="Hangfire.MemoryStorage" Version="1.7.0" />
       <PackageReference Include="Markdig.Signed" Version="0.30.2" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="6.0.7" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.7">
