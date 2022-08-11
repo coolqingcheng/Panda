@@ -40,6 +40,10 @@
             <i nz-icon nzType="user" nzTheme="outline"></i>
             <span> <a routerLink="/admin/sys/account/list">用户管理</a></span>
           </li>
+          <li nz-menu-item nzMatchRouter>
+            <i nz-icon nzType="user" nzTheme="outline" *appAuth="'hangfire'"></i>
+            <span> <a href="/hangfire" target="_blank">后台任务</a></span>
+          </li>
         </ul>
       </li>
     </ul>
