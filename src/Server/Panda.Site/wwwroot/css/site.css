@@ -29,6 +29,14 @@ body {
 .footer p {
   height: 1.2rem; }
 
+.post-list {
+  margin-bottom: 2rem;
+  transform: translateY(0);
+  transition: 0.5s all ease-in-out; }
+  .post-list:hover {
+    transform: translateY(8px);
+    transition: 0.5s all ease-in-out; }
+
 .post-list-item {
   display: flex;
   flex-direction: row;
@@ -66,11 +74,8 @@ body {
         transition: .5s all linear; }
         .post-list-item .item .top .title a {
           text-decoration: none; }
-        .post-list-item .item .top .title:hover {
-          transform: translateX(1.5rem);
-          transition: .3s all linear; }
-          .post-list-item .item .top .title:hover a {
-            text-decoration: underline; }
+        .post-list-item .item .top .title:hover a {
+          text-decoration: underline; }
     .post-list-item .item .info-bar {
       padding-left: 0.6rem;
       box-sizing: border-box; }
