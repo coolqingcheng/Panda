@@ -15,7 +15,7 @@ using Panda.Tools.Extensions;
 
 namespace Panda.Tools.Lucene;
 
-public abstract class LuceneHelper : IDisposable
+public abstract class LuceneHelper<T> : IDisposable where T : class, new()
 {
     private readonly IndexWriter _writer;
     private readonly Analyzer _analyzer;
@@ -35,41 +35,44 @@ public abstract class LuceneHelper : IDisposable
     /// <param name="model"></param>
     /// <typeparam name="T"></typeparam>
     /// <exception cref="ArgumentException"></exception>
-    public void WriteDocument<T>(T model) where T : class, new()
+    public void WriteDocuments<T>(IEnumerable<T> list) where T : class, new()
     {
-        var properties = typeof(T).GetProperties();
-        var key = properties.FirstOrDefault(a => a.GetCustomAttribute<LuceneIndex>()?.IsKey == true);
-        if (key == null)
+        foreach (var item in list)
         {
-            throw new ArgumentException($"{typeof(T).Name}没有key");
-        }
-
-        _writer.DeleteDocuments(new Term(key.Name, model.GetPropertyValue(key.Name).ToString()));
-
-
-        var doc = new Document();
-        foreach (var property in properties)
-        {
-            var att = property.GetCustomAttribute<LuceneIndex>();
-            var name = property.Name;
-            var value = model.GetPropertyValue(name);
-            if (att is { IndexType: IndexType.String })
+            var properties = item.GetType().GetProperties();
+            var key = properties.FirstOrDefault(a => a.GetCustomAttribute<LuceneIndexAttribute>()?.IsKey == true);
+            if (key == null)
             {
-                doc.Add(new StringField(name, value.ToString(), Field.Store.YES));
+                throw new ArgumentException($"{typeof(T).Name}没有key");
             }
 
-            if (att is { IndexType: IndexType.Text })
-            {
-                doc.Add(new TextField(name, value.ToString(), Field.Store.YES));
-            }
-        }
+            _writer.DeleteDocuments(new Term(key.Name, item.GetPropertyValue(key.Name).ToString()));
 
-        _writer.AddDocument(doc);
+
+            var doc = new Document();
+            foreach (var property in properties)
+            {
+                var att = property.GetCustomAttribute<LuceneIndexAttribute>();
+                var name = property.Name;
+                var value = item.GetPropertyValue(name);
+                if (att is { IndexType: IndexType.String })
+                {
+                    doc.Add(new StringField(name, value.ToString(), Field.Store.YES));
+                }
+
+                if (att is { IndexType: IndexType.Text })
+                {
+                    doc.Add(new TextField(name, value.ToString(), Field.Store.YES));
+                }
+            }
+
+            _writer.AddDocument(doc);
+        }
         _writer.Flush(triggerMerge: true, applyAllDeletes: true);
         _writer.Commit();
     }
 
-    public void WriteDocument(string url, string title, string description)
+    private void WriteDocument(string url, string title, string description)
     {
         _writer.DeleteDocuments(new Term("url", url));
 
@@ -96,7 +99,14 @@ public abstract class LuceneHelper : IDisposable
         return result;
     }
 
-    public IEnumerable<T> Search<T>(string q, int pageIndex, int pageSize) where T : class, new()
+    public void DeleteAll()
+    {
+        _writer.DeleteAll();
+        _writer.Flush(triggerMerge: true, applyAllDeletes: true);
+        _writer.Commit();
+    }
+
+    public IEnumerable<T> Search(string q, int pageIndex, int pageSize)
     {
         var reader = _writer.GetReader(applyAllDeletes: true);
         var searcher = new IndexSearcher(reader);
@@ -107,7 +117,7 @@ public abstract class LuceneHelper : IDisposable
         {
             foreach (var propertyInfo in type.GetProperties())
             {
-                var att = propertyInfo.GetCustomAttribute<LuceneIndex>();
+                var att = propertyInfo.GetCustomAttribute<LuceneIndexAttribute>();
 
                 if (att is { IndexType: IndexType.Text })
                 {
@@ -148,6 +158,8 @@ public abstract class LuceneHelper : IDisposable
 
         var hits = docs.ScoreDocs;
 
+       
+
         foreach (var hit in hits)
         {
             var document = searcher.Doc(hit.Doc);
@@ -155,7 +167,7 @@ public abstract class LuceneHelper : IDisposable
             foreach (var propertyInfo in t.GetType().GetProperties())
             {
                 var value = document.Get(propertyInfo.Name);
-                if (propertyInfo.GetCustomAttribute<LuceneIndex>()?.IndexType == IndexType.Text)
+                if (propertyInfo.GetCustomAttribute<LuceneIndexAttribute>()?.IndexType == IndexType.Text)
                 {
                     value = lighter.GetBestFragment(_analyzer, propertyInfo.Name, value);
                 }

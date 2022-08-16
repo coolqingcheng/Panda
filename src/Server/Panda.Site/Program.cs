@@ -7,7 +7,6 @@ using Panda.Site;
 using Panda.Tools;
 using Panda.Tools.Exception;
 using Microsoft.AspNetCore.HttpOverrides;
-using Panda.Site.Services.SearchService;
 
 using Panda.Site.Filter;
 using Panda.Site.Worker;
@@ -43,7 +42,6 @@ services.AddRazorPages()
           .AddMvcOptions(opt => { opt.Filters.Add<StatisticFilter>(); });
 services.AddConfig(builder.Configuration);
 services.AddTools();
-services.AddSingleton<SiteSearch>();
 services.AddAutoInject(opt =>
 {
     opt.Options.Add(new AutoInjectOptionItem
@@ -53,7 +51,7 @@ services.AddAutoInject(opt =>
 });
 
 services.AddHangFireEx();
-
+services.AddSiteLuceneIndex();
 
 builder.AddAdmin<PandaContext>();
 var app = builder.Build();

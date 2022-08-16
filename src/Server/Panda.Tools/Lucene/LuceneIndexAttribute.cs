@@ -1,6 +1,6 @@
 namespace Panda.Tools.Lucene;
 
-public class LuceneIndex : Attribute
+public class LuceneIndexAttribute : Attribute
 {
     public bool IsKey { get; set; }
 
@@ -9,6 +9,12 @@ public class LuceneIndex : Attribute
 
 public enum IndexType
 {
+    /// <summary>
+    /// 会分词
+    /// </summary>
     Text,
+    /// <summary>
+    /// 不会分词
+    /// </summary>
     String
 }

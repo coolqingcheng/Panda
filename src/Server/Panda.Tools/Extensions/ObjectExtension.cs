@@ -22,16 +22,26 @@ namespace Panda.Tools.Extensions
             {
                 throw new UserException(String.Format("该类型没有名为{0}的属性", name));
             }
-
             var param_obj = Expression.Parameter(typeof(T));
-            var param_val = Expression.Parameter(typeof(object));
+            if (p.PropertyType == typeof(DateTime))
+            {
+                var param_val = Expression.Parameter(typeof(DateTime));
+                //转成真实类型，防止Dynamic类型转换成object
+                var body_obj = Expression.Convert(param_obj, type);
+                var body = Expression.Property(body_obj, p);
+                var getValue = Expression.Lambda<Func<T, DateTime>>(body, param_obj).Compile();
+                return getValue(t);
+            }
+            else
+            {
 
-            //转成真实类型，防止Dynamic类型转换成object
-            var body_obj = Expression.Convert(param_obj, type);
-
-            var body = Expression.Property(body_obj, p);
-            var getValue = Expression.Lambda<Func<T, object>>(body, param_obj).Compile();
-            return getValue(t);
+                var param_val = Expression.Parameter(typeof(object));
+                //转成真实类型，防止Dynamic类型转换成object
+                var body_obj = Expression.Convert(param_obj, type);
+                var body = Expression.Property(body_obj, p);
+                var getValue = Expression.Lambda<Func<T, object>>(body, param_obj).Compile();
+                return getValue(t);
+            }
         }
 
         /// <summary>

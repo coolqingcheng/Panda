@@ -9,6 +9,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="Lucene_Index\**" />
+      <Content Remove="Lucene_Index\**" />
+      <EmbeddedResource Remove="Lucene_Index\**" />
+      <None Remove="Lucene_Index\**" />
+    </ItemGroup>
+
+    <ItemGroup>
       <Content Remove="compilerconfig.json" />
     </ItemGroup>
     <ItemGroup>
