@@ -35,7 +35,7 @@ public abstract class LuceneHelper<T> : IDisposable where T : class, new()
     /// <param name="model"></param>
     /// <typeparam name="T"></typeparam>
     /// <exception cref="ArgumentException"></exception>
-    public void WriteDocuments<T>(IEnumerable<T> list) where T : class, new()
+    public virtual void WriteDocuments<T>(IEnumerable<T> list) where T : class, new()
     {
         foreach (var item in list)
         {
@@ -106,7 +106,7 @@ public abstract class LuceneHelper<T> : IDisposable where T : class, new()
         _writer.Commit();
     }
 
-    public IEnumerable<T> Search(string q, int pageIndex, int pageSize)
+    public virtual IEnumerable<T> Search(string q, int pageIndex, int pageSize)
     {
         var reader = _writer.GetReader(applyAllDeletes: true);
         var searcher = new IndexSearcher(reader);
