@@ -85,6 +85,10 @@ namespace Panda.Tools.Extensions
             {
                 setValue(t, value.ToString() ?? string.Empty);
             }
+            else if (p.PropertyType == typeof(DateTime))
+            {
+                setValue(t, Convert.ToDateTime(value));
+            }
             else
             {
                 setValue(t, value);

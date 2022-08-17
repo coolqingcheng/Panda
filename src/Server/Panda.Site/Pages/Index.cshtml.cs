@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Panda.Entity.DataModels;
+using Panda.Site.Jobs;
 using Panda.Site.Models;
 using Panda.Tools.Extensions;
 
@@ -13,10 +14,14 @@ public class IndexModel : PageModel
 
     private readonly DbContext _dbContext;
 
+    private readonly PostLuceneIndex _postLucene;
+
     public IndexModel(ILogger<IndexModel> logger, DbContext dbContext)
     {
         _logger = logger;
         _dbContext = dbContext;
+        _postLucene = postLucene;
+        
     }
 
     /// <summary>

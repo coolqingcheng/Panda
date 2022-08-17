@@ -106,7 +106,14 @@ public abstract class LuceneHelper<T> : IDisposable where T : class, new()
         _writer.Commit();
     }
 
-    public virtual IEnumerable<T> Search(string q, int pageIndex, int pageSize)
+    public class SearchResult<T>
+    {
+        public int Total { get; set; }
+
+        public List<T> list { get; set; }
+    }
+
+    public virtual SearchResult<T> Search(string q, int pageIndex, int pageSize)
     {
         var reader = _writer.GetReader(applyAllDeletes: true);
         var searcher = new IndexSearcher(reader);
@@ -158,7 +165,7 @@ public abstract class LuceneHelper<T> : IDisposable where T : class, new()
 
         var hits = docs.ScoreDocs;
 
-       
+        var list = new List<T>();
 
         foreach (var hit in hits)
         {
@@ -177,9 +184,13 @@ public abstract class LuceneHelper<T> : IDisposable where T : class, new()
                     t.SetPropertyValue(propertyInfo.Name, value);
                 }
             }
-
-            yield return t;
+            list.Add(t);
         }
+        return new SearchResult<T>()
+        {
+            Total = docs.TotalHits,
+            list = list
+        };
     }
 
     public void Dispose()
