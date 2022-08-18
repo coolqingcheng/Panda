@@ -27,14 +27,14 @@ namespace Panda.Site.Jobs
 
         public async Task Exec()
         {
+
             const string INDEX_TIME_UPDATE_TIME = "INDEX_TIME_UPDATE_TIME";
             _logger.LogInformation("开始执行索引创建");
-
             var lastTime = await _optionService.GetDateTime(INDEX_TIME_UPDATE_TIME);
 
             if (lastTime == null)
             {
-                lastTime = await _dbContext.Set<Posts>().Where(a => a.Status == PostStatus.Publish).OrderByDescending(a => a.UpdateTime).Select(a => a.UpdateTime).FirstOrDefaultAsync();
+                lastTime = await _dbContext.Set<Posts>().Where(a => a.Status == PostStatus.Publish).AsNoTracking().OrderBy(a => a.UpdateTime).Select(a => a.UpdateTime).FirstOrDefaultAsync();
             }
             _logger.LogInformation($"索引时间范围:{lastTime}");
             var list = await _dbContext.Set<Posts>().Where(a => a.UpdateTime >= lastTime && a.Status == PostStatus.Publish).AsNoTracking().Select(a => new PostFullIndexModel()

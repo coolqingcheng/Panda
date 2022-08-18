@@ -184,7 +184,11 @@ public abstract class LuceneHelper<T> : IDisposable where T : class, new()
                 var value = document.Get(propertyInfo.Name);
                 if (propertyInfo.GetCustomAttribute<LuceneIndexAttribute>()?.IndexType == IndexType.Text)
                 {
-                    value = lighter.GetBestFragment(_analyzer, propertyInfo.Name, value);
+                    var lighterText = lighter.GetBestFragment(_analyzer, propertyInfo.Name, value);
+                    if (string.IsNullOrWhiteSpace(lighterText) == false)
+                    {
+                        value = lighterText;
+                    }
                 }
 
                 if (string.IsNullOrWhiteSpace(value) == false)
