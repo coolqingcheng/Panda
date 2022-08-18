@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Panda.Admin.Services.SiteOption;
 using Panda.Entity.DataModels;
 using Panda.Site.Models.FullIndexModel;
 using Panda.Tools.Lucene;
@@ -13,25 +14,25 @@ namespace Panda.Site.Jobs
 
         private readonly PostLuceneIndex _postLucene;
 
+        private readonly ISiteOptionService _optionService;
 
-        public PostIndexCreator(DbContext dbContext, ILogger<PostIndexCreator> logger, PostLuceneIndex postLucene)
+
+        public PostIndexCreator(DbContext dbContext, ILogger<PostIndexCreator> logger, PostLuceneIndex postLucene, ISiteOptionService optionService)
         {
             _dbContext = dbContext;
             _logger = logger;
             _postLucene = postLucene;
+            _optionService = optionService;
         }
 
         public async Task Exec()
         {
-            const string INDEX_TIME_PATH = "./Content/last_index.txt";
+            const string INDEX_TIME_UPDATE_TIME = "INDEX_TIME_UPDATE_TIME";
             _logger.LogInformation("开始执行索引创建");
-            if (File.Exists(INDEX_TIME_PATH) == false)
-            {
-                File.Create(INDEX_TIME_PATH);
-            }
-            var time = await File.ReadAllTextAsync(INDEX_TIME_PATH);
 
-            if (DateTime.TryParse(time, out var lastTime) == false)
+            var lastTime = await _optionService.GetDateTime(INDEX_TIME_UPDATE_TIME);
+
+            if (lastTime == null)
             {
                 lastTime = await _dbContext.Set<Posts>().Where(a => a.Status == PostStatus.Publish).OrderByDescending(a => a.UpdateTime).Select(a => a.UpdateTime).FirstOrDefaultAsync();
             }
@@ -46,7 +47,9 @@ namespace Panda.Site.Jobs
             _logger.LogInformation("索引写入条数:" + list.Count);
             _postLucene.WriteDocuments(list);
             _logger.LogInformation("写入索引完成");
-            await File.WriteAllTextAsync(INDEX_TIME_PATH, DateTime.Now.ToString());
+            var dic = new Dictionary<string, string>();
+            dic.Add(INDEX_TIME_UPDATE_TIME, DateTime.Now.ToString());
+            await _optionService.AddOrUpdate(dic);
             _logger.LogInformation("修改索引更新时间完成");
         }
     }

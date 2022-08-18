@@ -21,6 +21,8 @@ namespace Panda.Admin.Services.SiteOption
         Task<string> GetString(string key, string defaultValue);
 
         Task<Dictionary<string, string>> GetAll();
+
+        Task<DateTime?> GetDateTime(string key);
     }
 
     public class SiteOptionService : ISiteOptionService
@@ -153,6 +155,18 @@ namespace Panda.Admin.Services.SiteOption
             }
 
             return item;
+        }
+
+        public async Task<DateTime?> GetDateTime(string key)
+        {
+            var item = await GetAsync(key);
+            if (item == null)
+            {
+                return null;
+            }
+
+            return DateTime.Parse(item);
+
         }
     }
 

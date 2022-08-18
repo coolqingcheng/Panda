@@ -37,6 +37,9 @@ namespace Panda.Site.Extensions
         {
             var httpContext = context.GetHttpContext();
 
+#if DEBUG
+            return true;
+#endif
             // Allow all authenticated users to see the Dashboard (potentially dangerous).
             return httpContext.IsAdmin();
         }

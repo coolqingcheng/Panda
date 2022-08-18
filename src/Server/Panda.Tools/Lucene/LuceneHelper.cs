@@ -53,8 +53,16 @@ public abstract class LuceneHelper<T> : IDisposable where T : class, new()
             foreach (var property in properties)
             {
                 var att = property.GetCustomAttribute<LuceneIndexAttribute>();
+                if (att == null)
+                {
+                    continue;
+                }
                 var name = property.Name;
                 var value = item.GetPropertyValue(name);
+                if (value == null)
+                {
+                    value = "";
+                }
                 if (att is { IndexType: IndexType.String })
                 {
                     doc.Add(new StringField(name, value.ToString(), Field.Store.YES));
