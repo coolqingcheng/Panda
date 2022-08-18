@@ -21,8 +21,11 @@ public class SearchResult : PageModel
 
     public List<PostListItem> ListItems { get; set; }
 
+    public string Keyword { get; set; }
+
     public void OnGet(string keyword, int index = 1)
     {
+        Keyword = keyword;
         var result = _postLucene.Search(keyword, index, 10);
         CurrIndex = index;
         Count = result.Total;
