@@ -14,13 +14,11 @@ public class IndexModel : PageModel
 
     private readonly DbContext _dbContext;
 
-    private readonly PostLuceneIndex _postLucene;
 
     public IndexModel(ILogger<IndexModel> logger, DbContext dbContext)
     {
         _logger = logger;
         _dbContext = dbContext;
-        _postLucene = postLucene;
         
     }
 

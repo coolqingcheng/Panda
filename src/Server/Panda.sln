@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Site", "Panda.Site\Pa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{BAB2AF61-2A74-4E9A-B801-1CB640DCA6E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Tools.Test", "Test\Panda.Tools.Test\Panda.Tools.Test.csproj", "{A27F87F4-7B9B-48A9-9F7A-F7702FF336E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Tools.Test", "Test\Panda.Tools.Test\Panda.Tools.Test.csproj", "{A27F87F4-7B9B-48A9-9F7A-F7702FF336E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,10 +51,10 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {A0E89D0A-5588-470B-927B-9098ECCE9947}
-	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A27F87F4-7B9B-48A9-9F7A-F7702FF336E9} = {BAB2AF61-2A74-4E9A-B801-1CB640DCA6E9}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A0E89D0A-5588-470B-927B-9098ECCE9947}
 	EndGlobalSection
 EndGlobal

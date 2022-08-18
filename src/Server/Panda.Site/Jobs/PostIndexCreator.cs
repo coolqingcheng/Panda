@@ -40,7 +40,7 @@ namespace Panda.Site.Jobs
             {
                 LinkId = a.CustomLink,
                 Title = a.Title,
-                Content = a.Content,
+                Content = a.Text,
                 LastUpdateTime = a.UpdateTime
             }).ToListAsync();
             _logger.LogInformation("索引写入条数:" + list.Count);

@@ -12,7 +12,7 @@
         <div class="item">
             <div class="top">
                 <div class="title">
-                    <a href="/post/@(Model.Link).html" class="text-black">@Model.Title</a>
+                    <a href="/post/@(Model.Link).html" class="text-black">@Html.Raw(Model.Title)</a>
                 </div>
                 <div class="summary text-secondary">
                     @Html.Raw(Model.Summay)

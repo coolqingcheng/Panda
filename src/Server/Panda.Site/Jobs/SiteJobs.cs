@@ -10,7 +10,7 @@
         {
             //一个小时更新一下索引
             RecurringJob.AddOrUpdate<PostIndexCreator>(
-                a => a.Exec(), Cron.Hourly(), Tzi);
+                a => a.Exec(), Cron.Hourly(), Tzi,"创建全文索引");
         }
     }
 }
