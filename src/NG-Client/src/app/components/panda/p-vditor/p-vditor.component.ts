@@ -55,6 +55,8 @@ export class PVditorComponent implements OnInit, ControlValueAccessor {
   init() {
     this.vditor = new Vditor(this.viewelement.nativeElement, {
       height: 500,
+      lang: 'zh_CN',
+      cdn: './assets/vditor',
       toolbarConfig: {
         pin: true,
       },
@@ -81,7 +83,7 @@ export class PVditorComponent implements OnInit, ControlValueAccessor {
           console.log('text:', text)
           let obj = JSON.parse(text)
           let file = obj.url.match(new RegExp(/\w+\.\w+/));
-          
+
           var resp = `
           {
             "msg": "${obj.message}",

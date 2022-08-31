@@ -24,17 +24,13 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
 
     this.router.events.subscribe(event => {
-
       if (event instanceof NavigationStart) {
-        console.log('路由开始', event.url)
         NProgress.start();
       }
       if (event instanceof NavigationEnd) {
-        console.log('路由结束:', event.url)
         NProgress.done()
       }
       if (event instanceof NavigationCancel) {
-        console.log('路由取消', event.reason)
         NProgress.done()
       }
     })
