@@ -8,7 +8,7 @@ import { WelcomeComponent } from './welcome.component';
 
 const routes: Routes = [
   {
-    path: '', component: StatisticComponent
+    path: 'index', component: StatisticComponent
   },
   {
     path: 'unauthorized', component: UnauthorizedComponent

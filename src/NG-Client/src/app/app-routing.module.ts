@@ -5,7 +5,7 @@ import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { AuthGuard } from './shared/routers/auth.guard';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/index' },
+  { path: '', pathMatch: 'full', redirectTo: '/auth/login' },
   {
     path: 'index', component: IndexComponent, data: {
       auth: 'test-index'

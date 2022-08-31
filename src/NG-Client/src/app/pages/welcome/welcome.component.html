@@ -8,10 +8,10 @@
     </div>
     <ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed" routerLinkActive nzTheme="dark">
 
-      <li nz-menu-item nzTitle="Dashboard" nzIcon="dashboard" [nzMatchRouterExact]="true">
+      <li nz-menu-item nzTitle="Dashboard" nzIcon="dashboard" nzMatchRouter>
         <i nz-icon nzType="dashboard" nzTheme="outline"></i>
         <span>
-          <a routerLink="/admin">仪表盘</a>
+          <a routerLink="/admin/index">仪表盘</a>
         </span>
       </li>
       <li nz-submenu nzTitle="博客管理" nzIcon="form">
