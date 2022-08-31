@@ -5,6 +5,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { finalize } from 'rxjs';
 import { AccountService, PermissionService } from 'src/app/net';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import * as nProgress from 'nprogress';
 
 @Component({
   selector: 'app-auth-login',
@@ -34,11 +35,20 @@ export class AuthLoginComponent implements OnInit {
   ngOnInit(): void {
   }
   login() {
+
     if (this.loginFormGroup.valid) {
       this.loading = true;
-      this.account.adminAccountLoginPost(this.loginFormGroup.value).pipe(finalize(() => this.loading = false)).subscribe(res => {
+      nProgress.start()
+      this.account.adminAccountLoginPost(this.loginFormGroup.value).pipe(finalize(() => {
+        this.loading = false
+        nProgress.done()
+      }
+      )).subscribe(res => {
         let loading = this.message.loading("loading...")
-        this.permission.adminPermissionGetPermissionsGet().pipe(finalize(() => this.message.remove(loading.messageId))).subscribe(res => {
+        this.permission.adminPermissionGetPermissionsGet().pipe(finalize(() => {
+          this.message.remove(loading.messageId)
+
+        })).subscribe(res => {
           console.log(res)
           this.auth.refreshPermission(res.permissions!, res.isAdmin!)
           if (this.auth.checkPermission("用户管理-登录")) {

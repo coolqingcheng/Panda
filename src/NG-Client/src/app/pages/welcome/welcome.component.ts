@@ -11,14 +11,15 @@ export class WelcomeComponent implements OnInit {
   isCollapsed = false;
   constructor(
     private permission: PermissionService,
-    private auth: AuthService
+    private auth: AuthService,
+
   ) { }
 
   ngOnInit() {
-   this.getPermission();
+    this.getPermission();
   }
 
-  getPermission(){
+  getPermission() {
     this.permission.adminPermissionGetPermissionsGet().subscribe(res => {
       this.auth.refreshPermission(res.permissions!, res.isAdmin!)
     })
