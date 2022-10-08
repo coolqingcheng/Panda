@@ -7,11 +7,11 @@ using Panda.Site;
 using Panda.Tools;
 using Panda.Tools.Exception;
 using Microsoft.AspNetCore.HttpOverrides;
-
+using MrHuo.OAuth;
 using Panda.Site.Filter;
 using Panda.Site.Worker;
 using Panda.Site.Extensions;
-using Panda.Site.Jobs;
+using Panda.Tools.OAuth.Github;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,7 +39,7 @@ services.AddDbContext<PandaContext>(
     }
 );
 services.AddRazorPages()
-          .AddMvcOptions(opt => { opt.Filters.Add<StatisticFilter>(); });
+    .AddMvcOptions(opt => { opt.Filters.Add<StatisticFilter>(); });
 services.AddConfig(builder.Configuration);
 services.AddTools();
 services.AddAutoInject(opt =>
@@ -54,6 +54,8 @@ services.AddHangFireEx();
 services.AddSiteLuceneIndex();
 
 builder.AddAdmin<PandaContext>();
+
+services.AddSingleton(new GithubOAuth(OAuthConfig.LoadFrom(builder.Configuration, "oauth:github")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
