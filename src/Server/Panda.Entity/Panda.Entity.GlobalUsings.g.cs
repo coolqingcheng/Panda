@@ -1,1 +1,0 @@
-global using global::Panda.Admin.Entities.DataModels;

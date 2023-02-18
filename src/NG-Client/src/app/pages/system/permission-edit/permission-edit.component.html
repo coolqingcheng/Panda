@@ -1,9 +1,0 @@
-<nz-spin [nzSpinning]="treeData.length==0">
-    <nz-tree #tree *ngIf="treeData.length > 0" [nzData]="treeData" nzCheckable nzMultiple [nzCheckedKeys]="checkedKeys"
-        [nzSelectedKeys]="selectKeys"></nz-tree>
-</nz-spin>
-
-<p-form-submit-box>
-    <button nz-button nzType="primary" (click)="save()" [nzLoading]="saving">保存</button>
-    <button nz-button (click)="close()">取消</button>
-</p-form-submit-box>

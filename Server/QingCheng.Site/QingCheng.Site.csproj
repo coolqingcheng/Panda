@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<UserSecretsId>ab1145a6-7357-423d-93c8-00465ab3c945</UserSecretsId>
+		<NoWarn>CS1591,8618</NoWarn>
+		<PublishSingleFile>true</PublishSingleFile>
+		<PublishReadyToRun>true</PublishReadyToRun>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Swagger' " />
+	<PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Production' " />
+	<ItemGroup>
+		<ProjectReference Include="..\QingCheng.Tools\QingCheng.Tools.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Api\Account\Models\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Mapster.Core" Version="1.2.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.2">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="MySqlConnector" Version="2.2.5" />
+		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
+	</ItemGroup>
+
+
+</Project>
