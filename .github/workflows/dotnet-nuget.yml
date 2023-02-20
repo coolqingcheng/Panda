@@ -23,4 +23,4 @@ jobs:
     - name: Pack
       run: dotnet pack ./Server/QingCheng.Tools/QingCheng.Tools.csproj -c Release
     - name: push
-      run: dotnet nuget push "./Server/QingCheng.Tools/bin/Release/net7.0/QingCheng.Tools.1.0.1.nupkg" --api-key {{ NUGET_QINGCHENG_TOOLS_KEY }} --source https://api.nuget.org/v3/index.json
+      run: dotnet nuget push "**/*.nupkg" --api-key {{ NUGET_QINGCHENG_TOOLS_KEY }} --source https://api.nuget.org/v3/index.json
