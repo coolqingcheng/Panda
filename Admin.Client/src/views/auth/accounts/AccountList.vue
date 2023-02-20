@@ -59,7 +59,7 @@
 
 <script lang="ts" setup>
 
-import { QcConfig, PageModel, BasePageModel } from '@/shared/ElConfig'
+import { QcConfig, BasePageModel } from '@/shared/ElConfig'
 import { onMounted, reactive, ref } from 'vue';
 
 import { AccountItemModel, AccountService } from '@/shared/service'
@@ -69,7 +69,7 @@ const qc = new QcConfig();
 
 const loading = ref(false)
 
-const pageModel = reactive<BasePageModel>({
+const pageModel = reactive({
     index: 1,
     pageSize: 10,
     total: 0
