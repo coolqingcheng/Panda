@@ -8,7 +8,7 @@
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<Version>1.0.1</Version>
 		<Authors>青城</Authors>
-		<PackageId>qingcheng.tools</PackageId>
+		<PackageId>Qingcheng.Tools</PackageId>
     </PropertyGroup>
     <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App" />
