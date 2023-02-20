@@ -22,3 +22,5 @@ jobs:
         dotnet-version: 7.0.x
     - name: Pack
       run: dotnet pack ./Server/QingCheng.Tools/QingCheng.Tools.csproj -c Release
+    - name: push
+      run: dotnet nuget push ./Server/QingCheng.Tools/bin/Release/net7.0/QingCheng.Tools.nupkg -k {{ NUGET_QINGCHENG_TOOLS_KEY }}

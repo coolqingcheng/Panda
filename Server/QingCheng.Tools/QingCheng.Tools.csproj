@@ -5,11 +5,11 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
 		<NoWarn>8618</NoWarn>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<Version>1.0.1</Version>
+		<Authors>青城</Authors>
+		<PackageId>qingcheng.tools</PackageId>
     </PropertyGroup>
-
-    <ItemGroup>
-      <None Remove="Auth\4h0a4xne.ndd~" />
-    </ItemGroup>
     <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App" />
     </ItemGroup>
