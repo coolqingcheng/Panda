@@ -3,10 +3,10 @@
 
 name: .NET
 
-on:
+on: 
   push:
-    tags:
-      - 'nuget*'
+    branches:
+      - master
 
 jobs:
   build:
@@ -22,4 +22,4 @@ jobs:
     - name: Pack
       run: dotnet pack ./Server/QingCheng.Tools/QingCheng.Tools.csproj -c Release
     - name: push
-      run: dotnet nuget push "**/*.nupkg" --api-key ${{ secrets.NUGET_QINGCHENG_TOOLS_KEY }} --source https://api.nuget.org/v3/index.json
+      run: dotnet nuget push "**/*.nupkg" --api-key ${{ secrets.NUGET_QINGCHENG_TOOLS_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
