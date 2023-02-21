@@ -6,10 +6,9 @@ namespace QingCheng.Site;
 
 public static class SiteModule
 {
-    public static void AddSite(this IServiceCollection services)
+    public static void AddRazorSite(this IServiceCollection services)
     {
 
-        services.AddRazorPages();
         services.InjectServices(typeof(Program));
     }
 }

@@ -46,10 +46,19 @@ public class JwtHelper
     }
 }
 
+/// <summary>
+/// jwt
+/// </summary>
 public static class JwtAuthExtensions
 {
+    /// <summary>
+    /// 添加jwt身份验证
+    /// </summary>
+    /// <param name="service"></param>
+    /// <param name="configuration"></param>
     public static void AddJwtAuth(this IServiceCollection service,IConfiguration configuration)
     {
+        service.AddScoped<JwtHelper>();
         service.AddAuthentication(options => { options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme; })
             .AddJwtBearer(options =>
             {

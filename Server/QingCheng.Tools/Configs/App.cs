@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using QingCheng.Tools.EFCore;
 using FluentValidation.AspNetCore;
 using FluentValidation;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace QingCheng.Site.Configs;
 
@@ -17,7 +20,7 @@ namespace QingCheng.Site.Configs;
 public static class AppExtension
 {
 
-    public static void AddApiConfig(this IServiceCollection servies)
+    public static void AddWebApiConfig(this IServiceCollection servies)
     {
         servies.AddControllers().AddNewtonsoftJson(
                 options => { options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss"; })
@@ -45,14 +48,12 @@ public static class AppExtension
         servies.AddValidatorsFromAssembly(Assembly.GetEntryAssembly());
     }
 
-    public static void AddApp(this WebApplicationBuilder builder)
+    public static void AddApplication(this WebApplicationBuilder builder)
     {
         var service = builder.Services;
         service.AddScoped<TranContext>();
         service.AddMediatR(Assembly.GetEntryAssembly()!);
         service.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
-        service.AddScoped<JwtHelper>();
-        service.AddScoped<CookieAuthHelper>();
         service.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         service.AddHttpClient();
         service.AddSwagger();

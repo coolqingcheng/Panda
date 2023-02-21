@@ -7,10 +7,14 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using ILogger = Serilog.ILogger;
 
 namespace QingCheng.Tools.Serilog;
 
-public class SerilogExtensions
+public static class SerilogExtensions
 {
     public static ILogger Instance()
     {
@@ -29,5 +33,11 @@ public class SerilogExtensions
             )
             .CreateLogger();
         return Log.Logger;
+    }
+
+    public static void AddLog(this WebApplicationBuilder builder)
+    {
+        builder.Logging.ClearProviders();
+        builder.Host.UseSerilog();
     }
 }

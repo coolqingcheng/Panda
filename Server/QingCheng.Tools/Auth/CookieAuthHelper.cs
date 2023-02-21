@@ -64,6 +64,7 @@ public static class CookieAuthExtensions
 {
     public static void AddCookieAuth(this IServiceCollection service, Action<CookieAuthenticationOptions>? action = null)
     {
+        service.AddScoped<CookieAuthHelper>();
         service.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(
                 opt =>

@@ -8,8 +8,15 @@ using Microsoft.Extensions.Logging;
 
 namespace QingCheng.Tools.Exceptions;
 
+/// <summary>
+/// 异常处理
+/// </summary>
 public static class ExceptionHandler
 {
+    /// <summary>
+    /// 全局拦截
+    /// </summary>
+    /// <param name="app"></param>
     public static void UseEx(this IApplicationBuilder app)
     {
         app.UseExceptionHandler(exceptionHandlerApp =>

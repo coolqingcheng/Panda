@@ -8,7 +8,12 @@ public static class EFCoreInit
 {
     public static void AddEntityFrameworkCore(this IServiceCollection services, Action<DbContextOptionsBuilder> opt)
     {
-        services.AddDbContext<QingChengContext>(opt);
+        
+        services.AddDbContext<QingChengContext>(options =>
+        {
+            options.UseSnakeCaseNamingConvention();
+            opt(options);
+        });
         services.AddScoped<DbContext>((provider) =>
         {
             return provider.GetRequiredService<QingChengContext>();
