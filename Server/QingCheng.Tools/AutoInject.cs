@@ -11,10 +11,14 @@ namespace QingCheng.Tools
 {
     public static class AutoInject
     {
-        public static void InjectServices(this IServiceCollection collection, Type type)
+        public static void InjectServices(this IServiceCollection collection, Assembly? assembly)
         {
-
-            var types = type.Assembly.GetTypes();
+            if (assembly == null)
+            {
+                Console.WriteLine("注入的type为空");
+                return;
+            }
+            var types = assembly.GetTypes();
             var services = types.Where(a => a.Name.EndsWith("Service")).Where(a => a.IsAbstract == false).Where(a => a.IsClass).Where(a => a.GetCustomAttribute<IgnoreInjectAttribute>(inherit: false) == null).ToList();
             foreach (var service in services)
             {

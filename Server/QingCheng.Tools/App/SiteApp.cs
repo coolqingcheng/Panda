@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Reflection;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +24,8 @@ public class SiteApp
             builder.AddLog();
             var services = builder.Services;
         
+            
+            services.InjectServices(Assembly.GetCallingAssembly());
            
             services.AddWebApiConfig();
                 services.AddRazorPages();
