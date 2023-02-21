@@ -26,7 +26,7 @@ public static class WebApiApp
     /// <param name="args"></param>
     /// <param name="action"></param>
     /// <param name="appAction"></param>
-    public static void Run(string[] args,Action<IServiceCollection,IConfiguration>? action,Action<WebApplication>? appAction)
+    public static void Run(string[] args,Action<IServiceCollection,IConfiguration>? action = null,Action<WebApplication>? appAction = null)
     {
         var logger = SerilogExtensions.Instance();
         try
