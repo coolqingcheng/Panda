@@ -1,13 +1,10 @@
 
 
-using QingCheng.Site.Configs;
+using QingCheng.Site;
 using QingCheng.Tools.App;
+using QingCheng.Toos.EFCore;
 
-SiteApp.Run(args, (services,config) =>
+SiteApp.Run(args, (services, config) =>
 {
-    services.AddEntityFrameworkCore((opt) =>
-    {
-        var connString = config.GetConnectionString("mysql");
-        opt.UseMySql(connString, ServerVersion.AutoDetect(connString));
-    });
+    services.AddEFMySql<QingChengContext>(config.GetConnectionString("mysql")!);
 });
