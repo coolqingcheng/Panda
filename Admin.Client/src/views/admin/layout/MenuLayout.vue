@@ -1,8 +1,8 @@
 <template>
-    <div class="menu-box">
+    <div class="menu-box" style="background-color:#2d1f1c">
         <el-scrollbar>
-            <el-menu class="el-menu-vertical-demo" background-color="var(--menu-bg)" text-color="#6c8c9b"
-                active-text-color="var(--menu-active-color)" unique-opened :collapse="isCollapse"
+            <el-menu class="el-menu-vertical-demo"  background-color="#55423d" active-text-color="#ffc0ad" text-color="#ccc"
+             unique-opened :collapse="isCollapse"
                 :collapse-transition="false" :router="true" :default-active="defaultActive">
                 <el-menu-item index="/admin/dashboard">
                     <el-icon>

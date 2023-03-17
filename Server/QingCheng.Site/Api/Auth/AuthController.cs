@@ -17,15 +17,13 @@ namespace QingCheng.Site.Api.Auth;
 public class AuthController : BaseAdminController
 {
     private readonly AccountService _account;
-    private readonly JwtHelper _jwtHelper;
 
     private readonly CookieAuthHelper _cookieAuth;
 
 
-    public AuthController(AccountService account, JwtHelper jwtHelper, CookieAuthHelper cookieAuth)
+    public AuthController(AccountService account, CookieAuthHelper cookieAuth)
     {
         _account = account;
-        _jwtHelper = jwtHelper;
         _cookieAuth = cookieAuth;
     }
 
