@@ -43,11 +43,11 @@
             </el-card>
         </el-col>
     </el-row>
-    <el-row>
+    <el-row :gutter="8">
         <el-col :="{lg:12,xl:12}">
             <simple-table url="/admin/account/getlist">
-                <el-table-column prop="id" label="Id" width="120"></el-table-column>
-                <el-table-column prop="userName" label="用户名" width="100"></el-table-column>
+                <el-table-column prop="id" label="Id" width="180"></el-table-column>
+                <el-table-column prop="userName" label="用户名" width="180"></el-table-column>
                 <el-table-column prop="email" label="邮箱"></el-table-column>
             </simple-table>
         </el-col>

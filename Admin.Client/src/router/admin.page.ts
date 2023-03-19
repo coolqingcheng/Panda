@@ -84,10 +84,12 @@ const site = [
 
 
 
+
 const allPages = [
     ...blog,
     ...user,
-    ...site
+    ...site,
+    
 ]
 
 

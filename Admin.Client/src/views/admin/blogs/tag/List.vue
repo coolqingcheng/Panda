@@ -4,7 +4,8 @@
         <template #header>
             标签
         </template>
-        <ElTable :data="model.data" v-bind="table">
+      
+        <SimpleTable url="/admin/PostTag/GetList">
             <ElTableColumn label="Id" prop="id"></ElTableColumn>
             <ElTableColumn label="标签" prop="tagName"></ElTableColumn>
             <ElTableColumn label="关联文章" prop="count"></ElTableColumn>
@@ -16,10 +17,7 @@
                     </ElSpace>
                 </template>
             </ElTableColumn>
-        </ElTable>
-        <ElPagination v-bind="pagination" :total="model.total" v-model:current-page="page.index"
-            v-model:page-size="page.pageSize">
-        </ElPagination>
+        </SimpleTable>
     </ElCard>
 </template>
 
@@ -28,42 +26,17 @@ import { onMounted, reactive, ref } from 'vue';
 import { Edit, Delete } from '@element-plus/icons-vue';
 
 import { PostTagService, TagDtoModel } from '@/shared/service'
-import {table,pagination} from '@/shared/ElConfig'
+import SimpleTable from '@/components/SimpleTable.vue';
+import SimpleForm from '@/components/SimpleForm.vue';
+import { SimpleFormModel } from '@/components/SimpleFormModel';
 
-const loading = ref(true)
 
-const model = reactive<{
-    total: number,
-    data: TagDtoModel[]
-}>({
-    total: 0,
-    data: []
-})
 
-const page = reactive({
-    index: 1,
-    pageSize: 10
-})
 
-const save = () => {
-    loading.value = true;
-    PostTagService.getList({
-        ...page
-    }).then((res) => {
-        if (res.total) {
-            model.total = res.total
-        }
-        model.data = []
-        if (res.data) {
-            model.data.push(...res.data)
-        }
-    }).finally(() => {
-        loading.value = false
-    })
-}
 
-onMounted(() => {
-    save();
-})
+
+
+
+
 
 </script>

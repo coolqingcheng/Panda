@@ -1,12 +1,11 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import AdminIndex from '@/views/admin/Index.vue'
-import Page404 from "@/views/common/V404.vue"
 
-import { BlogRouter } from "./admin.blog"
-import { User } from './admin.router'
-import { SiteRouter } from './admin.site'
 import { allPages } from './admin.page'
-import { useRouteStore } from '@/store/RouteStore'
+
+import { TestRouter } from './admin.test'
+
+import Empty from  '../components/Empty.vue'
 
 
 const myRouter = createRouter({
@@ -48,6 +47,11 @@ const myRouter = createRouter({
                 //     redirect: '/admin/404'
                 // }
             ]
+        },
+        {
+            path: '/test',
+            component:Empty,
+            children: TestRouter
         }
     ]
 })
@@ -84,10 +88,10 @@ myRouter.beforeEach((to, from, next) => {
             next({ ...to, replace: true })
             // next();
             console.log(myRouter.getRoutes())
-        }else{
+        } else {
             next()
         }
-    }else{
+    } else {
         next();
     }
 })
