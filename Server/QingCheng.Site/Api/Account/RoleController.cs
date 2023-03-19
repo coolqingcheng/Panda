@@ -4,9 +4,9 @@ namespace QingCheng.Site.Api.Account
 {
     public class RoleController : BaseAdminController
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
     }
 }

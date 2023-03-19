@@ -12,11 +12,11 @@
 
                 </HeaderItem>
                 <div class="nav-crumb">
-                    <el-breadcrumb :separator-icon="ArrowRight">
+                    <!-- <el-breadcrumb :separator-icon="ArrowRight">
                         <template v-for="item in crumbList">
                             <el-breadcrumb-item :to="{ path: item.path }">{{ item.name }}</el-breadcrumb-item>
                         </template>
-                    </el-breadcrumb>
+                    </el-breadcrumb> -->
                 </div>
                 <ElDropdown>
                     <HeaderItem>
@@ -67,20 +67,20 @@ const route = useRoute();
 
 const setting = useVSetting();
 
-const crumbList = ref<{ name: string, path: string }[]>([])
+// const crumbList = ref<{ name: string, path: string }[]>([])
 
 const showBg = ref(true)
 
 router.afterEach((to, from, fail) => {
     closeSlideMenu();
     if (!fail) {
-        crumbList.value = [];
-        to.matched.filter(a => a.name).map(a => {
-            crumbList.value.push({
-                name: a.name!.toString(),
-                path: a.path
-            })
-        })
+        // crumbList.value = [];
+        // to.matched.filter(a => a.name).map(a => {
+        //     crumbList.value.push({
+        //         name: a.name!.toString(),
+        //         path: a.path
+        //     })
+        // })
     }
     showBg.value = route.meta.showbg as any;
     if (route.meta.title) {
@@ -89,13 +89,13 @@ router.afterEach((to, from, fail) => {
 })
 
 onMounted(() => {
-    crumbList.value = []
-    route.matched.filter(a => a.name).map(a => {
-        crumbList.value.push({
-            name: a.name!.toString(),
-            path: a.path
-        })
-    })
+    // crumbList.value = []
+    // route.matched.filter(a => a.name).map(a => {
+    //     crumbList.value.push({
+    //         name: a.name!.toString(),
+    //         path: a.path
+    //     })
+    // })
 })
 
 const LoginOut = () => {
