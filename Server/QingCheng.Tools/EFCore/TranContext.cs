@@ -4,6 +4,9 @@ using Microsoft.Extensions.Logging;
 
 namespace QingCheng.Tools.EFCore;
 
+/// <summary>
+/// DbContext 事务管理
+/// </summary>
 public class TranContext
 {
     private readonly DbContext _context;
@@ -20,12 +23,20 @@ public class TranContext
         _logger = logger;
     }
 
+    /// <summary>
+    /// 开启事务
+    /// </summary>
+    /// <returns></returns>
     public async Task BeginTranAsync()
     {
         _tran ??= await _context.Database.BeginTransactionAsync();
         _tranCount += 1;
     }
-
+    /// <summary>
+    /// 提交事务
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="UserException"></exception>
     public async Task CommitTranAsync()
     {
         if (_tran == null)
@@ -36,7 +47,7 @@ public class TranContext
         _tranCount -= 1;
         if (_tranCount == 0)
         {
-            await _tran?.CommitAsync();
+            await _tran?.CommitAsync()!;
         }
         else
         {

@@ -6,7 +6,7 @@ public class AccountRoles : BaseTableModel<Guid>
 {
     public string RoleName { get; set; }
 
-    public List<AccountRoleRelation> AccountRoleRelations { get; set; }
+    public List<AccountRoleRelation> AccountRoleRelations { get; set; } = new();
 }
 
 public class AccountRoleRelation : BaseTableModel<int>

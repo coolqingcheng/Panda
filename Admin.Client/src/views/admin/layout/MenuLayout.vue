@@ -1,9 +1,9 @@
 <template>
-    <div class="menu-box" style="background-color:#2d1f1c">
+    <div class="menu-box" style="background-color:#55423d">
         <el-scrollbar>
-            <el-menu class="el-menu-vertical-demo"  background-color="#55423d" active-text-color="#ffc0ad" text-color="#ccc"
-             unique-opened :collapse="isCollapse"
-                :collapse-transition="false" :router="true" :default-active="defaultActive">
+            <el-menu class="el-menu-vertical-demo" background-color="#55423d" active-text-color="#ffc0ad" text-color="#ccc"
+                unique-opened :collapse="isCollapse" :collapse-transition="false" :router="true"
+                :default-active="defaultActive">
                 <el-menu-item index="/admin/dashboard">
                     <el-icon>
                         <Odometer />
