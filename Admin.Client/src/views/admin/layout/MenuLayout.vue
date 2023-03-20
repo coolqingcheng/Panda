@@ -46,6 +46,14 @@
                     <el-menu-item index="/admin/role">角色组</el-menu-item>
                     <el-menu-item index="/admin/permission">权限</el-menu-item>
                 </el-sub-menu>
+
+                <el-sub-menu index="/admin/test">
+                    <template #title>
+                        测试
+                    </template>
+                    <ElMenuItem index="/admin/test-form">测试表单</ElMenuItem>
+                    <ElMenuItem index="/admin/test-table">测试Table</ElMenuItem>
+                </el-sub-menu>
             </el-menu>
         </el-scrollbar>
     </div>

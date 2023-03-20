@@ -3,13 +3,19 @@ import { Ref, ref } from "vue"
 
 
 export interface SimpleFormModel {
-    type: 'input' | 'number' | 'select' | 'checkbox' | 'datetime' | 'date'
+    type: 'input' | 'number' | 'select' | 'checkbox' | 'datetime' | 'date' | 'switch'
     name: string
     label: string,
-    value: any
+    value?: any
     placeholder?: string,
     dateTimeOption?: {
         type: 'year' | 'month' | 'date' | 'datetime' | 'week' | 'datetimerange' | 'daterange',
-        format?:string
+        format?: string
+    },
+    selectOption?: {
+        items: { label: string, value: any }[]
+    },
+    inputOption?: {
+        isNumber: false
     }
 }

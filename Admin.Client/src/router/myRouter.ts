@@ -3,9 +3,9 @@ import AdminIndex from '@/views/admin/Index.vue'
 
 import { allPages } from './admin.page'
 
-import { TestRouter } from './admin.test'
+import Empty from '../components/Empty.vue'
 
-import Empty from  '../components/Empty.vue'
+import Page404 from "@/views/common/V404.vue"
 
 
 const myRouter = createRouter({
@@ -26,19 +26,6 @@ const myRouter = createRouter({
             component: AdminIndex,
             children: [
                 // {
-                //     path: '',
-                //     component: () => import('@/views/admin/dashboard/DashBoard.vue')
-                // }
-                // ,
-                // ...BlogRouter,
-                // ...User,
-                // ...SiteRouter,
-                // {
-                //     path: 'setting',
-                //     name: '系统设置',
-                //     component: () => import('@/views/setting/Setting.vue')
-                // },
-                // {
                 //     path: '404',
                 //     component: Page404
                 // }
@@ -47,11 +34,6 @@ const myRouter = createRouter({
                 //     redirect: '/admin/404'
                 // }
             ]
-        },
-        {
-            path: '/test',
-            component:Empty,
-            children: TestRouter
         }
     ]
 })

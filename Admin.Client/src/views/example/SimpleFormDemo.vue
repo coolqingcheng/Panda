@@ -1,12 +1,20 @@
 <template>
-    <SimpleForm :="formOption" @ok="okHandler">
-    </SimpleForm>
+    <ElCard>
+        <template #header>
+            测试表单
+        </template>
+        <SimpleForm :="formOption" @ok="okHandler" :direction="formDirection">
+        </SimpleForm>
+        <ElButton @click="testHandler()">test</ElButton>
+    </ElCard>
 </template>
 
 <script lang="ts" setup>
 import { SimpleFormModel } from '@/components/SimpleFormModel';
 import SimpleForm from '@/components/SimpleForm.vue';
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
+
+const formDirection = ref<'v' | 'h'>('h')
 
 const formList = reactive<SimpleFormModel[]>([
     {
@@ -34,8 +42,30 @@ const formList = reactive<SimpleFormModel[]>([
         dateTimeOption: {
             type: 'daterange'
         }
+    },
+    {
+        label: '选择项', value: '', type: 'select', name: 'select-demo',
+        selectOption: {
+            items: [
+                { label: '选择1', value: 1 },
+                { label: '选择2', value: 2 },
+                { label: '选择3', value: 3 },
+            ]
+        }
+    },
+    {
+        label: '开关', value: true, type: 'switch', name: 'switch-demo'
     }
 ])
+
+const testHandler = () => {
+    // formList.filter(a => a.label == '选择项')[0].selectOption?.items.push({
+    //     label: '选择4', value: 4
+    // })
+    formDirection.value = formDirection.value == 'v' ? 'h' : 'v'
+
+    console.log('更新了')
+}
 
 const formOption = reactive({
     items: formList,

@@ -14,7 +14,18 @@
                             <template
                                 v-if="['year', 'month', 'date', 'datetime', 'week', 'datetimerange', 'daterange'].indexOf(item.type) > 0">
                                 <ElDatePicker v-model="fromModel[item.name]" :type="item.dateTimeOption?.type"
-                                    :format="item.dateTimeOption?.format" :value-format="item.dateTimeOption?.format"></ElDatePicker>
+                                    :format="item.dateTimeOption?.format" :value-format="item.dateTimeOption?.format">
+                                </ElDatePicker>
+                            </template>
+                            <template v-if="item.type == 'select'">
+                                <ElSelect v-model="fromModel[item.name]" :placeholder="item.placeholder">
+                                    <ElOption v-for="itemOption in item.selectOption?.items" :label="itemOption.label"
+                                        :value="itemOption.value" :key="itemOption.value">
+                                    </ElOption>
+                                </ElSelect>
+                            </template>
+                            <template v-if="item.type == 'switch'">
+                                <ElSwitch v-model="fromModel[item.name]" :placeholder="item.placeholder"></ElSwitch>
                             </template>
                         </ElFormItem>
                     </ElCol>
@@ -31,7 +42,8 @@
 </template>
 <script lang="ts" setup>
 import { ElForm, FormInstance, FormRules } from 'element-plus';
-import { ref, reactive, onMounted } from 'vue';
+import { keysOf } from 'element-plus/es/utils';
+import { ref, reactive, onMounted, watch } from 'vue';
 import { SimpleFormModel } from './SimpleFormModel';
 
 const formGrid = reactive({
@@ -42,9 +54,23 @@ const formGrid = reactive({
     xl: 6
 })
 
-const fromModel = reactive<Record<string, any>>({});
+const h = {
+    xs: 24,
+    sm: 24,
+    md: 12,
+    lg: 8,
+    xl: 6
+}
 
-const dateTypes = ['year', 'month', 'date', 'datetime', 'week', 'datetimerange', 'daterange']
+const v = {
+    xs: 24,
+    sm: 24,
+    md: 24,
+    lg: 24,
+    xl: 24
+}
+
+const fromModel = reactive<Record<string, any>>({});
 
 
 const props = withDefaults(defineProps<{
@@ -64,7 +90,17 @@ onMounted(() => {
     props.items.forEach(a => {
         fromModel[a.name] = a.value;
     })
+    updateDir()
 })
+
+const updateDir = () => {
+    console.log('update direction:', props.direction)
+    let item = props.direction=='v'?v:h
+        Object.assign(formGrid, item)
+    console.log('update direction:', formGrid)
+}
+
+watch(() => props.direction, updateDir)
 
 
 

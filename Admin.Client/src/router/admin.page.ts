@@ -44,14 +44,6 @@ const user = [
         meta: {
             title: '角色管理'
         }
-    },
-    {
-        path: 'permission',
-        name: '权限管理',
-        component: () => import("@/views/admin/users/PermissionManager.vue"),
-        meta: {
-            title: '权限管理'
-        }
     }
 ]
 
@@ -82,6 +74,19 @@ const site = [
     }
 ]
 
+const test = [
+    {
+        path: 'test-form',
+        name: '测试表单',
+        component: () => import("./../views/example/SimpleFormDemo.vue")
+    },
+    {
+        path: 'test-table',
+        name: '测试表格',
+        component: () => import("./../views/example/SimpleTableDemo.vue")
+    }
+]
+
 
 
 
@@ -89,7 +94,7 @@ const allPages = [
     ...blog,
     ...user,
     ...site,
-    
+    ...test
 ]
 
 
