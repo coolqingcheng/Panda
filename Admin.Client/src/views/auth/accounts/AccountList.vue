@@ -12,13 +12,13 @@
                 </ElSpace>
             </ElCol>
         </ElRow>
-        <ElTable v-bind="qc.getTableConfig()" :data="data">
+        <SimpleTable url="/admin/Account/GetList" ref="table">
             <ElTableColumn label="Id" prop="id"></ElTableColumn>
             <ElTableColumn label="账号" prop="userName"></ElTableColumn>
             <ElTableColumn label="邮箱" prop="email"></ElTableColumn>
             <ElTableColumn label="最后登录时间" prop="lastLoginTime"></ElTableColumn>
             <ElTableColumn label="创建时间" prop="createTime"></ElTableColumn>
-            <ElTableColumn label="锁定时间" >
+            <ElTableColumn label="锁定时间">
                 <template #default="scope">
                     <label v-if="scope.row.isLocked">{{ scope.row.lockedTime }}</label>
                 </template>
@@ -52,54 +52,30 @@
                     </ElDropdown>
                 </template>
             </ElTableColumn>
-        </ElTable>
-        <ElPagination v-bind="qc.getPageConfig()" :total="pageModel.total" v-model="pageModel.index"></ElPagination>
+        </SimpleTable>
     </ElCard>
 </template>
 
 <script lang="ts" setup>
 
-import { QcConfig, BasePageModel } from '@/shared/ElConfig'
-import { onMounted, reactive, ref } from 'vue';
 
-import { AccountItemModel, AccountService } from '@/shared/service'
+import { AccountService } from '@/shared/service'
 import { ElMessage } from 'element-plus';
+import SimpleTable from '@/components/SimpleTable.vue';
+import { ref } from 'vue';
 
-const qc = new QcConfig();
 
-const loading = ref(false)
+const table = ref<InstanceType<typeof SimpleTable>>();
 
-const pageModel = reactive({
-    index: 1,
-    pageSize: 10,
-    total: 0
-})
-
-const data = ref<AccountItemModel[]>([]);
-
-const getList = () => {
-    loading.value = true
-    AccountService.getList({
-        ...pageModel
-    }).then(res => {
-        pageModel.total = res.total!;
-        data.value = []
-        data.value = res.data!
-    }).finally(() => loading.value = false)
-}
 
 const forbidLogin = (id: string) => {
     AccountService.accountForbidLogin({
         accountId: id
     }).then(() => {
         ElMessage.success('操作成功')
-        getList()
+        table.value?.loadData();
     })
 }
 
-
-onMounted(() => {
-    getList();
-})
 
 </script>

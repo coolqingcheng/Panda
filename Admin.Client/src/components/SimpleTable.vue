@@ -8,8 +8,11 @@
     </ElRow>
     <ElRow>
         <ElCol>
-            <el-pagination :page-sizes="[10, 20, 50, 100]" background layout="total,prev, pager, next,sizes"
-                :total="config.total" v-model:current-page="params.index" v-model:page-size="params.pageSize" />
+            <ElSpace class="m-top-20">
+                <el-pagination :page-sizes="[10, 20, 50, 100]" background layout="total,prev, pager, next,sizes"
+                    :total="config.total" v-model:current-page="params.index" v-model:page-size="params.pageSize" />
+                <ElButton :icon="Refresh" @click="loadData()"></ElButton>
+            </ElSpace>
         </ElCol>
     </ElRow>
 </template>
@@ -17,11 +20,10 @@
 import { onMounted, reactive, ref, watch } from 'vue';
 
 import { serviceOptions } from '@/shared/service'
-
+import { Refresh } from '@element-plus/icons-vue'
 
 const props = defineProps({
-    url: String,
-    condition: Object
+    url: String
 })
 
 const loading = ref(false)
@@ -37,6 +39,9 @@ const params = reactive({
 
 })
 
+
+let condition: Record<string, any> = {}
+
 /**
  * 加载table数据
  */
@@ -45,7 +50,7 @@ const loadData = () => {
     serviceOptions.axios?.get(props.url ?? '', {
         params: {
             ...params,
-            ...props.condition
+            ...condition
         }
     })
         .then(res => {
@@ -59,9 +64,7 @@ const loadData = () => {
         })
 }
 
-defineExpose({
-    loadData
-})
+
 
 
 watch(() => params, () => {
@@ -69,15 +72,30 @@ watch(() => params, () => {
 }, { deep: true })
 
 
-watch(() => props.condition, () => {
-    console.log('condition变化')
+/**
+ * 设置参数后，重新加载table
+ * @param params 参数
+ */
+const setConditionReload = (params: Record<string, any>) => {
+    condition = {}
+    condition = { ...params }
     loadData();
-}, { deep: true })
+}
 
 
 onMounted(() => {
     loadData()
 })
-
+defineExpose({
+    loadData,
+    setConditionReload
+})
 
 </script>
+
+<style>
+.el-pagination {
+    display: inline-flex;
+    margin-top: 0;
+}
+</style>

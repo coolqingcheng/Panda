@@ -1,7 +1,7 @@
 <template>
     <ElCard>
         <template #header>
-            <h1>角色管理</h1>
+            角色管理
         </template>
         <ElRow>
             <ElCol>
@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 
 import SimpleTable from '@/components/SimpleTable.vue';
 
