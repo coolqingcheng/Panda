@@ -30,12 +30,12 @@
                             <ElDropdownItem>
                                 修改资料
                             </ElDropdownItem>
-                            <ElDropdownItem v-if="scope.row.isLocked" @click="forbidLogin(scope.row.id)">
+                            <!-- <ElDropdownItem v-if="scope.row.isLocked" @click="forbidLogin(scope.row.id)">
                                 解封账号
                             </ElDropdownItem>
                             <ElDropdownItem v-if="!scope.row.isLocked" @click="forbidLogin(scope.row.id)">
                                 禁用账号
-                            </ElDropdownItem>
+                            </ElDropdownItem> -->
                             <ElDropdownItem>
                                 修改密码
                             </ElDropdownItem>
