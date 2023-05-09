@@ -23,8 +23,7 @@
                 </ElDropdown>
             </div>
             <TabsView></TabsView>
-            <div :class="{ 'route-view': setting.showViewBg }">
-             
+            <div class="route-view">
                 <RouterView #default="{ Component }">
                     <KeepAlive :include="tabInlcude">
                         <component :is="Component" :key="$route.name"></component>
@@ -81,7 +80,7 @@ router.afterEach((to, from, fail) => {
     if (route.meta.title) {
         document.title = route.meta.title as string
     }
-    
+
     nextTick(() => {
         console.log('路由跳转完成:', to.meta.title);
         document.title = route.meta.title ?? '';
@@ -165,7 +164,7 @@ router.beforeEach(guard => {
         flex: 1;
         display: flex;
         flex-direction: column;
-        padding: 10px;
+
         box-sizing: border-box;
         padding-top: $header-h;
         position: relative;
@@ -176,6 +175,8 @@ router.beforeEach(guard => {
             min-height: 200px;
             overflow-y: auto;
             overflow-x: auto;
+            margin-top: 20px;
+            padding: 10px;
         }
 
         .header {
