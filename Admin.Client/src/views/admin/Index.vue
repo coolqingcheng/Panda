@@ -9,15 +9,7 @@
                     <el-icon class="expand-icon">
                         <Expand />
                     </el-icon>
-
                 </HeaderItem>
-                <div class="nav-crumb">
-                    <!-- <el-breadcrumb :separator-icon="ArrowRight">
-                        <template v-for="item in crumbList">
-                            <el-breadcrumb-item :to="{ path: item.path }">{{ item.name }}</el-breadcrumb-item>
-                        </template>
-                    </el-breadcrumb> -->
-                </div>
                 <ElDropdown>
                     <HeaderItem>
                         <ElIcon>
@@ -30,8 +22,13 @@
                     </template>
                 </ElDropdown>
             </div>
-            <div :class="{ 'route-view': setting.showViewBg }">
-                <RouterView></RouterView>
+            <TabsView></TabsView>
+            <div class="route-view">
+                <RouterView #default="{ Component }">
+                    <KeepAlive :include="tabInlcude">
+                        <component :is="Component" :key="$route.name"></component>
+                    </KeepAlive>
+                </RouterView>
             </div>
         </div>
     </div>
@@ -43,20 +40,27 @@ import { expandHandler, closeSlideMenu } from './layout/MenuStatus'
 import { Expand, User } from '@element-plus/icons-vue'
 import AsideLayout from './layout/AsideLayout.vue'
 import { useRoute, useRouter } from 'vue-router'
-import { onMounted, ref } from 'vue';
-import { ArrowRight } from '@element-plus/icons-vue'
+import { nextTick, ref } from 'vue';
 
 import { useVSetting } from '@/store/VSetting'
 
 import { AuthService } from '@/shared/service'
 import { ElLoading, ElMessage } from 'element-plus';
 import ChangePwd from './users/ChangePwd.vue';
-import { allPages } from '@/router/admin.page';
-import { useDynamicRouter } from '@/shared/useDynamic';
+
+import TabsView from '@/components/TabsView.vue';
+
+
+const tabInlcude = ref(['SimpleFormDemo']);
+
+
+const close = (tag: string) => {
+    tabInlcude.value = []
+}
 
 const ChangePwdStatus = ref(false)
 
-const showChangePwd = ()=>{
+const showChangePwd = () => {
     ChangePwdStatus.value = true
 }
 
@@ -67,36 +71,22 @@ const route = useRoute();
 
 const setting = useVSetting();
 
-// const crumbList = ref<{ name: string, path: string }[]>([])
 
-const showBg = ref(true)
 
 router.afterEach((to, from, fail) => {
     closeSlideMenu();
     if (!fail) {
-        // crumbList.value = [];
-        // to.matched.filter(a => a.name).map(a => {
-        //     crumbList.value.push({
-        //         name: a.name!.toString(),
-        //         path: a.path
-        //     })
-        // })
     }
-    showBg.value = route.meta.showbg as any;
     if (route.meta.title) {
         document.title = route.meta.title as string
     }
+
+    nextTick(() => {
+        console.log('路由跳转完成:', to.meta.title);
+        document.title = route.meta.title ?? '';
+    })
 })
 
-onMounted(() => {
-    // crumbList.value = []
-    // route.matched.filter(a => a.name).map(a => {
-    //     crumbList.value.push({
-    //         name: a.name!.toString(),
-    //         path: a.path
-    //     })
-    // })
-})
 
 const LoginOut = () => {
     let loading = ElLoading.service({
@@ -112,15 +102,10 @@ const LoginOut = () => {
     })
 }
 
-console.log('动态路由添加')
-
-router.beforeEach(guard=>{
+router.beforeEach(guard => {
     console.log('路由跳转之前')
 })
 
-useDynamicRouter();
-
-console.log(router.getRoutes())
 
 
 
@@ -179,9 +164,9 @@ console.log(router.getRoutes())
         flex: 1;
         display: flex;
         flex-direction: column;
-        padding: 10px;
+
         box-sizing: border-box;
-        padding-top: $header-h + 20px;
+        padding-top: $header-h;
         position: relative;
 
         .route-view {
@@ -190,6 +175,8 @@ console.log(router.getRoutes())
             min-height: 200px;
             overflow-y: auto;
             overflow-x: auto;
+            margin-top: 20px;
+            padding: 10px;
         }
 
         .header {
@@ -199,7 +186,7 @@ console.log(router.getRoutes())
             left: 0;
             height: $header-h;
             width: 100%;
-            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+            // box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
             z-index: 100;
             background-color: var(--el-bg-color);
             display: flex;

@@ -24,7 +24,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/admin': {
-        target: 'https://iwscl.com',
+        target: 'https://iwscl.com', //'http://localhost:51775',
         changeOrigin: true
       },
       '/file': {

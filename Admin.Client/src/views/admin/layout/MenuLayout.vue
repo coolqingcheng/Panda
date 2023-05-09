@@ -1,7 +1,7 @@
 <template>
-    <div class="menu-box" style="background-color:#55423d">
+    <div class="menu-box" style="background-color:#393d49">
         <el-scrollbar>
-            <el-menu class="el-menu-vertical-demo" background-color="#55423d" active-text-color="#ffc0ad" text-color="#ccc"
+            <el-menu class="el-menu-vertical-demo" background-color="#393d49" active-text-color="white" text-color="#ccc"
                 unique-opened :collapse="isCollapse" :collapse-transition="false" :router="true"
                 :default-active="defaultActive">
                 <el-menu-item index="/admin/dashboard">
@@ -64,8 +64,6 @@ import { isCollapse } from "./MenuStatus"
 import { User, Setting, Odometer } from '@element-plus/icons-vue'
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { allPages } from "@/router/admin.page";
-import { useDynamicRouter } from "@/shared/useDynamic";
 
 const defaultActive = ref('')
 
@@ -105,6 +103,23 @@ router.afterEach((to, from, fail) => {
     .el-menu-vertical-demo:not(.el-menu--collapse) {
         width: 230px;
         min-height: 400px;
+    }
+}
+
+.el-menu.el-menu--inline {
+    padding: 8px;
+    box-sizing: border-box;
+
+    .el-menu-item.is-active {
+        background-color: var(--el-color-primary);
+        color: white;
+
+    }
+}
+
+.el-sub-menu.is-active.is-opened {
+    .el-menu-item {
+        border-radius: 4px;
     }
 }
 </style>

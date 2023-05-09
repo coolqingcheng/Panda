@@ -74,15 +74,23 @@ const site = [
     }
 ]
 
-const test = [
+const test: RouteRecordRaw[] = [
     {
         path: 'test-form',
         name: '测试表单',
+        meta: {
+            keepName: 'SimpleFormDemo',
+            title: '测试表单'
+        },
         component: () => import("./../views/example/SimpleFormDemo.vue")
     },
     {
         path: 'test-table',
-        name: '测试表格',
+        name: '测试表格1',
+        meta: {
+            title: '测试表格',
+            keepName: 'SimpleTableDemo'
+        },
         component: () => import("./../views/example/SimpleTableDemo.vue")
     }
 ]
@@ -90,7 +98,7 @@ const test = [
 
 
 
-const allPages = [
+const allPages:RouteRecordRaw[] = [
     ...blog,
     ...user,
     ...site,
