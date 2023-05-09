@@ -3,19 +3,30 @@ import { Ref, ref } from "vue"
 
 
 export interface SimpleFormModel {
-    type: 'input' | 'number' | 'select' | 'checkbox' | 'datetime' | 'date' | 'switch'
-    name: string
+    id: string
     label: string,
     value?: any
     placeholder?: string,
-    dateTimeOption?: {
-        type: 'year' | 'month' | 'date' | 'datetime' | 'week' | 'datetimerange' | 'daterange',
-        format?: string
-    },
-    selectOption?: {
-        items: { label: string, value: any }[]
-    },
-    inputOption?: {
-        isNumber: false
-    }
+    option?: SimpleControlType
 }
+
+export type ControlName = 'input' | 'number' | 'time' | 'select';
+
+export class BaseOption {
+    control: ControlName = 'input';
+}
+
+export class InputOption extends BaseOption {
+    control: ControlName = 'input';
+}
+
+export class SelectOption extends BaseOption {
+    control: ControlName = 'select'
+    items?: { label: string, value: any }[]
+}
+// export class DateTimeOption extends BaseOption {
+//     type: 'year' | 'month' | 'date' | 'datetime' | 'week' | 'datetimerange' | 'daterange'
+//     format?: string
+// }
+
+export type SimpleControlType = SelectOption | InputOption //| DateTimeOption
