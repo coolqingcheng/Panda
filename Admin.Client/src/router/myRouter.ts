@@ -24,16 +24,7 @@ const myRouter = createRouter({
             path: '/admin',
             name: 'admin',
             component: AdminIndex,
-            children: [
-                // {
-                //     path: '404',
-                //     component: Page404
-                // }
-                // , {
-                //     path: ':pathMatch(.*)',
-                //     redirect: '/admin/404'
-                // }
-            ]
+            children: []
         }
     ]
 })
@@ -52,7 +43,8 @@ const addDynamicRoute = () => {
                 path: path,
                 name: item.name,
                 component: item.component,
-                children: []
+                children: [],
+                meta:item.meta
             })
         }
     })

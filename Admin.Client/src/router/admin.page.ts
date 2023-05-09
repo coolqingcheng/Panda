@@ -98,7 +98,7 @@ const test: RouteRecordRaw[] = [
 
 
 
-const allPages = [
+const allPages:RouteRecordRaw[] = [
     ...blog,
     ...user,
     ...site,

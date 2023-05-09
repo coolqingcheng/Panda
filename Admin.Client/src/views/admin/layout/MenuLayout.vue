@@ -106,8 +106,6 @@ router.afterEach((to, from, fail) => {
     }
 }
 
-
-
 .el-menu.el-menu--inline {
     padding: 8px;
     box-sizing: border-box;
@@ -115,6 +113,12 @@ router.afterEach((to, from, fail) => {
     .el-menu-item.is-active {
         background-color: var(--el-color-primary);
         color: white;
+
+    }
+}
+
+.el-sub-menu.is-active.is-opened {
+    .el-menu-item {
         border-radius: 4px;
     }
 }

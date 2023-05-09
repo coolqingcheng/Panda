@@ -22,10 +22,9 @@
                     </template>
                 </ElDropdown>
             </div>
+            <TabsView></TabsView>
             <div :class="{ 'route-view': setting.showViewBg }">
-                <div style="padding: 4px;">
-                    <ElTag v-for="tag in tabInlcude" closable @close="close(tag)">{{ tag }}</ElTag>
-                </div>
+             
                 <RouterView #default="{ Component }">
                     <KeepAlive :include="tabInlcude">
                         <component :is="Component" :key="$route.name"></component>
@@ -49,8 +48,8 @@ import { useVSetting } from '@/store/VSetting'
 import { AuthService } from '@/shared/service'
 import { ElLoading, ElMessage } from 'element-plus';
 import ChangePwd from './users/ChangePwd.vue';
-import { useDynamicRouter } from '@/shared/useDynamic';
 
+import TabsView from '@/components/TabsView.vue';
 
 
 const tabInlcude = ref(['SimpleFormDemo']);
@@ -104,15 +103,10 @@ const LoginOut = () => {
     })
 }
 
-console.log('动态路由添加')
-
 router.beforeEach(guard => {
     console.log('路由跳转之前')
 })
 
-useDynamicRouter();
-
-console.log(router.getRoutes())
 
 
 
@@ -173,7 +167,7 @@ console.log(router.getRoutes())
         flex-direction: column;
         padding: 10px;
         box-sizing: border-box;
-        padding-top: $header-h + 20px;
+        padding-top: $header-h;
         position: relative;
 
         .route-view {
@@ -191,7 +185,7 @@ console.log(router.getRoutes())
             left: 0;
             height: $header-h;
             width: 100%;
-            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+            // box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
             z-index: 100;
             background-color: var(--el-bg-color);
             display: flex;
