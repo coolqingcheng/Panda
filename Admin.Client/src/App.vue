@@ -1,6 +1,5 @@
 <script setup lang="ts">
 
-import { ElButton } from 'element-plus';
 import { useRouter } from 'vue-router'
 import 'nprogress/nprogress.css'
 
@@ -10,7 +9,7 @@ import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 
 const router = useRouter();
 
-router.beforeEach((to, from) => {
+router.beforeEach(guard => {
   NProgress.start();
 })
 
@@ -18,15 +17,6 @@ router.afterEach((to, from) => {
   NProgress.done()
 })
 
-// router.afterEach((to, from) => {
-//   // console.log(to.meta,from)
-//   if (to.meta.title) {
-//     document.title = String(to.meta.title);
-//   } else {
-//     document.title = ''
-//   }
-// }
-// );
 
 </script>
 

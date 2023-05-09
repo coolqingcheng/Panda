@@ -9,15 +9,7 @@
                     <el-icon class="expand-icon">
                         <Expand />
                     </el-icon>
-
                 </HeaderItem>
-                <div class="nav-crumb">
-                    <!-- <el-breadcrumb :separator-icon="ArrowRight">
-                        <template v-for="item in crumbList">
-                            <el-breadcrumb-item :to="{ path: item.path }">{{ item.name }}</el-breadcrumb-item>
-                        </template>
-                    </el-breadcrumb> -->
-                </div>
                 <ElDropdown>
                     <HeaderItem>
                         <ElIcon>
@@ -31,7 +23,14 @@
                 </ElDropdown>
             </div>
             <div :class="{ 'route-view': setting.showViewBg }">
-                <RouterView></RouterView>
+                <div style="padding: 4px;">
+                    <ElTag v-for="tag in tabInlcude" closable @close="close(tag)">{{ tag }}</ElTag>
+                </div>
+                <RouterView #default="{ Component }">
+                    <KeepAlive :include="tabInlcude">
+                        <component :is="Component" :key="$route.name"></component>
+                    </KeepAlive>
+                </RouterView>
             </div>
         </div>
     </div>
@@ -43,20 +42,27 @@ import { expandHandler, closeSlideMenu } from './layout/MenuStatus'
 import { Expand, User } from '@element-plus/icons-vue'
 import AsideLayout from './layout/AsideLayout.vue'
 import { useRoute, useRouter } from 'vue-router'
-import { onMounted, ref } from 'vue';
-import { ArrowRight } from '@element-plus/icons-vue'
+import { nextTick, ref } from 'vue';
 
 import { useVSetting } from '@/store/VSetting'
 
 import { AuthService } from '@/shared/service'
 import { ElLoading, ElMessage } from 'element-plus';
 import ChangePwd from './users/ChangePwd.vue';
-import { allPages } from '@/router/admin.page';
 import { useDynamicRouter } from '@/shared/useDynamic';
+
+
+
+const tabInlcude = ref(['SimpleFormDemo']);
+
+
+const close = (tag: string) => {
+    tabInlcude.value = []
+}
 
 const ChangePwdStatus = ref(false)
 
-const showChangePwd = ()=>{
+const showChangePwd = () => {
     ChangePwdStatus.value = true
 }
 
@@ -67,36 +73,22 @@ const route = useRoute();
 
 const setting = useVSetting();
 
-// const crumbList = ref<{ name: string, path: string }[]>([])
 
-const showBg = ref(true)
 
 router.afterEach((to, from, fail) => {
     closeSlideMenu();
     if (!fail) {
-        // crumbList.value = [];
-        // to.matched.filter(a => a.name).map(a => {
-        //     crumbList.value.push({
-        //         name: a.name!.toString(),
-        //         path: a.path
-        //     })
-        // })
     }
-    showBg.value = route.meta.showbg as any;
     if (route.meta.title) {
         document.title = route.meta.title as string
     }
+    
+    nextTick(() => {
+        console.log('路由跳转完成:', to.meta.title);
+        document.title = route.meta.title ?? '';
+    })
 })
 
-onMounted(() => {
-    // crumbList.value = []
-    // route.matched.filter(a => a.name).map(a => {
-    //     crumbList.value.push({
-    //         name: a.name!.toString(),
-    //         path: a.path
-    //     })
-    // })
-})
 
 const LoginOut = () => {
     let loading = ElLoading.service({
@@ -114,7 +106,7 @@ const LoginOut = () => {
 
 console.log('动态路由添加')
 
-router.beforeEach(guard=>{
+router.beforeEach(guard => {
     console.log('路由跳转之前')
 })
 

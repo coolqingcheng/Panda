@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import './style.scss'
 import App from './App.vue'
 import 'element-plus/dist/index.css'
-// import 'default-passive-events'
+import 'default-passive-events'
 
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'

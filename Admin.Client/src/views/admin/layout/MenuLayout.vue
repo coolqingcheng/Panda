@@ -64,8 +64,6 @@ import { isCollapse } from "./MenuStatus"
 import { User, Setting, Odometer } from '@element-plus/icons-vue'
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { allPages } from "@/router/admin.page";
-import { useDynamicRouter } from "@/shared/useDynamic";
 
 const defaultActive = ref('')
 
