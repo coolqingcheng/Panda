@@ -9,40 +9,6 @@ import {
 } from "vue";
 import { BaseOption, SelectOption } from "./SimpleFormModel";
 
-const userName = ref("111");
-
-const status = ref(false);
-
-const Test2 = (props: { name: string }) => {
-  return (
-    <>
-      <h2>
-        Test2:{props.name} - {userName.value} - 状态:{status.value}
-      </h2>
-      <ElInput v-model={userName.value}></ElInput>
-      <ElSwitch v-model={status.value}></ElSwitch>
-      <h1
-        style={{
-          background: "#ccc",
-          display: "inline-block",
-          userSelect: "none",
-        }}
-        onMousedown={(e) => {
-          console.log(e.clientX, e.clientY, e.screenX, e.screenY);
-          let el = e.currentTarget as HTMLElement;
-          console.log(el.style.marginLeft);
-          el.style.marginLeft = `${(el.style.marginLeft
-            ? parseInt(el.style.marginLeft)
-            : 0) + 10}px`;
-        }}
-      >
-        点击我
-      </h1>
-      <br />
-    </>
-  );
-};
-
 const Test = defineComponent({
   props: {
     items: {
@@ -63,6 +29,8 @@ const Test = defineComponent({
       x: 0,
       y: 0,
     });
+
+    const name = ref("123");
 
     return () => (
       <>
@@ -86,7 +54,7 @@ const Test = defineComponent({
           }
           return null;
         })}
-        <Test2 name="测试姓名"></Test2>
+        <ElInput v-model={name.value}></ElInput>
         <ElButton onClick={testHandler}>测试-click</ElButton>
       </>
     );
