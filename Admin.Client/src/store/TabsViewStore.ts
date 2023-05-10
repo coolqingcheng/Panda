@@ -11,7 +11,12 @@ const useTabsViewStore = defineStore('useTabsViewStore', {
                 fullPath: '/admin/dashboard',
                 isFix: true,
                 title: '控制台'
-            }] as TabRoute[]
+            }] as TabRoute[],
+            activePath: '/admin/dashboard',
+            /**
+             * 排除的
+             */
+            exCludeList: [] as string[]
         })
     },
     getters: {
@@ -32,6 +37,12 @@ const useTabsViewStore = defineStore('useTabsViewStore', {
         close(url: string) {
             console.log('关闭:' + url)
             let index = this.tableList.findIndex(a => a.fullPath == url);
+            var item = this.tableList[index]
+            if (item.componentName) {
+                if (this.exCludeList.findIndex(a => a == item.componentName) == -1) {
+                    this.exCludeList.push(item.componentName);
+                }
+            }
             // 获取下一个
             if ((index + 1) == this.tableList.length) {
                 url = this.tableList[index - 1].fullPath;
@@ -41,11 +52,15 @@ const useTabsViewStore = defineStore('useTabsViewStore', {
             }
             this.tableList.splice(index, 1);
             console.log('跳转:' + url, this.tableList)
+
+
         },
         add(item: TabRoute) {
             if (this.tableList.findIndex(a => a.fullPath == item.fullPath) == -1) {
                 this.tableList.push(item)
+
             }
+            this.exCludeList = this.exCludeList.filter(a => a != item.componentName);
         },
 
     }

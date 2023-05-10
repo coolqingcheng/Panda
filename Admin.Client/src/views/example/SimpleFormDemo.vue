@@ -5,6 +5,7 @@
         </template>
         <ElButton @click="testHandler()">test</ElButton>
         <Test :items="controlItems"></Test>
+        <ElInput v-model="name"></ElInput>
     </ElCard>
 </template>
 
@@ -15,6 +16,8 @@ import { reactive, ref } from 'vue';
 import Test from '@/components/test'
 
 const testBool = ref(false)
+
+const name = ref('')
 
 const formDirection = ref<'v' | 'h'>('h')
 

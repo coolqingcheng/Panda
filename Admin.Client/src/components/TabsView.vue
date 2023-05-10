@@ -2,8 +2,8 @@
     <div class="v-tabs">
         <ElScrollbar ref="scrollbarRef" @scroll="onScroll">
             <ul>
-                <li v-for="item in store.tableList" :key="item.fullPath" :class="{ 'active': activePath == item.fullPath }"
-                    @click="selectPath(item.fullPath)">
+                <li v-for="item in store.tableList" :key="item.fullPath"
+                    :class="{ 'active': store.activePath == item.fullPath }" @click="selectPath(item.fullPath)">
                     <div>
                         {{ item.title }}
                     </div>
@@ -41,10 +41,6 @@ import { useTabsViewStore } from '@/store/TabsViewStore';
 
 const store = useTabsViewStore();
 
-
-
-const activePath = ref('/admin/dashboard')
-
 const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>();
 const scrollVaue = ref(0);
 
@@ -72,7 +68,7 @@ const router = useRouter();
 router.afterEach((to, from) => {
     let index = store.tableList.findIndex(a => a.fullPath == to.fullPath);
     console.log('to:' + to.fullPath)
-    activePath.value = to.fullPath;
+    store.activePath = to.fullPath;
     if (index == -1) {
         store.add({
             fullPath: to.fullPath,
@@ -92,11 +88,11 @@ onMounted(() => {
         title: route.meta.title ?? route.fullPath,
         componentName: route.meta.keepName
     });
-    activePath.value = route.fullPath;
+    store.activePath = route.fullPath;
 })
 
 const selectPath = (url: string) => {
-    if (activePath.value != url) {
+    if (store.activePath != url) {
         router.push({
             path: url
         })
