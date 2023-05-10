@@ -24,7 +24,6 @@
             </div>
             <TabsView></TabsView>
             <div class="route-view">
-                {{ tabStore.getKeepAliveComponentNames }} - {{ tabStore.exCludeList }}
                 <RouterView #default="{ Component }">
                     <KeepAlive :include="tabStore.getKeepAliveComponentNames" :exclude="tabStore.exCludeList">
                         <component :is="Component" :key="$route.name"></component>

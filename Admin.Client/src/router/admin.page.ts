@@ -1,29 +1,39 @@
 import { RouteRecordRaw } from "vue-router";
 
-const blog = [
+const blog: RouteRecordRaw[] = [
     {
         path: 'post',
         component: () => import("@/views/admin/blogs/post/Index.vue"),
-        name: '文章列表'
+        meta: {
+            title: '文章管理'
+        }
     },
     {
         path: 'post-edit',
         component: () => import("@/views/admin/blogs/post/Edit.vue"),
-        name: '编辑文章'
+        meta: {
+            title: '编辑文章'
+        }
     },
     {
         path: 'cate',
         component: () => import("@/views/admin/blogs/cate/Index.vue"),
-        name: '文章分类',
+        meta: {
+            title: '分类'
+        }
     },
     {
         path: 'cate-edit',
         component: () => import("@/views/admin/blogs/cate/Edit.vue"),
-        name: '编辑分类',
+        meta: {
+            title: '编辑分类'
+        }
     },
     {
         path: 'tag',
-        name: '标签',
+        meta: {
+            title: '标签'
+        },
         component: () => import("@/views/admin/blogs/tag/List.vue")
     }
 ]
@@ -47,10 +57,12 @@ const user = [
     }
 ]
 
-const site = [
+const site: RouteRecordRaw[] = [
     {
         path: 'friendlink',
-        name: '友情链接',
+        meta: {
+            title: '友情链接',
+        },
         component: () => import('@/views/admin/blogs/friendlink/List.vue')
     },
     {
@@ -60,16 +72,23 @@ const site = [
     },
     {
         path: 'setting',
-        name: '系统设置',
+        meta: {
+            title: '系统设置',
+        },
         component: () => import('@/views/setting/Setting.vue')
     },
     {
         path: 'file-manager',
-        name: '文件管理',
+        meta: {
+            title: '文件管理'
+        },
         component: () => import('@/views/admin/regular/FileManager.vue')
     },
     {
         path: 'dashboard',
+        meta: {
+            title: '控制台'
+        },
         component: () => import('@/views/admin/dashboard/DashBoard.vue')
     }
 ]
@@ -98,7 +117,7 @@ const test: RouteRecordRaw[] = [
 
 
 
-const allPages:RouteRecordRaw[] = [
+const allPages: RouteRecordRaw[] = [
     ...blog,
     ...user,
     ...site,
