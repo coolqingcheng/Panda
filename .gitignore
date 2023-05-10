@@ -14,3 +14,4 @@ publish/
 Logs/
 appsettings.Development.json
 
+src/NG-Client/.DS_Store

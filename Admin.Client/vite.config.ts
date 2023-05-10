@@ -1,11 +1,15 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from "path";
+import vueJsx from '@vitejs/plugin-vue-jsx'
+
 
 // https://vitejs.dev/config/
 export default defineConfig({
   
-  plugins: [vue()],
+  plugins: [vue(),vueJsx({
+    
+  })],
   resolve: {
     alias: {
       "@/shared": path.resolve(__dirname, "src/shared"),
@@ -24,7 +28,7 @@ export default defineConfig({
         changeOrigin: true
       },
       '/file': {
-        target: 'http://localhost:51775',
+        target: 'https://iwscl.com',
         changeOrigin: true
       }
     }
