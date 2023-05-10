@@ -2,14 +2,14 @@
     <div class="v-tabs">
         <ElScrollbar ref="scrollbarRef" @scroll="onScroll">
             <ul>
-                <li v-for="item in tableList" :key="item.fullPath" :class="{ 'active': activePath == item.fullPath }"
+                <li v-for="item in store.tableList" :key="item.fullPath" :class="{ 'active': activePath == item.fullPath }"
                     @click="selectPath(item.fullPath)">
                     <div>
                         {{ item.title }}
                     </div>
                     <div class="v-tabs-close">
                         <el-icon>
-                            <Close @click="close" v-if="!item.isFix" />
+                            <Close @click.stop="close(item.fullPath)" v-if="!item.isFix" />
                         </el-icon>
                     </div>
                 </li>
@@ -32,39 +32,34 @@
 </template>
 <script setup lang="ts">
 import { Close, ArrowLeft, ArrowRight } from '@element-plus/icons-vue'
-import { reactive, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import { ElScrollbar } from 'element-plus'
 import { useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
+import { useTabsViewStore } from '@/store/TabsViewStore';
 
-interface TabRoute {
-    fullPath: string,
-    isFix: boolean,
-    title: string
-    componentName?: string
-}
 
-const tableList = reactive<TabRoute[]>([
-    {
-        fullPath: '/admin/dashboard',
-        isFix: true,
-        title: '控制台'
-    }
-]);
+const store = useTabsViewStore();
+
+
 
 const activePath = ref('/admin/dashboard')
 
 const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>();
 const scrollVaue = ref(0);
 
-const close = () => {
-    console.log('关闭')
-}
+
 const onScroll = (item: {
     scrollTop: number;
     scrollLeft: number;
 }) => {
     scrollVaue.value = item.scrollLeft;
 
+}
+
+const close = (url: string) => {
+    store.close(url);
+    router.push({ path: store.getLastUrl })
 }
 
 const scrollHandler = (v: number) => {
@@ -75,16 +70,29 @@ const scrollHandler = (v: number) => {
 const router = useRouter();
 
 router.afterEach((to, from) => {
-    let index = tableList.findIndex(a => a.fullPath == to.fullPath);
-    console.log('index:' + index)
+    let index = store.tableList.findIndex(a => a.fullPath == to.fullPath);
+    console.log('to:' + to.fullPath)
     activePath.value = to.fullPath;
     if (index == -1) {
-        tableList.push({
+        store.add({
             fullPath: to.fullPath,
             isFix: false,
-            title: to.meta.title ?? to.fullPath
+            title: to.meta.title ?? to.fullPath,
+            componentName: to.meta.keepName
         })
     }
+})
+
+const route = useRoute();
+
+onMounted(() => {
+    store.add({
+        fullPath: route.fullPath,
+        isFix: false,
+        title: route.meta.title ?? route.fullPath,
+        componentName: route.meta.keepName
+    });
+    activePath.value = route.fullPath;
 })
 
 const selectPath = (url: string) => {
