@@ -191,6 +191,7 @@ router.beforeEach(guard => {
             background-color: var(--el-bg-color);
             display: flex;
             flex-direction: row;
+            justify-content: space-between;
 
             .expand-icon {
                 font-size: 25px;

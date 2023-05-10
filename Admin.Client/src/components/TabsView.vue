@@ -2,13 +2,14 @@
     <div class="v-tabs">
         <ElScrollbar ref="scrollbarRef" @scroll="onScroll">
             <ul>
-                <li v-for="item in 30" :key="item">
+                <li v-for="item in tableList" :key="item.fullPath" :class="{ 'active': activePath == item.fullPath }"
+                    @click="selectPath(item.fullPath)">
                     <div>
-                        菜单:{{ item }}
+                        {{ item.title }}
                     </div>
-                    <div class="v-tabs-close" @click="close">
+                    <div class="v-tabs-close">
                         <el-icon>
-                            <Close />
+                            <Close @click="close" v-if="!item.isFix" />
                         </el-icon>
                     </div>
                 </li>
@@ -31,9 +32,26 @@
 </template>
 <script setup lang="ts">
 import { Close, ArrowLeft, ArrowRight } from '@element-plus/icons-vue'
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import { ElScrollbar } from 'element-plus'
+import { useRouter } from 'vue-router';
 
+interface TabRoute {
+    fullPath: string,
+    isFix: boolean,
+    title: string
+    componentName?: string
+}
+
+const tableList = reactive<TabRoute[]>([
+    {
+        fullPath: '/admin/dashboard',
+        isFix: true,
+        title: '控制台'
+    }
+]);
+
+const activePath = ref('/admin/dashboard')
 
 const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>();
 const scrollVaue = ref(0);
@@ -53,6 +71,30 @@ const scrollHandler = (v: number) => {
     scrollbarRef.value?.setScrollLeft(scrollVaue.value + v)
 }
 
+
+const router = useRouter();
+
+router.afterEach((to, from) => {
+    let index = tableList.findIndex(a => a.fullPath == to.fullPath);
+    console.log('index:' + index)
+    activePath.value = to.fullPath;
+    if (index == -1) {
+        tableList.push({
+            fullPath: to.fullPath,
+            isFix: false,
+            title: to.meta.title ?? to.fullPath
+        })
+    }
+})
+
+const selectPath = (url: string) => {
+    if (activePath.value != url) {
+        router.push({
+            path: url
+        })
+    }
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -65,6 +107,10 @@ const scrollHandler = (v: number) => {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+
+    .el-scrollbar {
+        flex: 1;
+    }
 
     .v-tabs-tools {
         display: flex;
