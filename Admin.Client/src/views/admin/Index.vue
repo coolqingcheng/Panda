@@ -25,7 +25,7 @@
             <TabsView></TabsView>
             <div class="route-view">
                 <RouterView #default="{ Component }">
-                    <KeepAlive :include="tabInlcude">
+                    <KeepAlive :include="tabStore.getKeepAliveComponentNames" :exclude="tabStore.exCludeList">
                         <component :is="Component" :key="$route.name"></component>
                     </KeepAlive>
                 </RouterView>
@@ -49,9 +49,12 @@ import { ElLoading, ElMessage } from 'element-plus';
 import ChangePwd from './users/ChangePwd.vue';
 
 import TabsView from '@/components/TabsView.vue';
+import { useTabsViewStore } from '@/store/TabsViewStore';
 
+const tabStore = useTabsViewStore();
 
-const tabInlcude = ref(['SimpleFormDemo']);
+const tabInlcude = ref(tabStore.getKeepAliveComponentNames);
+const tabexlcude = ref(tabStore.exCludeList);
 
 
 const close = (tag: string) => {
@@ -191,6 +194,7 @@ router.beforeEach(guard => {
             background-color: var(--el-bg-color);
             display: flex;
             flex-direction: row;
+            justify-content: space-between;
 
             .expand-icon {
                 font-size: 25px;
