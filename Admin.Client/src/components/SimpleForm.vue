@@ -12,9 +12,9 @@
                                 <ElInputNumber v-model="fromModel[item.name]" :placeholder="item.placeholder" />
                             </template> -->
                             <template v-if="item.option?.control=='time'">
-                                <ElDatePicker v-model="fromModel[item.id]"
+                                <!-- <ElDatePicker v-model="fromModel[item.id]"
                                     :format="item.option?" :value-format="item.option?.format">
-                                </ElDatePicker>
+                                </ElDatePicker> -->
                             </template>
                             <!-- <template v-if="item.type == 'select'">
                                 <ElSelect v-model="fromModel[item.name]" :placeholder="item.placeholder">
@@ -42,7 +42,7 @@
 <script lang="ts" setup>
 import { ElForm, FormInstance, FormRules } from 'element-plus';
 import { ref, reactive, onMounted, watch } from 'vue';
-import { BaseOption, DateTimeOption, InputOption, SimpleFormModel } from './SimpleFormModel';
+import { BaseOption, InputOption, SimpleFormModel } from './SimpleFormModel';
 
 const formGrid = reactive({
     xs: 24,
@@ -125,12 +125,6 @@ const emit = defineEmits<{
 
 const getControlType = (item: BaseOption) => {
 
-if (item.control == 'input') {
-    return item as InputOption;
-}
-if (item.control == 'time') {
-    return item as DateTimeOption;
-}
 
 return item as InputOption;
 
