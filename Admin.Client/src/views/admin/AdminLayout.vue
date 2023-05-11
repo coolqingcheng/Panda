@@ -54,7 +54,6 @@ import { useTabsViewStore } from '@/store/TabsViewStore';
 const tabStore = useTabsViewStore();
 
 const tabInlcude = ref(tabStore.getKeepAliveComponentNames);
-const tabexlcude = ref(tabStore.exCludeList);
 
 
 const close = (tag: string) => {
@@ -96,6 +95,7 @@ const LoginOut = () => {
         lock: true
     })
     AuthService.loginOut().then(() => {
+        tabStore.clear();
         ElMessage.success('退出成功')
         router.replace({
             name: '登录'

@@ -1,6 +1,6 @@
 import { serviceOptions } from '@/shared/service'
 import axios, { AxiosError, AxiosResponse } from 'axios'
-import { AdminRouter } from "../router/myRouter"
+import { AdminRouter } from "../router/AdminRouter"
 import { ElMessage } from "element-plus"
 import { useRouter } from 'vue-router'
 

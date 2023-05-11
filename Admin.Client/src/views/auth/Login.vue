@@ -28,7 +28,7 @@ import { useVSetting } from "@/store/VSetting";
 
 import { AuthService, LoginModel } from "@/shared/service";
 
-import { AdminRouter } from "@/router/myRouter"
+import { AdminRouter } from "@/router/AdminRouter"
 
 const vsetting = useVSetting();
 

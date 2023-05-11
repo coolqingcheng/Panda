@@ -56,12 +56,17 @@ const useTabsViewStore = defineStore('useTabsViewStore', {
 
         },
         add(item: TabRoute) {
+            if (item.fullPath.startsWith("/admin") == false) return;
             if (this.tableList.findIndex(a => a.fullPath == item.fullPath) == -1) {
                 this.tableList.push(item)
 
             }
             this.exCludeList = this.exCludeList.filter(a => a != item.componentName);
         },
+
+        clear() {
+            this.tableList = [];
+        }
 
     }
 })

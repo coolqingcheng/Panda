@@ -114,7 +114,7 @@ const test: RouteRecordRaw[] = [
     },
 ];
 
-const allPages: RouteRecordRaw[] = [
+const routeList: RouteRecordRaw[] = [
     {
         path: "blog",
         component: BlankLayout,
@@ -132,9 +132,9 @@ const allPages: RouteRecordRaw[] = [
     },
     {
         path: "test",
-        component: BlankLayout,
+        // component: BlankLayout,
         children: [...test],
     },
 ];
 
-export { allPages };
+export { routeList };

@@ -9,7 +9,7 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 import ElementPlus from 'element-plus'
 
-import { AdminRouter } from '@/router/myRouter'
+import { AdminRouter } from '@/router/AdminRouter'
 
 import { axiosConfig } from "@/shared/Axios.Config"
 
