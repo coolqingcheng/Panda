@@ -1,6 +1,6 @@
 import { serviceOptions } from '@/shared/service'
 import axios, { AxiosError, AxiosResponse } from 'axios'
-import { myRouter } from "../router/myRouter"
+import { AdminRouter } from "../router/myRouter"
 import { ElMessage } from "element-plus"
 import { useRouter } from 'vue-router'
 
@@ -24,7 +24,7 @@ const axiosConfig = () => {
                         message: '身份验证失败，请重新登录',
                         type: 'error'
                     })
-                    myRouter.replace("/auth")
+                    AdminRouter.replace("/auth")
 
                     break;
                 case 500:

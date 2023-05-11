@@ -3,20 +3,20 @@
         <ElCol>
             <ElForm ref="formRef" :label-width="labelWidth" :rules="rules" :model="fromModel">
                 <ElRow>
-                    <ElCol :="formGrid" v-for="item in items" :key="item.id">
-                        <ElFormItem :label="item.label" :prop="item.id">
+                    <ElCol :="formGrid" v-for="item in items" :key="item.name">
+                        <ElFormItem :label="item.label" :prop="item.name">
                             <template v-if="item.option?.control == 'input'">
                                 <ElInput v-model="item.value" :placeholder="item.placeholder"></ElInput>
                             </template>
-                            <!-- <template v-if="item.type == 'number'">
+                            <template v-if="item.type == 'number'">
                                 <ElInputNumber v-model="fromModel[item.name]" :placeholder="item.placeholder" />
-                            </template> -->
-                            <template v-if="item.option?.control=='time'">
-                                <!-- <ElDatePicker v-model="fromModel[item.id]"
-                                    :format="item.option?" :value-format="item.option?.format">
-                                </ElDatePicker> -->
                             </template>
-                            <!-- <template v-if="item.type == 'select'">
+                            <template v-if="item.option?.control == 'time'">
+                                <ElDatePicker v-model="fromModel[item.name]" :format="item.datePickerOption.format"
+                                    :value-format="item.datePickerOption?.format">
+                                </ElDatePicker>
+                            </template>
+                            <template v-if="item.type == 'select'">
                                 <ElSelect v-model="fromModel[item.name]" :placeholder="item.placeholder">
                                     <ElOption v-if="item.selectOption" v-for="itemOption in item.selectOption?.items"
                                         :label="itemOption.label" :value="itemOption.value" :key="itemOption.value">
@@ -25,7 +25,7 @@
                             </template>
                             <template v-if="item.type == 'switch'">
                                 <ElSwitch v-model="fromModel[item.name]" :placeholder="item.placeholder"></ElSwitch>
-                            </template> -->
+                            </template>
                         </ElFormItem>
                     </ElCol>
                 </ElRow>
@@ -126,7 +126,7 @@ const emit = defineEmits<{
 const getControlType = (item: BaseOption) => {
 
 
-return item as InputOption;
+    return item as InputOption;
 
 }
 

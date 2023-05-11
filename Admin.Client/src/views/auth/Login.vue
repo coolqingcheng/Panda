@@ -28,7 +28,7 @@ import { useVSetting } from "@/store/VSetting";
 
 import { AuthService, LoginModel } from "@/shared/service";
 
-import { myRouter } from "@/router/myRouter"
+import { AdminRouter } from "@/router/myRouter"
 
 const vsetting = useVSetting();
 
@@ -68,7 +68,7 @@ const submit = () => {
                     message: '登录成功',
                     type: 'success'
                 })
-                myRouter.replace('/admin')
+                AdminRouter.replace('/admin')
             }).finally(() => {
                 loading.value = false
             })

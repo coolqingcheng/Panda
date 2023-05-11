@@ -9,7 +9,7 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 import ElementPlus from 'element-plus'
 
-import { myRouter } from '@/router/myRouter'
+import { AdminRouter } from '@/router/myRouter'
 
 import { axiosConfig } from "@/shared/Axios.Config"
 
@@ -19,7 +19,7 @@ const app = createApp(App)
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 app.use(pinia)
-app.use(myRouter)
+app.use(AdminRouter)
 app.use(ElementPlus)
 app.mount('#app')
 
