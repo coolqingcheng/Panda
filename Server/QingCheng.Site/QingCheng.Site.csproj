@@ -17,16 +17,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Api\Account\Models\" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="Mapster.Core" Version="1.2.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.2">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="MySqlConnector" Version="2.2.5" />
+		<PackageReference Include="MySqlConnector" Version="2.2.6" />
 		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
 	</ItemGroup>
 

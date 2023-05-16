@@ -31,7 +31,7 @@ public class AccountService
 
     public async Task<AuthResult<Accounts>> LoginAsync(string userName, string pwd)
     {
-        var _pwd = pwd.GetSHA256();
+        pwd = pwd.GetSHA256();
         var account = await _context.Set<Accounts>().Where(a => a.UserName == userName || a.Email == userName)
             .FirstOrDefaultAsync();
         var res = new AuthResult<Accounts>(isOk: false);
@@ -40,29 +40,23 @@ public class AccountService
             res.Message = "账号和密码不匹配";
             _logger.LogError($"账号:{userName} 密码: {pwd} 尝试登录，失败！");
         }
-        else
-
-        if (account.LockedTime > DateTime.Now)
+        else if (account.LockedTime > DateTime.Now)
         {
             res.Message = "账号已经锁定！";
         }
-        else
-
-        if (account.Pwd != _pwd)
+        else if (account.Pwd != pwd)
         {
             res.Message = "账号和密码不匹配";
             account.LoginFailCount += 1;
             await _context.SaveChangesAsync();
         }
-        else
-
-        if (account.LoginFailCount > 5)
+        else if (account.LoginFailCount > 5)
         {
             account.LoginFailCount = 0;
             account.LockedTime = DateTime.Now.AddMinutes(15);
             await _context.SaveChangesAsync();
         }
-       
+
         else
         {
             res.Data = account;
@@ -174,16 +168,19 @@ public class AccountService
     /// <param name="roleIds"></param>
     public async Task SetRole(Guid accountId, List<Guid> roleIds)
     {
-        var account = await _context.Set<Accounts>().Include(a => a.AccountRoleRelations).FirstOrDefaultAsync(a => a.Id == accountId);
+        var account = await _context.Set<Accounts>().Include(a => a.AccountRoleRelations)
+            .FirstOrDefaultAsync(a => a.Id == accountId);
         if (account == null)
         {
             return;
         }
+
         var role = await _context.Set<AccountRoles>().FirstOrDefaultAsync(a => roleIds.Contains(a.Id));
         if (role == null)
         {
             return;
         }
+
         _context.Set<AccountRoleRelation>().RemoveRange(account.AccountRoleRelations);
         await _context.SaveChangesAsync();
         var roles = await _context.Set<AccountRoles>().Where(a => roleIds.Contains(a.Id)).ToListAsync();
@@ -214,6 +211,7 @@ public class AccountService
             {
                 account.LockedTime = DateTime.Now.AddYears(100);
             }
+
             await _context.SaveChangesAsync();
         }
     }
