@@ -1,6 +1,10 @@
-﻿namespace QingCheng.Site.Repositories.Blogs;
+﻿using QingCheng.Site.Data.Blogs;
 
-public class PostRepository
+namespace QingCheng.Site.Repositories.Blogs;
+
+public class PostRepository : BaseRepository<Posts>
 {
-    
+    public PostRepository(DbContext dbContext) : base(dbContext)
+    {
+    }
 }

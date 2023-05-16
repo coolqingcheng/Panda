@@ -58,7 +58,7 @@ public class AccountController : BaseAdminController
     /// <param name="request"></param>
     /// <returns></returns>
     [HttpGet]
-    public async Task<PageDto<AccountItemModel>> GetList([FromQuery] AccountListRequest request)
+    public async Task<PageDto<AccountItemDto>> GetList([FromQuery] AccountListRequest request)
     {
         return await _service.GetList(request);
     }

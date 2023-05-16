@@ -11,7 +11,13 @@ namespace QingCheng.Tools
 {
     public static class AutoInject
     {
-        public static void InjectServices(this IServiceCollection collection, Assembly? assembly)
+        /// <summary>
+        /// 自动注入
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="assembly"></param>
+        /// <param name="suffix"></param>
+        public static void InjectSuffix(this IServiceCollection collection, Assembly? assembly,string suffix="Service")
         {
             if (assembly == null)
             {
@@ -19,7 +25,7 @@ namespace QingCheng.Tools
                 return;
             }
             var types = assembly.GetTypes();
-            var services = types.Where(a => a.Name.EndsWith("Service")).Where(a => a.IsAbstract == false).Where(a => a.IsClass).Where(a => a.GetCustomAttribute<IgnoreInjectAttribute>(inherit: false) == null).ToList();
+            var services = types.Where(a => a.Name.EndsWith(suffix)).Where(a => a.IsAbstract == false).Where(a => a.IsClass).Where(a => a.GetCustomAttribute<IgnoreInjectAttribute>(inherit: false) == null).ToList();
             foreach (var service in services)
             {
 #if DEBUG

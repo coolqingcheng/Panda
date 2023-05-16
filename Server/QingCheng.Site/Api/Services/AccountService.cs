@@ -10,30 +10,34 @@ using QingCheng.Tools.Helper;
 using QingCheng.Site.Models;
 using QingCheng.Site.Models.Auth;
 using QingCheng.Site.Auth.Events;
+using QingCheng.Site.Repositories.Sys;
 
 namespace QingCheng.WebApi.Services;
 
 public class AccountService
 {
-    private readonly DbContext _context;
+    private readonly AccountRepository _accountRepository;
 
 
     private readonly IMediator _mediator;
 
     private readonly ILogger _logger;
 
-    public AccountService(DbContext context, IMediator mediator, ILogger<AccountService> logger)
+    private readonly AccountRoleRepository _accountRoleRepository;
+
+    public AccountService(IMediator mediator, ILogger<AccountService> logger, AccountRepository accountRepository,
+        AccountRoleRepository accountRoleRepository)
     {
-        _context = context;
         _mediator = mediator;
         _logger = logger;
+        _accountRepository = accountRepository;
+        _accountRoleRepository = accountRoleRepository;
     }
 
     public async Task<AuthResult<Accounts>> LoginAsync(string userName, string pwd)
     {
         pwd = pwd.GetSHA256();
-        var account = await _context.Set<Accounts>().Where(a => a.UserName == userName || a.Email == userName)
-            .FirstOrDefaultAsync();
+        var account = await _accountRepository.GetByUserNameAsync(userName);
         var res = new AuthResult<Accounts>(isOk: false);
         if (account == null)
         {
@@ -48,13 +52,11 @@ public class AccountService
         {
             res.Message = "账号和密码不匹配";
             account.LoginFailCount += 1;
-            await _context.SaveChangesAsync();
         }
         else if (account.LoginFailCount > 5)
         {
             account.LoginFailCount = 0;
             account.LockedTime = DateTime.Now.AddMinutes(15);
-            await _context.SaveChangesAsync();
         }
 
         else
@@ -62,6 +64,8 @@ public class AccountService
             res.Data = account;
             res.IsOk = true;
         }
+
+        await _accountRepository.UpdateAsync(account!);
 
         await _mediator.Publish(new LoginEvent()
         {
@@ -76,9 +80,9 @@ public class AccountService
     public async Task<BaseAuthResult> AddAccount(string userName, string pwd, string email)
     {
         var res = new BaseAuthResult(isOk: false, message: "");
-        if (await _context.Set<Accounts>().AnyAsync(a => a.UserName == userName || a.Email == email) == false)
+        if (await _accountRepository.CheckUserNameExistAsync(userName))
         {
-            await _context.Set<Accounts>().AddAsync(new Accounts()
+            await _accountRepository.AddAsync(new Accounts()
             {
                 UserName = userName,
                 Pwd = pwd.GetSHA256(),
@@ -86,7 +90,6 @@ public class AccountService
                 CreateTime = DateTime.Now,
                 Id = Guid.NewGuid()
             });
-            await _context.SaveChangesAsync();
             res.IsOk = true;
             res.Message = "添加账号成功";
         }
@@ -108,7 +111,7 @@ public class AccountService
     /// <exception cref="UserException"></exception>
     public async Task ChangePassword(Guid id, string currPwd, string newPwd)
     {
-        var account = await _context.Set<Accounts>().FirstOrDefaultAsync(a => a.Id == id);
+        var account = await _accountRepository.FindByIdAsync(id);
         if (account != null)
         {
             if (account.Pwd != currPwd.GetSHA256())
@@ -117,7 +120,7 @@ public class AccountService
             }
 
             account.Pwd = newPwd.GetSHA256();
-            await _context.SaveChangesAsync();
+            await _accountRepository.UpdateAsync(account);
         }
     }
 
@@ -129,11 +132,11 @@ public class AccountService
     /// <returns></returns>
     public async Task ChangePassword(Guid id, string newPwd)
     {
-        var account = await _context.Set<Accounts>().FirstOrDefaultAsync(a => a.Id == id);
+        var account = await _accountRepository.FindByIdAsync(id);
         if (account != null)
         {
             account.Pwd = newPwd.GetSHA256();
-            await _context.SaveChangesAsync();
+            await _accountRepository.UpdateAsync(account);
         }
     }
 
@@ -142,23 +145,9 @@ public class AccountService
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
-    public async Task<PageDto<AccountItemModel>> GetList(AccountListRequest model)
+    public async Task<PageDto<AccountItemDto>> GetList(AccountListRequest model)
     {
-        var query = _context.Set<Accounts>();
-        var res = await _context.Set<Accounts>()
-            .Select(a => new AccountItemModel()
-            {
-                Id = a.Id,
-                UserName = a.UserName,
-                Email = a.Email,
-                CreateTime = a.CreateTime,
-                LastUpdateTime = a.UpdateTime,
-                LastLoginTime = _context.Set<AccountLoginRecord>().Where(x => x.Account == a)
-                    .Max(x => x.CreateTime),
-                RoleName = a.AccountRoleRelations.Select(x => x.AccountRole.RoleName).ToList(),
-                LockedTime = a.LockedTime
-            }).ToListAsync();
-        return new PageDto<AccountItemModel>(await query.CountAsync(), res);
+        return await _accountRepository.GetAccountList(model);
     }
 
     /// <summary>
@@ -168,51 +157,34 @@ public class AccountService
     /// <param name="roleIds"></param>
     public async Task SetRole(Guid accountId, List<Guid> roleIds)
     {
-        var account = await _context.Set<Accounts>().Include(a => a.AccountRoleRelations)
-            .FirstOrDefaultAsync(a => a.Id == accountId);
+        var account = await _accountRepository.GetAccountAndRolesByAccountId(accountId);
         if (account == null)
         {
             return;
         }
-
-        var role = await _context.Set<AccountRoles>().FirstOrDefaultAsync(a => roleIds.Contains(a.Id));
-        if (role == null)
+        var roleList = await _accountRoleRepository.GetAccountRoleListByRoleIds(roleIds);
+        if (roleList.Count == 0)
         {
             return;
         }
-
-        _context.Set<AccountRoleRelation>().RemoveRange(account.AccountRoleRelations);
-        await _context.SaveChangesAsync();
-        var roles = await _context.Set<AccountRoles>().Where(a => roleIds.Contains(a.Id)).ToListAsync();
-        account.AccountRoleRelations.AddRange(roles.Select(a => new AccountRoleRelation()
-        {
-            AccountRole = a,
-            Account = account
-        }));
-        await _context.SaveChangesAsync();
+        await _accountRoleRepository.AddRoleRelationAsync(account, roleList);
     }
 
 
     /// <summary>
     /// 禁止登录，锁定100年，如果已经锁定，那么解锁
     /// </summary>
-    /// <param name="accoundId"></param>
+    /// <param name="accountId"></param>
     /// <returns></returns>
-    public async Task ForbidLogin(Guid accoundId)
+    public async Task ForbidLogin(Guid accountId)
     {
-        var account = await _context.Set<Accounts>().FirstOrDefaultAsync(a => a.Id == accoundId);
+        var account = await _accountRepository.FindByIdAsync(accountId);
         if (account != null)
         {
-            if (account.LockedTime > DateTime.Now)
-            {
-                account.LockedTime = DateTime.Now.AddSeconds(-1);
-            }
-            else
-            {
-                account.LockedTime = DateTime.Now.AddYears(100);
-            }
-
-            await _context.SaveChangesAsync();
+            account.LockedTime = account.LockedTime > DateTime.Now
+                ? DateTime.Now.AddSeconds(-1)
+                : DateTime.Now.AddYears(100);
+            await _accountRepository.UpdateAsync(account);
         }
     }
 }

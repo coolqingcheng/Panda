@@ -16,7 +16,7 @@ namespace QingCheng.Site.Api.Auth.Models
 
     }
 
-    public class AccountItemModel
+    public class AccountItemDto
     {
         public Guid Id { get; set; }
 

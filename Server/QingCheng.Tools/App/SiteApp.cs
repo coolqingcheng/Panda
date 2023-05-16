@@ -25,7 +25,8 @@ public class SiteApp
             var services = builder.Services;
         
             
-            services.InjectServices(Assembly.GetCallingAssembly());
+            services.InjectSuffix(Assembly.GetCallingAssembly(),suffix:"Service");
+            services.InjectSuffix(Assembly.GetCallingAssembly(),suffix:"Repository");
            
             services.AddWebApiConfig();
                 services.AddRazorPages();
