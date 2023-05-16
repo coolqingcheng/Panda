@@ -30,7 +30,7 @@ namespace QingCheng.Site.Api.Blogs
         }
 
         [HttpGet]
-        public async Task<PostEditRequest> Get(int Id)
+        public async Task<PostDetailModel> Get(int Id)
         {
             return await _post.Get(Id);
         }

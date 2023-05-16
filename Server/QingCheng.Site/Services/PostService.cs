@@ -38,9 +38,10 @@ public class PostService
         _postCatesRepository = postCatesRepository;
     }
 
-    public async Task<PostDetailModel?> Get(int id)
+    public async Task<PostDetailModel> Get(int id)
     {
-        return await _postRepository.GetById(id);
+        var res = await _postRepository.GetById(id);
+        return res!;
     }
 
     public async Task<PageDto<PostItemModel>> GetHomeList(PostRequestModel request)
