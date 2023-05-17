@@ -1,1 +1,0 @@
-const t={border:!0},a={small:!0,layout:"total, prev, pager, next,sizes","hide-on-single-page":!0,background:!0,"page-sizes":[10,20,50,100]};class r{getTableConfig(){return{border:!0}}getPageConfig(){return{small:!0,layout:"total, prev, pager, next,sizes","hide-on-single-page":!0,background:!0,"page-sizes":[10,20,50,100]}}}export{r as Q,a as p,t};
