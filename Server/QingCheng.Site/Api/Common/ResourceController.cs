@@ -30,7 +30,7 @@ namespace QingCheng.Site.Api.Common
             {
                 Url = a.Path,
                 Suffix = a.Suffix,
-                Domain = a.StorageDomain,
+                Domain = a.StorageDomain!,
                 Size = a.Size,
                 CreateTime = a.CreateTime,
                 StorageType = a.StorageType

@@ -1,18 +1,13 @@
-﻿using System;
-using MediatR;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+﻿using MediatR;
 using QingCheng.Site.Api.Auth.Models;
-using QingCheng.Site.Data;
+using QingCheng.Site.Auth.Events;
 using QingCheng.Site.Data.Entitys;
-using QingCheng.Tools.Helper;
 using QingCheng.Site.Models;
 using QingCheng.Site.Models.Auth;
-using QingCheng.Site.Auth.Events;
 using QingCheng.Site.Repositories.Sys;
+using QingCheng.Tools.Helper;
 
-namespace QingCheng.WebApi.Services;
+namespace QingCheng.Site.Services.Sys;
 
 public class AccountService
 {

@@ -51,7 +51,7 @@ public static class AppExtension
     public static void AddApplication(this WebApplicationBuilder builder)
     {
         var service = builder.Services;
-        service.AddMediatR(Assembly.GetEntryAssembly()!);
+        service.AddMediatR(a=>a.RegisterServicesFromAssembly(Assembly.GetEntryAssembly()!));
         service.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
         service.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         service.AddHttpClient();
