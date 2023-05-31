@@ -12,6 +12,7 @@ using QingCheng.Site.Models;
 using QingCheng.Site.Models.Blogs;
 using QingCheng.Site.Models.Dto;
 using QingCheng.Site.Services;
+using QingCheng.Site.Services.Blogs;
 
 namespace QingCheng.Site.Api.Blogs
 {

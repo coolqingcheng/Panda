@@ -1,4 +1,6 @@
-﻿namespace QingCheng.Site.Repositories;
+﻿using System.Linq.Expressions;
+
+namespace QingCheng.Site.Repositories;
 
 public class BaseRepository<T> where T : class, new()
 {
@@ -16,7 +18,7 @@ public class BaseRepository<T> where T : class, new()
         return res > 0;
     }
     
-    public async Task<bool> AddAsync(List<T> entitys)
+    public async Task<bool> AddAsync(IEnumerable<T> entitys)
     {
         await DbContext.Set<T>().AddRangeAsync(entitys);
         var res = await DbContext.SaveChangesAsync();
@@ -48,5 +50,10 @@ public class BaseRepository<T> where T : class, new()
     {
         var entity = await DbContext.Set<T>().FindAsync(id);
         return entity;
+    }
+
+    public async Task<List<T>> FindListAsync(Expression<Func<T,bool>> expression)
+    {
+        return await DbContext.Set<T>().Where(expression).ToListAsync();
     }
 }

@@ -1,10 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using QingCheng.Site.Data.Blogs;
+﻿using QingCheng.Site.Data.Blogs;
 using QingCheng.Site.Models;
 using QingCheng.Site.Models.Blogs;
 using QingCheng.Site.Models.Dto;
 
-namespace QingCheng.Site.Services;
+namespace QingCheng.Site.Services.Blogs;
 
 public class PostTagService
 {

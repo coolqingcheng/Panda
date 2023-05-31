@@ -2,6 +2,7 @@
 @using QingCheng.Site.Models
 @model QingCheng.Site.Pages.Home.HomeModel
 @using QingCheng.Site.Services;
+@using QingCheng.Site.Services.Blogs
 @inject PostCateService postCateService;
 @{
     var cateList = await postCateService.GetCateList(20);
