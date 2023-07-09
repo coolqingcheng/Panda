@@ -33,10 +33,10 @@ const blog: RouteRecordRaw[] = [
     },
     {
         path: "tag",
-        name:'标签',
+        name: '标签',
         meta: {
             title: "标签",
-            keepName:'TagList'
+            keepName: 'TagList'
         },
         component: () => import("@/views/admin/blogs/tag/TagList.vue"),
     },
@@ -83,6 +83,7 @@ const site: RouteRecordRaw[] = [
         path: "setting",
         meta: {
             title: "系统设置",
+            keepName: 'Setting'
         },
         component: () => import("@/views/setting/Setting.vue"),
     },
@@ -103,7 +104,7 @@ const test: RouteRecordRaw[] = [
             keepName: "SimpleFormDemo",
             title: "测试表单",
         },
-        component: () => import("./../views/example/SimpleFormDemo.vue"),
+        component: () => import("@/views/example/SimpleFormDemo.vue"),
     },
     {
         path: "test-table",
@@ -112,29 +113,25 @@ const test: RouteRecordRaw[] = [
             title: "测试表格",
             keepName: "SimpleTableDemo",
         },
-        component: () => import("./../views/example/SimpleTableDemo.vue"),
+        component: () => import("@/views/example/SimpleTableDemo.vue"),
     },
 ];
 
 const routeList: RouteRecordRaw[] = [
     {
         path: "blog",
-        component: BlankLayout,
         children: [...blog],
     },
     {
         path: "user",
-        component: BlankLayout,
         children: [...user],
     },
     {
         path: "site",
-        component: BlankLayout,
         children: [...site],
     },
     {
         path: "test",
-        // component: BlankLayout,
         children: [...test],
     },
 ];
