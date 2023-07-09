@@ -33,8 +33,10 @@ const blog: RouteRecordRaw[] = [
     },
     {
         path: "tag",
+        name:'标签',
         meta: {
             title: "标签",
+            keepName:'TagList'
         },
         component: () => import("@/views/admin/blogs/tag/TagList.vue"),
     },
