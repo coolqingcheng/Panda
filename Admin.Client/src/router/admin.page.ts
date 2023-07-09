@@ -12,9 +12,11 @@ const blog: RouteRecordRaw[] = [
     },
     {
         path: "post-edit",
+        name:'post-edit',
         component: () => import("@/views/admin/blogs/post/PostEdit.vue"),
         meta: {
             title: "编辑文章",
+            keepName:'PostEdit'
         },
     },
     {

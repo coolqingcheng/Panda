@@ -17,9 +17,9 @@
                         <el-icon>
                             <Setting />
                         </el-icon>
-                        <span>常规管理</span>
+                        <span>系统</span>
                     </template>
-                    <el-menu-item index="/admin/site/setting">系统设置</el-menu-item>
+                    <el-menu-item index="/admin/site/setting">设置</el-menu-item>
                     <el-menu-item index="/admin/site/file-manager">附件管理</el-menu-item>
                 </el-sub-menu>
                 <el-sub-menu index="/admin/blogs">
@@ -33,7 +33,6 @@
                     <ElMenuItem index="/admin/blog/cate">分类</ElMenuItem>
                     <ElMenuItem index="/admin/blog/tag">标签</ElMenuItem>
                     <ElMenuItem index="/admin/site/friendlink">友情链接</ElMenuItem>
-                    <ElMenuItem index="/admin/site/setting">网站设置</ElMenuItem>
                 </el-sub-menu>
                 <el-sub-menu index="/admin/user">
                     <template #title>
@@ -44,7 +43,6 @@
                     </template>
                     <el-menu-item index="/admin/user/user">账号管理</el-menu-item>
                     <el-menu-item index="/admin/user/role">角色组</el-menu-item>
-                    <el-menu-item index="/admin/user/permission">权限</el-menu-item>
                 </el-sub-menu>
 
                 <el-sub-menu index="/admin/test">

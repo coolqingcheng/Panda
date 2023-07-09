@@ -22,7 +22,7 @@ namespace QingCheng.Site.Api.Config
         }
 
         [HttpGet]
-        public async Task Test([FromServices] IConfiguration configuration)
+        public async Task Test()
         {
             await _config.UpdateConfig(new Dictionary<string, string> { { "test-1", "mb" } });
         }

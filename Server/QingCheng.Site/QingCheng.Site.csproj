@@ -13,6 +13,10 @@
 	<PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Swagger' " />
 	<PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Production' " />
 	<ItemGroup>
+	  <Compile Remove="Data\Blogs\Extensions\PostCateExtension.cs" />
+	  <Compile Remove="Data\Blogs\Extensions\PostTagRelationExtension.cs" />
+	</ItemGroup>
+	<ItemGroup>
 		<ProjectReference Include="..\QingCheng.Tools\QingCheng.Tools.csproj" />
 	</ItemGroup>
 
@@ -24,6 +28,10 @@
 		</PackageReference>
 		<PackageReference Include="MySqlConnector" Version="2.2.6" />
 		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Data\Blogs\Extensions\" />
 	</ItemGroup>
 
 

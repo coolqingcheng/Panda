@@ -15,6 +15,9 @@ namespace QingCheng.Site.Services.Config
         [Required]
         public string ICP { get; set; }
 
-        public int Age { get; set; }
+        /// <summary>
+        /// 站点描述
+        /// </summary>
+        public string SiteDesc { get; set; }
     }
 }

@@ -22,13 +22,14 @@
                     </template>
                 </ElDropdown>
             </div>
-            <TabsView></TabsView>
+            <!-- <TabsView></TabsView> -->
             <div class="route-view">
-                <RouterView #default="{ Component }">
+                <!-- <RouterView #default="{ Component }">
                     <KeepAlive :include="tabStore.getKeepAliveComponentNames" :exclude="tabStore.exCludeList">
                         <component :is="Component" :key="$route.name"></component>
                     </KeepAlive>
-                </RouterView>
+                </RouterView> -->
+                <RouterView></RouterView>
             </div>
         </div>
     </div>

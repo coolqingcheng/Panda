@@ -75,11 +75,11 @@ const toEdit = (id: number | null) => {
     console.log(id)
     if (!id) {
         router.push({
-            path: '/admin/post-edit'
+            name:'post-edit'
         })
     } else {
         router.push({
-            path: '/admin/post-edit',
+            name: 'post-edit',
             query: {
                 id: id
             }

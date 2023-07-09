@@ -72,7 +72,7 @@ public class PostService
         if (post==null)
         {
             await tran.RollbackAsync();
-            throw new UserException("文章不存,更新失败！");
+            throw new UserException("文章不存在,更新失败！");
         }
         await _tagRepository.PostSetTagRelationAsync(post, tagList);
 

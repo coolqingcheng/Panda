@@ -25,7 +25,8 @@ const loading = ref(false)
 const form = ref<SiteConfig>({
     siteName: '',
     age: 0,
-    icp: ''
+    icp: '',
+    siteDesc:''
 });
 
 const save = () => {
