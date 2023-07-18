@@ -37,6 +37,7 @@ import { ElScrollbar } from 'element-plus'
 import { useRouter } from 'vue-router';
 import { useRoute } from 'vue-router';
 import { useTabsViewStore } from '@/store/TabsViewStore';
+import { extractPath, parseQueryParams } from '@/shared/Utils';
 
 
 const store = useTabsViewStore();
@@ -91,10 +92,12 @@ onMounted(() => {
     store.activePath = route.fullPath;
 })
 
-const selectPath = (url: string) => {
-    if (store.activePath != url) {
+const selectPath = (path: string) => {
+    console.log('切换:', path)
+    if (store.activePath != path) {
         router.push({
-            path: url
+            path: extractPath(path),
+            query: parseQueryParams(path)
         })
     }
 }

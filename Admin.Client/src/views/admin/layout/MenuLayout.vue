@@ -19,8 +19,8 @@
                         </el-icon>
                         <span>系统</span>
                     </template>
-                    <el-menu-item index="/admin/site/setting">设置</el-menu-item>
-                    <el-menu-item index="/admin/site/file-manager">附件管理</el-menu-item>
+                    <el-menu-item index="/admin/setting">设置</el-menu-item>
+                    <el-menu-item index="/admin/file-manager">附件管理</el-menu-item>
                 </el-sub-menu>
                 <el-sub-menu index="/admin/blogs">
                     <template #title>
@@ -29,10 +29,10 @@
                         </ElIcon>
                         <span>博客</span>
                     </template>
-                    <ElMenuItem index="/admin/blog/post">文章</ElMenuItem>
-                    <ElMenuItem index="/admin/blog/cate">分类</ElMenuItem>
-                    <ElMenuItem index="/admin/blog/tag">标签</ElMenuItem>
-                    <ElMenuItem index="/admin/site/friendlink">友情链接</ElMenuItem>
+                    <ElMenuItem index="/admin/blog-post">文章</ElMenuItem>
+                    <ElMenuItem index="/admin/blog-cate">分类</ElMenuItem>
+                    <ElMenuItem index="/admin/blog-tag">标签</ElMenuItem>
+                    <ElMenuItem index="/admin/friendlink">友情链接</ElMenuItem>
                 </el-sub-menu>
                 <el-sub-menu index="/admin/user">
                     <template #title>
@@ -41,16 +41,16 @@
                         </el-icon>
                         <span>用户管理</span>
                     </template>
-                    <el-menu-item index="/admin/user/user">账号管理</el-menu-item>
-                    <el-menu-item index="/admin/user/role">角色组</el-menu-item>
+                    <el-menu-item index="/admin/user">账号管理</el-menu-item>
+                    <el-menu-item index="/admin/role">角色组</el-menu-item>
                 </el-sub-menu>
 
                 <el-sub-menu index="/admin/test">
                     <template #title>
                         测试
                     </template>
-                    <ElMenuItem index="/admin/test/test-form">测试表单</ElMenuItem>
-                    <ElMenuItem index="/admin/test/test-table">测试Table</ElMenuItem>
+                    <ElMenuItem index="/admin/test-form">测试表单</ElMenuItem>
+                    <ElMenuItem index="/admin/test-table">测试Table</ElMenuItem>
                 </el-sub-menu>
             </el-menu>
         </el-scrollbar>

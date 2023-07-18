@@ -4,37 +4,37 @@ import BlankLayout from "@/views/admin/layout/BlankLayout.vue";
 
 const blog: RouteRecordRaw[] = [
     {
-        path: "post",
+        path: "blog-post",
         component: () => import("@/views/admin/blogs/post/PosList.vue"),
         meta: {
             title: "文章管理",
         },
     },
     {
-        path: "post-edit",
-        name:'post-edit',
+        path: "blog-post-edit",
+        name: 'post-edit',
         component: () => import("@/views/admin/blogs/post/PostEdit.vue"),
         meta: {
             title: "编辑文章",
-            keepName:'PostEdit'
+            keepName: 'PostEdit'
         },
     },
     {
-        path: "cate",
+        path: "blog-cate",
         component: () => import("@/views/admin/blogs/cate/CateList.vue"),
         meta: {
             title: "分类",
         },
     },
     {
-        path: "cate-edit",
+        path: "blog-cate-edit",
         component: () => import("@/views/admin/blogs/cate/CateEdit.vue"),
         meta: {
             title: "编辑分类",
         },
     },
     {
-        path: "tag",
+        path: "blog-tag",
         name: '标签',
         meta: {
             title: "标签",
@@ -120,22 +120,10 @@ const test: RouteRecordRaw[] = [
 ];
 
 const routeList: RouteRecordRaw[] = [
-    {
-        path: "blog",
-        children: [...blog],
-    },
-    {
-        path: "user",
-        children: [...user],
-    },
-    {
-        path: "site",
-        children: [...site],
-    },
-    {
-        path: "test",
-        children: [...test],
-    },
+    ...blog,
+    ...user,
+    ...site,
+    ...test,
 ];
 
 export { routeList };

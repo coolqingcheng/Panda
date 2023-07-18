@@ -42,9 +42,29 @@ const useWindowClientResize = (func: (w: number, h: number) => void) => {
     onUnmounted(() => {
         window.removeEventListener('resize', onResize)
     })
+
+
+}
+
+const parseQueryParams = (url: string) => {
+    const params = {};
+    const query = url.split('?')[1];
+    if (query) {
+        const pairs = query.split('&');
+        pairs.forEach(pair => {
+            const [key, value] = pair.split('=');
+            params[key] = decodeURIComponent(value);
+        });
+    }
+    return params;
+}
+const extractPath = (url: string) => {
+    return url.split('?')[0];
 }
 
 export {
     checkVScrollBarIsShow,
-    useWindowClientResize
+    useWindowClientResize,
+    parseQueryParams,
+    extractPath
 }

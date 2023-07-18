@@ -22,14 +22,19 @@
                     </template>
                 </ElDropdown>
             </div>
-            <!-- <TabsView></TabsView> -->
+            <TabsView></TabsView>
             <div class="route-view">
-                <!-- <RouterView #default="{ Component }">
-                    <KeepAlive :include="tabStore.getKeepAliveComponentNames" :exclude="tabStore.exCludeList">
-                        <component :is="Component" :key="$route.name"></component>
+                <RouterView #default="{ Component, route }">
+                    <!-- <KeepAlive :include="tabStore.getKeepAliveComponentNames" :exclude="tabStore.exCludeList"> -->
+                    <KeepAlive max="10">
+                        <!-- <div> -->
+                        <!-- <h2>{{ route.fullPath }}</h2> -->
+                        <component :is="cacheWrapperComponent(Component,$route.fullPath,$route.fullPath)"
+                            :key="route.fullPath">
+                        </component>
+                        <!-- </div> -->
                     </KeepAlive>
-                </RouterView> -->
-                <RouterView></RouterView>
+                </RouterView>
             </div>
         </div>
     </div>
@@ -41,7 +46,7 @@ import { expandHandler, closeSlideMenu } from './layout/MenuStatus'
 import { Expand, User } from '@element-plus/icons-vue'
 import AsideLayout from './layout/AsideLayout.vue'
 import { useRoute, useRouter } from 'vue-router'
-import { nextTick, ref } from 'vue';
+import { h, nextTick, ref } from 'vue';
 
 import { useVSetting } from '@/store/VSetting'
 
@@ -51,6 +56,41 @@ import ChangePwd from './users/ChangePwd.vue';
 
 import TabsView from '@/components/TabsView.vue';
 import { useTabsViewStore } from '@/store/TabsViewStore';
+
+interface CacheModel {
+    name: string
+    component: any
+}
+
+
+const cacheMap = new Map<String, CacheModel>();
+
+/**
+ * 缓存包裹容器
+ * @param component 
+ * @param fullPath 
+ */
+const cacheWrapperComponent = (component: any, fullPath: string, title: string) => {
+    var cache = cacheMap.get(fullPath)
+    console.log(cacheMap)
+    if (cache) {
+        return h(cache.component)
+    }
+    else {
+        const wrapper = {
+            name: fullPath,
+            render() {
+                return h(component)
+            }
+        }
+        cacheMap.set(fullPath, {
+            name: title,
+            component: component
+        })
+        return h(wrapper)
+    }
+}
+
 
 const tabStore = useTabsViewStore();
 

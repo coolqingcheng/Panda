@@ -26,7 +26,6 @@ const form = ref<SiteConfig>({
     siteName: '',
     age: 0,
     icp: '',
-    siteDesc:''
 });
 
 const save = () => {
