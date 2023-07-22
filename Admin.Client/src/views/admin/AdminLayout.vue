@@ -22,19 +22,17 @@
                     </template>
                 </ElDropdown>
             </div>
-            <TabsView></TabsView>
+            <!-- <TabsView></TabsView> -->
             <div class="route-view">
-                <RouterView #default="{ Component, route }">
-                    <!-- <KeepAlive :include="tabStore.getKeepAliveComponentNames" :exclude="tabStore.exCludeList"> -->
+                <!-- <RouterView #default="{ Component, route }">
+                    <KeepAlive :include="tabStore.getKeepAliveComponentNames" :exclude="tabStore.exCludeList">
                     <KeepAlive max="10">
-                        <!-- <div> -->
-                        <!-- <h2>{{ route.fullPath }}</h2> -->
                         <component :is="cacheWrapperComponent(Component,$route.fullPath,$route.fullPath)"
                             :key="route.fullPath">
                         </component>
-                        <!-- </div> -->
                     </KeepAlive>
-                </RouterView>
+                </RouterView> -->
+                <RouterView></RouterView>
             </div>
         </div>
     </div>
@@ -46,7 +44,7 @@ import { expandHandler, closeSlideMenu } from './layout/MenuStatus'
 import { Expand, User } from '@element-plus/icons-vue'
 import AsideLayout from './layout/AsideLayout.vue'
 import { useRoute, useRouter } from 'vue-router'
-import { h, nextTick, ref } from 'vue';
+import { h, markRaw, nextTick, ref } from 'vue';
 
 import { useVSetting } from '@/store/VSetting'
 
@@ -72,7 +70,7 @@ const cacheMap = new Map<String, CacheModel>();
  */
 const cacheWrapperComponent = (component: any, fullPath: string, title: string) => {
     var cache = cacheMap.get(fullPath)
-    console.log(cacheMap)
+    console.log(cache?.component)
     if (cache) {
         return h(cache.component)
     }
@@ -81,7 +79,8 @@ const cacheWrapperComponent = (component: any, fullPath: string, title: string) 
             name: fullPath,
             render() {
                 return h(component)
-            }
+            },
+            
         }
         cacheMap.set(fullPath, {
             name: title,

@@ -15,6 +15,7 @@ import SimpleForm from '@/components/SimpleForm.vue';
 import { reactive, ref } from 'vue';
 import Test from '@/components/test'
 
+import { onActivated, onDeactivated } from 'vue';
 const testBool = ref(false)
 
 const name = ref('')
@@ -23,11 +24,20 @@ const formDirection = ref<'v' | 'h'>('h')
 
 const select = new SelectOption();
 select.items = [{
-    label:'测试',value:'测试的值'
+    label: '测试', value: '测试的值'
 }]
 const controlItems = reactive<BaseOption[]>([
     new InputOption(), select
 ])
+
+
+onDeactivated(() => {
+    console.log('form:onDeactivated')
+})
+
+onActivated(() => {
+    console.log('form:onActivated')
+})
 
 
 

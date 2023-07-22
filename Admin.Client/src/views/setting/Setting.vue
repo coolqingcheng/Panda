@@ -17,4 +17,13 @@
 import DataBack from './DataBack.vue';
 import SiteSetting from './SiteSetting.vue'
 import CosSetting from './CosSetting.vue'
+import { onActivated, onDeactivated } from 'vue';
+
+onDeactivated(()=>{
+    console.log('setting:onDeactivated')
+})
+
+onActivated(()=>{
+    console.log('setting:onActivated')
+})
 </script>
