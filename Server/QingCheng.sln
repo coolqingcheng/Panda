@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QingCheng.Site", "QingCheng.Site\QingCheng.Site.csproj", "{8FF5E7EC-EBA6-450F-B2CD-39A3612BFF27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PandaSite", "PandaSite\PandaSite.csproj", "{8FF5E7EC-EBA6-450F-B2CD-39A3612BFF27}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QingCheng.Tools", "QingCheng.Tools\QingCheng.Tools.csproj", "{EFD1A0B6-C393-47A9-B6E0-AD3554279F34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PandaTools", "PandaTools\PandaTools.csproj", "{EFD1A0B6-C393-47A9-B6E0-AD3554279F34}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{15BBEF1D-0A37-4B59-9EA2-4E33111437B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
