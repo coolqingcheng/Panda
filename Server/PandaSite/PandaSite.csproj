@@ -8,9 +8,9 @@
 		<NoWarn>CS1591,8618</NoWarn>
 	</PropertyGroup>
 
-	<PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Swagger' " />
-	<PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Production' " />
-
+	<PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Web' " />
+	<PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Data.Swagger' " />
+	<PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Data.Production' " />
 	<ItemGroup>
 		<ProjectReference Include="..\PandaTools\PandaTools.csproj" />
 	</ItemGroup>
