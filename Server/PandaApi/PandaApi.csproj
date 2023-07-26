@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <DocumentationFile>./PnadaApi.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\App\Panda.Models\Panda.Models.csproj" />
+      <ProjectReference Include="..\App\Panda.Repositoies\Panda.Repositoies.csproj" />
+      <ProjectReference Include="..\App\Panda.Services\Panda.Services.csproj" />
+    </ItemGroup>
+
+</Project>

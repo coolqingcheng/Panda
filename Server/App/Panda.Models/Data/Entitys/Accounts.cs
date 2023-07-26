@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Panda.Models.Data.ModelConfigs;
-using PandaTools.Auth.Models;
+﻿using Panda.Models.Data.ModelConfigs;
 
 namespace Panda.Models.Data.Entitys;
 

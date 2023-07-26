@@ -1,7 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Panda.Models.Data.Blogs;
-using PandaTools.EFCore;
 
 namespace Panda.Models.Data.ModelConfigs;
 

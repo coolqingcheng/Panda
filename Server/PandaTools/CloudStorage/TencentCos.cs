@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using COSXML;
+﻿using COSXML;
 using COSXML.Auth;
-using COSXML.Model.Object;
-using COSXML.Model.Bucket;
-using COSXML.CosException;
 using COSXML.Transfer;
 
 namespace PandaTools.CloudStorage

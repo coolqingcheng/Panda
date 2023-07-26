@@ -13,19 +13,13 @@
 	<PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Data.Production' " />
 	<ItemGroup>
 		<ProjectReference Include="..\App\Panda.Services\Panda.Services.csproj" />
+		<ProjectReference Include="..\PandaApi\PandaApi.csproj" />
 		<ProjectReference Include="..\PandaTools\PandaTools.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Mapster.Core" Version="1.2.0" />
 		
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Api\Auth\Models\" />
-	  <Folder Include="Api\Blogs\Services\Models\" />
-	  <Folder Include="Models\" />
-	  <Folder Include="Services\" />
 	</ItemGroup>
 
 

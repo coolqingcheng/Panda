@@ -1,6 +1,4 @@
-﻿using PandaTools.EFCore;
-
-namespace Panda.Models.Data.Blogs;
+﻿namespace Panda.Models.Data.Blogs;
 
 public class Posts : SoftDeleteBaseTable<int>
 {

@@ -1,12 +1,4 @@
-﻿using PandaTools.EFCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PandaTools.EFCore;
+﻿namespace PandaTools.EFCore;
 
 public class BaseTableModel<T> : BaseTimeTable where T : struct
 {
