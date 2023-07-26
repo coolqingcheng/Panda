@@ -18,15 +18,19 @@
 <body>
 <div>
     <div class="container">
-        <h1>系统安装</h1>
-        <form method="post" asp-page-handler="InstallSave">
+        <h1 class="mb-5 mt-3 text-dark">初始化配置</h1>
+        <form method="post">
             <div class="form-group mb-3">
-                <label asp-for="SiteInitModel.DbConnectString" class="form-label"></label>
-                <input asp-for="SiteInitModel.DbConnectString" class="form-control"/>
-                <span asp-validation-for="SiteInitModel.DbConnectString" class="text-danger"></span>
+                <label asp-for="SiteInitModel.UserName" class="form-label"></label>
+                <input asp-for="SiteInitModel.UserName" class="form-control"/>
+                <span asp-validation-for="SiteInitModel.UserName" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-outline-primary">测试连接</button>
-            <button type="submit" class="btn btn-primary">保存</button>
+            <div class="form-group mb-3">
+                <label asp-for="SiteInitModel.UserPwd" class="form-label"></label>
+                <input asp-for="SiteInitModel.UserPwd" class="form-control"/>
+                <span asp-validation-for="SiteInitModel.UserPwd" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary" asp-page-handler="InstallSave">确定</button>
         </form>
 
     </div>

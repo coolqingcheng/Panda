@@ -48,7 +48,6 @@ public class PandaDbContext : AuthDbContext<Accounts>
         base.OnModelCreating(modelBuilder);
         modelBuilder.ConfigAccount();
         modelBuilder.PostConfig();
-        modelBuilder.SystemModelConfig();
 
 
     }

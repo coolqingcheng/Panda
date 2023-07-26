@@ -1,7 +1,4 @@
-﻿
-
-
-using Panda.Models.Dtos.Account;
+﻿using Panda.Models.Dtos.Account;
 
 namespace Panda.Repositoies.Sys;
 
@@ -29,7 +26,7 @@ public class AccountRepository : BaseRepository<Accounts>
     /// <returns></returns>
     public async Task<Accounts?> GetAccountAndRolesByAccountId(Guid accountId)
     {
-        return  await DbContext.Set<Accounts>().Include(a => a.AccountRoleRelations)
+        return await DbContext.Set<Accounts>().Include(a => a.AccountRoleRelations)
             .FirstOrDefaultAsync(a => a.Id == accountId);
     }
 
@@ -50,5 +47,14 @@ public class AccountRepository : BaseRepository<Accounts>
                 LockedTime = a.LockedTime
             }).ToListAsync();
         return new PageDto<AccountItemDto>(await query.CountAsync(), res);
+    }
+
+    /// <summary>
+    /// 检查账户表中是否存在账户
+    /// </summary>
+    /// <returns></returns>
+    public Task<bool> ExistAccount()
+    {
+        return DbContext.Set<Accounts>().AnyAsync();
     }
 }

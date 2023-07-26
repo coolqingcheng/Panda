@@ -149,11 +149,13 @@ public class AccountService
         {
             return;
         }
+
         var roleList = await _accountRoleRepository.GetAccountRoleListByRoleIds(roleIds);
         if (roleList.Count == 0)
         {
             return;
         }
+
         await _accountRoleRepository.AddRoleRelationAsync(account, roleList);
     }
 
@@ -173,5 +175,14 @@ public class AccountService
                 : DateTime.Now.AddYears(100);
             await _accountRepository.UpdateAsync(account);
         }
+    }
+
+    /// <summary>
+    /// 检查系统初始化状态
+    /// </summary>
+    /// <returns></returns>
+    public async Task<bool> CheckSysInitStatus()
+    {
+        return await _accountRepository.ExistAccount();
     }
 }

@@ -50,7 +50,7 @@ public static class ExceptionHandler
                     else
                     {
                         context.Response.ContentType = "text/html; charset=utf-8";
-                        await context.Response.WriteAsync("<h1>服务器繁忙..</h1>");
+                        await context.Response.WriteAsync("<h1>服务器内部错误</h1>");
                     }
                 }
             });
