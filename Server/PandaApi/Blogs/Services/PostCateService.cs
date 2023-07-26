@@ -5,8 +5,8 @@ namespace PandaApi.Blogs.Services
 {
     public class PostCateService
     {
-        private readonly QingChengContext _context;
-        public PostCateService(QingChengContext context)
+        private readonly PandaDbContext _context;
+        public PostCateService(PandaDbContext context)
         {
             _context = context;
         }

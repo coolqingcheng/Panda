@@ -4,7 +4,7 @@ using PandaTools.Auth;
 
 namespace Panda.Models.Data;
 
-public class QingChengContext : AuthDbContext<Accounts>
+public class PandaDbContext : AuthDbContext<Accounts>
 {
     public DbSet<Posts> Posts { get; set; }
 
@@ -30,7 +30,7 @@ public class QingChengContext : AuthDbContext<Accounts>
     /// </summary>
     public DbSet<SysResource> SysResources { get; set; }
 
-    public QingChengContext(DbContextOptions<QingChengContext> options) : base(options)
+    public PandaDbContext(DbContextOptions<PandaDbContext> options) : base(options)
     {
 
     }

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using MySqlConnector;
 
 namespace PandaSite.Pages.Install;
 
@@ -9,6 +10,14 @@ public class Index : PageModel
 
     public void OnGet()
     {
+    }
+
+    public async Task InstallSave()
+    {
+        
+        await using var conn = new MySqlConnection(SiteInitModel.DbConnectString);
+        await conn.OpenAsync();
+        
     }
 }
 

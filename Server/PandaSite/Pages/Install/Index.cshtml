@@ -19,7 +19,7 @@
 <div>
     <div class="container">
         <h1>系统安装</h1>
-        <form>
+        <form method="post" asp-page-handler="InstallSave">
             <div class="form-group mb-3">
                 <label asp-for="SiteInitModel.DbConnectString" class="form-label"></label>
                 <input asp-for="SiteInitModel.DbConnectString" class="form-control"/>

@@ -6,11 +6,11 @@ namespace PandaApi.Blogs.Services
 {
     public class FriendLinkService
     {
-        private readonly QingChengContext _context;
+        private readonly PandaDbContext _context;
 
         readonly IDistributedCache _cache;
 
-        public FriendLinkService(QingChengContext context, IDistributedCache cache)
+        public FriendLinkService(PandaDbContext context, IDistributedCache cache)
         {
             _context = context;
             _cache = cache;

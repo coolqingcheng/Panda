@@ -2,9 +2,9 @@
 {
     public class PostTagService
     {
-        private readonly QingChengContext _context;
+        private readonly PandaDbContext _context;
 
-        public PostTagService(QingChengContext context)
+        public PostTagService(PandaDbContext context)
         {
             _context = context;
         }

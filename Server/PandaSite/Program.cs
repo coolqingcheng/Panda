@@ -1,2 +1,2 @@
 SiteApp.Run(args,
-    (services, config) => { services.AddEFMySql<QingChengContext>(config.GetConnectionString("mysql")!); });
+    (services, config) => { services.AddEFMySql<PandaDbContext>(config.GetConnectionString("mysql")!); });
