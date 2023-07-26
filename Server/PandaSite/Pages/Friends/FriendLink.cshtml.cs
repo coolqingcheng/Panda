@@ -6,6 +6,5 @@ public class FriendLink : PageModel
 {
     public void OnGet()
     {
-        
     }
 }

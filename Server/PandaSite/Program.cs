@@ -1,6 +1,2 @@
-
-
-SiteApp.Run(args, (services, config) =>
-{
-    services.AddEFMySql<QingChengContext>(config.GetConnectionString("mysql")!);
-});
+SiteApp.Run(args,
+    (services, config) => { services.AddEFMySql<QingChengContext>(config.GetConnectionString("mysql")!); });

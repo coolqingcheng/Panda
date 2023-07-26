@@ -24,7 +24,9 @@ public class Category : PageModel
         _postService = postService;
         _postCateService = postCateService;
     }
+
     public PageDto<PostItemModel> pageDto;
+
     public async Task OnGet(int cateid)
     {
         PageIndex = 1;

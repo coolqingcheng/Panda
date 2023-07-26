@@ -13,22 +13,22 @@
 
             <div class="post-item-desc  text-body">
                 <div class="post-thumb">
-                    <img src="@item.Thumb" alt="@item.Title" onerror="this.onerror='';this.style.display='none'" />
+                    <img src="@item.Thumb" alt="@item.Title" onerror="this.onerror='';this.style.display='none'"/>
                 </div>
                 <div class="post-item-body">
                     <div class="post-item-cate text-black-50">
-                    <span>
-                        @foreach (var cateItem in item.CateItems)
-                        {
-                            <a class="link-info" asp-page="/Category/Category" asp-route-cateId="@cateItem.Id" asp-route-index="1">@cateItem.CateName</a>
-                        }
-                    </span>
+                        <span>
+                            @foreach (var cateItem in item.CateItems)
+                            {
+                                <a class="link-info" asp-page="/Category/Category" asp-route-cateId="@cateItem.Id" asp-route-index="1">@cateItem.CateName</a>
+                            }
+                        </span>
 
-                    / <span>更新时间:@item.LastUpdateTime.ToString("yyyy-MM-dd HH:mm")</span> / <span>阅读次数:@item.ReadCount</span>
-                </div>
-                <div class="post-snippit">
-                    @Html.Raw(item.Snippet)
-                </div>
+                        / <span>更新时间:@item.LastUpdateTime.ToString("yyyy-MM-dd HH:mm")</span> / <span>阅读次数:@item.ReadCount</span>
+                    </div>
+                    <div class="post-snippit">
+                        @Html.Raw(item.Snippet)
+                    </div>
                 </div>
             </div>
         </div>

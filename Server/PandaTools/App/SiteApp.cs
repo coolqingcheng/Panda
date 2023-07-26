@@ -23,9 +23,8 @@ public class SiteApp
             builder.AddLog();
             var services = builder.Services;
         
-            
-            services.InjectSuffix(Assembly.GetCallingAssembly(),suffix:"Service");
-            services.InjectSuffix(Assembly.GetCallingAssembly(),suffix:"Repository");
+            services.InjectSuffix(Assembly.Load("Panda.Services"),suffix:"Service");
+            services.InjectSuffix(Assembly.Load("Panda.Repositoies"),suffix:"Repository");
            
             services.AddWebApiConfig();
             services.AddRazorPages();

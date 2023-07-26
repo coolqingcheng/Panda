@@ -5,14 +5,14 @@
 @{
     var cateList = await postCateService.GetCateList(20);
     var cateRankList = new RankListModel()
-            {
-                Title = "分类",
-                RankList = cateList.Select(a => new RankListItem()
-                {
-                    Text = a.CateName,
-                    Url = $"/cate/{a.Id}-1"
-                }).ToList()
-            };
+    {
+        Title = "分类",
+        RankList = cateList.Select(a => new RankListItem()
+        {
+            Text = a.CateName,
+            Url = $"/cate/{a.Id}-1"
+        }).ToList()
+    };
 }
 <div class="row pb-2">
     @await Html.PartialAsync("Partial/_HomeBanner")
@@ -26,7 +26,7 @@
         </div>
     </div>
     <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-3">
-        <partial name="Partial/_RankList" model="cateRankList" />
+        <partial name="Partial/_RankList" model="cateRankList"/>
     </div>
 </div>
 

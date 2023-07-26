@@ -8,7 +8,6 @@ namespace PandaSite.Pages.Home;
 
 public class HomeModel : PageModel
 {
-
     private readonly PostService _postService;
 
     public HomeModel(PostService postService)
@@ -16,8 +15,7 @@ public class HomeModel : PageModel
         _postService = postService;
     }
 
-    [BindProperty]
-    public TestUser TestUser { get; set; }
+    [BindProperty] public TestUser TestUser { get; set; }
     public string Name { get; set; }
 
     public int PageIndex { get; set; }

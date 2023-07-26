@@ -24,8 +24,10 @@ public class Post : PageModel
         {
             return NotFound();
         }
+
         Item = item;
-        await _postService.Visit(item.Id, HttpContext.GetClientIP(), HttpContext.Request.Headers.UserAgent, HttpContext.GetSiteUid());
+        await _postService.Visit(item.Id, HttpContext.GetClientIP(), HttpContext.Request.Headers.UserAgent,
+            HttpContext.GetSiteUid());
         return Page();
     }
 }
