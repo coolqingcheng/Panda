@@ -1,9 +1,9 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PandaSite.Api.Auth.Models;
-using PandaSite.Models.Auth;
-using PandaSite.Services.Sys;
+using Panda.Models.Dtos.Account;
+using Panda.Models.Dtos.Auth;
+using Panda.Services.Sys;
 using PandaTools.Auth;
 using PandaTools.Exceptions;
 

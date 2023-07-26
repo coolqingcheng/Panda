@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Net.Http.Headers;
-using PandaSite.Data.Entitys;
+using Panda.Models.Data.Entitys;
 
 namespace PandaSite.Api.Auth.Events
 {

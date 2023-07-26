@@ -1,9 +1,10 @@
 ﻿using Mapster;
 using Microsoft.Extensions.Caching.Distributed;
-using PandaSite.Api.Blogs.Services.Models;
-using PandaSite.Data.Blogs;
-using PandaSite.Models;
-using PandaSite.Services.Cache;
+using Panda.Models.Data;
+using Panda.Models.Data.Blogs;
+using Panda.Models.Dtos;
+using Panda.Models.Dtos.Blogs.Posts;
+using Panda.Services.Cache;
 
 namespace PandaSite.Api.Blogs.Services
 {

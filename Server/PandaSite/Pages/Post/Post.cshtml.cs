@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using PandaSite.Models;
-using PandaSite.Services.Blogs;
+using Panda.Services.Blogs;
 using PandaTools.MiddleWare;
 
 namespace PandaSite.Pages.Post;

@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using PandaSite.Models.Blogs;
-using PandaSite.Models.Blogs.Dto;
-using PandaSite.Services.Blogs;
+using Panda.Models.Dtos.Blogs;
+using Panda.Models.Dtos.Blogs.Dto;
+using Panda.Services.Blogs;
 
 namespace PandaSite.Pages.Home;
 

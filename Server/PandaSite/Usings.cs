@@ -8,3 +8,7 @@ global using Microsoft.EntityFrameworkCore;
 global using PandaTools.App;
 global using PandaTools.EFCore;
 global using PandaTools.Helper;
+global using Panda.Models.Data;
+global using Panda.Models.Data.Blogs;
+global using Panda.Models.Dtos;
+global using Panda.Models.Dtos.Blogs.Posts;

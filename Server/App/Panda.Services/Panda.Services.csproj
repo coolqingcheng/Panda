@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\PandaTools\PandaTools.csproj" />
+      <ProjectReference Include="..\Panda.Models\Panda.Models.csproj" />
+      <ProjectReference Include="..\Panda.Repositoies\Panda.Repositoies.csproj" />
+    </ItemGroup>
+
+</Project>

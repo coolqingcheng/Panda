@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PandaSite.Api.Blogs.Services;
-using PandaSite.Api.Blogs.Services.Models;
-using PandaSite.Models;
 
 namespace PandaSite.Api.Blogs
 {

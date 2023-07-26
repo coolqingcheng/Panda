@@ -12,17 +12,20 @@
 	<PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Data.Swagger' " />
 	<PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Data.Production' " />
 	<ItemGroup>
+		<ProjectReference Include="..\App\Panda.Services\Panda.Services.csproj" />
 		<ProjectReference Include="..\PandaTools\PandaTools.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Mapster.Core" Version="1.2.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="MySqlConnector" Version="2.2.6" />
-		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
+		
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Api\Auth\Models\" />
+	  <Folder Include="Api\Blogs\Services\Models\" />
+	  <Folder Include="Models\" />
+	  <Folder Include="Services\" />
 	</ItemGroup>
 
 

@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Panda.Models.Data.Entitys;
+using Panda.Models.Dtos.Common;
 using PandaSite.Api.Common.Models;
-using PandaSite.Data.Entitys;
-using PandaSite.Models;
-using PandaSite.Models.Common;
 
 namespace PandaSite.Api.Common
 {

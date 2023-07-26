@@ -1,5 +1,5 @@
-﻿@using PandaSite.Services
-@using PandaSite.Models.Blogs.Dto
+﻿@using Panda.Models.Dtos.Blogs.Dto
+@using Panda.Services
 @inject FriendLinkService FlService
 @{
     var res = await FlService.GetLinkList(new GetFriendLinkModel()

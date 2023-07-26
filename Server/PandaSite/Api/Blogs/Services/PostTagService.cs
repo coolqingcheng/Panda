@@ -1,5 +1,4 @@
-﻿using PandaSite.Api.Blogs.Services.Models;
-using PandaSite.Models;
+﻿using Panda.Models.Data;
 
 namespace PandaSite.Api.Blogs.Services
 {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PandaSite.Data.Entitys;
+using Panda.Models.Data.Entitys;
 
 namespace PandaSite.Api.Common
 {

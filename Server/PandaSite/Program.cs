@@ -1,6 +1,6 @@
 
 
-using PandaSite;
+using Panda.Models.Data;
 
 SiteApp.Run(args, (services, config) =>
 {

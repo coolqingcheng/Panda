@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PandaSite.Services.Config;
-using PandaSite.Services.Config.Services;
+using Panda.Services.Config;
+using Panda.Services.Config.Services;
 
 namespace PandaSite.Api.Config
 {
