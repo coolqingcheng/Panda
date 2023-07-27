@@ -4,7 +4,8 @@
 
 **This package contains only the CDN build assets of highlight.js.**
 
-This may be what you want if you'd like to install the pre-built distributable highlight.js client-side assets via NPM. If you're wanting to use highlight.js mainly on the server-side you likely want the [highlight.js][1] package instead.
+This may be what you want if you'd like to install the pre-built distributable highlight.js client-side assets via NPM.
+If you're wanting to use highlight.js mainly on the server-side you likely want the [highlight.js][1] package instead.
 
 To access these files via CDN:<br>
 https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/
@@ -41,5 +42,7 @@ Further in-depth documentation for the API and other topics is at
 A list of the Core Team and contributors can be found in the [CONTRIBUTORS.md][8] file.
 
 [1]: https://www.npmjs.com/package/highlight.js
+
 [7]: https://github.com/highlightjs/highlight.js/blob/main/LICENSE
+
 [8]: https://github.com/highlightjs/highlight.js/blob/main/CONTRIBUTORS.md

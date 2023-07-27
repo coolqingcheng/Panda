@@ -11,12 +11,12 @@ public class AccountService
 {
     private readonly AccountRepository _accountRepository;
 
-
-    private readonly IMediator _mediator;
+    private readonly AccountRoleRepository _accountRoleRepository;
 
     private readonly ILogger _logger;
 
-    private readonly AccountRoleRepository _accountRoleRepository;
+
+    private readonly IMediator _mediator;
 
     public AccountService(IMediator mediator, ILogger<AccountService> logger, AccountRepository accountRepository,
         AccountRoleRepository accountRoleRepository)
@@ -31,7 +31,7 @@ public class AccountService
     {
         pwd = pwd.GetSHA256();
         var account = await _accountRepository.GetByUserNameAsync(userName);
-        var res = new AuthResult<Accounts>(isOk: false);
+        var res = new AuthResult<Accounts>(false);
         if (account == null)
         {
             res.Message = "账号和密码不匹配";
@@ -69,7 +69,7 @@ public class AccountService
         var res = new BaseAuthResult(isOk: false, message: "");
         if (await _accountRepository.CheckUserNameExistAsync(userName))
         {
-            await _accountRepository.AddAsync(new Accounts()
+            await _accountRepository.AddAsync(new Accounts
             {
                 UserName = userName,
                 Pwd = pwd.GetSHA256(),
@@ -89,7 +89,7 @@ public class AccountService
     }
 
     /// <summary>
-    /// 修改密码[需要验证当前密码]
+    ///     修改密码[需要验证当前密码]
     /// </summary>
     /// <param name="id"></param>
     /// <param name="currPwd"></param>
@@ -101,10 +101,7 @@ public class AccountService
         var account = await _accountRepository.FindByIdAsync(id);
         if (account != null)
         {
-            if (account.Pwd != currPwd.GetSHA256())
-            {
-                throw new UserException("当前密码错误");
-            }
+            if (account.Pwd != currPwd.GetSHA256()) throw new UserException("当前密码错误");
 
             account.Pwd = newPwd.GetSHA256();
             await _accountRepository.UpdateAsync(account);
@@ -112,7 +109,7 @@ public class AccountService
     }
 
     /// <summary>
-    /// 修改密码
+    ///     修改密码
     /// </summary>
     /// <param name="id"></param>
     /// <param name="newPwd"></param>
@@ -128,7 +125,7 @@ public class AccountService
     }
 
     /// <summary>
-    /// 获取用户列表
+    ///     获取用户列表
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
@@ -138,30 +135,24 @@ public class AccountService
     }
 
     /// <summary>
-    /// 设置角色
+    ///     设置角色
     /// </summary>
     /// <param name="accountId"></param>
     /// <param name="roleIds"></param>
     public async Task SetRole(Guid accountId, List<Guid> roleIds)
     {
         var account = await _accountRepository.GetAccountAndRolesByAccountId(accountId);
-        if (account == null)
-        {
-            return;
-        }
+        if (account == null) return;
 
         var roleList = await _accountRoleRepository.GetAccountRoleListByRoleIds(roleIds);
-        if (roleList.Count == 0)
-        {
-            return;
-        }
+        if (roleList.Count == 0) return;
 
         await _accountRoleRepository.AddRoleRelationAsync(account, roleList);
     }
 
 
     /// <summary>
-    /// 禁止登录，锁定100年，如果已经锁定，那么解锁
+    ///     禁止登录，锁定100年，如果已经锁定，那么解锁
     /// </summary>
     /// <param name="accountId"></param>
     /// <returns></returns>
@@ -178,7 +169,7 @@ public class AccountService
     }
 
     /// <summary>
-    /// 检查系统初始化状态
+    ///     检查系统初始化状态
     /// </summary>
     /// <returns></returns>
     public async Task<bool> CheckSysInitStatus()

@@ -7,17 +7,12 @@ namespace PandaSite.Pages.Category;
 
 public class Category : PageModel
 {
-    public int PageIndex { get; set; }
-    public int CateId { get; set; }
-
-    public int PageSize { get; set; } = 10;
-
-    public string? CateName { get; set; }
+    private readonly PostCateService _postCateService;
 
 
-    readonly PostService _postService;
+    private readonly PostService _postService;
 
-    readonly PostCateService _postCateService;
+    public PageDto<PostItemModel> pageDto;
 
     public Category(PostService postService, PostCateService postCateService)
     {
@@ -25,13 +20,18 @@ public class Category : PageModel
         _postCateService = postCateService;
     }
 
-    public PageDto<PostItemModel> pageDto;
+    public int PageIndex { get; set; }
+    public int CateId { get; set; }
+
+    public int PageSize { get; set; } = 10;
+
+    public string? CateName { get; set; }
 
     public async Task OnGet(int cateid)
     {
         PageIndex = 1;
         CateId = cateid;
-        pageDto = await _postService.GetHomeList(new PostRequestModel()
+        pageDto = await _postService.GetHomeList(new PostRequestModel
         {
             CateId = CateId,
             Index = PageIndex,

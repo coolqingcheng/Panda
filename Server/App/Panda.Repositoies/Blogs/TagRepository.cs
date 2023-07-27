@@ -15,10 +15,8 @@ public class TagRepository : BaseRepository<PostTags>
     {
         await DbContext.Set<PostTagRelation>().Where(a => a.Post == post).ExecuteDeleteAsync();
         foreach (var item in list)
-        {
             await DbContext.Set<PostTagRelation>()
                 .AddAsync(new PostTagRelation(post, item));
-        }
 
         await DbContext.SaveChangesAsync();
     }

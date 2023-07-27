@@ -7,9 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\PandaTools\PandaTools.csproj" />
-      <ProjectReference Include="..\Panda.Models\Panda.Models.csproj" />
-      <ProjectReference Include="..\Panda.Repositoies\Panda.Repositoies.csproj" />
+        <ProjectReference Include="..\..\PandaTools\PandaTools.csproj"/>
+        <ProjectReference Include="..\Panda.Models\Panda.Models.csproj"/>
+        <ProjectReference Include="..\Panda.Repositoies\Panda.Repositoies.csproj"/>
     </ItemGroup>
 
 </Project>

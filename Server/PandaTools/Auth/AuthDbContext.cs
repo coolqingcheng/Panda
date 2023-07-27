@@ -5,16 +5,14 @@ namespace PandaTools.Auth;
 
 public class AuthDbContext<User> : DbContext where User : BaseAccount
 {
-    public virtual DbSet<User> Accounts { get; set; }
-
     public AuthDbContext(DbContextOptions option) : base(option)
     {
-
     }
+
+    public virtual DbSet<User> Accounts { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
     }
-
 }

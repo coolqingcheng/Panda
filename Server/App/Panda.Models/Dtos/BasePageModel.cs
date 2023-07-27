@@ -5,11 +5,12 @@ namespace Panda.Models.Dtos;
 public class BasePageModel
 {
     /// <summary>
-    /// 页码
+    ///     页码
     /// </summary>
     public int Index { get; set; }
+
     /// <summary>
-    /// 页大小
+    ///     页大小
     /// </summary>
     public int PageSize { get; set; }
 

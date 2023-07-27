@@ -1,23 +1,21 @@
-﻿namespace Panda.Models.Dtos
+﻿namespace Panda.Models.Dtos;
+
+public class RoleModels
 {
-    public class RoleModels
-    {
-    }
+}
 
-    public class RoleListRequest : BasePageModel
-    {
+public class RoleListRequest : BasePageModel
+{
+}
 
-    }
+public class RoleListResponse
+{
+    public Guid Id { get; set; }
 
-    public class RoleListResponse
-    {
-        public Guid Id { get; set; }
+    public string RoleName { get; set; }
 
-        public string RoleName { get; set; }
-
-        public DateTime CreateTime { get; set; }
+    public DateTime CreateTime { get; set; }
 
 
-        public int Count { get; set; }
-    }
+    public int Count { get; set; }
 }

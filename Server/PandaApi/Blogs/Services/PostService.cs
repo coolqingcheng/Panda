@@ -1,3 +1,1 @@
-﻿namespace PandaApi.Blogs.Services
-{
-}
+﻿namespace PandaApi.Blogs.Services;

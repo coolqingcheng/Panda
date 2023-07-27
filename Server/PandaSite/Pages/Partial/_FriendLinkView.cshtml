@@ -2,7 +2,7 @@
 @using Panda.Services
 @inject FriendLinkService FlService
 @{
-    var res = await FlService.GetLinkList(new GetFriendLinkModel()
+    var res = await FlService.GetLinkList(new GetFriendLinkModel
     {
         Index = 1,
         PageSize = 50

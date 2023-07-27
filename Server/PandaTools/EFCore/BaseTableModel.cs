@@ -3,7 +3,6 @@
 public class BaseTableModel<T> : BaseTimeTable where T : struct
 {
     public T Id { get; set; }
-
 }
 
 public class BaseTimeTable

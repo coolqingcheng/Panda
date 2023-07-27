@@ -4,17 +4,18 @@ using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PandaTools.Serilog;
 using PandaTools.Auth;
 using PandaTools.Configs;
 using PandaTools.Exceptions;
 using PandaTools.MiddleWare;
+using PandaTools.Serilog;
 
 namespace PandaTools.App;
 
 public class SiteApp
 {
-    public static void Run(string[] args,Action<IServiceCollection,IConfiguration>? action,Action<WebApplication>? appAction = null)
+    public static void Run(string[] args, Action<IServiceCollection, IConfiguration>? action,
+        Action<WebApplication>? appAction = null)
     {
         var logger = SerilogExtensions.Instance();
         try
@@ -22,20 +23,19 @@ public class SiteApp
             var builder = WebApplication.CreateBuilder(args);
             builder.AddLog();
             var services = builder.Services;
-        
-            services.InjectSuffix(Assembly.Load("Panda.Services"),suffix:"Service");
-            services.InjectSuffix(Assembly.Load("Panda.Repositoies"),suffix:"Repository");
-           
+
+            services.InjectSuffix(Assembly.Load("Panda.Services"), "Service");
+            services.InjectSuffix(Assembly.Load("Panda.Repositoies"), "Repository");
+
             services.AddWebApiConfig();
             services.AddRazorPages();
             services.AddDistributedMemoryCache();
             builder.AddApplication();
             builder.Services.AddCookieAuth();
-            action?.Invoke(services,builder.Configuration);
+            action?.Invoke(services, builder.Configuration);
             var app = builder.Build();
-        
-        
-        
+
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -49,6 +49,7 @@ public class SiteApp
                 option.AddRedirectToHttps();
                 app.UseRewriter(option);
             }
+
             app.UseStaticFiles();
             app.UseEx();
             app.UseSiteUid();

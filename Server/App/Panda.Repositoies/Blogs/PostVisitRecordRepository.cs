@@ -8,7 +8,7 @@ public class PostVisitRecordRepository : BaseRepository<PostVisitRecord>
 
     public async Task VisitAsync(Posts post, string ip, string? userAgent, string? uid)
     {
-        await AddAsync(new PostVisitRecord()
+        await AddAsync(new PostVisitRecord
         {
             Post = post!,
             IP = ip,
@@ -17,10 +17,7 @@ public class PostVisitRecordRepository : BaseRepository<PostVisitRecord>
         });
 
         var record = await DbContext.Set<PostVisitRecord>().Where(a => a.UId == uid).FirstOrDefaultAsync();
-        if (record == null)
-        {
-            post!.ReadCount += 1;
-        }
+        if (record == null) post!.ReadCount += 1;
         await DbContext.SaveChangesAsync();
     }
 }

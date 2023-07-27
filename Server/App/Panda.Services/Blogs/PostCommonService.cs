@@ -1,18 +1,12 @@
-﻿
+﻿namespace Panda.Services.Blogs;
 
-
-namespace Panda.Services.Blogs
+[IgnoreInject]
+public abstract class PostCommonService
 {
-    [IgnoreInject]
-    public abstract class PostCommonService
+    private readonly DbContext _context;
+
+    protected PostCommonService(DbContext context)
     {
-        readonly DbContext _context;
-
-        protected PostCommonService(DbContext context)
-        {
-            _context = context;
-        }
-
-        
+        _context = context;
     }
 }

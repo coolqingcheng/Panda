@@ -1,10 +1,5 @@
-﻿namespace PandaTools.Configs
-{
-    public class CacheConstant
-    {
-        public CacheConstant()
-        {
-        }
-    }
-}
+﻿namespace PandaTools.Configs;
 
+public class CacheConstant
+{
+}

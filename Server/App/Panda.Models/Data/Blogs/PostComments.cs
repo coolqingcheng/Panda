@@ -4,8 +4,8 @@ public class PostComments : BaseTableModel<int>
 {
     public PostComments()
     {
-        
     }
+
     public PostComments(string content, string email, string nickName, int pid, Posts posts)
     {
         Content = content;

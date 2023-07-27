@@ -7,7 +7,7 @@ namespace PandaSite.Pages.Post;
 
 public class Post : PageModel
 {
-    readonly PostService _postService;
+    private readonly PostService _postService;
 
     public Post(PostService postService)
     {
@@ -20,10 +20,7 @@ public class Post : PageModel
     {
         Console.WriteLine("Id" + Id);
         var item = await _postService.Get(Id);
-        if (item == null)
-        {
-            return NotFound();
-        }
+        if (item == null) return NotFound();
 
         Item = item;
         await _postService.Visit(item.Id, HttpContext.GetClientIP(), HttpContext.Request.Headers.UserAgent,

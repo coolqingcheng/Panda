@@ -7,17 +7,16 @@ namespace Panda.Services.Blogs;
 
 public class PostService
 {
-    private readonly PostVisitRecordRepository _visitRecordRepository;
-
-    private readonly PostRepository _postRepository;
+    private readonly DbContext _dbContext;
 
     private readonly ILogger _logger;
 
-    private readonly DbContext _dbContext;
+    private readonly PostCatesRepository _postCatesRepository;
+
+    private readonly PostRepository _postRepository;
 
     private readonly TagRepository _tagRepository;
-
-    private readonly PostCatesRepository _postCatesRepository;
+    private readonly PostVisitRecordRepository _visitRecordRepository;
 
     public PostService(PostVisitRecordRepository visitRecordRepository,
         PostRepository postRepository, ILogger<PostService> logger, DbContext dbContext, TagRepository tagRepository,
@@ -43,7 +42,7 @@ public class PostService
     }
 
     /// <summary>
-    /// 编辑文章
+    ///     编辑文章
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
@@ -66,11 +65,12 @@ public class PostService
             await _postRepository.AddAsync(post);
         }
 
-        if (post==null)
+        if (post == null)
         {
             await tran.RollbackAsync();
             throw new UserException("文章不存在,更新失败！");
         }
+
         await _tagRepository.PostSetTagRelationAsync(post, tagList);
 
         await _postCatesRepository.PostSetCateRelation(post, cateList);
@@ -79,7 +79,7 @@ public class PostService
     }
 
     /// <summary>
-    /// 访问
+    ///     访问
     /// </summary>
     /// <param name="postId"></param>
     /// <param name="ip"></param>
@@ -100,6 +100,6 @@ public class PostService
 
     public async Task Top(int Id)
     {
-         await _postRepository.Top(Id);
+        await _postRepository.Top(Id);
     }
 }

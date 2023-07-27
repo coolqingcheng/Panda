@@ -10,7 +10,7 @@ using PandaTools.Exceptions;
 namespace PandaApi.Auth;
 
 /// <summary>
-/// 授权认证
+///     授权认证
 /// </summary>
 public class AuthController : BaseAdminController
 {
@@ -26,27 +26,25 @@ public class AuthController : BaseAdminController
     }
 
     /// <summary>
-    /// 登录
+    ///     登录
     /// </summary>
     /// <returns></returns>
-    [HttpPost, AllowAnonymous]
+    [HttpPost]
+    [AllowAnonymous]
     public async Task Login(LoginModel model)
     {
         var res = await _account.LoginAsync(model.UserName, model.Pwd);
-        if (res.IsOk == false)
-        {
-           
-            throw new UserException($"登录失败！{res.Message}");
-        }
+        if (res.IsOk == false) throw new UserException($"登录失败！{res.Message}");
 
-        await _cookieAuth.CookieLogin(new List<Claim>()
+        await _cookieAuth.CookieLogin(new List<Claim>
         {
             new("Id", res.Data.Id.ToString()),
-            new("Name",res.Data.UserName)
+            new("Name", res.Data.UserName)
         });
     }
+
     /// <summary>
-    /// 退出
+    ///     退出
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -56,7 +54,7 @@ public class AuthController : BaseAdminController
     }
 
     /// <summary>
-    /// 修改密码
+    ///     修改密码
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>

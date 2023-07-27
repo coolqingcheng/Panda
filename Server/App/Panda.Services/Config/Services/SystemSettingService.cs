@@ -6,8 +6,9 @@ namespace Panda.Services.Config.Services;
 [Inject(InjectType.Scope)]
 public class ConfigService
 {
-    private readonly DbContext _context;
     private readonly IDistributedCache _cache;
+    private readonly DbContext _context;
+
     public ConfigService(DbContext context, IDistributedCache cache)
     {
         _context = context;
@@ -19,70 +20,39 @@ public class ConfigService
         var cacheValue = await _cache.GetStringAsync(key);
         if (string.IsNullOrWhiteSpace(cacheValue))
         {
-            cacheValue = await _context.Set<SysConfig>().Where(a => a.Key == key).Select(a => a.Value).FirstOrDefaultAsync();
-            if (string.IsNullOrWhiteSpace(cacheValue) == false)
-            {
-                await _cache.SetStringAsync(key, cacheValue);
-            }
+            cacheValue = await _context.Set<SysConfig>().Where(a => a.Key == key).Select(a => a.Value)
+                .FirstOrDefaultAsync();
+            if (string.IsNullOrWhiteSpace(cacheValue) == false) await _cache.SetStringAsync(key, cacheValue);
         }
+
         return cacheValue!;
     }
 
 
-
     public async Task<string> GetAsync(string key, string defaultValue)
     {
-
         var cacheValue = await GetAsync(key);
-        if (string.IsNullOrWhiteSpace(cacheValue))
-        {
-            return defaultValue;
-        }
+        if (string.IsNullOrWhiteSpace(cacheValue)) return defaultValue;
         return cacheValue;
     }
-
 
 
     public async Task<int> GetAsync(string key, int defaultValue)
     {
         var cacheValue = await GetAsync(key);
-        if (string.IsNullOrWhiteSpace(cacheValue))
-        {
-            return defaultValue;
-        }
+        if (string.IsNullOrWhiteSpace(cacheValue)) return defaultValue;
         return Convert.ToInt32(cacheValue);
     }
+
     public async Task<bool> GetAsync(string key, bool defaultValue)
     {
         var cacheValue = await GetAsync(key);
-        if (string.IsNullOrWhiteSpace(cacheValue))
-        {
-            return defaultValue;
-        }
+        if (string.IsNullOrWhiteSpace(cacheValue)) return defaultValue;
         return Convert.ToBoolean(cacheValue);
     }
 
-    #region 获取Key，强类型
-    public async Task<string> GetString<T>(Expression<Func<T, object>> exp, string defaultValue = "") where T : class, new()
-    {
-        var key = ConfigHelper.GetK<T>(exp);
-        return await GetAsync(key, defaultValue);
-    }
-    public async Task<int> GetInt<T>(Expression<Func<T, object>> exp, int defaultValue = 0) where T : class, new()
-    {
-        var key = ConfigHelper.GetK<T>(exp);
-        return await GetAsync(key, defaultValue);
-    }
-
-    public async Task<bool> GetBool<T>(Expression<Func<T, object>> exp, bool defaultValue = false) where T : class, new()
-    {
-        var key = ConfigHelper.GetK<T>(exp);
-        return await GetAsync(key, defaultValue);
-    }
-    #endregion
-
     /// <summary>
-    /// 更新配置
+    ///     更新配置
     /// </summary>
     /// <param name="dic"></param>
     /// <returns></returns>
@@ -102,6 +72,7 @@ public class ConfigService
                 item.Value = v;
             }
         }
+
         await _context.SaveChangesAsync();
     }
 
@@ -116,18 +87,38 @@ public class ConfigService
             var value = await _cache.GetStringAsync(key);
             if (string.IsNullOrWhiteSpace(value))
             {
-                value = await _context.Set<SysConfig>().Where(a => a.Key == key).Select(a => a.Value).FirstOrDefaultAsync();
-                if (value != null)
-                {
-                    await _cache.SetStringAsync(key, value);
-                }
+                value = await _context.Set<SysConfig>().Where(a => a.Key == key).Select(a => a.Value)
+                    .FirstOrDefaultAsync();
+                if (value != null) await _cache.SetStringAsync(key, value);
             }
-            if (value != null)
-            {
-                property.SetValue(t, Convert.ChangeType(value, property.PropertyType));
-            }
+
+            if (value != null) property.SetValue(t, Convert.ChangeType(value, property.PropertyType));
         }
 
         return t;
     }
+
+    #region 获取Key，强类型
+
+    public async Task<string> GetString<T>(Expression<Func<T, object>> exp, string defaultValue = "")
+        where T : class, new()
+    {
+        var key = ConfigHelper.GetK(exp);
+        return await GetAsync(key, defaultValue);
+    }
+
+    public async Task<int> GetInt<T>(Expression<Func<T, object>> exp, int defaultValue = 0) where T : class, new()
+    {
+        var key = ConfigHelper.GetK(exp);
+        return await GetAsync(key, defaultValue);
+    }
+
+    public async Task<bool> GetBool<T>(Expression<Func<T, object>> exp, bool defaultValue = false)
+        where T : class, new()
+    {
+        var key = ConfigHelper.GetK(exp);
+        return await GetAsync(key, defaultValue);
+    }
+
+    #endregion
 }

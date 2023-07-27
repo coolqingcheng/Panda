@@ -1,20 +1,18 @@
-﻿namespace Panda.Models.Dtos.Blogs.Posts
+﻿namespace Panda.Models.Dtos.Blogs.Posts;
+
+internal class TagModels
 {
-    internal class TagModels
-    {
-    }
+}
 
-    public class TagDtoModel
-    {
-        public int Id { get; set; }
+public class TagDtoModel
+{
+    public int Id { get; set; }
 
-        public string TagName { get; set; }
+    public string TagName { get; set; }
 
-        public int Count { get; set; }
-    }
+    public int Count { get; set; }
+}
 
-    public class TagListRequest : BasePageModel
-    {
-
-    }
+public class TagListRequest : BasePageModel
+{
 }

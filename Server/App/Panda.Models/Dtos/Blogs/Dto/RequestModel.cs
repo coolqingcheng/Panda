@@ -9,15 +9,12 @@ public class PostRequestModel : BasePageModel
 
 public class GetCateModel : BasePageModel
 {
-
 }
 
 public class GetTagModel : BasePageModel
 {
-
 }
 
 public class GetFriendLinkModel : BasePageModel
 {
-
 }

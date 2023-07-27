@@ -12,7 +12,7 @@ public class PostTagService
     public async Task<PageDto<TagCountItem>> GetList(GetTagModel model)
     {
         var list = await _context.Set<PostTags>().AsNoTracking().Skip(model.Skip).Take(model.PageSize)
-            .Select(a => new TagCountItem()
+            .Select(a => new TagCountItem
             {
                 Id = a.Id,
                 TagName = a.TagName,

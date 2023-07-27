@@ -1,20 +1,19 @@
-﻿namespace Panda.Models.Dtos
+﻿namespace Panda.Models.Dtos;
+
+public class RankListModel
 {
-    public class RankListModel
-    {
-        /// <summary>
-        /// 标题
-        /// </summary>
-        public string Title { get; set; }
+    /// <summary>
+    ///     标题
+    /// </summary>
+    public string Title { get; set; }
 
 
-        public List<RankListItem> RankList { get; set; } = new();
-    }
+    public List<RankListItem> RankList { get; set; } = new();
+}
 
-    public class RankListItem
-    {
-        public string Url { get; set; }
+public class RankListItem
+{
+    public string Url { get; set; }
 
-        public string Text { get; set; }
-    }
+    public string Text { get; set; }
 }

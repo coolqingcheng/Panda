@@ -9,13 +9,14 @@ public class BaseAccount : BaseTableModel<Guid>
     public string Email { get; set; }
 
     public string Pwd { get; set; }
+
     /// <summary>
-    /// 锁定时间
+    ///     锁定时间
     /// </summary>
     public DateTime LockedTime { get; set; }
 
     /// <summary>
-    /// 登录失败次数
+    ///     登录失败次数
     /// </summary>
     public int LoginFailCount { get; set; }
 }

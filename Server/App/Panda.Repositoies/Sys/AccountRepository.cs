@@ -20,7 +20,7 @@ public class AccountRepository : BaseRepository<Accounts>
     }
 
     /// <summary>
-    /// 获取账号已经关联的角色
+    ///     获取账号已经关联的角色
     /// </summary>
     /// <param name="accountId"></param>
     /// <returns></returns>
@@ -34,7 +34,7 @@ public class AccountRepository : BaseRepository<Accounts>
     {
         var query = DbContext.Set<Accounts>();
         var res = await DbContext.Set<Accounts>()
-            .Select(a => new AccountItemDto()
+            .Select(a => new AccountItemDto
             {
                 Id = a.Id,
                 UserName = a.UserName,
@@ -50,7 +50,7 @@ public class AccountRepository : BaseRepository<Accounts>
     }
 
     /// <summary>
-    /// 检查账户表中是否存在账户
+    ///     检查账户表中是否存在账户
     /// </summary>
     /// <returns></returns>
     public Task<bool> ExistAccount()

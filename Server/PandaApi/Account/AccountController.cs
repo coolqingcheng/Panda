@@ -8,7 +8,7 @@ using PandaApi.Events;
 namespace PandaApi.Account;
 
 /// <summary>
-/// 账号管理
+///     账号管理
 /// </summary>
 public class AccountController : BaseAdminController
 {
@@ -23,10 +23,11 @@ public class AccountController : BaseAdminController
     }
 
     /// <summary>
-    /// 初始化系统账号
+    ///     初始化系统账号
     /// </summary>
     /// <returns></returns>
-    [HttpGet, AllowAnonymous]
+    [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> InitAccount()
     {
         var res = await _service.AddAccount("admin", "admin", "admin@qq.com");
@@ -35,22 +36,22 @@ public class AccountController : BaseAdminController
     }
 
     /// <summary>
-    /// 测试event
+    ///     测试event
     /// </summary>
     [HttpGet]
     [AllowAnonymous]
-    public async Task<string?> Test([FromServices]IHttpContextAccessor httpContext)
+    public async Task<string?> Test([FromServices] IHttpContextAccessor httpContext)
     {
-        var res = await _mediator.Send(new TestModel()
+        var res = await _mediator.Send(new TestModel
         {
             Time = DateTime.Now
         });
         Console.WriteLine("结果:" + res);
-        return httpContext.HttpContext?.TraceIdentifier.ToString();
+        return httpContext.HttpContext?.TraceIdentifier;
     }
 
     /// <summary>
-    /// 账户列表
+    ///     账户列表
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
@@ -59,8 +60,9 @@ public class AccountController : BaseAdminController
     {
         return await _service.GetList(request);
     }
+
     /// <summary>
-    /// 禁止登录
+    ///     禁止登录
     /// </summary>
     /// <param name="accountId"></param>
     /// <returns></returns>
@@ -71,18 +73,18 @@ public class AccountController : BaseAdminController
     }
 
     /// <summary>
-    /// 创建用户
+    ///     创建用户
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
     [HttpPost]
     public async Task CreateUser(CreateUserModel model)
     {
-        await _service.AddAccount(model.UserName, model.Password, model.Email??"");
+        await _service.AddAccount(model.UserName, model.Password, model.Email ?? "");
     }
 
     /// <summary>
-    /// 修改密码
+    ///     修改密码
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>

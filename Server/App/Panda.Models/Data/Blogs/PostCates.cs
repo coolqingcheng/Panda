@@ -4,7 +4,6 @@ public class PostCates : BaseTableModel<int>
 {
     public PostCates()
     {
-        
     }
 
     public PostCates(string cateName)
@@ -21,8 +20,8 @@ public class PostCateRelation : BaseTableModel<int>
 {
     public PostCateRelation()
     {
-        
     }
+
     public PostCateRelation(PostCates postCate, Posts posts)
     {
         PostCate = postCate;

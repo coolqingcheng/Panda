@@ -1,10 +1,9 @@
-﻿namespace PandaApi.Account
+﻿namespace PandaApi.Account;
+
+public class RoleController : BaseAdminController
 {
-    public class RoleController : BaseAdminController
-    {
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
-    }
+    //public IActionResult Index()
+    //{
+    //    return View();
+    //}
 }

@@ -2,52 +2,50 @@
 using Microsoft.Extensions.Caching.Distributed;
 using Panda.Services.Cache;
 
-namespace PandaApi.Blogs.Services
+namespace PandaApi.Blogs.Services;
+
+public class FriendLinkService
 {
-    public class FriendLinkService
+    private readonly IDistributedCache _cache;
+    private readonly PandaDbContext _context;
+
+    public FriendLinkService(PandaDbContext context, IDistributedCache cache)
     {
-        private readonly PandaDbContext _context;
+        _context = context;
+        _cache = cache;
+    }
 
-        readonly IDistributedCache _cache;
-
-        public FriendLinkService(PandaDbContext context, IDistributedCache cache)
+    public async Task<PageDto<FriendLinkModel>> GetList(FriendLinkRequestModel request)
+    {
+        var list = await _context.FriendLinks.Skip(request.Skip).Take(request.PageSize).Select(a => new FriendLinkModel
         {
-            _context = context;
-            _cache = cache;
-        }
+            Name = a.Name,
+            Url = a.Url,
+            Order = a.Order,
+            Id = a.Id,
+            IsPublish = a.IsPublish
+        }).ToListAsync();
+        return new PageDto<FriendLinkModel>(await _context.FriendLinks.CountAsync(), list);
+    }
 
-        public async Task<PageDto<FriendLinkModel>> GetList(FriendLinkRequestModel request)
+    public async Task Edit(FriendLinkModel model)
+    {
+        if (model.Id > 0)
         {
-            var list = await _context.FriendLinks.Skip(request.Skip).Take(request.PageSize).Select(a => new FriendLinkModel()
+            var item = await _context.FriendLinks.FirstOrDefaultAsync(a => a.Id == model.Id);
+            if (item != null)
             {
-                Name = a.Name,
-                Url = a.Url,
-                Order = a.Order,
-                Id = a.Id,
-                IsPublish = a.IsPublish
-            }).ToListAsync();
-            return new PageDto<FriendLinkModel>(await _context.FriendLinks.CountAsync(), list);
-        }
-
-        public async Task Edit(FriendLinkModel model)
-        {
-            if (model.Id > 0)
-            {
-                var item = await _context.FriendLinks.FirstOrDefaultAsync(a => a.Id == model.Id);
-                if (item != null)
-                {
-                    model.Adapt(item);
-                    await _context.SaveChangesAsync();
-                }
-            }
-            else
-            {
-                var item = model.Adapt<FriendLink>();
-                await _context.FriendLinks.AddAsync(item);
+                model.Adapt(item);
                 await _context.SaveChangesAsync();
-
             }
-            await _cache.RemoveAsync(CacheKeys.FriendLinkKey);
         }
+        else
+        {
+            var item = model.Adapt<FriendLink>();
+            await _context.FriendLinks.AddAsync(item);
+            await _context.SaveChangesAsync();
+        }
+
+        await _cache.RemoveAsync(CacheKeys.FriendLinkKey);
     }
 }

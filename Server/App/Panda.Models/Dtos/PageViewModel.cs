@@ -2,7 +2,7 @@
 
 public class PageViewModel
 {
-    private Func<int, string> _func;
+    private readonly Func<int, string> _func;
 
     public PageViewModel(int total, int pageSize, int currIndex, Func<int, string> func)
     {
@@ -12,73 +12,59 @@ public class PageViewModel
         _func = func;
     }
 
-    private int Total { get; set; }
+    private int Total { get; }
 
 
-    private int PageSize { get; set; }
+    private int PageSize { get; }
 
-    private int CurrIndex { get; set; }
+    private int CurrIndex { get; }
 
     public List<PageItem> GetUrls()
     {
         var list = new List<PageItem>();
-        var maxPage = Total % PageSize == 0 ? Total / PageSize : ((Total / PageSize) + 1);
-        if (maxPage <= 0)
-        {
-            return list;
-        }
+        var maxPage = Total % PageSize == 0 ? Total / PageSize : Total / PageSize + 1;
+        if (maxPage <= 0) return list;
 
         if (CurrIndex > 1)
-        {
-            list.Add(new PageItem()
+            list.Add(new PageItem
             {
                 Text = "上一页",
                 Url = _func.Invoke(CurrIndex - 1)
             });
-        }
-
 
 
         for (var i = CurrIndex - 3; i < CurrIndex; i++)
         {
-            if (i <= 0)
-            {
-                continue;
-            }
+            if (i <= 0) continue;
 
             var url = _func.Invoke(i);
-            list.Add(new PageItem()
+            list.Add(new PageItem
             {
                 Url = url,
                 Text = i.ToString()
             });
         }
 
-        list.Add(new PageItem()
+        list.Add(new PageItem
         {
             Url = _func.Invoke(CurrIndex),
             IsActive = true,
             Text = CurrIndex.ToString()
         });
 
-        for (int i = CurrIndex + 1; i < CurrIndex + 1 + 3; i++)
+        for (var i = CurrIndex + 1; i < CurrIndex + 1 + 3; i++)
         {
-            if (i > maxPage)
-            {
-                break;
-            }
+            if (i > maxPage) break;
 
-            list.Add(new PageItem()
+            list.Add(new PageItem
             {
                 Url = _func.Invoke(i),
                 Text = i.ToString()
             });
         }
-        if (list.Count<=1)
-        {
-            return list;
-        }
-        list.Add(new PageItem()
+
+        if (list.Count <= 1) return list;
+        list.Add(new PageItem
         {
             Url = _func.Invoke(CurrIndex + 1),
             Text = "下一页"

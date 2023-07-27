@@ -6,6 +6,10 @@ namespace Panda.Models.Data;
 
 public class PandaDbContext : AuthDbContext<Accounts>
 {
+    public PandaDbContext(DbContextOptions<PandaDbContext> options) : base(options)
+    {
+    }
+
     public DbSet<Posts> Posts { get; set; }
 
     public DbSet<PostTags> PostTags { get; set; }
@@ -22,18 +26,14 @@ public class PandaDbContext : AuthDbContext<Accounts>
 
 
     /// <summary>
-    /// 系统配置
+    ///     系统配置
     /// </summary>
     public DbSet<SysConfig> SysConfig { get; set; }
+
     /// <summary>
-    /// 资源文件
+    ///     资源文件
     /// </summary>
     public DbSet<SysResource> SysResources { get; set; }
-
-    public PandaDbContext(DbContextOptions<PandaDbContext> options) : base(options)
-    {
-
-    }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -48,8 +48,5 @@ public class PandaDbContext : AuthDbContext<Accounts>
         base.OnModelCreating(modelBuilder);
         modelBuilder.ConfigAccount();
         modelBuilder.PostConfig();
-
-
     }
-
 }

@@ -13,10 +13,8 @@ using PandaTools.Swagger;
 
 namespace PandaTools.Configs;
 
-
 public static class AppExtension
 {
-
     public static void AddWebApiConfig(this IServiceCollection servies)
     {
         servies.AddControllers().AddNewtonsoftJson(
@@ -37,25 +35,21 @@ public static class AppExtension
                     });
                 };
             });
-        servies.AddFluentValidationAutoValidation(config =>
-        {
-            config.DisableDataAnnotationsValidation = true;
-            
-        });
+        servies.AddFluentValidationAutoValidation(config => { config.DisableDataAnnotationsValidation = true; });
         servies.AddValidatorsFromAssembly(Assembly.GetEntryAssembly());
     }
 
     public static void AddApplication(this WebApplicationBuilder builder)
     {
         var service = builder.Services;
-        service.AddMediatR(a=>a.RegisterServicesFromAssembly(Assembly.GetEntryAssembly()!));
+        service.AddMediatR(a => a.RegisterServicesFromAssembly(Assembly.GetEntryAssembly()!));
         service.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
         service.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         service.AddHttpClient();
         service.AddSwagger();
     }
 
-    static void AddSwagger(this IServiceCollection service)
+    private static void AddSwagger(this IServiceCollection service)
     {
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         service.AddEndpointsApiExplorer();
@@ -70,7 +64,7 @@ public static class AppExtension
                 Type = SecuritySchemeType.Http,
                 Scheme = "Bearer"
             });
-            c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
                 {
                     new OpenApiSecurityScheme
@@ -82,7 +76,7 @@ public static class AppExtension
                         },
                         Scheme = "oauth2",
                         Name = "Bearer",
-                        In = ParameterLocation.Header,
+                        In = ParameterLocation.Header
                     },
                     new List<string>()
                 }
@@ -96,14 +90,9 @@ public static class AppExtension
                 var fileName = fileInfo.Name.Substring(0,
                     fileInfo.Name.LastIndexOf(fileInfo.Extension, StringComparison.Ordinal));
                 var path = Path.Combine(AppContext.BaseDirectory, fileName + ".xml");
-                if (File.Exists(path))
-                {
-                    c.IncludeXmlComments(path, true);
-                }
+                if (File.Exists(path)) c.IncludeXmlComments(path, true);
             }
         });
         service.AddSwaggerGenNewtonsoftSupport(); // explicit opt-in - needs to be placed after AddSwaggerGen()
-
     }
-
 }

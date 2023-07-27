@@ -10,6 +10,8 @@ public class HomeModel : PageModel
 {
     private readonly PostService _postService;
 
+    public List<PostItemModel> list = new();
+
     public HomeModel(PostService postService)
     {
         _postService = postService;
@@ -22,11 +24,9 @@ public class HomeModel : PageModel
 
     public int Total { get; set; }
 
-    public List<PostItemModel> list = new();
-
     public async Task OnGet(int pageIndex)
     {
-        var res = await _postService.GetHomeList(new PostRequestModel()
+        var res = await _postService.GetHomeList(new PostRequestModel
         {
             Index = pageIndex,
             PageSize = 10

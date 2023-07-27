@@ -1,6 +1,4 @@
-﻿
-
-namespace Panda.Repositoies.Blogs;
+﻿namespace Panda.Repositoies.Blogs;
 
 public class PostCatesRepository : BaseRepository<PostCates>
 {
@@ -17,13 +15,11 @@ public class PostCatesRepository : BaseRepository<PostCates>
     {
         await DbContext.Set<PostCateRelation>().Where(a => a.Post == post).ExecuteDeleteAsync();
         foreach (var item in list)
-        {
             await DbContext.Set<PostCateRelation>()
-                .AddAsync(new PostCateRelation()
+                .AddAsync(new PostCateRelation
                 {
-                    Post = post,PostCate = item
+                    Post = post, PostCate = item
                 });
-        }
 
         await DbContext.SaveChangesAsync();
     }

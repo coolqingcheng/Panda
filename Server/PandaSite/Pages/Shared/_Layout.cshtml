@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @await Html.PartialAsync("Partial/_css")
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-    @await RenderSectionAsync("css", required: false)
+    @await RenderSectionAsync("css", false)
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
@@ -56,6 +56,6 @@
 
 
 @await Html.PartialAsync("Partial/_js")
-@await RenderSectionAsync("js", required: false)
+@await RenderSectionAsync("js", false)
 </body>
 </html>

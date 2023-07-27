@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace PandaApi.Spa;
 
 /// <summary>
-/// 处理Spa文件
+///     处理Spa文件
 /// </summary>
 public class SpaController : ControllerBase
 {
@@ -24,7 +24,7 @@ public class SpaController : ControllerBase
     }
 
     /// <summary>
-    /// 后台Spa页面
+    ///     后台Spa页面
     /// </summary>
     /// <param name="env"></param>
     /// <returns></returns>

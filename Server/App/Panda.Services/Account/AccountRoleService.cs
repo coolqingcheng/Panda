@@ -1,5 +1,4 @@
-﻿
-using Panda.Repositoies.Sys;
+﻿using Panda.Repositoies.Sys;
 
 namespace Panda.Services.Sys;
 

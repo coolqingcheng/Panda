@@ -5,12 +5,10 @@ namespace Panda.Models.Data.Entitys;
 public class Accounts : BaseAccount
 {
     public List<AccountRoleRelation> AccountRoleRelations { get; set; }
-
 }
 
 public static class AccountModelCreating
 {
-
     public static void ConfigAccount(this ModelBuilder builder)
     {
         builder.SetDateTimeConfig<Accounts>().HasKey(a => a.Id);

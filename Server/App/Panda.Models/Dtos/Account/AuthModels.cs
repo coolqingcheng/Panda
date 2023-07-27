@@ -1,13 +1,12 @@
-﻿namespace Panda.Models.Dtos.Account
+﻿namespace Panda.Models.Dtos.Account;
+
+internal class AuthModels
 {
-    internal class AuthModels
-    {
-    }
+}
 
-    public class ChangeCurrPwd
-    {
-        public string OldPwd { get; set; }
+public class ChangeCurrPwd
+{
+    public string OldPwd { get; set; }
 
-        public string NewPwd { get; set; }
-    }
+    public string NewPwd { get; set; }
 }

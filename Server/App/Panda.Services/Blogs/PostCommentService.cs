@@ -1,14 +1,11 @@
-﻿namespace Panda.Services.Blogs
+﻿namespace Panda.Services.Blogs;
+
+public class PostCommentService
 {
-    public class PostCommentService
+    private readonly DbContext _context;
+
+    public PostCommentService(DbContext context)
     {
-        private readonly DbContext _context;
-
-        public PostCommentService(DbContext context)
-        {
-            _context = context;
-        }
-
-
+        _context = context;
     }
 }

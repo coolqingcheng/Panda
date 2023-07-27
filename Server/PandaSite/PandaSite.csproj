@@ -1,26 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
-		<Nullable>enable</Nullable>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<UserSecretsId>ab1145a6-7357-423d-93c8-00465ab3c945</UserSecretsId>
-		<NoWarn>CS1591,8618</NoWarn>
-	</PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <UserSecretsId>ab1145a6-7357-423d-93c8-00465ab3c945</UserSecretsId>
+        <NoWarn>CS1591,8618</NoWarn>
+    </PropertyGroup>
 
-	<PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Web' " />
-	<PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Data.Swagger' " />
-	<PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Data.Production' " />
-	<ItemGroup>
-		<ProjectReference Include="..\App\Panda.Services\Panda.Services.csproj" />
-		<ProjectReference Include="..\PandaApi\PandaApi.csproj" />
-		<ProjectReference Include="..\PandaTools\PandaTools.csproj" />
-	</ItemGroup>
+    <PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Web' "/>
+    <PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Data.Swagger' "/>
+    <PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Data.Production' "/>
+    <ItemGroup>
+        <ProjectReference Include="..\App\Panda.Services\Panda.Services.csproj"/>
+        <ProjectReference Include="..\PandaApi\PandaApi.csproj"/>
+        <ProjectReference Include="..\PandaTools\PandaTools.csproj"/>
+    </ItemGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Mapster.Core" Version="1.2.0" />
-		
-	</ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Mapster.Core" Version="1.2.0"/>
+
+    </ItemGroup>
 
 
 </Project>

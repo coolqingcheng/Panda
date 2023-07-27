@@ -2,7 +2,10 @@
 
 public class PostTags : BaseTableModel<int>
 {
-    public PostTags() { }
+    public PostTags()
+    {
+    }
+
     public PostTags(string tagName)
     {
         TagName = tagName;
@@ -11,12 +14,13 @@ public class PostTags : BaseTableModel<int>
     public string TagName { get; set; }
 
     public List<PostTagRelation> TagRelation { get; set; }
-
 }
 
 public class PostTagRelation : BaseTableModel<int>
 {
-    public PostTagRelation() { }
+    public PostTagRelation()
+    {
+    }
 
     public PostTagRelation(Posts posts, PostTags postTags)
     {
