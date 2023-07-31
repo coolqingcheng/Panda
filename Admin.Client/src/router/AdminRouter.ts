@@ -28,15 +28,14 @@ const AdminRouter = createRouter({
                 {
                     path: '',
                     redirect: {
-                        name: 'dashboard'
+                        name: '仪表盘'
                     }
                 },
                 {
                     path: "dashboard",
-                    name: 'dashboard',
+                    name: '仪表盘',
                     meta: {
-                        title: "控制台",
-                        keepName: "DashBoard",
+                        leftMenu: true
                     },
                     component: () => import("@/views/admin/dashboard/DashBoard.vue"),
                 },

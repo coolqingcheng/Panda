@@ -75,11 +75,11 @@ const toEdit = (id: number | null) => {
     console.log(id)
     if (!id) {
         router.push({
-            name:'post-edit'
+            name:'编辑文章'
         })
     } else {
         router.push({
-            name: 'post-edit',
+            name: '编辑文章',
             query: {
                 id: id
             }

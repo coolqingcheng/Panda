@@ -119,14 +119,14 @@ router.afterEach((to, from, fail) => {
     closeSlideMenu();
     if (!fail) {
     }
-    if (route.meta.title) {
-        document.title = route.meta.title as string
-    }
+    // if (route.meta.title) {
+    //     document.title = route.meta.title as string
+    // }
 
-    nextTick(() => {
-        console.log('路由跳转完成:', to.meta.title);
-        document.title = route.meta.title ?? '';
-    })
+    // nextTick(() => {
+    //     console.log('路由跳转完成:', to.meta.title);
+    //     document.title = route.meta.title ?? '';
+    // })
 })
 
 

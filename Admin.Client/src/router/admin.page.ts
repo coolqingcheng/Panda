@@ -2,100 +2,67 @@ import { RouteRecordRaw } from "vue-router";
 
 import BlankLayout from "@/views/admin/layout/BlankLayout.vue";
 
-const blog: RouteRecordRaw[] = [
+const blogTags: RouteRecordRaw[] = [
     {
-        path: "blog-post",
-        component: () => import("@/views/admin/blogs/post/PosList.vue"),
+        path: "tag",
+        name: "标签",
         meta: {
-            title: "文章管理",
-        },
-    },
-    {
-        path: "blog-post-edit",
-        name: 'post-edit',
-        component: () => import("@/views/admin/blogs/post/PostEdit.vue"),
-        meta: {
-            title: "编辑文章",
-            keepName: 'PostEdit'
-        },
-    },
-    {
-        path: "blog-cate",
-        component: () => import("@/views/admin/blogs/cate/CateList.vue"),
-        meta: {
-            title: "分类",
-        },
-    },
-    {
-        path: "blog-cate-edit",
-        component: () => import("@/views/admin/blogs/cate/CateEdit.vue"),
-        meta: {
-            title: "编辑分类",
-        },
-    },
-    {
-        path: "blog-tag",
-        name: '标签',
-        meta: {
-            title: "标签",
-            keepName: 'TagList'
+            leftMenu: true,
         },
         component: () => import("@/views/admin/blogs/tag/TagList.vue"),
     },
 ];
 
-const user = [
+const user: RouteRecordRaw[] = [
     {
-        path: "user",
+        path: "",
         name: "用户管理",
         component: () => import("@/views/auth/accounts/AccountList.vue"),
         meta: {
-            title: "账号管理",
+            leftMenu: true,
         },
     },
     {
         path: "role",
         name: "角色管理",
         component: () => import("@/views/admin/users/RoleManager.vue"),
-        meta: {
-            title: "角色管理",
-        },
+        meta: {},
     },
 ];
 
 const site: RouteRecordRaw[] = [
     {
-        path: "friendlink",
+        path: "",
+        name: "友情链接",
         meta: {
-            title: "友情链接",
+            leftMenu: true,
         },
         component: () =>
             import("@/views/admin/blogs/friendlink/FriendLinkList.vue"),
     },
     {
         path: "edit",
-        name: "友情链接-编辑",
-        meta: {
-            title: "友情链接-编辑",
-        },
+        name: "友情链接编辑",
+        meta: {},
         component: () =>
             import("@/views/admin/blogs/friendlink/FriendLinkEdit.vue"),
     },
     {
         path: "setting",
+        name: "系统设置",
         meta: {
-            title: "系统设置",
-            keepName: 'Setting'
+            leftMenu: true,
         },
         component: () => import("@/views/setting/Setting.vue"),
     },
     {
         path: "file-manager",
+        name: "文件管理",
         meta: {
-            title: "文件管理",
+            leftMenu: true,
         },
         component: () => import("@/views/admin/regular/FileManager.vue"),
-    }
+    },
 ];
 
 const test: RouteRecordRaw[] = [
@@ -120,10 +87,73 @@ const test: RouteRecordRaw[] = [
 ];
 
 const routeList: RouteRecordRaw[] = [
-    ...blog,
-    ...user,
-    ...site,
-    ...test,
+    {
+        path: "blog-post",
+        component: BlankLayout,
+        children: [
+            {
+                path: "",
+                name: "文章",
+                component: () => import("@/views/admin/blogs/post/PosList.vue"),
+                meta: {
+                    leftMenu: true,
+                },
+            },
+            {
+                path: "edit",
+                name: "编辑文章",
+                component: () => import("@/views/admin/blogs/post/PostEdit.vue"),
+            },
+        ],
+        name: "博客",
+        meta: {
+            leftMenu: true,
+        },
+    },
+    {
+        path: "blog-cate",
+        component: BlankLayout,
+        children: [
+            {
+                path: "",
+                name: "分类",
+                meta: {
+                    leftMenu: true,
+                },
+                component: () => import("@/views/admin/blogs/cate/CateList.vue"),
+            },
+            {
+                path: "cate-edit",
+                name: "编辑分类",
+                meta: {},
+                component: () => import("@/views/admin/blogs/cate/CateEdit.vue"),
+            },
+        ],
+        name: "博客分类",
+        meta: {
+            leftMenu: true,
+        },
+    },
+    {
+        path: "user",
+        component: BlankLayout,
+        children: [...user],
+        name: "用户",
+        meta: {
+            leftMenu: true,
+        },
+    },
+    {
+        path: "setting",
+        component: BlankLayout,
+        children: [...site],
+        name: "系统",
+        meta: {
+            leftMenu: true,
+            iconName: "setting",
+        },
+    },
+    // ...test,
 ];
 
 export { routeList };

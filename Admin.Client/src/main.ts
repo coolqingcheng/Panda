@@ -12,10 +12,15 @@ import ElementPlus from 'element-plus'
 import { AdminRouter } from '@/router/AdminRouter'
 
 import { axiosConfig } from "@/shared/Axios.Config"
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+
 
 axiosConfig()
 
 const app = createApp(App)
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+    app.component(key, component)
+}
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 app.use(pinia)
