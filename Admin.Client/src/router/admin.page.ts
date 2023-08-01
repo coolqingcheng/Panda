@@ -141,7 +141,6 @@ const routeList: RouteRecordRaw[] = [
     {
         path: 'friendlink',
         component: BlankLayout,
-        name: '友情链接',
         children: [
             {
                 path: "",
