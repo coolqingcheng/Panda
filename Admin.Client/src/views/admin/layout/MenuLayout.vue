@@ -8,7 +8,7 @@
                 <template v-for="item in memuList" :key="item.path">
                     <el-menu-item :index="item.path" v-if="item.children.length == 0">
                         <el-icon>
-                            <Odometer />
+                            <component :is="item.icon"></component>
                         </el-icon>
                         <template #title>
                             <span>{{ item.memuName }}</span>
@@ -23,7 +23,7 @@
                             <span>{{ item.memuName }} </span>
                         </template>
                         <el-menu-item :index="child.path" v-for="child in item.children" :key="child.path">{{
-                            child.memuName }} {{ child.path }}</el-menu-item>
+                            child.memuName }}</el-menu-item>
                     </el-sub-menu>
                 </template>
 
@@ -37,6 +37,7 @@ import { isCollapse } from "./MenuStatus"
 
 import { User, Setting, Odometer } from '@element-plus/icons-vue'
 import { onMounted, ref } from "vue";
+import { RouterLink } from "vue-router";
 import { useRoute, useRouter } from "vue-router";
 
 const defaultActive = ref('')

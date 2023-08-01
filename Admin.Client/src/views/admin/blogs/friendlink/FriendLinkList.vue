@@ -54,7 +54,7 @@ const router = useRouter();
 const edit = (item: any) => {
     console.log(item)
     router.push({
-        name: '友情链接-编辑',
+        name: '友情链接编辑',
         state: { item: { ...item } }
     })
 }

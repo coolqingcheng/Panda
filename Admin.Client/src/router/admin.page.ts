@@ -7,7 +7,7 @@ const blogTags: RouteRecordRaw[] = [
         path: "tag",
         name: "标签",
         meta: {
-            leftMenu: true,
+            groupName: '博客',
         },
         component: () => import("@/views/admin/blogs/tag/TagList.vue"),
     },
@@ -31,22 +31,7 @@ const user: RouteRecordRaw[] = [
 ];
 
 const site: RouteRecordRaw[] = [
-    {
-        path: "",
-        name: "友情链接",
-        meta: {
-            leftMenu: true,
-        },
-        component: () =>
-            import("@/views/admin/blogs/friendlink/FriendLinkList.vue"),
-    },
-    {
-        path: "edit",
-        name: "友情链接编辑",
-        meta: {},
-        component: () =>
-            import("@/views/admin/blogs/friendlink/FriendLinkEdit.vue"),
-    },
+
     {
         path: "setting",
         name: "系统设置",
@@ -96,13 +81,14 @@ const routeList: RouteRecordRaw[] = [
                 name: "文章",
                 component: () => import("@/views/admin/blogs/post/PosList.vue"),
                 meta: {
-                    leftMenu: true,
+                    groupName: '博客',
+                    leftMenu: true
                 },
             },
             {
                 path: "edit",
                 name: "编辑文章",
-                component: () => import("@/views/admin/blogs/post/PostEdit.vue"),
+                component: () => import("@/views/admin/blogs/post/PostEdit.vue")
             },
         ],
         name: "博客",
@@ -110,15 +96,16 @@ const routeList: RouteRecordRaw[] = [
             leftMenu: true,
         },
     },
+    ...blogTags,
     {
         path: "blog-cate",
         component: BlankLayout,
         children: [
             {
                 path: "",
-                name: "分类",
+                name: "博客分类",
                 meta: {
-                    leftMenu: true,
+                    groupName: '博客',
                 },
                 component: () => import("@/views/admin/blogs/cate/CateList.vue"),
             },
@@ -129,7 +116,7 @@ const routeList: RouteRecordRaw[] = [
                 component: () => import("@/views/admin/blogs/cate/CateEdit.vue"),
             },
         ],
-        name: "博客分类",
+        name: "",
         meta: {
             leftMenu: true,
         },
@@ -149,10 +136,27 @@ const routeList: RouteRecordRaw[] = [
         children: [...site],
         name: "系统",
         meta: {
-            leftMenu: true,
-            iconName: "setting",
         },
     },
+    {
+        path: 'friendlink',
+        component: BlankLayout,
+        name: '友情链接',
+        children: [
+            {
+                path: "",
+                name: "友情链接",
+                component: () =>
+                    import("@/views/admin/blogs/friendlink/FriendLinkList.vue"),
+            },
+            {
+                path: "edit",
+                name: "友情链接编辑",
+                component: () =>
+                    import("@/views/admin/blogs/friendlink/FriendLinkEdit.vue"),
+            },
+        ]
+    }
     // ...test,
 ];
 
