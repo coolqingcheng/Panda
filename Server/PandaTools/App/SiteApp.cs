@@ -25,6 +25,7 @@ public class SiteApp
             var services = builder.Services;
 
             services.InjectSuffix(Assembly.Load("Panda.Services"), "Service");
+            services.InjectSuffix(Assembly.Load("PandaApi"), "Service");
             services.InjectSuffix(Assembly.Load("Panda.Repositoies"), "Repository");
 
             services.AddWebApiConfig();

@@ -1,2 +1,6 @@
 SiteApp.Run(args,
-    (services, config) => { services.AddEFMySql<PandaDbContext>(config.GetConnectionString("mysql")!); });
+    (services, config) =>
+    {
+        services.AddMyCaptcha(config);
+        services.AddEFMySql<PandaDbContext>(config.GetConnectionString("mysql")!);
+    });

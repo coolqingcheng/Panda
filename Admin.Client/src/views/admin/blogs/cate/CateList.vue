@@ -13,7 +13,7 @@
                 </ElSpace>
             </ElCol>
         </ElRow>
-        <ElTable :data="list" :loading="loading" v-bind="table">
+        <ElTable :data="list" v-loading="loading" v-bind="table">
             <ElTableColumn label="Id" width="80" prop="id"></ElTableColumn>
             <ElTableColumn label="名称" prop="cateName"></ElTableColumn>
             <ElTableColumn label="关联数量" width="120" prop="postCount"></ElTableColumn>
@@ -70,18 +70,18 @@ watch(() => pageModel.index, () => {
     getList();
 })
 
-var list = reactive<CateDtoModel[]>([])
+var list = ref<CateDtoModel[]>([])
 
 const getList = () => {
     loading.value = true;
     CateService.getList({
         ...pageModel
     }).then(res => {
-        list = []
+        list.value = []
         if (res.data) {
-            list = res.data
+            list.value = res.data
         }
-        console.log(list)
+        console.log(list.value)
         pageModel.total = res.total!
 
     }).finally(() => loading.value = false)

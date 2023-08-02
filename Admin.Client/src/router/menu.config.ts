@@ -24,7 +24,13 @@ const memuList = [
     },
     {
         title:'系统',
-        icon:'setting'
+        icon:'setting',
+        children:[
+            {
+                title:'设置',
+                routeName:'系统设置'
+            }
+        ]
     }
 ]
 

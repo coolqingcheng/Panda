@@ -1,10 +1,12 @@
 <template>
     <ElCard>
         <template #header>
-            <span class="text-large"><ElSpace>
-                <ElButton text :icon="Back" @click="()=>router.back()">返回</ElButton>
-                编辑分类
-            </ElSpace></span>
+            <span class="text-large">
+                <ElSpace>
+                    <ElButton text :icon="Back" @click="() => router.back()"></ElButton>
+                    编辑分类
+                </ElSpace>
+            </span>
         </template>
         <ElForm label-position="top" :model="formModel" ref="form" @submit.navtive.prevent>
             <ElFormItem label="分类名称" prop="cateName">

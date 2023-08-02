@@ -16,5 +16,5 @@ public class ResourceModels
 
     public StorageType StorageType { get; set; }
 
-    public string StorageName => StorageType.GetDescription();
+    public string? StorageName => StorageType.GetDescription();
 }

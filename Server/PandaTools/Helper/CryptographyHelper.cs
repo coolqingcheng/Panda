@@ -78,6 +78,8 @@ public static class CryptographyHelper
     ///     AES加密算法
     /// </summary>
     /// <param name="input">明文字符串</param>
+    /// <param name="key"></param>
+    /// <param name="iv"></param>
     /// <returns>字符串</returns>
     public static string EncryptByAES(string input, string key, string iv)
     {
@@ -108,6 +110,8 @@ public static class CryptographyHelper
     ///     AES解密
     /// </summary>
     /// <param name="input">密文字节数组</param>
+    /// <param name="key"></param>
+    /// <param name="iv"></param>
     /// <returns>返回解密后的字符串</returns>
     public static string DecryptByAES(string input, string key, string iv)
     {

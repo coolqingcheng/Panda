@@ -49,8 +49,9 @@ public static class IDistributedCacheExtensions
     }
 
     /// <summary>
-    ///     获取cache配置
+    /// 获取cache配置
     /// </summary>
+    /// <param name="cache"></param>
     /// <param name="timeSpan"></param>
     /// <param name="isSliding">是否是滑动过期。默认不是</param>
     /// <returns></returns>
