@@ -8,17 +8,17 @@
         <NoWarn>CS1591,8618</NoWarn>
     </PropertyGroup>
 
-    <PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Web' "/>
-    <PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Data.Swagger' "/>
-    <PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Data.Production' "/>
+    <PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Web' " />
+    <PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Data.Swagger' " />
+    <PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Data.Production' " />
     <ItemGroup>
-        <ProjectReference Include="..\App\Panda.Services\Panda.Services.csproj"/>
-        <ProjectReference Include="..\PandaApi\PandaApi.csproj"/>
-        <ProjectReference Include="..\PandaTools\PandaTools.csproj"/>
+        <ProjectReference Include="..\App\Panda.Services\Panda.Services.csproj" />
+        <ProjectReference Include="..\PandaApi\PandaApi.csproj" />
+        <ProjectReference Include="..\PandaTools\PandaTools.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Mapster.Core" Version="1.2.0"/>
+        <PackageReference Include="Mapster.Core" Version="1.2.0" />
 
     </ItemGroup>
 

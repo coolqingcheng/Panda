@@ -21,6 +21,10 @@ const memuList = [
                 title: "友情链接"
             }
         ]
+    },
+    {
+        title:'系统',
+        icon:'setting'
     }
 ]
 
