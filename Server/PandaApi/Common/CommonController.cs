@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Lazy.Captcha.Core;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Panda.Models.Data.Entitys;
+using CaptchaHelper = PandaTools.Helper.CaptchaHelper;
 
 namespace PandaApi.Common;
 
@@ -55,5 +57,24 @@ public class CommonController : BaseAdminController
         await _dbcontext.SaveChangesAsync();
 
         return Ok(new { list, size });
+    }
+
+    /// <summary>
+    /// 获取验证码
+    /// </summary>
+    /// <param name="captcha"></param>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    [HttpGet("/captcha")]
+    public IActionResult GetCaptcha([FromServices] ICaptcha captcha, int type)
+    {
+        var guid = Guid.NewGuid().ToString();
+        var id = $"{type}_{guid}";
+        var info = captcha.Generate(id, 60 * 3);
+        // 有多处验证码且过期时间不一样，可传第二个参数覆盖默认配置。
+        //var info = _captcha.Generate(id,120);
+        var stream = new MemoryStream(info.Bytes);
+        HttpContext.Response.Cookies.Append("captcha-id", guid);
+        return File(stream, "image/gif");
     }
 }
