@@ -4,10 +4,10 @@
     <div class="login-page">
         <div class="login-box" v-loading="loading">
             <el-form :model="loginModel" label-width="" :rules="loginRule" ref="form" @submit.native.prevent>
-                <el-form-item label="" prop="userName">
+                <el-form-item label="用户名" prop="userName">
                     <el-input placeholder="输入用户名" v-model="loginModel.userName"></el-input>
                 </el-form-item>
-                <el-form-item label="" prop="passWord">
+                <el-form-item label="密码" prop="passWord">
                     <el-input placeholder="输入密码" type="password" v-model="loginModel.pwd"></el-input>
                 </el-form-item>
                 <el-form-item>
