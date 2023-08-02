@@ -15,7 +15,7 @@ public class AccountRepository : BaseRepository<Accounts>
 
     public async Task<bool> CheckUserNameExistAsync(string userName)
     {
-        return await DbContext.Set<Accounts>().Where(a => a.UserName == userName && a.Email == userName)
+        return await DbContext.Set<Accounts>().Where(a => a.UserName == userName || a.Email == userName)
             .AnyAsync();
     }
 

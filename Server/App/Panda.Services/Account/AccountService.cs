@@ -67,7 +67,8 @@ public class AccountService
     public async Task<BaseAuthResult> AddAccount(string userName, string pwd, string email)
     {
         var res = new BaseAuthResult(isOk: false, message: "");
-        if (await _accountRepository.CheckUserNameExistAsync(userName))
+        var exist = await _accountRepository.CheckUserNameExistAsync(userName);
+        if (exist == false)
         {
             await _accountRepository.AddAsync(new Accounts
             {
