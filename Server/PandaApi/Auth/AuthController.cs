@@ -1,6 +1,8 @@
 ﻿using System.Security.Claims;
+using Lazy.Captcha.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Panda.Models;
 using Panda.Models.Dtos.Account;
 using Panda.Models.Dtos.Auth;
 using Panda.Services.Sys;
@@ -31,8 +33,22 @@ public class AuthController : BaseAdminController
     /// <returns></returns>
     [HttpPost]
     [AllowAnonymous]
-    public async Task Login(LoginModel model)
+    public async Task Login(LoginModel model, [FromServices] ICaptcha captcha)
     {
+        //检验验证码
+        if (HttpContext.Request.Cookies.TryGetValue("captcha-id", out var guid))
+        {
+            var captchaId = $"{(int)ValidateCodeType.Login}_{guid}";
+            if (captcha.Validate(captchaId, model.ValidCode, removeIfSuccess: true) == false)
+            {
+                throw new UserException("验证码错误");
+            }
+        }
+        else
+        {
+            throw new UserException("验证码错误");
+        }
+
         var res = await _account.LoginAsync(model.UserName, model.Pwd);
         if (res.IsOk == false) throw new UserException($"登录失败！{res.Message}");
 

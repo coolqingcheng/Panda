@@ -53,7 +53,7 @@
                 授权认证
             </summary>
         </member>
-        <member name="M:PandaApi.Auth.AuthController.Login(Panda.Models.Dtos.Auth.LoginModel)">
+        <member name="M:PandaApi.Auth.AuthController.Login(Panda.Models.Dtos.Auth.LoginModel,Lazy.Captcha.Core.ICaptcha)">
             <summary>
                 登录
             </summary>
@@ -171,7 +171,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:PandaApi.Common.CommonController.GetCaptcha(Lazy.Captcha.Core.ICaptcha,System.Int32)">
+        <member name="M:PandaApi.Common.CommonController.GetCaptcha(Lazy.Captcha.Core.ICaptcha,Panda.Models.ValidateCodeType)">
             <summary>
             获取验证码
             </summary>

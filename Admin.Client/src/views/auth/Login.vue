@@ -1,14 +1,18 @@
 <template>
-
     <div class="login-wrapper"></div>
     <div class="login-page">
         <div class="login-box" v-loading="loading">
-            <el-form :model="loginModel" label-width="" :rules="loginRule" ref="form" @submit.native.prevent>
+            <el-form :model="loginModel" label-width="" :rules="loginRule" ref="form" @submit.native.prevent
+                label-position="top">
                 <el-form-item label="用户名" prop="userName">
                     <el-input placeholder="输入用户名" v-model="loginModel.userName"></el-input>
                 </el-form-item>
-                <el-form-item label="密码" prop="passWord">
+                <el-form-item label="密码" prop="pwd">
                     <el-input placeholder="输入密码" type="password" v-model="loginModel.pwd"></el-input>
+                </el-form-item>
+                <el-form-item label="验证码" prop="validCode">
+                    <el-input style="width: 120px;margin-right: 8px;" v-model="loginModel.validCode"></el-input>
+                    <img width="90" height="30" :src="captchaUrl+'&t='+nowTime" title="点击刷新验证码" @click="refreshValidateCode()" style="cursor: pointer;" >
                 </el-form-item>
                 <el-form-item>
                     <el-button native-type="submit" @click="submit()" type="primary" class="login-btn">
@@ -33,6 +37,15 @@ import { AdminRouter } from "@/router/AdminRouter"
 const vsetting = useVSetting();
 
 
+const captchaUrl = '/admin/common/getcaptcha?type=1';
+
+const nowTime = ref('1');
+
+const refreshValidateCode = ()=>{
+    nowTime.value = new Date().getTime().toString();
+}
+
+
 const loginModel = reactive<LoginModel>({
     userName: '',
     pwd: '',
@@ -53,15 +66,21 @@ const loginRule: FormRules = {
         {
             required: true, message: "密码不能为空"
         }
+    ],
+    validCode: [
+        {
+            required: true, message: '验证码不能为空'
+        }
     ]
 }
 
 // const router = useRouter();
 
 const submit = () => {
-    loading.value = true
+
     form.value?.validate((isvalid => {
         if (isvalid) {
+            loading.value = true
             AuthService.login({ body: loginModel }).then(res => {
                 vsetting.setToken(res.token!)
                 ElMessage({
@@ -70,14 +89,14 @@ const submit = () => {
                 })
                 AdminRouter.replace('/admin')
             }).finally(() => {
+                refreshValidateCode()
+                loginModel.validCode = ''
                 loading.value = false
+                form.value?.resetFields(['validCode'])
             })
 
         } else {
             console.log('验证失败')
-            setTimeout(() => {
-                loading.value = false
-            }, 3000);
         }
 
 

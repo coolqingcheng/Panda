@@ -29,8 +29,8 @@ public static class CaptchaHelper
                 option.ImageOption.Animation = true; // 是否启用动画
                 option.ImageOption.FrameDelay = 30; // 每帧延迟,Animation=true时有效, 默认30
 
-                option.ImageOption.Width = 150; // 验证码宽度
-                option.ImageOption.Height = 60; // 验证码高度
+                option.ImageOption.Width = 100; // 验证码宽度
+                option.ImageOption.Height = 40; // 验证码高度
                 option.ImageOption.BackgroundColor = SKColors.White; // 验证码背景色
 
                 option.ImageOption.BubbleCount = 2; // 气泡数量
@@ -67,5 +67,16 @@ public static class CaptchaHelper
         };
         var bytes = imageGenerator.Generate(str, option);
         return bytes;
+    }
+
+    /// <summary>
+    /// 生成Id
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public static Tuple<string, string> GenerateId(int type)
+    {
+        var guid = Guid.NewGuid().ToString();
+        return new Tuple<string, string>($"{type}_{guid}", guid);
     }
 }

@@ -19,6 +19,7 @@ public class LoginModel
     /// <summary>
     ///     验证码
     /// </summary>
+    [Required]
     public string ValidCode { get; set; }
 }
 

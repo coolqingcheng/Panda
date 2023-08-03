@@ -1,6 +1,9 @@
-﻿using Lazy.Captcha.Core;
+﻿using System.ComponentModel.DataAnnotations;
+using Lazy.Captcha.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Panda.Models;
 using Panda.Models.Data.Entitys;
 using CaptchaHelper = PandaTools.Helper.CaptchaHelper;
 
@@ -65,11 +68,10 @@ public class CommonController : BaseAdminController
     /// <param name="captcha"></param>
     /// <param name="type"></param>
     /// <returns></returns>
-    [HttpGet("/captcha")]
-    public IActionResult GetCaptcha([FromServices] ICaptcha captcha, int type)
+    [HttpGet, AllowAnonymous]
+    public IActionResult GetCaptcha([FromServices] ICaptcha captcha, [Required] ValidateCodeType type)
     {
-        var guid = Guid.NewGuid().ToString();
-        var id = $"{type}_{guid}";
+        var (id, guid) = CaptchaHelper.GenerateId((int)type);
         var info = captcha.Generate(id, 60 * 3);
         // 有多处验证码且过期时间不一样，可传第二个参数覆盖默认配置。
         //var info = _captcha.Generate(id,120);
