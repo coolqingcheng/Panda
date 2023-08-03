@@ -34,7 +34,7 @@ public class CommonController : BaseAdminController
         foreach (var formFile in files)
             if (formFile.Length > 0)
             {
-                var path = Path.Combine(host.WebRootPath, "files");
+                var path = Path.Combine(host.WebRootPath, "files", DateTime.Now.ToString("yyyyMMdd"));
 
                 if (!Directory.Exists(path)) Directory.CreateDirectory(path);
                 var fileName = $"{Guid.NewGuid():N}{Path.GetExtension(formFile.FileName)}";
