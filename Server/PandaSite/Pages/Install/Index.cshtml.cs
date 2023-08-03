@@ -28,10 +28,6 @@ public class Index : PageModel
         return Page();
     }
 
-    public async Task InstallSave()
-    {
-    }
-
 
     public async Task<IActionResult> TestConnect()
     {
