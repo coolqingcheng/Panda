@@ -21,6 +21,11 @@ const AdminRouter = createRouter({
             component: () => import("@/views/auth/Login.vue")
         },
         {
+            path: '/forget-pwd',
+            name: '忘记密码',
+            component: () => import("@/views/auth/ForgetPwd.vue")
+        },
+        {
             path: '/admin',
             name: 'admin',
             component: AdminLayout,

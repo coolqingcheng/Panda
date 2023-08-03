@@ -12,12 +12,24 @@
                 </el-form-item>
                 <el-form-item label="验证码" prop="validCode">
                     <el-input style="width: 120px;margin-right: 8px;" v-model="loginModel.validCode"></el-input>
-                    <img width="90" height="30" :src="captchaUrl+'&t='+nowTime" title="点击刷新验证码" @click="refreshValidateCode()" style="cursor: pointer;" >
+                    <img width="90" height="30" :src="captchaUrl + '&t=' + nowTime" title="点击刷新验证码"
+                        @click="refreshValidateCode()" style="cursor: pointer;">
                 </el-form-item>
                 <el-form-item>
                     <el-button native-type="submit" @click="submit()" type="primary" class="login-btn">
                         登录
                     </el-button>
+                    <el-row style="width: 100%;">
+                        <el-col :span="12">
+
+                        </el-col>
+                        <el-col :span="12" style="text-align: right;">
+                            <router-link to="/forget-pwd">
+                                <el-link>忘记密码</el-link>
+                            </router-link>
+                        </el-col>
+
+                    </el-row>
                 </el-form-item>
             </el-form>
         </div>
@@ -41,7 +53,7 @@ const captchaUrl = '/admin/common/getcaptcha?type=1';
 
 const nowTime = ref('1');
 
-const refreshValidateCode = ()=>{
+const refreshValidateCode = () => {
     nowTime.value = new Date().getTime().toString();
 }
 
