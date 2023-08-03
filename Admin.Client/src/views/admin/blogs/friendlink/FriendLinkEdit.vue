@@ -1,13 +1,11 @@
 <template>
     <ElCard>
         <template #header>
-            <div class="title-text">
-                <ElSpace>
-                    <ElButton :icon="Back" @click="() => router.back()" text>返回</ElButton> {{
-                        form.id ? "编辑" : "添加"
-                    }}友情链接
-                </ElSpace>
-            </div>
+            <ElSpace>
+                <ElButton :icon="Back" @click="() => router.back()" text></ElButton> {{
+                    form.id ? "编辑" : "添加"
+                }}友情链接
+            </ElSpace>
         </template>
         <ElForm label-width="60" :model="form" @submit.native.prevent :rules="rules" ref="formRef">
             <ElFormItem label="名称" prop="name">

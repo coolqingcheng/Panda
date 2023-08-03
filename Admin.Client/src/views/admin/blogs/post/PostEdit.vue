@@ -1,5 +1,5 @@
 <template>
-    <ElCard>
+    <ElCard v-loading="loading">
         <template #header>
             <ElButton @click="goBack()" :icon="Back" text type="info">
                 返回
@@ -9,7 +9,7 @@
             <ElFormItem label="标题" prop="title">
                 <ElInput v-model="form.title"></ElInput>
             </ElFormItem>
-            <ElFormItem :label="`摘要:${form.snippet.length}字`" prop="snippet">
+            <ElFormItem :label="`摘要:${form.snippet?.length ?? 0}字`" prop="snippet">
                 <ElInput type="textarea" v-model="form.snippet" :rows="5"></ElInput>
             </ElFormItem>
             <ElFormItem label="内容" prop="content">
@@ -38,7 +38,7 @@
             </ElFormItem>
             <ElFormItem>
                 <ElSpace>
-                    <ElButton type="primary" @click="submit()" native-type="submit" :loading="subLoading">保存</ElButton>
+                    <ElButton type="primary" @click="submit()" native-type="submit" :loading="loading">保存</ElButton>
                     <ElButton @click="() => router.back()">返回</ElButton>
                 </ElSpace>
             </ElFormItem>
@@ -59,6 +59,8 @@ import CWangEditor from '@/components/CWangEditor.vue';
 import { PostEditRequest, CateService, CateDtoModel, PostService } from '@/shared/service'
 import { ElLoading, ElMessage, FormInstance, FormRules } from 'element-plus';
 
+import { HttpService } from "@/shared/Axios.Config"
+
 
 const formEl = ref<FormInstance>();
 
@@ -73,7 +75,7 @@ const form = ref<PostEditRequest>({
     id: 0,
     title: '',
     tagsStr: '',
-    cates: [1],
+    cates: [],
     thumb: '',
     snippet: '',
     isPublish: true
@@ -99,7 +101,6 @@ const rules = reactive<FormRules>({
     }]
 })
 
-const subLoading = ref(false)
 
 const submit = () => {
     formEl.value?.validate((isvalid, fields) => {
@@ -114,7 +115,7 @@ const submit = () => {
 }
 
 const save = async () => {
-    subLoading.value = true;
+   loading.value = true
     try {
         await PostService.edit({
             body: form.value
@@ -124,7 +125,7 @@ const save = async () => {
     } catch (error) {
         ElMessage.error('保存失败');
     } finally {
-        subLoading.value = false
+        loading.value = false;
     }
 
 }
@@ -149,14 +150,31 @@ const getCateList = () => {
     })
 }
 
+const loading = ref(false)
+
 onMounted(() => {
     getCateList();
     var id = route.query.id;
     console.log('id:' + id)
     if (id) {
-        PostService.get({ id: id as any }).then(res => {
-            form.value = res;
-        })
+        loading.value = true;
+        HttpService?.get('/admin/post/get', {
+            params: {
+                id: id
+            }
+        }).then(res => {
+            let data = res.data;
+            form.value = {
+                title: data.title,
+                id: data.id,
+                content: data.content,
+                tagsStr: data.tags.map(a => a.tagName).join('|'),
+                thumb: data.thumb,
+                snippet: data.snippet,
+                isPublish: data.isPublish,
+                cates: data.cates.map(a => a.id)
+            }
+        }).finally(() => loading.value = false)
     }
 })
 

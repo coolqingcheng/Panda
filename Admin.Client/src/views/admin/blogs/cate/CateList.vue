@@ -21,8 +21,10 @@
             <ElTableColumn label="最后修改时间" width="180" prop="lastUpdateTime"></ElTableColumn>
             <ElTableColumn label="操作" width="120">
                 <template #default="scope">
-                    <ElButton type="primary" link @click="EditCate(scope.row)">编辑</ElButton>
-                    <ElButton type="danger" link>删除</ElButton>
+                    <ElSpace>
+                        <ElLink type="primary" @click="EditCate(scope.row)">编辑</ElLink>
+                        <ElLink type="danger" @click="del(scope.row.id)">删除</ElLink>
+                    </ElSpace>
                 </template>
             </ElTableColumn>
         </ElTable>
@@ -35,10 +37,11 @@ import { useRouter } from 'vue-router';
 
 import { CateService, CateDtoModel } from '@/shared/service'
 import { onMounted, reactive, ref, watch } from 'vue';
-import { ElCard, ElButton, ElTable, ElTableColumn } from 'element-plus';
+import { ElCard, ElButton, ElTable, ElTableColumn, ElMessageBox, ElMessage } from 'element-plus';
 
 import { Plus, Refresh } from '@element-plus/icons-vue';
-import {table,pagination} from '@/shared/ElConfig'
+import { table, pagination } from '@/shared/ElConfig'
+import { HttpService } from '@/shared/Axios.Config';
 
 const router = useRouter();
 
@@ -56,6 +59,19 @@ const EditCate = (item: CateDtoModel | null) => {
             name: '编辑分类'
         })
     }
+}
+const del = (id) => {
+    ElMessageBox.confirm('确定删除吗?', '提示')
+        .then(() => {
+            HttpService.delete('/admin/cate/delete', {
+                params: {
+                    id
+                }
+            }).then(_ => {
+                ElMessage.success('删除成功')
+                getList();
+            })
+        })
 }
 
 var loading = ref(false)

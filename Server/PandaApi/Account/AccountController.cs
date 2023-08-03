@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Panda.Models.Dtos.Account;
 using Panda.Services.Sys;
-using PandaApi.Events;
 
 namespace PandaApi.Account;
 
@@ -35,20 +34,7 @@ public class AccountController : BaseAdminController
         return new JsonResult(res);
     }
 
-    /// <summary>
-    ///     测试event
-    /// </summary>
-    [HttpGet]
-    [AllowAnonymous]
-    public async Task<string?> Test([FromServices] IHttpContextAccessor httpContext)
-    {
-        var res = await _mediator.Send(new TestModel
-        {
-            Time = DateTime.Now
-        });
-        Console.WriteLine("结果:" + res);
-        return httpContext.HttpContext?.TraceIdentifier;
-    }
+
 
     /// <summary>
     ///     账户列表

@@ -26,7 +26,9 @@ public class PostDetailModel
 
     public string Content { get; set; }
 
+    public string Thumb { get; set; }
 
+    public string Snippet { get; set; }
     public List<PostTagModel> Tags { get; set; }
 
 
@@ -37,4 +39,6 @@ public class PostDetailModel
     public DateTime UpdateTime { get; set; }
 
     public int ReadCount { get; set; }
+
+    public bool IsPublish { get; set; }
 }

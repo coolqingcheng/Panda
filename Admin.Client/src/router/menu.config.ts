@@ -12,7 +12,7 @@ const memuList = [
             },
             {
                 title: "分类",
-                routeName:'博客分类'
+                routeName:'文章分类'
             },
             {
                 title: "标签"

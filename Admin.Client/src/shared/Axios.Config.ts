@@ -1,20 +1,13 @@
 import { serviceOptions } from '@/shared/service'
-import axios, { AxiosError, AxiosResponse } from 'axios'
+import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios'
 import { AdminRouter } from "../router/AdminRouter"
 import { ElMessage } from "element-plus"
 import { useRouter } from 'vue-router'
 
 
 const axiosConfig = () => {
-    serviceOptions.axios = axios.create({
-        timeout: 1000 * 10,
-        headers: {
-            "client-lib": "axios"
-        }
-    })
 
-
-    serviceOptions.axios.interceptors.response.use(
+    http.interceptors.response.use(
         (res: AxiosResponse) => {
             return res;
         }, (err: AxiosError) => {
@@ -47,8 +40,17 @@ const axiosConfig = () => {
             }
             return Promise.reject(err)
         })
+    serviceOptions.axios = http;
 }
 
+const http: AxiosInstance = axios.create({
+    timeout: 1000 * 10,
+    headers: {
+        "client-lib": "axios"
+    }
+})
+
 export {
-    axiosConfig
+    axiosConfig,
+    http as HttpService
 }

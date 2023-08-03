@@ -15,11 +15,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:PandaApi.Account.AccountController.Test(Microsoft.AspNetCore.Http.IHttpContextAccessor)">
-            <summary>
-                测试event
-            </summary>
-        </member>
         <member name="M:PandaApi.Account.AccountController.GetList(Panda.Models.Dtos.Account.AccountListRequest)">
             <summary>
                 账户列表

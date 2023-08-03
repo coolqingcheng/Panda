@@ -19,6 +19,8 @@ public class PostRepository : BaseRepository<Posts>
                 Id = a.Id,
                 Title = a.Title,
                 Content = a.Content,
+                Thumb = a.Thumb,
+                Snippet = a.Snippet,
                 Cates = a.CateRelations.Select(b => new PostCateModel
                         { Id = b.PostCate.Id, CateName = b.PostCate.CateName })
                     .ToList(),
@@ -29,7 +31,8 @@ public class PostRepository : BaseRepository<Posts>
                 }).ToList(),
                 CreateTime = a.CreateTime,
                 UpdateTime = a.UpdateTime,
-                ReadCount = a.ReadCount
+                ReadCount = a.ReadCount,
+                IsPublish = a.IsPublish
             }).FirstOrDefaultAsync();
         return item;
     }

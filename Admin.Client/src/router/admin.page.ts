@@ -103,10 +103,7 @@ const routeList: RouteRecordRaw[] = [
         children: [
             {
                 path: "",
-                name: "博客分类",
-                meta: {
-                    groupName: '博客',
-                },
+                name: "文章分类",
                 component: () => import("@/views/admin/blogs/cate/CateList.vue"),
             },
             {
