@@ -16,8 +16,6 @@ router.beforeEach(guard => {
 router.afterEach((to, from) => {
   NProgress.done()
 })
-
-
 </script>
 
 <template>
@@ -30,19 +28,17 @@ router.afterEach((to, from) => {
 
 html,
 body {
-  height: 100%;
+  height: 100% !important;
   box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
-
 #app {
   padding: 0;
   width: 100%;
   height: 100%;
   margin: 0 auto;
 }
-
 .el-pagination {
   margin-top: 20px;
 }

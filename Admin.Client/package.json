@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc && vite build --base=/admin/",
+    "build": "vue-tsc && vite build --base=/admin/ --emptyOutDir",
     "preview": "vite preview",
     "swagger": "node ./swagger.js",
     "build-all": "node ./build.js"

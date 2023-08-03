@@ -32,5 +32,8 @@ export default defineConfig({
         changeOrigin: true
       }
     }
+  },
+  build:{
+    outDir:'../Server/PandaSite/wwwroot/admin'
   }
 })

@@ -40,7 +40,9 @@ const useTabsViewStore = defineStore('useTabsViewStore', {
             var item = this.tableList[index]
             if (item.componentName) {
                 if (this.exCludeList.findIndex(a => a == item.componentName) == -1) {
-                    this.exCludeList.push(item.componentName);
+                   if(item.componentName){
+                    this.exCludeList.push(item.componentName?.toString());
+                   }
                 }
             }
             // 获取下一个
@@ -79,6 +81,6 @@ export interface TabRoute {
     fullPath: string,
     isFix: boolean,
     title: string
-    componentName?: string
+    componentName?: string | unknown
 }
 

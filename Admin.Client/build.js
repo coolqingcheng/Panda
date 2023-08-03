@@ -23,7 +23,7 @@ const run = async () => {
         console.log(stdout, stderr)
         //删除wwwroot/admin下的所有文件
 
-        const serverPath = path.resolve(rootPath, 'Server', 'QingCheng.Site')
+        const serverPath = path.resolve(rootPath, 'Server', 'PandaSite')
         const wwwroot_admin = path.resolve(serverPath, 'wwwroot', 'admin')
         console.log('服务器文件夹:', serverPath)
         console.log('wwwroot/admin路径:', wwwroot_admin)
