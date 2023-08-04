@@ -24,7 +24,7 @@ jobs:
         node-version: '18.14.2'
     - name: 安装依赖
       working-directory: Admin.Client
-      run: node -v && npm install –legacy-peer-deps && npm run build
+      run: npm install -g yarn && yarn && yarn build
     
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
