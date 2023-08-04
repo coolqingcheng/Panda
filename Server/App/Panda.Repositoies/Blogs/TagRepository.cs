@@ -1,6 +1,6 @@
 ﻿namespace Panda.Repositoies.Blogs;
 
-public class TagRepository : BaseRepository<PostTags>
+public class TagRepository : BaseRepository<PostTags, int>
 {
     public TagRepository(DbContext dbContext) : base(dbContext)
     {

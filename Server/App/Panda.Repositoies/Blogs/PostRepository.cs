@@ -3,7 +3,7 @@ using PandaTools.Helper;
 
 namespace Panda.Repositoies.Blogs;
 
-public class PostRepository : BaseRepository<Posts>
+public class PostRepository : BaseRepository<Posts,int>
 {
     public PostRepository(DbContext dbContext) : base(dbContext)
     {

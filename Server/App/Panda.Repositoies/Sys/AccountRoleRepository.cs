@@ -1,6 +1,6 @@
 ﻿namespace Panda.Repositoies.Sys;
 
-public class AccountRoleRepository : BaseRepository<AccountRoles>
+public class AccountRoleRepository : BaseRepository<AccountRoles,Guid>
 {
     public AccountRoleRepository(DbContext dbContext) : base(dbContext)
     {

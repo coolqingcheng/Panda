@@ -1,6 +1,6 @@
 ﻿namespace Panda.Repositoies.Blogs;
 
-public class PostVisitRecordRepository : BaseRepository<PostVisitRecord>
+public class PostVisitRecordRepository : BaseRepository<PostVisitRecord,int>
 {
     public PostVisitRecordRepository(DbContext dbContext) : base(dbContext)
     {

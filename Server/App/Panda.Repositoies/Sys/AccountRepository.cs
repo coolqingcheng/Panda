@@ -2,7 +2,7 @@
 
 namespace Panda.Repositoies.Sys;
 
-public class AccountRepository : BaseRepository<Accounts>
+public class AccountRepository : BaseRepository<Accounts,Guid>
 {
     public AccountRepository(DbContext dbContext) : base(dbContext)
     {

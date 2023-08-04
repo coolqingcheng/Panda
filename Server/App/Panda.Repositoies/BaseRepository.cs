@@ -1,8 +1,10 @@
 ﻿using System.Linq.Expressions;
+using PandaTools.Helper;
 
 namespace Panda.Repositoies;
 
-public class BaseRepository<T> where T : class, new()
+public class BaseRepository<T, TId> where T : BaseTableModel<TId>, new()
+    where TId : struct
 {
     protected readonly DbContext DbContext;
 
@@ -52,8 +54,11 @@ public class BaseRepository<T> where T : class, new()
         return entity;
     }
 
-    public async Task<List<T>> FindListAsync(Expression<Func<T, bool>> expression)
+    public async Task<PageDto<T>> GetListAsync(Expression<Func<T, bool>> expression, int index, int size)
     {
-        return await DbContext.Set<T>().Where(expression).ToListAsync();
+        var query = DbContext.Set<T>().Where(expression);
+        var list = await query.Page(index, size).OrderByDescending(a => a.Id).ToListAsync();
+        var count = await query.CountAsync();
+        return new PageDto<T>(count, list);
     }
 }

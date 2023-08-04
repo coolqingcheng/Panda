@@ -1,6 +1,6 @@
 ﻿namespace Panda.Repositoies.Blogs;
 
-public class PostCatesRepository : BaseRepository<PostCates>
+public class PostCatesRepository : BaseRepository<PostCates,int>
 {
     public PostCatesRepository(DbContext dbContext) : base(dbContext)
     {

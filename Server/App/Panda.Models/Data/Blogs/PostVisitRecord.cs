@@ -1,9 +1,7 @@
 ﻿namespace Panda.Models.Data.Blogs;
 
-public class PostVisitRecord : BaseTimeTable
+public class PostVisitRecord : BaseTableModel<int>
 {
-    public int Id { get; set; }
-
     public int PostId { get; set; }
 
     public Posts Post { get; set; }
