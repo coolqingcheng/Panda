@@ -1,4 +1,5 @@
-﻿using Panda.Models.Data.Blogs;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Panda.Models.Data.Blogs;
 using Panda.Models.Data.ModelConfigs;
 using PandaTools.Auth;
 
@@ -8,6 +9,33 @@ public class PandaDbContext : AuthDbContext<Accounts>
 {
     public PandaDbContext(DbContextOptions<PandaDbContext> options) : base(options)
     {
+        StartChangeListen();
+    }
+
+    private void StartChangeListen()
+    {
+        ChangeTracker.StateChanged += UpdateTimestamps;
+        ChangeTracker.Tracked += UpdateTimestamps;
+    }
+
+    static void UpdateTimestamps(object? sender, EntityEntryEventArgs e)
+    {
+        if (e.Entry.Entity is not BaseTimeTable model) return;
+        switch (e.Entry.State)
+        {
+            case EntityState.Detached:
+                break;
+            case EntityState.Unchanged:
+                break;
+            case EntityState.Deleted:
+                break;
+            case EntityState.Modified:
+                model.UpdateTime = DateTime.Now;
+                break;
+            case EntityState.Added:
+                model.CreateTime = DateTime.Now;
+                break;
+        }
     }
 
     public DbSet<Posts> Posts { get; set; }
