@@ -13,6 +13,8 @@ import { AdminRouter } from '@/router/AdminRouter'
 
 import { axiosConfig } from "@/shared/Axios.Config"
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import zhCn from "element-plus/es/locale/lang/zh-cn";
+
 
 
 axiosConfig()
@@ -25,6 +27,8 @@ const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 app.use(pinia)
 app.use(AdminRouter)
-app.use(ElementPlus)
+app.use(ElementPlus, {
+    locale: zhCn
+})
 app.mount('#app')
 

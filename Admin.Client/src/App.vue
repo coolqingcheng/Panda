@@ -4,8 +4,7 @@ import { useRouter } from 'vue-router'
 import 'nprogress/nprogress.css'
 
 import NProgress from 'nprogress'
-
-import zhCn from 'element-plus/lib/locale/lang/zh-cn'
+import zhCn from "element-plus/es/locale/lang/zh-cn";
 
 const router = useRouter();
 
