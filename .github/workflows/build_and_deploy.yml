@@ -34,7 +34,7 @@ jobs:
       working-directory: Server/PandaSite
       run: dotnet restore
     - name: Build
-      run: dotnet publish -o ./publish
+      run: echo pwd && dotnet publish -o ./publish
     - name: 打印目录
       run: tree ./publish
     
