@@ -24,6 +24,7 @@ export function useSlideMenu() {
 
         }
         let url = router.getRoutes().filter(a => a.name == item.routeName).map(a => a.path)[0]
+        
         return url;
     }
 

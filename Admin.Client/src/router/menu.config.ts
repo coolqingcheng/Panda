@@ -12,7 +12,7 @@ const memuList = [
             },
             {
                 title: "分类",
-                routeName:'文章分类'
+                routeName: '文章分类'
             },
             {
                 title: "标签"
@@ -23,12 +23,12 @@ const memuList = [
         ]
     },
     {
-        title:'系统',
-        icon:'setting',
-        children:[
+        title: '系统',
+        icon: 'setting',
+        children: [
             {
-                title:'设置',
-                routeName:'系统设置'
+                title: '设置',
+                routeName: '系统设置'
             }
         ]
     }
