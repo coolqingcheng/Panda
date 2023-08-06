@@ -1,11 +1,8 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import AdminLayout from '@/views/admin/AdminLayout.vue'
 
-import { routeList } from './Admin.page'
+import { routeList } from './Admin.Page'
 
-// import Empty from '../components/Empty.vue'
-
-// import Page404 from "@/views/common/V404.vue"
 
 
 const AdminRouter = createRouter({
