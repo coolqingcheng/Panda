@@ -1,5 +1,5 @@
 
-import { memuList } from "@/router/Menu.Config";
+import { memuList } from "@/router/MenuConfig";
 import { onMounted, reactive } from "vue";
 import { useRouter } from "vue-router"
 
