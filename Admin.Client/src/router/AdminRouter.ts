@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import AdminLayout from '@/views/admin/AdminLayout.vue'
 
-import { routeList } from './admin.page'
+import { routeList } from './Admin.page'
 
 // import Empty from '../components/Empty.vue'
 
