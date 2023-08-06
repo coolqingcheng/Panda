@@ -22,7 +22,7 @@ jobs:
     - uses: actions/setup-node@v2
       with:
         node-version: '18.14.2'
-    - name: 安装依赖
+    - name: 打包Vue文件
       working-directory: Admin.Client
       run: npm install -g yarn && yarn && yarn build
     
@@ -30,11 +30,11 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 7.0.x
-    - name: Restore dependencies
+    - name: 打包asp.net文件
       working-directory: Server/PandaSite
       run: dotnet restore
     - name: Build
-      run: echo pwd && dotnet publish -o ./publish
+      run: echo $(pwd) && dotnet publish -o ./publish
     - name: 打印目录
       run: tree ./publish
     
