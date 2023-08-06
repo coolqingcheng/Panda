@@ -37,6 +37,7 @@ jobs:
       working-directory: Server/PandaSite
       run: echo $(pwd) && dotnet publish -o ./publish
     - name: 打印目录
+      working-directory: Server/PandaSite
       run: tree ./publish
     
     
