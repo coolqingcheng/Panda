@@ -2,5 +2,7 @@ SiteApp.Run(args,
     (services, config) =>
     {
         services.AddMyCaptcha(config);
-        services.AddEFMySql<PandaDbContext>(config.GetConnectionString("mysql")!);
+        var connString = config.GetConnectionString("mysql");
+        Console.WriteLine("读取Mysql连接:" + connString);
+        services.AddEFMySql<PandaDbContext>(connString!);
     });

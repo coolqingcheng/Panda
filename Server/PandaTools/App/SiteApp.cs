@@ -38,6 +38,7 @@ public class SiteApp
 
 
             // Configure the HTTP request pipeline.
+            Console.WriteLine("当前环境:"+app.Environment.EnvironmentName);
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -45,10 +46,10 @@ public class SiteApp
             }
             else
             {
-                var option = new RewriteOptions();
-                option.AddRedirectToNonWwwPermanent();
-                option.AddRedirectToHttps();
-                app.UseRewriter(option);
+                // var option = new RewriteOptions();
+                // option.AddRedirectToNonWwwPermanent();
+                // option.AddRedirectToHttps();
+                // app.UseRewriter(option);
             }
 
             app.UseStaticFiles();
