@@ -6,6 +6,8 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <UserSecretsId>ab1145a6-7357-423d-93c8-00465ab3c945</UserSecretsId>
         <NoWarn>CS1591,8618</NoWarn>
+		<ServerGarbageCollection>false</ServerGarbageCollection>
+		
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Web' " />
