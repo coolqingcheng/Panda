@@ -17,7 +17,7 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: 打包vue后台文件
-    - uses: actions/setup-node@v2
+    - uses: actions/setup-node@v3
       with:
         node-version: '18.14.2'
     - name: 安装依赖
