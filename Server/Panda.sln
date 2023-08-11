@@ -9,13 +9,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PandaTools", "PandaTools\Pa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{15BBEF1D-0A37-4B59-9EA2-4E33111437B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Repositoies", "App\Panda.Repositoies\Panda.Repositoies.csproj", "{C8DCAAE0-E9AB-4B4C-B012-6B9679EDCD34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Repositoies", "App\Panda.Repositoies\Panda.Repositoies.csproj", "{C8DCAAE0-E9AB-4B4C-B012-6B9679EDCD34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Services", "App\Panda.Services\Panda.Services.csproj", "{19AD788C-5822-44F7-91C9-84A1FB05392B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Services", "App\Panda.Services\Panda.Services.csproj", "{19AD788C-5822-44F7-91C9-84A1FB05392B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Models", "App\Panda.Models\Panda.Models.csproj", "{AB5CC139-14B5-49E5-81A1-DE11E3FC63D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Models", "App\Panda.Models\Panda.Models.csproj", "{AB5CC139-14B5-49E5-81A1-DE11E3FC63D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PandaApi", "PandaApi\PandaApi.csproj", "{1DC55CD1-6A72-4FB0-981E-BF60CAF93C63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PandaApi", "PandaApi\PandaApi.csproj", "{1DC55CD1-6A72-4FB0-981E-BF60CAF93C63}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VueApp", "..\VueApp\VueApp.esproj", "{DA758FBD-3199-4D65-979A-7A814F348168}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,16 +49,20 @@ Global
 		{1DC55CD1-6A72-4FB0-981E-BF60CAF93C63}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DC55CD1-6A72-4FB0-981E-BF60CAF93C63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DC55CD1-6A72-4FB0-981E-BF60CAF93C63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA758FBD-3199-4D65-979A-7A814F348168}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA758FBD-3199-4D65-979A-7A814F348168}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA758FBD-3199-4D65-979A-7A814F348168}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA758FBD-3199-4D65-979A-7A814F348168}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {DD05E3AF-6F47-4C01-BDC2-D163D343C7D9}
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C8DCAAE0-E9AB-4B4C-B012-6B9679EDCD34} = {15BBEF1D-0A37-4B59-9EA2-4E33111437B2}
 		{19AD788C-5822-44F7-91C9-84A1FB05392B} = {15BBEF1D-0A37-4B59-9EA2-4E33111437B2}
 		{AB5CC139-14B5-49E5-81A1-DE11E3FC63D2} = {15BBEF1D-0A37-4B59-9EA2-4E33111437B2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DD05E3AF-6F47-4C01-BDC2-D163D343C7D9}
 	EndGlobalSection
 EndGlobal
