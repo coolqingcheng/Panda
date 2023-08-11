@@ -41,4 +41,8 @@
         <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.5.0" />
         <PackageReference Include="Tencent.QCloud.Cos.Sdk" Version="5.4.34" />
     </ItemGroup>
+    <ItemGroup>
+      <None Remove="Fonts\LXGWWenKaiMono-Bold.ttf" />
+      <EmbeddedResource Include="Fonts\LXGWWenKaiMono-Bold.ttf" />
+    </ItemGroup>
 </Project>

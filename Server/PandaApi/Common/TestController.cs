@@ -6,13 +6,14 @@ namespace PandaApi.Common;
 public class TestController : Controller
 {
     [HttpGet("/TestWaterTag")]
-    public async Task<IActionResult> TestWaterTag([FromServices] IWebHostEnvironment environment)
+    public async Task<IActionResult> TestWaterTag([FromServices] IWebHostEnvironment environment,
+        string name = "iwscl.com")
     {
         var filePath = Path.Combine(environment.WebRootPath, "img", "test.jpg");
         await using var fs = System.IO.File.Open(filePath, FileMode.Open);
-        var ms = new MemoryStream();
+        using var ms = new MemoryStream();
         await fs.CopyToAsync(ms);
-        var img = ImageHelper.WriteWaterTag(ms.ToArray(), "青城的博客", 80);
+        var img = ImageHelper.WriteWaterTag(ms.ToArray(), name, 80);
         var ms2 = new MemoryStream(img);
         return File(ms2, "image/jpg");
     }
