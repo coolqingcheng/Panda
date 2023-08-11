@@ -36,7 +36,7 @@ public class Index : PageModel
             await using var conn = new MySqlConnection(SiteInitModel.DbConnectString);
             await conn.OpenAsync();
         }
-        catch (Exception e)
+        catch (Exception)
         {
             IsConnect = false;
         }

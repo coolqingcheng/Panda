@@ -37,46 +37,59 @@ public class ImageHelper
         using var writeStream = File.OpenWrite(target);
         image.Encode(SKEncodedImageFormat.Jpeg, quality).SaveTo(writeStream);
     }
-    
+
     /// <summary>
-    /// 绘制水印
+    /// 图片文字水印
     /// </summary>
-    /// <param name="imageBytes">图片</param>
-    /// <param name="watermarkText">水印文字</param>
+    /// <param name="bytes"></param>
+    /// <param name="text"></param>
+    /// <param name="fontSize"></param>
     /// <returns></returns>
-    public static byte[] AddWatermarkToImage(byte[] imageBytes, string watermarkText)
+    public static byte[] WriteWaterTag(byte[] bytes, string text, int fontSize)
     {
-        using MemoryStream imageStream = new MemoryStream(imageBytes);
-        using SKBitmap originalBitmap = SKBitmap.Decode(imageStream);
-         SKImageInfo info = originalBitmap.Info; // Remove "using" here
+        using var ms = new MemoryStream(bytes);
 
-        using SKSurface surface = SKSurface.Create(info);
-        SKCanvas canvas = surface.Canvas;
+        using var bitmap = SKBitmap.Decode(ms);
+        var info = bitmap.Info;
 
-        // Draw the original image
-        canvas.DrawBitmap(originalBitmap, new SKRect(0, 0, info.Width, info.Height));
+        using var surface = SKSurface.Create(info);
 
-        // Create a SKPaint object for the watermark text
-        SKPaint textPaint = new SKPaint
-        {
-            Color = SKColors.White,
-            TextSize = 40,
-            TextAlign = SKTextAlign.Center,
-            Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyle.Normal)
-        };
+        var canvas = surface.Canvas;
 
+        canvas.DrawBitmap(bitmap, new SKRect(0, 0, info.Width, info.Height));
+
+        using var textPaint = new SKPaint();
+        textPaint.Color = new SKColor(255, 255, 255, 180);
+        textPaint.TextSize = fontSize;
+        textPaint.TextAlign = SKTextAlign.Center;
+        textPaint.Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyle.Normal);
+        var textWidth = textPaint.GetGlyphWidths(text).Sum();
+
+        SKFontMetrics fontMetrics = textPaint.FontMetrics;
+        float textHeight = fontMetrics.CapHeight; //fontMetrics.Bottom - fontMetrics.Top;
+
+        using var rectPaint = new SKPaint();
+        rectPaint.Color = new SKColor(0, 0, 0, 100);
+
+        //计算水印背景色的宽高和位置
+        var bgW = textWidth += textWidth / 3;
+        var bgH = textHeight += textHeight;
+        var bgX = info.Width - bgW - 20;
+        var bgY = info.Height - bgH - 20;
+
+        canvas.DrawRect(bgX, bgY, bgW, bgH, rectPaint);
+
+        //根据背景色的位置，计算文字的位置s
+        var textX = bgX + textWidth / 2;
+
+        var textY = bgY + textHeight / 4 * 3;
         // Draw the watermark text
-        canvas.DrawText(watermarkText, info.Width / 2, info.Height - 50, textPaint);
+        canvas.DrawText(text, textX, textY, textPaint);
 
-        // Convert the SKSurface to a byte array
-                   
-        // Convert the SKSurface to SKImage
-        SKImage image = surface.Snapshot();
 
-        // Convert the SKImage to SKData (encoded image)
-        using SKData encodedData = image.Encode();
-        // Convert SKData to byte array
-        byte[] encodedBytes = encodedData.ToArray();
-        return encodedBytes;
+        using var data = surface.Snapshot().Encode(SKEncodedImageFormat.Jpeg, 80);
+
+        var dataBytes = data.ToArray();
+        return dataBytes;
     }
 }
