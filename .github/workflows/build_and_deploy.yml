@@ -23,7 +23,7 @@ jobs:
       with:
         node-version: '18.14.2'
     - name: 打包Vue文件
-      working-directory: Admin.Client
+      working-directory: VueApp
       run: npm install -g yarn && yarn && yarn build
     
     - name: Setup .NET
