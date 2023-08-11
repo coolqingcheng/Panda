@@ -62,7 +62,8 @@ public class ImageHelper
         textPaint.Color = new SKColor(255, 255, 255, 180);
         textPaint.TextSize = fontSize;
         textPaint.TextAlign = SKTextAlign.Center;
-        textPaint.Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyle.Normal);
+        textPaint.Typeface =  SKTypeface.FromFamilyName("微软雅黑");
+        textPaint.IsAntialias = true;
         var textWidth = textPaint.GetGlyphWidths(text).Sum();
 
         SKFontMetrics fontMetrics = textPaint.FontMetrics;

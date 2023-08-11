@@ -40,9 +40,10 @@ public class CommonController : BaseAdminController
                 var fileName = $"{Guid.NewGuid():N}{Path.GetExtension(formFile.FileName)}";
                 path = Path.Combine(path, fileName);
                 var filePath = path;
-
-                using var stream = System.IO.File.Create(filePath);
-                await formFile.CopyToAsync(stream);
+                using var ms = new MemoryStream();
+                await using var stream = System.IO.File.Create(filePath);
+                await formFile.CopyToAsync(ms);
+                ImageHelper.WriteWaterTag(ms.ToArray(), "iwscl.com", 10);
                 var c = Path.VolumeSeparatorChar;
                 var file =
                     $"/{Path.Combine("files", fileName).Replace(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)}";
