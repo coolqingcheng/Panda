@@ -39,17 +39,21 @@ public class AccountLoginRecordRepository : BaseRepository<AccountLoginRecord, i
         await Ctx.SaveChangesAsync();
     }
 
-    public async Task<PageDto<AccountLoginRecordDto>> GetLoginRecord(BasePageModel model)
+    public async Task<PageDto<AccountLoginRecordDto>> GetLoginRecord(BasePageModel model, Guid? accountId)
     {
         var count = await Ctx.Set<AccountLoginRecord>().CountAsync();
-        var res = await Ctx.Set<AccountLoginRecord>().Include(a => a.Account).Page(model.Index, model.PageSize).Select(
-            a => new AccountLoginRecordDto
-            {
-                AccountName = a.Account.UserName,
-                CreateTime = a.CreateTime,
-                Ip = a.Ip,
-                UserAgent = a.UA
-            }).ToListAsync();
+        var res = await Ctx.Set<AccountLoginRecord>()
+            .WhereIf(accountId != null, a => a.Account.Id == accountId)
+            .Include(a => a.Account)
+            .OrderByDescending(a => a.CreateTime)
+            .Page(model.Index, model.PageSize).Select(
+                a => new AccountLoginRecordDto
+                {
+                    AccountName = a.Account.UserName,
+                    CreateTime = a.CreateTime,
+                    Ip = a.Ip,
+                    UserAgent = a.UA
+                }).ToListAsync();
         return new PageDto<AccountLoginRecordDto>(count, res);
     }
 }

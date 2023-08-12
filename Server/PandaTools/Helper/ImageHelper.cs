@@ -14,7 +14,7 @@ public class ImageHelper
             var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var path = Path.Combine(dir!, "Fonts",
                 "LXGWWenKaiMono-Bold.ttf");
-            var ms = new MemoryStream(File.ReadAllBytes(path));
+            using var ms = new MemoryStream(File.ReadAllBytes(path));
             _embeddedTypeface = SKTypeface.FromStream(ms);
         }
     }

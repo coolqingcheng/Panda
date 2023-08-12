@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Panda.Models.Dtos.Account;
 using Panda.Services.Account;
 using Panda.Services.Sys;
+using PandaTools.Auth;
 
 namespace PandaApi.Account;
 
@@ -82,8 +83,9 @@ public class AccountController : BaseAdminController
     /// <param name="model"></param>
     /// <returns></returns>
     [HttpGet]
-    public Task<PageDto<AccountLoginRecordDto>> GetLoginRecord([FromQuery]BasePageModel model)
+    public Task<PageDto<AccountLoginRecordDto>> GetLoginRecord([FromQuery] BasePageModel model)
     {
-        return _service.GetLoginRecord(model);
+        var userId = HttpContext.CurrUserId();
+        return _service.GetLoginRecord(model, userId);
     }
 }

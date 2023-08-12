@@ -182,9 +182,9 @@ public class AccountService
     }
 
 
-    public async Task<PageDto<AccountLoginRecordDto>> GetLoginRecord(BasePageModel model)
+    public async Task<PageDto<AccountLoginRecordDto>> GetLoginRecord(BasePageModel model,Guid? accountId = null)
     {
-        var res = await _loginRecordRepository.GetLoginRecord(model);
+        var res = await _loginRecordRepository.GetLoginRecord(model,accountId);
         return res;
     }
 }
