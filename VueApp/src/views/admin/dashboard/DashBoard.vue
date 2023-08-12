@@ -45,18 +45,7 @@
     </el-row>
     <el-row :gutter="8">
         <el-col :="{ lg: 12, xl: 12 }">
-            <el-card>
-                <template #header>
-                    最近登录
-                </template>
-                <simple-table url="/admin/account/getlist">
-                    <!-- <el-table-column prop="id" label="Id" width="180"></el-table-column> -->
-                    <el-table-column prop="userName" label="用户名" width="180"></el-table-column>
-                    <el-table-column prop="" label="访问时间" width="180"></el-table-column>
-                    <el-table-column prop="" label="访问Ip"></el-table-column>
-                    <el-table-column prop="" label="访问位置" width="180"></el-table-column>
-                </simple-table>
-            </el-card>
+           <VisitLog></VisitLog>
         </el-col>
     </el-row>
 </template>
@@ -67,7 +56,8 @@ import { onMounted, ref } from 'vue'
 
 import { useVSetting } from "@/store/VSetting"
 import { useRoute, useRouter } from 'vue-router';
-import SimpleTable from '@/components/SimpleTable.vue';
+
+import VisitLog from './VisitLog.vue';
 
 const cardGrid = { xs: 24, sm: 12, md: 8, lg: 6, xl: 4 }
 

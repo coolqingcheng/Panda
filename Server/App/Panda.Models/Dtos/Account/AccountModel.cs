@@ -1,4 +1,8 @@
-﻿namespace Panda.Models.Dtos.Account;
+﻿using MaxMind.GeoIP2.Responses;
+using PandaTools.Helper;
+using UAParser;
+
+namespace Panda.Models.Dtos.Account;
 
 internal class AccountModel
 {
@@ -27,4 +31,50 @@ public class AccountItemDto
     public DateTime LockedTime { get; set; }
 
     public bool IsLocked => LockedTime > DateTime.Now;
+}
+
+public class AccountLoginRecordDto
+{
+    public string AccountName { get; set; }
+
+    public string Ip { get; set; }
+
+    public string IpCity
+    {
+        get
+        {
+            var response = IpHelper.City(Ip);
+            if (response == null)
+            {
+                return Ip;
+            }
+
+           
+            var str =  $"{response.Continent.Names["zh-CN"]}/{response.Country.Names["zh-CN"]}/{response.City.Names["zh-CN"]}";
+            var asn = IpHelper.ASN(Ip);
+
+            if (asn!=null)
+            {
+                str += $"[{asn.AutonomousSystemOrganization}]";
+            }
+
+            return str;
+        }
+    }
+
+    public string UserAgent { get; set; }
+
+    /// <summary>
+    /// 浏览器和操作系统
+    /// </summary>
+    public string BrowserOs
+    {
+        get
+        {
+            var client = Parser.GetDefault().Parse(UserAgent);
+            return $"{client.OS}-{client.UA.ToString()}";
+        }
+    }
+
+    public DateTime CreateTime { get; set; }
 }

@@ -11,7 +11,7 @@ public class PostRepository : BaseRepository<Posts,int>
 
     public async Task<PostDetailModel?> GetById(int Id)
     {
-        var item = await DbContext.Set<Posts>().AsNoTracking()
+        var item = await Ctx.Set<Posts>().AsNoTracking()
             .Include(a => a.CateRelations)
             .Include(a => a.TagRelations)
             .Where(a => a.Id == Id).Select(a => new PostDetailModel
@@ -39,7 +39,7 @@ public class PostRepository : BaseRepository<Posts,int>
 
     public async Task<PageDto<PostItemModel>> GetHomeList(PostRequestModel request)
     {
-        var query = DbContext.Set<Posts>().AsQueryable();
+        var query = Ctx.Set<Posts>().AsQueryable();
 
         var count = await query.CountAsync();
         var list = await query
@@ -79,7 +79,7 @@ public class PostRepository : BaseRepository<Posts,int>
 
     public async Task<PostEditRequest> Get(int Id)
     {
-        var item = await DbContext.Set<Posts>().Include(a => a.CateRelations).Where(a => a.Id == Id).Select(a =>
+        var item = await Ctx.Set<Posts>().Include(a => a.CateRelations).Where(a => a.Id == Id).Select(a =>
             new PostEditRequest
             {
                 Id = a.Id,
@@ -116,7 +116,7 @@ public class PostRepository : BaseRepository<Posts,int>
     /// <returns></returns>
     public async Task Top(int Id)
     {
-        var item = await DbContext.Set<Posts>().FirstOrDefaultAsync(a => a.Id == Id);
+        var item = await Ctx.Set<Posts>().FirstOrDefaultAsync(a => a.Id == Id);
         if (item != null)
         {
             item.IsTop = !item.IsTop;

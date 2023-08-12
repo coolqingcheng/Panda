@@ -16,8 +16,8 @@ public class PostVisitRecordRepository : BaseRepository<PostVisitRecord,int>
             UId = uid ?? ""
         });
 
-        var record = await DbContext.Set<PostVisitRecord>().Where(a => a.UId == uid).FirstOrDefaultAsync();
+        var record = await Ctx.Set<PostVisitRecord>().Where(a => a.UId == uid).FirstOrDefaultAsync();
         if (record == null) post!.ReadCount += 1;
-        await DbContext.SaveChangesAsync();
+        await Ctx.SaveChangesAsync();
     }
 }

@@ -2,6 +2,7 @@
 using Panda.Models.Dtos.Account;
 using Panda.Models.Dtos.Auth;
 using Panda.Repositoies.Sys;
+using PandaTools.App;
 using PandaTools.Helper;
 
 namespace Panda.Services.Account;
@@ -14,14 +15,18 @@ public class AccountService
 
     private readonly ILogger _logger;
 
+    private AccountLoginRecordRepository _loginRecordRepository;
 
+    private readonly IApp _app;
 
     public AccountService(ILogger<AccountService> logger, AccountRepository accountRepository,
-        AccountRoleRepository accountRoleRepository)
+        AccountRoleRepository accountRoleRepository, AccountLoginRecordRepository loginRecordRepository, IApp app)
     {
         _logger = logger;
         _accountRepository = accountRepository;
         _accountRoleRepository = accountRoleRepository;
+        _loginRecordRepository = loginRecordRepository;
+        _app = app;
     }
 
     public async Task<AuthResult<Accounts>> LoginAsync(string userName, string pwd)
@@ -56,7 +61,8 @@ public class AccountService
         }
 
         await _accountRepository.UpdateAsync(account!);
-
+        await _loginRecordRepository.AddRecordAsync(account?.Id, _app.GetClientIp(), _app.GetUserAgent(), res.Message,
+            res.IsOk);
 
         return res;
     }
@@ -173,5 +179,12 @@ public class AccountService
     public async Task<bool> CheckSysInitStatus()
     {
         return await _accountRepository.ExistAccount();
+    }
+
+
+    public async Task<PageDto<AccountLoginRecordDto>> GetLoginRecord(BasePageModel model)
+    {
+        var res = await _loginRecordRepository.GetLoginRecord(model);
+        return res;
     }
 }

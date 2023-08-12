@@ -43,6 +43,13 @@
             <param name="model"></param>
             <returns></returns>
         </member>
+        <member name="M:PandaApi.Account.AccountController.GetLoginRecord(Panda.Models.Dtos.BasePageModel)">
+            <summary>
+            获取最近登录记录
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
         <member name="T:PandaApi.Auth.AuthController">
             <summary>
                 授权认证

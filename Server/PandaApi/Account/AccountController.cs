@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Panda.Models.Dtos.Account;
 using Panda.Services.Account;
@@ -12,10 +11,9 @@ namespace PandaApi.Account;
 /// </summary>
 public class AccountController : BaseAdminController
 {
-
     private readonly AccountService _service;
 
-    public AccountController( AccountService service)
+    public AccountController(AccountService service)
     {
         _service = service;
     }
@@ -32,7 +30,6 @@ public class AccountController : BaseAdminController
 
         return new JsonResult(res);
     }
-
 
 
     /// <summary>
@@ -77,5 +74,16 @@ public class AccountController : BaseAdminController
     public async Task UpdatePwd(UpdatePwdModel model)
     {
         await _service.ChangePassword(model.id, model.NewPwd);
+    }
+
+    /// <summary>
+    /// 获取最近登录记录
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    [HttpGet]
+    public Task<PageDto<AccountLoginRecordDto>> GetLoginRecord([FromQuery]BasePageModel model)
+    {
+        return _service.GetLoginRecord(model);
     }
 }

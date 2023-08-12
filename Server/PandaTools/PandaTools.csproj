@@ -22,6 +22,7 @@
         <PackageReference Include="Lazy.Captcha.Core" Version="2.0.3" />
         <PackageReference Include="Mapster.Core" Version="1.2.0" />
         <PackageReference Include="Mapster.DependencyInjection" Version="1.0.0" />
+        <PackageReference Include="MaxMind.GeoIP2" Version="5.1.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.9" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="7.0.9" />
         <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.9" />
@@ -39,9 +40,19 @@
         <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.9" />
         <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.5.0" />
         <PackageReference Include="Tencent.QCloud.Cos.Sdk" Version="5.4.34" />
+        <PackageReference Include="UAParser" Version="3.1.47" />
     </ItemGroup>
     <ItemGroup>
       <None Remove="Fonts\LXGWWenKaiMono-Bold.ttf" />
       <EmbeddedResource Include="Fonts\LXGWWenKaiMono-Bold.ttf" />
+      <None Update="MaxMindDb\GeoLite2-ASN.mmdb">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="MaxMindDb\GeoLite2-City.mmdb">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="MaxMindDb\GeoLite2-Country.mmdb">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 </Project>

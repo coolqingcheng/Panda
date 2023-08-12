@@ -1,9 +1,7 @@
 ﻿namespace Panda.Models.Data.Entitys;
 
-public class AccountLoginRecord : BaseTimeTable
+public class AccountLoginRecord : BaseTableModel<int>
 {
-    public int Id { get; set; }
-
     /// <summary>
     ///     账户
     /// </summary>

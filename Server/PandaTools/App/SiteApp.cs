@@ -27,7 +27,7 @@ public class SiteApp
             services.InjectSuffix(Assembly.Load("Panda.Services"), "Service");
             services.InjectSuffix(Assembly.Load("PandaApi"), "Service");
             services.InjectSuffix(Assembly.Load("Panda.Repositoies"), "Repository");
-
+            services.AddScoped<IApp, WebApp>();
             services.AddWebApiConfig();
             services.AddRazorPages();
             services.AddDistributedMemoryCache();
@@ -38,7 +38,7 @@ public class SiteApp
 
 
             // Configure the HTTP request pipeline.
-            Console.WriteLine("当前环境:"+app.Environment.EnvironmentName);
+            Console.WriteLine("当前环境:" + app.Environment.EnvironmentName);
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();

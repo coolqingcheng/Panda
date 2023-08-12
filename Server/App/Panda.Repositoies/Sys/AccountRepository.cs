@@ -10,12 +10,12 @@ public class AccountRepository : BaseRepository<Accounts,Guid>
 
     public async Task<Accounts?> GetByUserNameAsync(string userName)
     {
-        return await DbContext.Set<Accounts>().FirstOrDefaultAsync(a => a.UserName == userName || a.Email == userName);
+        return await Ctx.Set<Accounts>().FirstOrDefaultAsync(a => a.UserName == userName || a.Email == userName);
     }
 
     public async Task<bool> CheckUserNameExistAsync(string userName)
     {
-        return await DbContext.Set<Accounts>().Where(a => a.UserName == userName || a.Email == userName)
+        return await Ctx.Set<Accounts>().Where(a => a.UserName == userName || a.Email == userName)
             .AnyAsync();
     }
 
@@ -26,14 +26,14 @@ public class AccountRepository : BaseRepository<Accounts,Guid>
     /// <returns></returns>
     public async Task<Accounts?> GetAccountAndRolesByAccountId(Guid accountId)
     {
-        return await DbContext.Set<Accounts>().Include(a => a.AccountRoleRelations)
+        return await Ctx.Set<Accounts>().Include(a => a.AccountRoleRelations)
             .FirstOrDefaultAsync(a => a.Id == accountId);
     }
 
     public async Task<PageDto<AccountItemDto>> GetAccountList(AccountListRequest request)
     {
-        var query = DbContext.Set<Accounts>();
-        var res = await DbContext.Set<Accounts>()
+        var query = Ctx.Set<Accounts>();
+        var res = await Ctx.Set<Accounts>()
             .Select(a => new AccountItemDto
             {
                 Id = a.Id,
@@ -41,7 +41,7 @@ public class AccountRepository : BaseRepository<Accounts,Guid>
                 Email = a.Email,
                 CreateTime = a.CreateTime,
                 LastUpdateTime = a.UpdateTime,
-                LastLoginTime = DbContext.Set<AccountLoginRecord>().Where(x => x.Account == a)
+                LastLoginTime = Ctx.Set<AccountLoginRecord>().Where(x => x.Account == a)
                     .Max(x => x.CreateTime),
                 RoleName = a.AccountRoleRelations.Select(x => x.AccountRole.RoleName).ToList(),
                 LockedTime = a.LockedTime
@@ -55,6 +55,6 @@ public class AccountRepository : BaseRepository<Accounts,Guid>
     /// <returns></returns>
     public Task<bool> ExistAccount()
     {
-        return DbContext.Set<Accounts>().AnyAsync();
+        return Ctx.Set<Accounts>().AnyAsync();
     }
 }

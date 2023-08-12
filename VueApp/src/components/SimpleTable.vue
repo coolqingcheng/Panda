@@ -33,6 +33,8 @@ const config = reactive({
     data: []
 })
 
+const url = ref(props.url);
+
 const params = reactive({
     index: 1,
     pageSize: 10,
@@ -47,7 +49,11 @@ let condition: Record<string, any> = {}
  */
 const loadData = () => {
     loading.value = true;
-    serviceOptions.axios?.get(props.url ?? '', {
+    console.log('加载数据:' + url.value)
+    if(!url.value){
+        console.log('为空')
+    }
+    serviceOptions.axios?.get(url.value!, {
         params: {
             ...params,
             ...condition
@@ -68,6 +74,7 @@ const loadData = () => {
 
 
 watch(() => params, () => {
+    console.log('修改分页')
     loadData();
 }, { deep: true })
 
