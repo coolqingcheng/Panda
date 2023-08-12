@@ -1,11 +1,10 @@
-﻿using MediatR;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Panda.Models.Dtos.Account;
 using Panda.Models.Dtos.Auth;
 using Panda.Repositoies.Sys;
 using PandaTools.Helper;
 
-namespace Panda.Services.Sys;
+namespace Panda.Services.Account;
 
 public class AccountService
 {
@@ -16,12 +15,10 @@ public class AccountService
     private readonly ILogger _logger;
 
 
-    private readonly IMediator _mediator;
 
-    public AccountService(IMediator mediator, ILogger<AccountService> logger, AccountRepository accountRepository,
+    public AccountService(ILogger<AccountService> logger, AccountRepository accountRepository,
         AccountRoleRepository accountRoleRepository)
     {
-        _mediator = mediator;
         _logger = logger;
         _accountRepository = accountRepository;
         _accountRoleRepository = accountRoleRepository;

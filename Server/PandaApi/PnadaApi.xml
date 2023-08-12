@@ -67,21 +67,6 @@
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="P:PandaApi.Auth.Events.LoginEvent.Account">
-            <summary>
-                用户Id
-            </summary>
-        </member>
-        <member name="P:PandaApi.Auth.Events.LoginEvent.Message">
-            <summary>
-                信息
-            </summary>
-        </member>
-        <member name="P:PandaApi.Auth.Events.LoginEvent.isLogin">
-            <summary>
-                是否登录成功
-            </summary>
-        </member>
         <member name="T:PandaApi.Blogs.CateController">
             <summary>
                 分类

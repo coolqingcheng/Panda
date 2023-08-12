@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MySqlConnector;
+using Panda.Services.Account;
 using Panda.Services.Sys;
 
 namespace PandaSite.Pages.Install;

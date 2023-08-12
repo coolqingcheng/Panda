@@ -1,7 +1,8 @@
-﻿using MediatR;
+﻿
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Panda.Models.Dtos.Account;
+using Panda.Services.Account;
 using Panda.Services.Sys;
 
 namespace PandaApi.Account;
@@ -11,13 +12,11 @@ namespace PandaApi.Account;
 /// </summary>
 public class AccountController : BaseAdminController
 {
-    private readonly IMediator _mediator;
 
     private readonly AccountService _service;
 
-    public AccountController(IMediator mediator, AccountService service)
+    public AccountController( AccountService service)
     {
-        _mediator = mediator;
         _service = service;
     }
 
