@@ -72,7 +72,7 @@ public class AccountLoginRecordDto
         get
         {
             var client = Parser.GetDefault().Parse(UserAgent);
-            return $"{client.OS}-{client.UA.ToString()}";
+            return $"{client.OS}-{client.UA}";
         }
     }
 

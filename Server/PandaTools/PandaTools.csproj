@@ -43,8 +43,6 @@
         <PackageReference Include="UAParser" Version="3.1.47" />
     </ItemGroup>
     <ItemGroup>
-      <None Remove="Fonts\LXGWWenKaiMono-Bold.ttf" />
-      <EmbeddedResource Include="Fonts\LXGWWenKaiMono-Bold.ttf" />
       <None Update="MaxMindDb\GeoLite2-ASN.mmdb">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
@@ -52,6 +50,9 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="MaxMindDb\GeoLite2-Country.mmdb">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Fonts\LXGWWenKaiMono-Bold.ttf">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>

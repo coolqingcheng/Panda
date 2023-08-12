@@ -11,8 +11,11 @@ public class ImageHelper
     {
         if (_embeddedTypeface == null)
         {
-            _embeddedTypeface = SKTypeface.FromStream(Assembly.GetExecutingAssembly()
-                .GetManifestResourceStream("PandaTools.Fonts.LXGWWenKaiMono-Bold.ttf"));
+            var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var path = Path.Combine(dir!, "Fonts",
+                "LXGWWenKaiMono-Bold.ttf");
+            var ms = new MemoryStream(File.ReadAllBytes(path));
+            _embeddedTypeface = SKTypeface.FromStream(ms);
         }
     }
 

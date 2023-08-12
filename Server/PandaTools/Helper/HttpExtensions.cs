@@ -10,23 +10,23 @@ public static class HttpExtensions
     /// <param name="context"></param>
     /// <param name="isProxy"></param>
     /// <returns></returns>
-    public static string GetClientIP(this HttpContext context, bool isProxy = false)
+    public static string GetClientIP(this HttpContext context)
     {
         string? ip;
-        if (isProxy)
+        ip = context.Request.Headers.Where(a => a.Key == "Cdn-Src-Ip").Select(a => a.Value.ToString())
+            .FirstOrDefault();
+        if (!string.IsNullOrEmpty(ip))
+            return IpReplace(ip);
+
+        ip = context.Request.Headers.Where(a => a.Key == "X-Forwarded-For").Select(a => a.Value.ToString())
+            .FirstOrDefault();
+        if (!string.IsNullOrEmpty(ip))
+            return IpReplace(ip);
+
+        if (string.IsNullOrWhiteSpace(ip))
         {
-            ip = context.Request.Headers.Where(a => a.Key == "Cdn-Src-Ip").Select(a => a.Value.ToString())
-                .FirstOrDefault();
-            if (!string.IsNullOrEmpty(ip))
-                return IpReplace(ip);
-
-            ip = context.Request.Headers.Where(a => a.Key == "X-Forwarded-For").Select(a => a.Value.ToString())
-                .FirstOrDefault();
-            if (!string.IsNullOrEmpty(ip))
-                return IpReplace(ip);
+            ip = context.Connection.RemoteIpAddress?.ToString();
         }
-
-        ip = context.Connection.RemoteIpAddress?.ToString();
         if (string.IsNullOrWhiteSpace(ip)) return "未知";
         return IpReplace(ip);
     }
