@@ -1,4 +1,5 @@
 ﻿using Mapster;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Panda.Models.Dtos.Blogs.Posts;
 using Panda.Repositoies.Blogs;
@@ -101,5 +102,11 @@ public class PostService
     public async Task Top(int Id)
     {
         await _postRepository.Top(Id);
+    }
+    
+    [HttpPost]
+    public async Task Publish(int Id)
+    {
+        await _postRepository.Publish(Id);
     }
 }

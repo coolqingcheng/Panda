@@ -58,6 +58,15 @@ public class PostController : BaseAdminController
     {
         await _post.Edit(request);
     }
+    
+    /// <summary>
+    /// 发布/隐藏
+    /// </summary>
+    /// <param name="model"></param>
+    [HttpPost]
+    public async Task Publish(BaseIdModel<int> model)
+    {
+        await _post.Publish(model.Id);
+    }
 
-    //删除
 }

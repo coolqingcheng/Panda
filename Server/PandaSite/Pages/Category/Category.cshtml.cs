@@ -35,7 +35,9 @@ public class Category : PageModel
         {
             CateId = CateId,
             Index = PageIndex,
-            PageSize = PageSize
+            PageSize = PageSize,
+            FilterPublish = true,
+            PublishStatus = true
         });
         CateName = await _postCateService.GetCateNameById(cateid);
     }

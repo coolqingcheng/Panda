@@ -43,6 +43,7 @@ public class PostRepository : BaseRepository<Posts, int>
 
         var count = await query.CountAsync();
         var list = await query
+            .WhereIf(request.FilterPublish, a => a.IsPublish == request.PublishStatus)
             .Include(a => a.TagRelations)
             .Include(a => a.PostComments)
             .Include(a => a.CateRelations)
@@ -122,6 +123,20 @@ public class PostRepository : BaseRepository<Posts, int>
         if (item != null)
         {
             item.IsTop = !item.IsTop;
+            await UpdateAsync(item);
+        }
+    }
+
+    /// <summary>
+    /// 发布
+    /// </summary>
+    /// <param name="Id"></param>
+    public async Task Publish(int Id)
+    {
+        var item = await Ctx.Set<Posts>().FirstOrDefaultAsync(a => a.Id == Id);
+        if (item != null)
+        {
+            item.IsPublish = !item.IsPublish;
             await UpdateAsync(item);
         }
     }

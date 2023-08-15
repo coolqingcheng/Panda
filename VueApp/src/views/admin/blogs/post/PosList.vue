@@ -38,10 +38,21 @@
             </ElTableColumn>
             <ElTableColumn label="阅读人数" width="80" prop="readCount"></ElTableColumn>
             <ElTableColumn label="评论" width="80" prop="commentCount"></ElTableColumn>
+            <ElTableColumn label="置顶" width="80" prop="commentCount">
+                <template #default="scope">
+                    <ElSwitch v-model="scope.row.isTop" @change="topHandler(scope.row)"></ElSwitch>
+                </template>
+            </ElTableColumn>
+            <ElTableColumn label="发布" width="80" prop="commentCount">
+                <template #default="scope">
+                    <ElSwitch v-model="scope.row.isPublish" @change="publishHandler(scope.row)"></ElSwitch>
+                </template>
+            </ElTableColumn>
             <ElTableColumn label="操作" width="150">
                 <template #default="scope">
                     <ElSpace>
                         <ElButton size="small" @click="toEdit(scope.row.id)">编辑</ElButton>
+
                     </ElSpace>
                 </template>
             </ElTableColumn>
@@ -60,6 +71,7 @@ import { onMounted, ref, reactive, watch } from 'vue';
 import { Plus, Refresh } from '@element-plus/icons-vue';
 
 import { table, pagination } from '@/shared/ElConfig'
+import { HttpService } from '@/shared/Axios.Config';
 
 
 const router = useRouter();
@@ -70,12 +82,29 @@ const toDetail = (id: number) => {
     window.open(`/post/${id}.html`)
 }
 
+const topHandler = (e) => {
+    console.log(e)
+    HttpService.post('/admin/post/top', {
+        id: e.id
+    }).catch(_ => {
+        e.isTop = !e.isTop;
+    })
+}
+
+const publishHandler = (e)=>{
+    HttpService.post('/admin/post/publish', {
+        id: e.id
+    }).catch(_ => {
+        e.isPublish = !e.isPublish;
+    })
+}
+
 
 const toEdit = (id: number | null) => {
     console.log(id)
     if (!id) {
         router.push({
-            name:'编辑文章'
+            name: '编辑文章'
         })
     } else {
         router.push({

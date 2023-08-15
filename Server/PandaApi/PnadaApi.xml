@@ -140,6 +140,12 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:PandaApi.Blogs.PostController.Publish(Panda.Models.Dtos.BaseIdModel{System.Int32})">
+            <summary>
+            发布/隐藏
+            </summary>
+            <param name="model"></param>
+        </member>
         <member name="M:PandaApi.Blogs.PostTagController.GetList(Panda.Models.Dtos.Blogs.Posts.TagListRequest)">
             <summary>
                 获取标签列表

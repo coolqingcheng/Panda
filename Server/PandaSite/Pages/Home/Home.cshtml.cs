@@ -29,7 +29,9 @@ public class HomeModel : PageModel
         var res = await _postService.GetHomeList(new PostRequestModel
         {
             Index = pageIndex,
-            PageSize = 10
+            PageSize = 10,
+            FilterPublish = true,
+            PublishStatus = true
         });
         list.AddRange(res.Data);
         Total = res.Total;
