@@ -13,28 +13,38 @@ public class IpHelper
         try
         {
             var dic = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var path = Path.Combine(dic, "MaxMindDb", "GeoLite2-City.mmdb");
-            using var reader = new DatabaseReader(path);
-            var response = reader.City(ipString);
-            return response;
+            if (dic != null)
+            {
+                var path = Path.Combine(dic, "MaxMindDb", "GeoLite2-City.mmdb");
+                using var reader = new DatabaseReader(path);
+                var response = reader.City(ipString);
+                return response;
+            }
+
+            return null;
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return null;
         }
     }
 
-    public static AsnResponse? ASN(string ipString)
+    public static AsnResponse? Asn(string ipString)
     {
         try
         {
             var dic = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var path = Path.Combine(dic, "MaxMindDb", "GeoLite2-ASN.mmdb");
-            using var reader = new DatabaseReader(path);
-            var response = reader.Asn(ipString);
-            return response;
+            if (dic != null)
+            {
+                var path = Path.Combine(dic, "MaxMindDb", "GeoLite2-ASN.mmdb");
+                using var reader = new DatabaseReader(path);
+                var response = reader.Asn(ipString);
+                return response;
+            }
+
+            return null;
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return null;
         }

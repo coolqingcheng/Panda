@@ -8,9 +8,8 @@ public static class HttpExtensions
     ///     获取IP地址
     /// </summary>
     /// <param name="context"></param>
-    /// <param name="isProxy"></param>
     /// <returns></returns>
-    public static string GetClientIP(this HttpContext context)
+    public static string GetClientIp(this HttpContext context)
     {
         string? ip;
         ip = context.Request.Headers.Where(a => a.Key == "Cdn-Src-Ip").Select(a => a.Value.ToString())

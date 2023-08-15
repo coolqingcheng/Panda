@@ -1,9 +1,9 @@
 ﻿@page "/{pageIndex:int=1}"
 @using Panda.Services.Blogs
 @model HomeModel
-@inject PostCateService postCateService;
+@inject PostCateService PostCateService;
 @{
-    var cateList = await postCateService.GetCateList(20);
+    var cateList = await PostCateService.GetCateList(20);
     var cateRankList = new RankListModel
     {
         Title = "分类",

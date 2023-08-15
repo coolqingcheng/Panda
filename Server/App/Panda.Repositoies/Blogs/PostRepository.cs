@@ -3,7 +3,7 @@ using PandaTools.Helper;
 
 namespace Panda.Repositoies.Blogs;
 
-public class PostRepository : BaseRepository<Posts,int>
+public class PostRepository : BaseRepository<Posts, int>
 {
     public PostRepository(DbContext dbContext) : base(dbContext)
     {
@@ -49,7 +49,9 @@ public class PostRepository : BaseRepository<Posts,int>
             .WhereIf(request.TagId.HasValue, a => a.TagRelations.Any(x => x.PostTags.Id == request.TagId))
             .WhereIf(request.CateId.HasValue, a => a.CateRelations.Any(x => x.PostCate.Id == request.CateId))
             .Skip(request.Skip).Take(request.PageSize)
-            .OrderByDescending(a => a.CreateTime)
+            .OrderByDescending(a => a.IsTop)
+            .ThenByDescending(a => a.CreateTime)
+            .ThenByDescending(a => a.UpdateTime)
             .Select(a => new PostItemModel
             {
                 Id = a.Id,

@@ -51,7 +51,7 @@ public class AccountLoginRecordDto
 
            
             var str =  $"{response.Continent.Names["zh-CN"]}/{response.Country.Names["zh-CN"]}/{response.City.Names["zh-CN"]}";
-            var asn = IpHelper.ASN(Ip);
+            var asn = IpHelper.Asn(Ip);
 
             if (asn!=null)
             {

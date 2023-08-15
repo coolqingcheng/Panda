@@ -21,7 +21,7 @@ public class WebApp : IApp
 
     public string GetClientIp()
     {
-        var ip = _httpContextAccessor.HttpContext?.GetClientIP();
+        var ip = _httpContextAccessor.HttpContext?.GetClientIp();
         return ip ?? "未知";
     }
 

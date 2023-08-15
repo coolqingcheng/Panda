@@ -119,11 +119,11 @@
                 文章
             </summary>
         </member>
-        <member name="M:PandaApi.Blogs.PostController.Top(System.Int32)">
+        <member name="M:PandaApi.Blogs.PostController.Top(Panda.Models.Dtos.BaseIdModel{System.Int32})">
             <summary>
                 置顶
             </summary>
-            <param name="Id"></param>
+            <param name="model"></param>
             <returns></returns>
         </member>
         <member name="M:PandaApi.Blogs.PostController.List(Panda.Models.Dtos.Blogs.Dto.PostRequestModel)">

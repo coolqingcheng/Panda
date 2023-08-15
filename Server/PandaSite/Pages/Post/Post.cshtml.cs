@@ -23,7 +23,7 @@ public class Post : PageModel
         if (item == null) return NotFound();
 
         Item = item;
-        await _postService.Visit(item.Id, HttpContext.GetClientIP(), HttpContext.Request.Headers.UserAgent,
+        await _postService.Visit(item.Id, HttpContext.GetClientIp(), HttpContext.Request.Headers.UserAgent,
             HttpContext.GetSiteUid());
         return Page();
     }

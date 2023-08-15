@@ -53,7 +53,7 @@ public class CommonController : BaseAdminController
                     Path = file,
                     Size = new FileInfo(filePath).Length,
                     Suffix = Path.GetExtension(formFile.FileName),
-                    ClientIp = HttpContext.GetClientIP(),
+                    ClientIp = HttpContext.GetClientIp(),
                     StorageType = StorageType.Local
                 });
             }

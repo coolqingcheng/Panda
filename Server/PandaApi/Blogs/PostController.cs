@@ -19,20 +19,20 @@ public class PostController : BaseAdminController
     }
 
     [HttpGet]
-    public async Task<PostDetailModel> Get(int Id)
+    public async Task<PostDetailModel> Get(int id)
     {
-        return await _post.Get(Id);
+        return await _post.Get(id);
     }
 
     /// <summary>
     ///     置顶
     /// </summary>
-    /// <param name="Id"></param>
+    /// <param name="model"></param>
     /// <returns></returns>
-    [HttpGet]
-    public async Task Top(int Id)
+    [HttpPost]
+    public async Task Top(BaseIdModel<int> model)
     {
-        await _post.Top(Id);
+        await _post.Top(model.Id);
     }
 
     /// <summary>
