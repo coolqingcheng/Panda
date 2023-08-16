@@ -68,7 +68,7 @@ public class ImageHelper
         var textY = bgY + textHeight / 4 * 3;
         // Draw the watermark text
         canvas.DrawText(text, textX, textY, textPaint);
-        using var data = surface.Snapshot().Encode(SKEncodedImageFormat.Jpeg, 80);
+        using var data = surface.Snapshot().Encode(SKEncodedImageFormat.Webp, 80);
         return data.ToArray();
     }
 }
