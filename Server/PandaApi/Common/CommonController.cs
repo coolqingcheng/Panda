@@ -22,11 +22,13 @@ public class CommonController : BaseAdminController
     }
 
     /// <summary>
-    ///     上传
+    /// 上传
     /// </summary>
+    /// <param name="host"></param>
+    /// <param name="isTag"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<IActionResult> Upload([FromServices] IWebHostEnvironment host)
+    public async Task<IActionResult> Upload([FromServices] IWebHostEnvironment host, [FromQuery] bool isTag = true)
     {
         var files = Request.Form.Files;
         var size = files.Sum(f => f.Length);
@@ -42,9 +44,16 @@ public class CommonController : BaseAdminController
                 var filePath = path;
                 using var ms = new MemoryStream();
                 await using var stream = System.IO.File.Create(filePath);
-                await formFile.CopyToAsync(ms);
-                ImageHelper.WriteWaterTag(ms.ToArray(), "iwscl.com", 10);
-                var c = Path.VolumeSeparatorChar;
+                if (isTag)
+                {
+                    ImageHelper.WriteWaterTag(ms.ToArray(), "iwscl.com", 10);
+                }
+                else
+                {
+                    await formFile.CopyToAsync(ms);
+                }
+
+               
                 var file =
                     $"/{Path.Combine("files", fileName).Replace(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)}";
                 list.Add(file);
