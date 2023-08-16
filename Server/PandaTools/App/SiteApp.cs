@@ -14,7 +14,7 @@ namespace PandaTools.App;
 
 public class SiteApp
 {
-    public static void Run(string[] args, Action<IServiceCollection, IConfiguration>? action,
+    public static WebApplicationBuilder Run(string[] args, Action<IServiceCollection, IConfiguration>? action,
         Action<WebApplication>? appAction = null)
     {
         var logger = SerilogExtensions.Instance();
@@ -62,6 +62,7 @@ public class SiteApp
             app.MapRazorPages();
             appAction?.Invoke(app);
             app.Run();
+            return builder;
         }
         catch (Exception ex)
         {

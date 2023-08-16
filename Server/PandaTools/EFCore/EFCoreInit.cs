@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace PandaTools.EFCore;
@@ -32,5 +34,13 @@ public static class EFExtensions
     public static void AddEFMySql<DB>(this IServiceCollection services, string connString) where DB : DbContext
     {
         services.AddEFCore<DB>(options => { options.UseMySql(connString, ServerVersion.AutoDetect(connString)); });
+    }
+
+    public static void AddPgSql<DB>(this WebApplicationBuilder builder) where DB:DbContext
+    {
+        builder.Services.AddDbContext<DB>(opt =>
+        {
+            opt.UseNpgsql(builder.Configuration.GetConnectionString("pgsql"));
+        });
     }
 }
