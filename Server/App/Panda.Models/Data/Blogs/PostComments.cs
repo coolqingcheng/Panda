@@ -1,6 +1,6 @@
 ﻿namespace Panda.Models.Data.Blogs;
 
-public class PostComments : BaseTableModel<int>
+public class PostComments : BaseEntity<int>
 {
     public PostComments()
     {

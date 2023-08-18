@@ -13,9 +13,6 @@ public class CateDtoModel
     public int PostCount { get; set; }
 
     public DateTime CreateTime { get; set; }
-
-
-    public DateTime LastUpdateTime { get; set; }
 }
 
 public class CateRequest

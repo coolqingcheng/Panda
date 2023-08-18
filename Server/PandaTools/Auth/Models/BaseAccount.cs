@@ -2,7 +2,7 @@
 
 namespace PandaTools.Auth.Models;
 
-public class BaseAccount : BaseTableModel<Guid>
+public class BaseAccount : BaseEntity<Guid>
 {
     public string UserName { get; set; }
 
@@ -19,4 +19,7 @@ public class BaseAccount : BaseTableModel<Guid>
     ///     登录失败次数
     /// </summary>
     public int LoginFailCount { get; set; }
+
+
+    public DateTime? UpdateTime { get; set; }
 }

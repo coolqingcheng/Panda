@@ -1,6 +1,6 @@
 ﻿namespace Panda.Models.Data.Blogs;
 
-public class FriendLink : BaseTableModel<int>
+public class FriendLink : BaseEntity<int>
 {
     public string Name { get; set; }
 

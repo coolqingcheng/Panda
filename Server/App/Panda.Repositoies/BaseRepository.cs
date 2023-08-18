@@ -3,7 +3,7 @@ using PandaTools.Helper;
 
 namespace Panda.Repositoies;
 
-public abstract class BaseRepository<T, TId> where T : BaseTableModel<TId>, new()
+public abstract class BaseRepository<T, TId> where T : BaseEntity<TId>, new()
     where TId : struct
 {
     protected readonly DbContext Ctx;

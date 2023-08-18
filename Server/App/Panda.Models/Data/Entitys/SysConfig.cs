@@ -3,7 +3,7 @@
 /// <summary>
 ///     系统配置表
 /// </summary>
-public class SysConfig : BaseTableModel<int>
+public class SysConfig : BaseEntity<int>
 {
     /// <summary>
     ///     key

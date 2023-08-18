@@ -1,20 +1,9 @@
 ﻿namespace Panda.Models.Data.Blogs;
 
-public class Posts : SoftDeleteBaseTable<int>
+public class Posts : BaseEntity<int>
 {
     public Posts()
     {
-    }
-
-    public Posts(string title, string content, string snippet, List<PostTagRelation> tagRelations,
-        List<PostCateRelation> cateRelations, List<PostComments> postComments)
-    {
-        Title = title;
-        Content = content;
-        Snippet = snippet;
-        TagRelations = tagRelations;
-        CateRelations = cateRelations;
-        PostComments = postComments;
     }
 
     /// <summary>
@@ -70,5 +59,11 @@ public class Posts : SoftDeleteBaseTable<int>
     /// <summary>
     ///     访问记录
     /// </summary>
-    public List<PostVisitRecord> VisitRecords { get; set; }
+    public List<PostVisitRecord> VisitRecords { get; set; } = new();
+
+
+    public bool IsDelete { get; set; }
+
+
+    public DateTime UpdateTime { get; set; }
 }

@@ -21,7 +21,6 @@ public class PostCateService
                 Id = a.Id,
                 CateName = a.CateName,
                 CreateTime = a.CreateTime,
-                LastUpdateTime = a.UpdateTime,
                 PostCount = a.PostCateRelations.Count()
             }).ToListAsync();
         return new PageDto<CateDtoModel>(await query.CountAsync(), list);
@@ -35,7 +34,6 @@ public class PostCateService
             if (item == null) throw new UserException("找不到更新的分类");
 
             item.CateName = request.CateName;
-            item.UpdateTime = DateTime.Now;
             await _context.SaveChangesAsync();
         }
         else

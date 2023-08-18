@@ -1,6 +1,6 @@
 ﻿namespace Panda.Models.Data.Blogs;
 
-public class PostTags : BaseTableModel<int>
+public class PostTags : BaseEntity<int>
 {
     public PostTags()
     {
@@ -16,7 +16,7 @@ public class PostTags : BaseTableModel<int>
     public List<PostTagRelation> TagRelation { get; set; }
 }
 
-public class PostTagRelation : BaseTableModel<int>
+public class PostTagRelation : BaseEntity<int>
 {
     public PostTagRelation()
     {

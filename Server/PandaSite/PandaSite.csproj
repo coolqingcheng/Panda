@@ -17,6 +17,7 @@
         <ProjectReference Include="..\App\Panda.Services\Panda.Services.csproj" />
         <ProjectReference Include="..\PandaApi\PandaApi.csproj" />
         <ProjectReference Include="..\PandaTools\PandaTools.csproj" />
+        <ProjectReference Include="..\App\Panda.Models\Panda.Models.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -18,14 +18,14 @@
         <PackageReference Include="Dapper" Version="2.0.143" />
         <PackageReference Include="EFCore.NamingConventions" Version="7.0.2" />
         <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
-        <PackageReference Include="HtmlSanitizer" Version="8.0.645" />
+        <PackageReference Include="HtmlSanitizer" Version="8.0.692" />
         <PackageReference Include="Lazy.Captcha.Core" Version="2.0.3" />
         <PackageReference Include="Mapster.Core" Version="1.2.0" />
         <PackageReference Include="Mapster.DependencyInjection" Version="1.0.0" />
         <PackageReference Include="MaxMind.GeoIP2" Version="5.1.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.9" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="7.0.9" />
-        <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.10" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="7.0.10" />
+        <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.10" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
@@ -37,8 +37,8 @@
         <PackageReference Include="SkiaSharp" Version="2.88.3" />
         <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.3" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.9" />
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.9" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.10" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.10" />
         <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.5.0" />
         <PackageReference Include="Tencent.QCloud.Cos.Sdk" Version="5.4.34" />
         <PackageReference Include="UAParser" Version="3.1.47" />

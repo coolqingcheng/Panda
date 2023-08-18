@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Panda.Models.Data.Entitys;
 
-public class SysResource : BaseTableModel<long>
+public class SysResource : BaseEntity<long>
 {
     public Accounts? Account { get; set; }
 

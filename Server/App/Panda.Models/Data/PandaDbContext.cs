@@ -20,7 +20,7 @@ public class PandaDbContext : AuthDbContext<Accounts>
 
     static void UpdateTimestamps(object? sender, EntityEntryEventArgs e)
     {
-        if (e.Entry.Entity is not BaseTimeTable model) return;
+        var entity = e.Entry.Entity;
         switch (e.Entry.State)
         {
             case EntityState.Detached:
@@ -30,10 +30,19 @@ public class PandaDbContext : AuthDbContext<Accounts>
             case EntityState.Deleted:
                 break;
             case EntityState.Modified:
-                model.UpdateTime = DateTime.Now;
+                if (entity.GetType().GetProperty("UpdateTime") != null)
+                {
+                    var type = entity.GetType();
+                    type.GetProperty("UpdateTime")?.SetValue(type, DateTime.Now);
+                }
                 break;
             case EntityState.Added:
-                model.CreateTime = DateTime.Now;
+                if (entity.GetType().GetProperty("CreateTime") != null)
+                {
+                    var type = entity.GetType();
+                    type.GetProperty("CreateTime")?.SetValue(type, DateTime.Now);
+                }
+
                 break;
         }
     }

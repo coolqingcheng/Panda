@@ -158,10 +158,12 @@
                 公共操作
             </summary>
         </member>
-        <member name="M:PandaApi.Common.CommonController.Upload(Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+        <member name="M:PandaApi.Common.CommonController.Upload(Microsoft.AspNetCore.Hosting.IWebHostEnvironment,System.Boolean)">
             <summary>
-                上传
+            上传
             </summary>
+            <param name="host"></param>
+            <param name="isTag"></param>
             <returns></returns>
         </member>
         <member name="M:PandaApi.Common.CommonController.GetCaptcha(Lazy.Captcha.Core.ICaptcha,Panda.Models.ValidateCodeType)">

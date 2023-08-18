@@ -1,6 +1,6 @@
 ﻿namespace Panda.Models.Data.Entitys;
 
-public class AccountLoginRecord : BaseTableModel<int>
+public class AccountLoginRecord : BaseEntity<int>
 {
     /// <summary>
     ///     账户

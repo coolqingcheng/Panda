@@ -1,6 +1,6 @@
 ﻿namespace Panda.Models.Data.Blogs;
 
-public class PostVisitRecord : BaseTableModel<int>
+public class PostVisitRecord : BaseEntity<int>
 {
     public int PostId { get; set; }
 

@@ -22,7 +22,7 @@ public class AccountItemDto
 
     public DateTime CreateTime { get; set; }
 
-    public DateTime LastUpdateTime { get; set; }
+    public DateTime? LastUpdateTime { get; set; }
 
     public DateTime? LastLoginTime { get; set; }
 
