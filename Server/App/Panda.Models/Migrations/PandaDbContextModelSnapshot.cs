@@ -387,6 +387,18 @@ namespace Panda.Models.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Accounts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("2bb0c71e-24d5-4e62-981d-e8741cbbb97c"),
+                            CreateTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "chenxinandroid@gmail.com",
+                            LockedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LoginFailCount = 0,
+                            Pwd = "JAvlGPq9JyTdtvBO6x2llnRI1+gxwIyPqCKAn3THIKk=",
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("Panda.Models.Data.Entitys.SysConfig", b =>

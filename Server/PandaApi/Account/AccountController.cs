@@ -14,9 +14,12 @@ public class AccountController : BaseAdminController
 {
     private readonly AccountService _service;
 
-    public AccountController(AccountService service)
+    private DbContext _context;
+
+    public AccountController(AccountService service, DbContext context)
     {
         _service = service;
+        _context = context;
     }
 
     /// <summary>
@@ -27,9 +30,9 @@ public class AccountController : BaseAdminController
     [AllowAnonymous]
     public async Task<IActionResult> InitAccount()
     {
-        var res = await _service.AddAccount("admin", "admin", "admin@qq.com");
+        var res = await _context.Database.EnsureCreatedAsync();
 
-        return new JsonResult(res);
+        return Content("初始化结果:" + res);
     }
 
 

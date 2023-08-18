@@ -11,6 +11,8 @@ public class HomeModel : PageModel
     private readonly PostService _postService;
 
     public List<PostItemModel> list = new();
+    
+    
 
     public HomeModel(PostService postService)
     {
