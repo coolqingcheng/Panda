@@ -1,4 +1,5 @@
 ﻿using Panda.Models.Data.ModelConfigs;
+using PandaTools.Helper;
 
 namespace Panda.Models.Data.Entitys;
 
@@ -23,5 +24,12 @@ public static class AccountModelCreating
         builder.Entity<AccountRoles>().Property(a => a.RoleName)
             .HasMaxLength(20)
             .IsUnicode();
+        builder.Entity<Accounts>().HasData(new Accounts()
+        {
+            Id = Guid.NewGuid(),
+            UserName = "admin",
+            Pwd = "admin123".GetSHA256(),
+            Email = "chenxinandroid@gmail.com"
+        });
     }
 }

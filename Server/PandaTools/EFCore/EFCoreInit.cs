@@ -36,11 +36,9 @@ public static class EFExtensions
         services.AddEFCore<DB>(options => { options.UseMySql(connString, ServerVersion.AutoDetect(connString)); });
     }
 
-    public static void AddPgSql<DB>(this WebApplicationBuilder builder) where DB:DbContext
+    public static void AddPgSql<DB>(this IServiceCollection service, IConfiguration configuration) where DB : DbContext
     {
-        builder.Services.AddDbContext<DB>(opt =>
-        {
-            opt.UseNpgsql(builder.Configuration.GetConnectionString("pgsql"));
-        });
+        service.AddDbContext<DB>(opt => { opt.UseNpgsql(configuration.GetConnectionString("pgsql")); });
+        service.AddScoped<DbContext>(a => a.GetService<DB>()!);
     }
 }
