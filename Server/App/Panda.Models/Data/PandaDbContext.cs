@@ -35,13 +35,14 @@ public class PandaDbContext : AuthDbContext<Accounts>
                     var type = entity.GetType();
                     type.GetProperty("UpdateTime")?.SetValue(type, DateTime.Now);
                 }
+
                 break;
             case EntityState.Added:
-                if (entity.GetType().GetProperty("CreateTime") != null)
-                {
-                    var type = entity.GetType();
-                    type.GetProperty("CreateTime")?.SetValue(type, DateTime.Now);
-                }
+                // if (entity.GetType().GetProperty("CreateTime") != null)
+                // {
+                //     var type = entity.GetType();
+                //     type.GetProperty("CreateTime")?.SetValue(type, DateTime.Now);
+                // }
 
                 break;
         }
@@ -85,5 +86,21 @@ public class PandaDbContext : AuthDbContext<Accounts>
         base.OnModelCreating(modelBuilder);
         modelBuilder.ConfigAccount();
         modelBuilder.PostConfig();
+
+        #region 批量设置CreateTime
+
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        {
+            var properties = entityType.ClrType.GetProperties();
+            foreach (var property in properties)
+            {
+                if (property.Name == "CreateTime" && property.PropertyType == typeof(DateTime))
+                {
+                    modelBuilder.Entity(entityType.ClrType).Property(property.Name).HasDefaultValueSql("now()");
+                }
+            }
+        }
+
+        #endregion
     }
 }
