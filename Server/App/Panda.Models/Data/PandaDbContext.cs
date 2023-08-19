@@ -5,7 +5,7 @@ using PandaTools.Auth;
 
 namespace Panda.Models.Data;
 
-public class PandaDbContext : AuthDbContext<Accounts>
+public class PandaDbContext : BaseDbContext<Accounts>
 {
     public PandaDbContext(DbContextOptions<PandaDbContext> options) : base(options)
     {
@@ -87,20 +87,6 @@ public class PandaDbContext : AuthDbContext<Accounts>
         modelBuilder.ConfigAccount();
         modelBuilder.PostConfig();
 
-        #region 批量设置CreateTime
-
-        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
-        {
-            var properties = entityType.ClrType.GetProperties();
-            foreach (var property in properties)
-            {
-                if (property.Name == "CreateTime" && property.PropertyType == typeof(DateTime))
-                {
-                    modelBuilder.Entity(entityType.ClrType).Property(property.Name).HasDefaultValueSql("now()");
-                }
-            }
-        }
-
-        #endregion
+        
     }
 }

@@ -3,9 +3,9 @@ using PandaTools.Auth.Models;
 
 namespace PandaTools.Auth;
 
-public class AuthDbContext<User> : DbContext where User : BaseAccount
+public class BaseDbContext<User> : DbContext where User : BaseAccount
 {
-    public AuthDbContext(DbContextOptions option) : base(option)
+    public BaseDbContext(DbContextOptions option) : base(option)
     {
     }
 
@@ -14,5 +14,20 @@ public class AuthDbContext<User> : DbContext where User : BaseAccount
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        #region 批量设置CreateTime
+
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        {
+            var properties = entityType.ClrType.GetProperties();
+            foreach (var property in properties)
+            {
+                if (property.Name == "CreateTime" && property.PropertyType == typeof(DateTime))
+                {
+                    modelBuilder.Entity(entityType.ClrType).Property(property.Name).HasDefaultValueSql("now()");
+                }
+            }
+        }
+
+        #endregion
     }
 }
