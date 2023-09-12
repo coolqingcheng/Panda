@@ -1,4 +1,4 @@
-﻿namespace Panda.Models.Data.Entitys;
+﻿namespace Panda.Models.Data.Entities;
 
 public class AccountLoginRecord : BaseEntity<int>
 {

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Panda.Models.Data.Entitys;
 using Panda.Models.Dtos.Common;
 using PandaApi.Common.Models;
 

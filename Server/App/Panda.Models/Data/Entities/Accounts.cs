@@ -1,7 +1,7 @@
 ﻿using Panda.Models.Data.ModelConfigs;
 using PandaTools.Helper;
 
-namespace Panda.Models.Data.Entitys;
+namespace Panda.Models.Data.Entities;
 
 public class Accounts : BaseAccount
 {

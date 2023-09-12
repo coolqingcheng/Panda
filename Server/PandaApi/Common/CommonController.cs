@@ -1,10 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Lazy.Captcha.Core;
+﻿using Lazy.Captcha.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Panda.Models;
-using Panda.Models.Data.Entitys;
+using System.ComponentModel.DataAnnotations;
 using CaptchaHelper = PandaTools.Helper.CaptchaHelper;
 
 namespace PandaApi.Common;

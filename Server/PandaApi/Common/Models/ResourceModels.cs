@@ -1,6 +1,4 @@
-﻿using Panda.Models.Data.Entitys;
-
-namespace PandaApi.Common.Models;
+﻿namespace PandaApi.Common.Models;
 
 public class ResourceModels
 {

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Panda.Models.Data.Entitys;
+namespace Panda.Models.Data.Entities;
 
 public class SysResource : BaseEntity<long>
 {
