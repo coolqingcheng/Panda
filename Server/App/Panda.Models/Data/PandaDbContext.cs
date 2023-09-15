@@ -33,7 +33,7 @@ public class PandaDbContext : BaseDbContext<Accounts>
                 if (entity.GetType().GetProperty("UpdateTime") != null)
                 {
                     var type = entity.GetType();
-                    type.GetProperty("UpdateTime")?.SetValue(type, DateTime.Now);
+                    type.GetProperty("UpdateTime")?.SetValue(entity, DateTime.Now);
                 }
 
                 break;
