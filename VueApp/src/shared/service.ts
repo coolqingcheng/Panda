@@ -882,7 +882,7 @@ export interface SiteConfig {
   icp: string;
 
   /**  */
-  age?: number;
+  siteDesc?: number;
 }
 
 export interface TagDtoModel {
