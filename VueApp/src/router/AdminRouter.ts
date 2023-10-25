@@ -4,6 +4,16 @@ import AdminLayout from '@/views/admin/AdminLayout.vue'
 import { routeList } from '@/router/AdminPage'
 
 
+// const test = await import.meta.glob('../views/**/**.vue',{
+
+// })
+// Object.entries(test).map(a=>{
+    
+// console.log('a:',a)
+// })
+
+
+
 
 const AdminRouter = createRouter({
     history: createWebHashHistory(),
