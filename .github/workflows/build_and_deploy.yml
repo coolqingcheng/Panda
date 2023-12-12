@@ -13,31 +13,27 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
-
     steps:
     - uses: actions/checkout@v3
 
-    
+    - name: 打包vue后台文件
     - uses: actions/setup-node@v3
       with:
         node-version: '18.14.2'
-    - name: 打包Vue文件
-      working-directory: VueApp
-      run: npm install -g yarn && yarn && yarn build
+    - name: 安装依赖
+      working-directory: Admin.Client
+      run: npm install && npm run build
     
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 7.0.x
-    - name: 打包asp.net文件
+    - name: Restore dependencies
       working-directory: Server/PandaSite
       run: dotnet restore
     - name: Build
-      working-directory: Server/PandaSite
-      run: echo $(pwd) && dotnet publish -o ./publish
+      run: dotnet publish -o ./publish
     - name: 打印目录
-      working-directory: Server/PandaSite
       run: tree ./publish
     
     
