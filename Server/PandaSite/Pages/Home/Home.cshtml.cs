@@ -1,37 +1,39 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using PandaSite.Models.Blogs;
-using PandaSite.Models.Blogs.Dto;
-using PandaSite.Services.Blogs;
+using Panda.Models.Dtos.Blogs;
+using Panda.Models.Dtos.Blogs.Dto;
+using Panda.Services.Blogs;
 
 namespace PandaSite.Pages.Home;
 
 public class HomeModel : PageModel
 {
-
     private readonly PostService _postService;
+
+    public List<PostItemModel> list = new();
+    
+    
 
     public HomeModel(PostService postService)
     {
         _postService = postService;
     }
 
-    [BindProperty]
-    public TestUser TestUser { get; set; }
+    [BindProperty] public TestUser TestUser { get; set; }
     public string Name { get; set; }
 
     public int PageIndex { get; set; }
 
     public int Total { get; set; }
 
-    public List<PostItemModel> list = new();
-
     public async Task OnGet(int pageIndex)
     {
-        var res = await _postService.GetHomeList(new PostRequestModel()
+        var res = await _postService.GetHomeList(new PostRequestModel
         {
             Index = pageIndex,
-            PageSize = 10
+            PageSize = 10,
+            FilterPublish = true,
+            PublishStatus = true
         });
         list.AddRange(res.Data);
         Total = res.Total;

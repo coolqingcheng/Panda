@@ -6,6 +6,5 @@ public class Tags : PageModel
 {
     public void OnGet()
     {
-        
     }
 }

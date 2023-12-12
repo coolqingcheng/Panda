@@ -1,5 +1,4 @@
-﻿using System.Net;
-using System.Net.Mime;
+﻿using System.Net.Mime;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
@@ -9,12 +8,12 @@ using Microsoft.Extensions.Logging;
 namespace PandaTools.Exceptions;
 
 /// <summary>
-/// 异常处理
+///     异常处理
 /// </summary>
 public static class ExceptionHandler
 {
     /// <summary>
-    /// 全局拦截
+    ///     全局拦截
     /// </summary>
     /// <param name="app"></param>
     public static void UseEx(this IApplicationBuilder app)
@@ -42,7 +41,6 @@ public static class ExceptionHandler
                 {
                     if (context.Request.ContentType != null && context.Request.ContentType.Contains("json"))
                     {
-
                         await context.Response.WriteAsJsonAsync(new
                         {
                             message = "服务器处理出错了.."
@@ -51,11 +49,10 @@ public static class ExceptionHandler
                     else
                     {
                         context.Response.ContentType = "text/html; charset=utf-8";
-                        await context.Response.WriteAsync("<h1>服务器繁忙..</h1>");
+                        await context.Response.WriteAsync("<h1>服务器内部错误</h1>");
                     }
                 }
             });
         });
     }
 }
-

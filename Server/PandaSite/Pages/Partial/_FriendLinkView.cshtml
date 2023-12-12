@@ -1,12 +1,12 @@
-﻿@using PandaSite.Services
-@using PandaSite.Models.Blogs.Dto
+﻿@using Panda.Models.Dtos.Blogs.Dto
+@using Panda.Services
 @inject FriendLinkService FlService
 @{
-    var res = await FlService.GetLinkList(new GetFriendLinkModel()
-            {
-                Index = 1,
-                PageSize = 50
-            });
+    var res = await FlService.GetLinkList(new GetFriendLinkModel
+    {
+        Index = 1,
+        PageSize = 50
+    });
 }
 @if (res.Total > 0)
 {

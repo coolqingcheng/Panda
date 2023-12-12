@@ -1,21 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 
 namespace PandaTools.Helper;
 
 public static class EFExtension
 {
-    public static IQueryable<T> WhereIf<T>(this IQueryable<T> query, bool condition, Expression<Func<T, bool>> exp) where T : class
+    public static IQueryable<T> WhereIf<T>(this IQueryable<T> query, bool condition, Expression<Func<T, bool>> exp)
+        where T : class
     {
-        if (condition)
-        {
-            query = query.Where(exp);
-        }
+        if (condition) query = query.Where(exp);
 
         return query;
+    }
+
+    /// <summary>
+    /// 分页
+    /// </summary>
+    /// <param name="query"></param>
+    /// <param name="index"></param>
+    /// <param name="size"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static IQueryable<T> Page<T>(this IQueryable<T> query, int index, int size) where T : class
+    {
+        int skip = (index - 1) * size;
+        return query.Skip(skip).Take(size);
     }
 }

@@ -9,13 +9,13 @@ namespace PandaTools.Swagger;
 public class SwaggerEnumFilter : IDocumentFilter
 {
     /// <summary>
-    /// 实现IDocumentFilter接口的Apply函数
+    ///     实现IDocumentFilter接口的Apply函数
     /// </summary>
     /// <param name="swaggerDoc"></param>
     /// <param name="context"></param>
     public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
     {
-        Dictionary<string, Type> dict = GetAllEnum();
+        var dict = GetAllEnum();
 
         foreach (var item in swaggerDoc.Components.Schemas)
         {
@@ -25,19 +25,12 @@ public class SwaggerEnumFilter : IDocumentFilter
             {
                 Type? itemType;
                 if (dict.ContainsKey(typeName))
-                {
                     itemType = dict[typeName];
-                }
                 else
-                {
                     itemType = null;
-                }
 
-                List<OpenApiInteger> list = new List<OpenApiInteger>();
-                foreach (var val in property.Enum)
-                {
-                    list.Add((OpenApiInteger)val);
-                }
+                var list = new List<OpenApiInteger>();
+                foreach (var val in property.Enum) list.Add((OpenApiInteger)val);
 
                 property.Description += DescribeEnum(itemType!, list);
             }
@@ -52,20 +45,16 @@ public class SwaggerEnumFilter : IDocumentFilter
         list.Add(Assembly.GetEntryAssembly()!);
         foreach (var name in assList!)
         {
-            Assembly ass = Assembly.Load(name); //枚举所在的命名空间的xml文件名，我的枚举都放在Model层里（类库）
+            var ass = Assembly.Load(name); //枚举所在的命名空间的xml文件名，我的枚举都放在Model层里（类库）
             list.Add(ass);
         }
 
         foreach (var assembly in list)
         {
-            Type[] types = assembly.GetTypes();
-            foreach (Type item in types)
-            {
+            var types = assembly.GetTypes();
+            foreach (var item in types)
                 if (item.IsEnum)
-                {
                     dict.TryAdd(item.Name, item);
-                }
-            }
         }
 
         return dict;
@@ -91,19 +80,11 @@ public class SwaggerEnumFilter : IDocumentFilter
 
     private static string GetDescription(Type t, object value)
     {
-        foreach (MemberInfo mInfo in t.GetMembers())
-        {
+        foreach (var mInfo in t.GetMembers())
             if (mInfo.Name == t.GetEnumName(value))
-            {
-                foreach (Attribute attr in Attribute.GetCustomAttributes(mInfo))
-                {
+                foreach (var attr in Attribute.GetCustomAttributes(mInfo))
                     if (attr.GetType() == typeof(DescriptionAttribute))
-                    {
                         return ((DescriptionAttribute)attr).Description;
-                    }
-                }
-            }
-        }
 
         return string.Empty;
     }

@@ -1,29 +1,33 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
-		<Nullable>enable</Nullable>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<UserSecretsId>ab1145a6-7357-423d-93c8-00465ab3c945</UserSecretsId>
-		<NoWarn>CS1591,8618</NoWarn>
-	</PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <UserSecretsId>ab1145a6-7357-423d-93c8-00465ab3c945</UserSecretsId>
+        <NoWarn>CS1591,8618</NoWarn>
+		<ServerGarbageCollection>false</ServerGarbageCollection>
+		
+    </PropertyGroup>
 
-	<PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Swagger' " />
-	<PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Production' " />
+    <PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Web' " />
+    <PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Data.Swagger' " />
+    <PropertyGroup Condition=" '$(RunConfiguration)' == 'QingCheng.Site.Data.Production' " />
+    <ItemGroup>
+        <ProjectReference Include="..\App\Panda.Services\Panda.Services.csproj" />
+        <ProjectReference Include="..\PandaApi\PandaApi.csproj" />
+        <ProjectReference Include="..\PandaTools\PandaTools.csproj" />
+        <ProjectReference Include="..\App\Panda.Models\Panda.Models.csproj" />
+    </ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\PandaTools\PandaTools.csproj" />
-	</ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Mapster.Core" Version="1.2.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.10">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
 
-	<ItemGroup>
-		<PackageReference Include="Mapster.Core" Version="1.2.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="MySqlConnector" Version="2.2.6" />
-		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
-	</ItemGroup>
+    </ItemGroup>
 
 
 </Project>

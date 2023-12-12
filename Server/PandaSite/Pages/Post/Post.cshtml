@@ -1,5 +1,5 @@
 ﻿@page "/post/{Id}.html"
-@model PandaSite.Pages.Post.Post
+@model Post
 
 @{
     Layout = "_Layout";
@@ -33,11 +33,11 @@
 </div>
 
 @section css{
-   
+
 }
 
 @section js{
-    
+
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', (event) => {
             document.querySelectorAll('pre code').forEach((el) => {

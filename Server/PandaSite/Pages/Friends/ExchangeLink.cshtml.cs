@@ -6,6 +6,5 @@ public class ExchangeLink : PageModel
 {
     public void OnGet()
     {
-        
     }
 }

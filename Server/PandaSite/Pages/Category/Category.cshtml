@@ -1,6 +1,5 @@
 ﻿@page "/cate/{cateId}-{index}"
-@using PandaSite.Models
-@model PandaSite.Pages.Category.Category
+@model Category
 
 @{
     Layout = "_Layout";
@@ -17,7 +16,7 @@
 </div>
 <div class="row bg-white mt-2 pt-4">
     <div class="col">
-        @await Html.PartialAsync("Partial/_PostItemView",Model.pageDto.Data)
-        @await Html.PartialAsync("Partial/_PageView",new PageViewModel(Model.pageDto.Total,Model.PageSize,Model.PageIndex,(index)=>$"/cate/{Model.CateId}/{index}"))
+        @await Html.PartialAsync("Partial/_PostItemView", Model.pageDto.Data)
+        @await Html.PartialAsync("Partial/_PageView", new PageViewModel(Model.pageDto.Total, Model.PageSize, Model.PageIndex, index => $"/cate/{Model.CateId}/{index}"))
     </div>
 </div>

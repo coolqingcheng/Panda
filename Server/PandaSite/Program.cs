@@ -1,8 +1,6 @@
-
-
-using PandaSite;
-
-SiteApp.Run(args, (services, config) =>
-{
-    services.AddEFMySql<QingChengContext>(config.GetConnectionString("mysql")!);
-});
+SiteApp.Run(args,
+    (services, config) =>
+    {
+        services.AddMyCaptcha(config);
+        services.AddPgSql<PandaDbContext>(config);
+    });

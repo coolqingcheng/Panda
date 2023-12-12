@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -35,7 +30,7 @@ public class CookieAuthHelper
             // value set here overrides the ExpireTimeSpan option of 
             // CookieAuthenticationOptions set with AddCookie.
 
-            IsPersistent = true,
+            IsPersistent = true
             // Whether the authentication session is persisted across 
             // multiple requests. When used with cookies, controls
             // whether the cookie's lifetime is absolute (matching the
@@ -62,14 +57,15 @@ public class CookieAuthHelper
 
 public static class CookieAuthExtensions
 {
-    public static void AddCookieAuth(this IServiceCollection service, Action<CookieAuthenticationOptions>? action = null)
+    public static void AddCookieAuth(this IServiceCollection service,
+        Action<CookieAuthenticationOptions>? action = null)
     {
         service.AddScoped<CookieAuthHelper>();
         service.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(
                 opt =>
                 {
-                    opt.Cookie = new CookieBuilder()
+                    opt.Cookie = new CookieBuilder
                     {
                         HttpOnly = true,
                         SameSite = SameSiteMode.Strict,
@@ -81,7 +77,6 @@ public static class CookieAuthExtensions
                         context.Response.StatusCode = 401;
                         if (contentType.Contains("json"))
                         {
-
                         }
                         else
                         {
@@ -94,7 +89,7 @@ public static class CookieAuthExtensions
 
     public static void UseCookieAuth(this IApplicationBuilder app)
     {
-        app.UseCookiePolicy(new CookiePolicyOptions()
+        app.UseCookiePolicy(new CookiePolicyOptions
         {
             MinimumSameSitePolicy = SameSiteMode.Strict
         });
